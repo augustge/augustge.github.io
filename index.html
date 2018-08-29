@@ -56,6 +56,41 @@ function openClose(theID) {
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script> -->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script> -->
       <!-- <script src="mainPageScript2.js"></script> -->
+
+      <!-- including JQuery -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+      <!-- For including HTML -->
+      <script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+}
+</script>
+
    </HEAD>
    <BODY>
 
@@ -87,10 +122,15 @@ function openClose(theID) {
                   <li><a class='link-entry' href='Ising model'>Ising model</a></li>
               </ul>
 
-              <!-- <h3 id="design" class="select" title="Posts">Select a Design:</h3>
+              <h3 id="design" class="select" title="Posts">Select a Design:</h3>
               <ul>
-                <li><a class='link-entry' onClick="openClose(1)" style="cursor:hand; cursor:pointer;">TATA</a></li>
-              </ul> -->
+                <li><a class='link-entry' onClick="openClose(1)" style="cursor:hand; cursor:pointer;">TATA</a>
+                </li>
+                <li><a class='link-entry' onClick="openClose(2)" style="cursor:hand; cursor:pointer;">TOTO</a></li>
+                <li><a class='link-entry' onClick="openClose(3)" style="cursor:hand; cursor:pointer;">TITI</a></li>
+                <li><a class='link-entry' onClick="openClose(4)" style="cursor:hand; cursor:pointer;">FAFA</a></li>
+                <li><a class='link-entry' onClick="openClose(5)" style="cursor:hand; cursor:pointer;">RORO</a></li>
+              </ul>
        				</nav>
        			</div>
 
@@ -101,11 +141,12 @@ function openClose(theID) {
      	</section>
       <!--  POSTS -->
 
-      <!-- <div id="Basic"></div>
+      <div id="Basic"></div>
       <div class="post texter" role="article" id="1">
         <h3 id="design" title="TATA" onClick="openClose(1)" style="cursor:hand; cursor:pointer;">TATA</h3>
-        <p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
-      </div> -->
+        <div w3-include-html="Posts/Brachistochroneproblemet.html">
+        </div>
+      </div>
 
 
       <div id="disqus_thread"></div>
@@ -130,6 +171,9 @@ function openClose(theID) {
 
 
 
+      <script>
+      includeHTML();
+      </script>
 
    </BODY>
 
