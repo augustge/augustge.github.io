@@ -1,0 +1,99 @@
+:root {
+    --c7_1: #E3CDA4;
+    --c7_2: #C77966;
+    --c7_3: #2F343B;
+    --c7_4: #7E827A;
+    --c7_5: #703030;
+
+    --C1: var(--c7_1);
+    --C2: var(--c7_2);
+    --C3: var(--c7_3);
+    --C4: var(--c7_4);
+    --C5: var(--c7_5);
+}
+
+input[type=range].terminatorSlider {
+  -webkit-appearance: none;
+  width: 20%;
+  margin: 0.7px 0;
+}
+input[type=range].terminatorSlider:focus {
+  outline: none;
+}
+input[type=range].terminatorSlider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 25.6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--C3);
+  border-radius: 0px;
+  border: 0px solid #010101;
+}
+input[type=range].terminatorSlider::-webkit-slider-thumb {
+  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
+  border: 0px solid #ff1e00;
+  height: 27px;
+  width: 18px;
+  border-radius: 0px;
+  background: var(--C1);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -0.7px;
+}
+input[type=range].terminatorSlider:focus::-webkit-slider-runnable-track {
+  background: #545a5a;
+}
+input[type=range].terminatorSlider::-moz-range-track {
+  width: 100%;
+  height: 25.6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #484d4d;
+  border-radius: 0px;
+  border: 0px solid #010101;
+}
+input[type=range].terminatorSlider::-moz-range-thumb {
+  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
+  border: 0px solid #ff1e00;
+  height: 27px;
+  width: 18px;
+  border-radius: 0px;
+  background: rgba(255, 67, 95, 0.93);
+  cursor: pointer;
+}
+input[type=range].terminatorSlider::-ms-track {
+  width: 100%;
+  height: 25.6px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range].terminatorSlider::-ms-fill-lower {
+  background: #3c4040;
+  border: 0px solid #010101;
+  border-radius: 0px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range].terminatorSlider::-ms-fill-upper {
+  background: #484d4d;
+  border: 0px solid #010101;
+  border-radius: 0px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range].terminatorSlider::-ms-thumb {
+  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
+  border: 0px solid #ff1e00;
+  height: 27px;
+  width: 18px;
+  border-radius: 0px;
+  background: rgba(255, 67, 95, 0.93);
+  cursor: pointer;
+  height: 25.6px;
+}
+input[type=range].terminatorSlider:focus::-ms-fill-lower {
+  background: #484d4d;
+}
+input[type=range].terminatorSlider:focus::-ms-fill-upper {
+  background: #545a5a;
+}
