@@ -9,37 +9,31 @@ function notContains(a,obj){
   for(var i=0; i<a.length; i++){if(a[i]===obj){return false;}}
   return true; }
 
-// function for vizibilizing elements with id theID. All others will be closed
+// function for visibilizing elements with id theID. All others will be closed
 function openClose(theID) {
-   if (document.getElementById(theID).style.display == "block") {
-    document.getElementById(theID).style.display = "none";
-    document.getElementById('Basic').style.display = "block";
-  }
-   else {
-    document.getElementById(theID).style.display  = "block";
-    document.getElementById('Basic').style.display = "none";
-    var numtrue = 0;
+  var div = document.getElementById(theID);
+  if (div.style.display == "block") {
+    div.style.display   = "none";
+    document.getElementById("Basic").style.display = "block";
+  } else {
+    div.style.display   = "block";
+    document.getElementById("Basic").style.display = "none";
     for (var i=0; i<idVals.length;i++){
       if(idVals[i]!=theID){
-        document.getElementById(idVals[i]).style.display = "none";
+          document.getElementById(idVals[i]).style.display = "none";
       }
     }
   }
-
   if(notContains(idVals,theID)){idVals.push(theID);}
 }
 </script>
 
 
-
-
-
 <HTML>
    <HEAD>
       <TITLE>AUGUST GEELMUYDEN</TITLE>
-
       <!-- css file -->
-      <link rel="stylesheet" type="text/css" href="mystyle.css">
+      <link rel="stylesheet" type="text/css" href="mainpageStyle.css">
 
       <!-- MATHJAX for latex display -->
       <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
@@ -49,68 +43,70 @@ function openClose(theID) {
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
       <!-- for unicode utf-8 display -->
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
       <META name="author" content="August Geelmuyden">
 
+      <!--  For Google font: Almendra Display -->
+      <link href='https://fonts.googleapis.com/css?family=Almendra Display' rel='stylesheet'>
+
+      <!--  P5.js -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script> -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script> -->
+      <!-- <script src="mainPageScript2.js"></script> -->
    </HEAD>
    <BODY>
 
 
-<!--
-     <h1 class="title">August Geelmuyden</h1> -->
+     <div class="page-wrapper">
 
-     <div class="letterContainer">
-      <span class="letter" data-letter="A">A</span>
-      <span class="letter" data-letter="U">U</span>
-      <span class="letter" data-letter="G">G</span>
-      <span class="letter" data-letter="U">U</span>
-      <span class="letter" data-letter="S">S</span>
-      <span class="letter" data-letter="T">T</span><br>
-      <span class="letter" data-letter="G">G</span>
-      <span class="letter" data-letter="E">E</span>
-      <span class="letter" data-letter="E">E</span>
-      <span class="letter" data-letter="L">L</span>
-      <span class="letter" data-letter="M">M</span>
-      <span class="letter" data-letter="U">U</span>
-      <span class="letter" data-letter="Y">Y</span>
-      <span class="letter" data-letter="D">D</span>
-      <span class="letter" data-letter="E">E</span>
-      <span class="letter" data-letter="N">N</span>
-    </div>
+     	<section class="intro">
+     		<header role="banner">
+     			<h1 id="design">AUGUSTG</h1>
+     			<h2 id="design">For thoughts and other stuff </h2>
+     		</header>
 
+        <div class="summary" role="article">
+            <blockquote><p>
+            Euclid taught me that without assumptions there is no proof. Therefore, in any
+            argument, examine the assumptions.
+            <cite>E. T. Bell</cite>
+            </p></blockquote>
+     		</div>
 
-     <blockquote>
-       A rose is a rose is a rose
-       <cite>Gertrude Stein, "Sacred Emily" (1913)</cite>
-     </blockquote>
+        <aside class="sidebar" role="complementary">
+       		<div class="wrapper">
 
+       			<div class="page-selection" id="page-selection">
+       				<h3 id="design" class="select" title="Pages">Select a Design:</h3>
+       				<nav role="navigation">
+       					<ul>
+                  
+              </ul>
+              <h3 id="design" class="select" title="Posts">Select a Design:</h3>
+              <ul>
 
-      <h2 class="topic">Pages</h2>
+            </ul>
+       				</nav>
+       			</div>
 
-
-
-
-      <h2 class="topic">Texts</h2>
-      <div class="container" id="tekstMenu">
-      <a class="box" onClick="openClose(1)" style="cursor:hand; cursor:pointer;">Baselproblemet.html</a>
-    </div>
+       		</div>
+       	</aside>
 
 
-    <ul id="messageList">
-      <div id='Basic' class="texter" style="display: block;">
-        <p class="image"><img src="Animations/biljards2.gif" width='80%' height='70%'><p>
-          </div>
+     	</section>
+      <!--  POSTS -->
 
-          <div id="1" class="texter"><h2 id="inText">Baselproblemet</h2>bla bla bla</div>
-          </ul>
+      <div id="Basic"></div>
+
+
 
 
 
 
 
    </BODY>
-<!--
-   <footer>
+
+   <!-- <footer>
     <p>Posted by: August Geelmuyden</p>
     <p>Contact information: <a href="mailto:someone@example.com">
     someone@example.com</a>.</p>
