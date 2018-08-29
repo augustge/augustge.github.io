@@ -39,3 +39,5 @@ function get_file(url, callback)
     }
     xmlhttp.send();
 }
+
+function(response){TEXT=response;});

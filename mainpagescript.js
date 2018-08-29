@@ -19,7 +19,7 @@ function draw(){
 }
 
 function mousePressed(){
-  var text = get_file("Brachistochroneproblemet.html",True);
+  var text = get_file("Brachistochroneproblemet.html",function(response){TEXT=response;});
   div.html(text)
 }
 
