@@ -70,6 +70,7 @@ function includeHTML() {
     elmnt = z[i];
     /*search for elements with a certain atrribute:*/
     file = elmnt.getAttribute("w3-include-html");
+    // if (file && elmnt.style.display = "none";) {
     if (file) {
       /*make an HTTP request using the attribute value as the file name:*/
       xhttp = new XMLHttpRequest();
@@ -125,7 +126,7 @@ function includeHTML() {
               <h3 id="design" class="select" title="Posts">Select a Design:</h3>
               <ul>
                 <li><a class='link-entry' onClick="openClose(1)" style="cursor:hand; cursor:pointer;">Brachistochroneproblemet
-                <div id="1" w3-include-html="Posts/Brachistochroneproblemet.html"></div></a></li>
+                </a><div id="1" class="post texter" role="article" w3-include-html="Posts/Brachistochroneproblemet.html"></div></li>
 
                 <li><a class='link-entry' onClick="openClose(2)" style="cursor:hand; cursor:pointer;">TOTO</a></li>
                 <li><a class='link-entry' onClick="openClose(3)" style="cursor:hand; cursor:pointer;">TITI</a></li>
