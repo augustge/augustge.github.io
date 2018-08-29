@@ -25,3 +25,17 @@ function includeHTML() {
     }
   }
 }
+
+function get_file(url, callback)
+{
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET", url, true);
+    xmlhttp.onreadystatechange = function()
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+        {
+            callback(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.send();
+}
