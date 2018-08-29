@@ -92,12 +92,6 @@ body {
   font-size: 16px;
   font-weight: 300;
   color: var(--C5);
-  background:
-  linear-gradient(
-    rgba(255, 255, 255, 0.40),
-    rgba(255, 255, 255, 0.40)
-  ),
-    url(PAPERtexture.jpg);
 }
 
 
