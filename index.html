@@ -33,7 +33,7 @@ function openClose(theID) {
    <HEAD>
       <TITLE>AUGUST GEELMUYDEN</TITLE>
       <!-- css file -->
-      <link rel="stylesheet" type="text/css" href="mainpageStyle.css">
+      <link rel="stylesheet" type="text/css" href="mystyle.css">
 
       <!-- MATHJAX for latex display -->
       <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
@@ -80,11 +80,12 @@ function openClose(theID) {
        				<h3 id="design" class="select" title="Pages">Select a Design:</h3>
        				<nav role="navigation">
        					<ul>
-                  
+                  <li><a class='link-entry' href='".$file."'>Animations</a></li>
               </ul>
+
               <h3 id="design" class="select" title="Posts">Select a Design:</h3>
               <ul>
-
+                <li><a class='link-entry' onClick="openClose(1)" style="cursor:hand; cursor:pointer;">TATA</a></li>
             </ul>
        				</nav>
        			</div>
@@ -97,7 +98,10 @@ function openClose(theID) {
       <!--  POSTS -->
 
       <div id="Basic"></div>
-
+      <div class="post texter" role="article" id="1">
+        <h3 id="design" title="TATA" onClick="openClose(1)" style="cursor:hand; cursor:pointer;">TATA</h3>
+        <p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
+      </div>
 
 
 
