@@ -34,17 +34,22 @@ function Post(filename,title){
   this.load = function(){
     console.log("TRYING")
     var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
+    this.showPost();
   }
 
   this.loadCallback = function(txt){
     this.TEXT = txt
     text(txt,width/2,height/2)
-    console.log("PRINT")
-    console.log(this.DIV)
-    console.log("END PRINT")
-    console.log(txt)
-    console.log("END PRINT 2")
-    this.DIV.html(txt);
+    // console.log("PRINT")
+    // console.log(this.DIV)
+    // console.log("END PRINT")
+    // console.log(txt)
+    // console.log("END PRINT 2")
+    // this.DIV.html(txt);
+  }
+
+  this.showPost = function(){
+    this.DIV.html(this.TEXT);
   }
 }
 
