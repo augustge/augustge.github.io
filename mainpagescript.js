@@ -19,10 +19,12 @@ function Post(filename,title){
   this.filename = filename
   this.title = title
   this.DIV = createDiv(title)
+  this.DIV.position(width/2,height/2);
 
   this.load = function(){
     var infile = loadStrings("Brachistochroneproblemet.html",this.loadCallback);
   }
+  
   this.loadCallback = function(text){
     this.DIV.html(text);
   }
