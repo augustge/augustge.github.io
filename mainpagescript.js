@@ -19,10 +19,8 @@ function preload(){
 
 function setup(){
   // canvas = createCanvas(windowWidth,windowHeight);
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOPLA").initiate() )//"Brachistochroneproblemet") )
+  POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
   POSTS.push( new Post("Brachistochroneproblemet.html","HIIPLA").initiate() )
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOKLA").initiate() )
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOFLA").initiate() )
 
 
 }
