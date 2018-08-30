@@ -7,7 +7,7 @@ var POSTS = [];
 function setup(){
   canvas = createCanvas(windowWidth,windowHeight);
 
-  POSTS.push( new Post("Brachistochroneproblemet.html","SHATATA"))//"Brachistochroneproblemet") )
+  POSTS.push( new Post("Brachistochroneproblemet.html","THIS IS A TEST"))//"Brachistochroneproblemet") )
 
 }
 
