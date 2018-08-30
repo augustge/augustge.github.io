@@ -20,7 +20,7 @@ function preload(){
 function setup(){
   // canvas = createCanvas(windowWidth,windowHeight);
   POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
-  POSTS.push( new Post("Brachistochroneproblemet.html","zop zop zop").initiate() )
+  POSTS.push( new Post("Brachistochroneproblemet.html","hookle kookle").initiate() )
 
 
 }
@@ -46,9 +46,17 @@ function Post(filename,title){
 
   this.mouseEvent = function(){
     console.log("TRYING")
-    var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
-    console.log("IN LOAD:")
-    console.log(infile)
+    try{
+      console.log("--> works")
+      loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
+      console.log("--> still works")
+    }
+    catch(err) {
+      console.log("--> catched error")
+      this.loadCallback(["<h2>[FAILED TO UPLOAD POST]</h2>"])
+      console.log("--> Compensated")
+    }
+
   }
 
   this.loadCallback = function(result){
@@ -62,13 +70,10 @@ function Post(filename,title){
     div.parent(postEntry)
     console.log("updated parental status for div")
     text(txt,width/2,height/2)
+    console.log("local storage of div")
+    this.div = div
     console.log("end")
-    // return txt;
-    // console.log(this.DIV)
-    // console.log("END PRINT")
-    // console.log(txt)
-    // console.log("END PRINT 2")
-    // this.DIV.html(txt);
+    return result
   }
 
 }
