@@ -1,22 +1,27 @@
 
-var canvas;
+// var canvas;
 
 var div;
 var POSTS = [];
 
-var pagesElm, postsElm;
+var pagesElm, pagesUl;
+var postsElm, postsUl;
 
 function preload(){
   pagesElm = document.getElementById('Pages');
+  pagesUl  = document.getElementById('pagesList');
   postsElm = document.getElementById('Posts');
+  postsUl  = document.getElementById('postsList');
+
+
 }
 
 function setup(){
-  canvas = createCanvas(windowWidth,windowHeight);
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOPLA"))//"Brachistochroneproblemet") )
-  POSTS.push( new Post("Brachistochroneproblemet.html","HIIPLA"))
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOKLA"))
-  POSTS.push( new Post("Brachistochroneproblemet.html","HOOFLA"))
+  // canvas = createCanvas(windowWidth,windowHeight);
+  POSTS.push( new Post("Brachistochroneproblemet.html","HOOPLA").initiate() )//"Brachistochroneproblemet") )
+  POSTS.push( new Post("Brachistochroneproblemet.html","HIIPLA").initiate() )
+  POSTS.push( new Post("Brachistochroneproblemet.html","HOOKLA").initiate() )
+  POSTS.push( new Post("Brachistochroneproblemet.html","HOOFLA").initiate() )
 
 
 }
@@ -27,17 +32,22 @@ function draw(){
 
 function Post(filename,title){
   this.filename = filename
-  this.title = title
-  this.header = createElement("h3","FAFA")
-  // this.header.id("design")
-  // this.header.attribute("title","BOBO")
-  this.header.parent(postsElm);
-  // <h3 id="design" class="select" title="Posts">Select a Design:</h3>
-  this.DIV = createDiv(title);
-  this.DIV.position(width/2,height/2);
-  console.log("this is 'this.DIV':")
-  console.log(this.DIV)
-  console.log("--> end")
+  this.title    = title;
+
+  this.initiate = function(){
+    this.li_elm = createElement("li","")
+    this.li_elm.parent(postsUl)
+    this.header = createElement("a",this.title)
+    this.header.class("link-entry")
+    this.header.style("cursor","pointer")
+    this.header.mousePressed(this.load);
+    this.header.parent(this.li_elm);
+    return this
+  }
+
+  this.mouseEvent = function(){
+    this.load();
+  }
 
   this.load = function(){
     console.log("TRYING")
@@ -50,6 +60,7 @@ function Post(filename,title){
   this.loadCallback = function(txt){
     this.TEXT = txt
     text(txt,width/2,height/2)
+    return txt;
     // console.log(this.DIV)
     // console.log("END PRINT")
     // console.log(txt)
@@ -62,6 +73,6 @@ function Post(filename,title){
   }
 }
 
-function mousePressed(){
-  POSTS[0].load();
-}
+// function mousePressed(){
+//   POSTS[0].load();
+// }
