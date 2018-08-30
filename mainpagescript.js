@@ -26,6 +26,8 @@ function Post(filename,title){
   }
 
   this.loadCallback = function(text){
+    this.text = text
+    text(text,width/2,height/2)
     this.DIV.html(text);
   }
 }
