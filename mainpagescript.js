@@ -51,9 +51,10 @@ function Post(filename,title){
     console.log(infile)
   }
 
-  this.loadCallback = function(txt){
+  this.loadCallback = function(result){
     console.log("IN CALLBACK:")
     console.log(result)
+    var txt = join(result," ")
     console.log("got text:")
     console.log(txt)
     var div = createDiv(txt);
