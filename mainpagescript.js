@@ -21,7 +21,7 @@ function preload(){
 function setup(){
   // canvas = createCanvas(windowWidth,windowHeight);
   POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
-  POSTS.push( new Post("FirstPost.txt","hookle kookle").initiate() )
+  POSTS.push( new Post("FirstPost.html","hookle kookle").initiate() )
 
 
 }
