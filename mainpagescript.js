@@ -6,13 +6,14 @@ var POSTS = [];
 
 var pagesElm, pagesUl;
 var postsElm, postsUl;
+var postEntry;
 
 function preload(){
-  pagesElm = document.getElementById('Pages');
-  pagesUl  = document.getElementById('pagesList');
-  postsElm = document.getElementById('Posts');
-  postsUl  = document.getElementById('postsList');
-
+  pagesElm    = document.getElementById('Pages');
+  pagesUl     = document.getElementById('pagesList');
+  postsElm    = document.getElementById('Posts');
+  postsUl     = document.getElementById('postsList');
+  postEntry   = document.getElementById('postEntry');
 
 }
 
@@ -54,13 +55,13 @@ function Post(filename,title){
     var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
     console.log("IN LOAD:")
     console.log(infile)
-    this.showPost();
   }
 
   this.loadCallback = function(txt){
-    this.TEXT = txt
+    var div = createDiv(txt);
+    div.parent(postEntry)
     text(txt,width/2,height/2)
-    return txt;
+    // return txt;
     // console.log(this.DIV)
     // console.log("END PRINT")
     // console.log(txt)
@@ -68,9 +69,6 @@ function Post(filename,title){
     // this.DIV.html(txt);
   }
 
-  this.showPost = function(){
-    this.DIV.html(this.TEXT);
-  }
 }
 
 // function mousePressed(){
