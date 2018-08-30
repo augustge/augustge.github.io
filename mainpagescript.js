@@ -12,7 +12,7 @@ function preload(){
 
 function setup(){
   canvas = createCanvas(windowWidth,windowHeight);
-  POSTS.push( new Post("Brachistochroneproblemet.html","THIS IS A TEST 2"))//"Brachistochroneproblemet") )
+  POSTS.push( new Post("Brachistochroneproblemet.html","THIS IS A TEST!"))//"Brachistochroneproblemet") )
 
 
 }
@@ -42,6 +42,8 @@ function Post(filename,title){
     console.log("PRINT")
     console.log(this.DIV)
     console.log("END PRINT")
+    console.log(txt)
+    console.log("END PRINT 2")
     this.DIV.html(txt);
   }
 }
