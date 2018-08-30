@@ -27,7 +27,7 @@ function setup(){
 }
 
 function draw(){
-  // background(0);
+  // background(200);
 }
 
 function Post(filename,title){
@@ -43,9 +43,9 @@ function Post(filename,title){
     this.header.parent(this.li_elm);
     console.log(filename)
     this.header.mousePressed(function (){
-      console.log("In mouseEvent");
-      console.log(filename);
-      console.log("loading strings...");
+      // console.log("In mouseEvent");
+      // console.log(filename);
+      // console.log("loading strings...");
       loadStrings(filename,loadPost,loadPostError);
     });
     return this
@@ -57,6 +57,11 @@ function loadPost(result){
   console.log("TEST")
   var txt = join(result," ")
   postDiv  = select('#postDiv');
+  if(postDiv.html==txt){
+    postDiv.html("");
+  }else{
+    postDiv.html(txt)
+  }
   console.log("TEST2")
   postDiv.html(txt) // update html content
   console.log("TEST3")
@@ -66,16 +71,6 @@ function loadPost(result){
 }
 
 function loadPostError(){
-  var txt = "[Failed loading file... or something...]"
   postDiv  = select('#postDiv');
-  postDiv.html(txt) // update html content
-  // MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
-  // return result
+  // postDiv.html("");
 }
-
-
-
-
-// function mousePressed(){
-//   POSTS[0].load();
-// }

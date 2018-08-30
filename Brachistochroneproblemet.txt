@@ -10,167 +10,189 @@ Isaac Newton ble i 1696 gitt følgende utfordring:
 Det sies at Newton kom opp med en løsning allerede neste dag. La oss se nærmere på problemet:
 
 <p id='image'><img id='IMG' src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Brachistochrone.svg/600px-Brachistochrone.svg.png'>
-
 <p>
 Vi beskriver punktene A og B med koordinatene
-$
-    A=(x_a,y_a) \mbox{ og } B=(x_b,y_b)
-$
+\[
+  A=(x_a,y_a) \mbox{ og } B=(x_b,y_b)
+\]
 
 Den totale tiden T perlen bruker på å trille fra A til B kan vi skrive som et integral over infinitesimale tidsteg
 
-$
-    T=\int_{t_a}^{t_b} dt
-$
+\[
+  T=\int_{t_a}^{t_b} dt
+\]
 
 og siden fart er gitt som <i>v dt = ds</i> får vi
 
-$
-    T=\int_{A}^{B} \frac{1}{v}ds
-$
+\[
+  T=\int_{A}^{B} \frac{1}{v}ds
+\]
 
 Siden <i>ds</i> er et infinitesimalt linjestykke kan vi tenke på <i>ds</i> som hypotenusen i en rettvinklet trekant med kateter
 <i>dx</i> og <i>dy</i>. Da kan vi bruke pythagoras til å si at
 
-$
-    T=\int_{A}^{B} \frac{1}{v}\sqrt{dx^2+dy^2}= \int_{x_a}^{x_b}\frac{ 1 }{v} \sqrt{ 1+\left( \frac{dy}{dx} \right)^2 }dx
-$
+\[
+  T=\int_{A}^{B} \frac{1}{v}\sqrt{dx^2+dy^2}= \int_{x_a}^{x_b}\frac{ 1 }{v} \sqrt{ 1+\left( \frac{dy}{dx} \right)^2 }dx
+\]
 
 Vi tenker oss at perlen ikke opplever friksjonskrefter, noe som betyr at energi er bevart. Ved å likestille den kinetiske enerien med den potensielle energien fra tyngefeltet, får vi
-
-$
-    \frac{1}{2}mv^2=mgy \Rightarrow v = \sqrt{2gy}
-$
+\[
+  \frac{1}{2}mv^2=mgy \Rightarrow v = \sqrt{2gy}
+\]
 
 Problemet ligger altså i å minimere
-
-$
+\[
     T= \frac{1}{\sqrt{2g}}\int_{x_a}^{x_b} \sqrt{ \frac{ 1+\left( y' \right)^2}{y} }dx
-$
+\]
 
 For å forhindre grisete regning definerer vi nå
 
-$
-    F(y,y') \equiv \frac{1}{\sqrt{2g}}\sqrt{ \frac{ 1+\left( y' \right)^2}{y} }
-$
+\[
+  F(y,y') \equiv \frac{1}{\sqrt{2g}}\sqrt{ \frac{ 1+\left( y' \right)^2}{y} }
+\]
 
 og studerer en liten endring $\delta T$ i perlens reisetid:
 
-$ \begin{aligned}
-    \delta T
-    &= \delta \int_{x_a}^{x_b}F dx \\
-    &= \int_{x_a}^{x_b}\left( \frac{\partial F}{\partial y}\delta y+\frac{\partial F}{\partial y'}\delta y'\right)dx \\
-    &= \int_{x_a}^{x_b}\frac{\partial F}{\partial y}\delta y dx + \int_{x_a}^{x_b} \frac{\partial F}{\partial y'}\frac{d(\delta y)}{dx} dx \\
-    \end{aligned}
-$
+\[
+  \begin{aligned}
+  \delta T
+  &= \delta \int_{x_a}^{x_b}F dx \\
+  &= \int_{x_a}^{x_b}\left( \frac{\partial F}{\partial y}\delta y+\frac{\partial F}{\partial y'}\delta y'\right)dx \\
+  &= \int_{x_a}^{x_b}\frac{\partial F}{\partial y}\delta y dx + \int_{x_a}^{x_b} \frac{\partial F}{\partial y'}\frac{d(\delta y)}{dx} dx \\
+  \end{aligned}
+\]
 
 Vi bruker nå delvis integrasjon på siste ledd i integralet ved å
 
-$
-    \mbox{integrere } \frac{d}{dx}(\delta y) \mbox{ og derivere } \frac{\partial F}{\partial y'}
-$
+\[
+  \mbox{integrere } \frac{d}{dx}(\delta y) \mbox{ og derivere } \frac{\partial F}{\partial y'}
+\]
 
 Det gir
 
-$
-    \begin{aligned}
-    \int_{x_a}^{x_b} \frac{\partial F}{\partial y'}\frac{d(\delta y)}{dx} dx = \left[ \frac{\partial F}{\partial y'}\delta y \right]_{x_a}^{x_b}-\int_{x_a}^{x_b} \delta y \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) dx
-    \end{aligned}
-$
+\[
+  \begin{aligned}
+  \int_{x_a}^{x_b} \frac{\partial F}{\partial y'}\frac{d(\delta y)}{dx} dx = \left[ \frac{\partial F}{\partial y'}\delta y \right]_{x_a}^{x_b}-\int_{x_a}^{x_b} \delta y \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) dx
+  \end{aligned}
+\]
 
 Vi ønsker ikke å tillate variasjoner i kurvens endepunkter siden disse skal holdes fast i punktene A og B.
 Det betyr at
-$
-    \delta y(x_a)=\delta y(x_b)=0 \mbox{ og derfor } \left[ \frac{\partial F}{\partial y'}\delta y \right]_{x_a}^{x_b} = 0
-$
+\[
+  \delta y(x_a)=\delta y(x_b)=0 \mbox{ og derfor } \left[ \frac{\partial F}{\partial y'}\delta y \right]_{x_a}^{x_b} = 0
+\]
 
 Vi sitter altså igjen med at en liten endring $ \delta T$ i perlens reisetid er gitt som
 
-$ \begin{aligned}
-\delta T &= \int_{x_a}^{x_b}\frac{\partial F}{\partial y}\delta y dx-\int_{x_a}^{x_b} \delta y \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) dx \\
-&= \int_{x_a}^{x_b}\left(\frac{\partial F}{\partial y}-\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]\right)\delta y dx
-\end{aligned}
-$
+\[
+  \begin{aligned}
+  \delta T &= \int_{x_a}^{x_b}\frac{\partial F}{\partial y}\delta y dx-\int_{x_a}^{x_b} \delta y \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) dx \\
+  &= \int_{x_a}^{x_b}\left(\frac{\partial F}{\partial y}-\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]\right)\delta y dx
+  \end{aligned}
+\]
 
 Siden det ikke finnes noen maksimal tid perlen kan bruke kan vi trygt si at kurven som gir minimal reisetid fremkommer av å kreve at endringen i reisetid er forsvinnende:
 $\delta T = 0 $.
 Vi får altså
 
-$
-    \int_{x_a}^{x_b}\left(\frac{\partial F}{\partial y}-\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]\right)\delta y dx=0
-$
+\[
+  \int_{x_a}^{x_b}\left(\frac{\partial F}{\partial y}-\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]\right)\delta y dx=0
+\]
 
 som må bety at
 
-$
-    \frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]-\frac{\partial F}{\partial y}=0
-$
+\[
+  \frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]-\frac{\partial F}{\partial y}=0
+\]
 
 Denne likningen kalles Euler-Lagrange likningen og gjelder for en generell situasjon der man ønsker å gjøre $ \int F(x,y,y') dx $ stasjonær.
 For å forenkle regningen kan det være hensiktsmessig å benytte Beltramis identitet. Den finner vi lett ved å derivere <i>F</i> med hensyn på <i>x</i>:
 
-$
-    \frac{dF}{dx}=\frac{\partial F}{\partial y}y'+\frac{\partial F}{\partial y'}y''  \mbox{ siden } \frac{\partial F}{\partial x}=0
-$
+\[
+  \frac{dF}{dx}=\frac{\partial F}{\partial y}y'+\frac{\partial F}{\partial y'}y''  \mbox{ siden } \frac{\partial F}{\partial x}=0
+\]
 
 Vi løser likningen for
 
-$
-    \frac{\partial F}{\partial y}y' \mbox{ og finner } \frac{\partial F}{\partial y}y'=\frac{dF}{dx}-\frac{\partial F}{\partial y'}y''
+\[
+  \frac{\partial F}{\partial y}y' \mbox{ og finner } \frac{\partial F}{\partial y}y'=\frac{dF}{dx}-\frac{\partial F}{\partial y'}y''
 $
 
 Med dette i tankene multipliserer vi Euler-Lagrange med <i>y'</i> og får
 
-$
-    y'\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]-y'\frac{\partial F}{\partial y}=y'\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]+\frac{\partial F}{\partial y'}y''-\frac{dF}{dx}=0
-$
+\[
+  y'\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]-y'\frac{\partial F}{\partial y}=y'\frac{d}{dx}\left[\frac{\partial F}{\partial y'}\right]+\frac{\partial F}{\partial y'}y''-\frac{dF}{dx}=0
+\]
 
 Ved å kjenne igjen produktregelen får vi da
 
-$
-    \frac{d}{dx}\left( y'\frac{\partial F}{\partial y'}-F\right)=0
-$
+\[
+  \frac{d}{dx}\left( y'\frac{\partial F}{\partial y'}-F\right)=0
+\]
 
 Vi kan altså si at uttrykket
-$
-    y'\frac{\partial F}{\partial y'}-F
-$
+\[
+  y'\frac{\partial F}{\partial y'}-F
+\]
 må være en konstant. Denne konstanten kaller vi
 $-C/\sqrt{2g}$.
 Da har vi
 
-$
-    \begin{aligned}
-    C &=\sqrt{2g}\left[ F-y'\frac{\partial F}{\partial y'}\right] \\
-    &=\sqrt{\frac{1+y'^2}{y}}-y'\frac{\partial }{\partial y'}\sqrt{\frac{1+y'^2}{y}} \\
-    &=\frac{1}{\sqrt{y}}\sqrt{1+y'^2}-\frac{1}{\sqrt{y}}\frac{y'^2}{\sqrt{1+y'^2}} \\
-    &=\frac{1}{\sqrt{y}}\frac{1}{\sqrt{1+y'^2}} \\
-    \end{aligned}
-$
+\[
+  \begin{aligned}
+  C &=\sqrt{2g}\left[ F-y'\frac{\partial F}{\partial y'}\right] \\
+  &=\sqrt{\frac{1+y'^2}{y}}-y'\frac{\partial }{\partial y'}\sqrt{\frac{1+y'^2}{y}} \\
+  &=\frac{1}{\sqrt{y}}\sqrt{1+y'^2}-\frac{1}{\sqrt{y}}\frac{y'^2}{\sqrt{1+y'^2}} \\
+  &=\frac{1}{\sqrt{y}}\frac{1}{\sqrt{1+y'^2}} \\
+  \end{aligned}
+\]
 
 Dette betyr, ved å introdusere nok en konstant
 $k^2=1/C^2$, at
 
-$
+\[
     \left[ 1+\left(\frac{dy}{dx}\right)^2 \right] y = k^2
-$
+\]
 
 eller, om du vil,
 
-$
+\[
     \left[ dx^2+dy^2 \right] y = k^2 dx^2
-$
+\]
 
 som løses av
 
-$
+\[
     \begin{aligned}
     x(t)&=\frac{1}{2}k^2(t-\sin t) \\
     y(t)&=\frac{1}{2}k^2(1-\cos t) \\
     \end{aligned}
-$
+\]
 
 Dette er likningene for en sykloide - et punkt på en trillende sirkel.
 
 <p id='image'><img id='IMG' src='http://38.media.tumblr.com/739ac4cbb3ca3755c878217a51821e95/tumblr_n88735XnO61qd5dslo1_500.gif'>
 <p>
+
+
+
+
+<div id="disqus_thread"></div>
+  <script>
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+  var disqus_config = function () {
+  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  */
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://augustg.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
