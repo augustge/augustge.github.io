@@ -546,7 +546,7 @@ h2 {
 /* ====================================================*/
 
 .texter {
-    display: none;
+    /* display: none; */
     list-style: none;
     text-align: left;
     word-wrap: break-word;

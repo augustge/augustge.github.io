@@ -1,0 +1,8 @@
+
+This is a simple post to test functionality. Does LaTex work?
+\[ f(x) \int fdx \]
+perhaps also inline? Given $x$, what is $x \mapsto y$ provided $x \in X$?
+This is a quote:
+<blockquote>
+  Quoted does not mean it's wise!
+</blockquote>

@@ -4,9 +4,9 @@
 var div;
 var POSTS = [];
 
-var pagesElm, pagesUl;
-var postsElm, postsUl;
-var postEntry;
+var pagesElm,  pagesUl;
+var postsElm,  postsUl;
+var postEntry, postDiv;
 
 function preload(){
   pagesElm    = document.getElementById('Pages');
@@ -14,13 +14,14 @@ function preload(){
   postsElm    = document.getElementById('Posts');
   postsUl     = document.getElementById('postsList');
   postEntry   = document.getElementById('postEntry');
+  postDiv     = document.getElementById('postDiv');
 
 }
 
 function setup(){
   // canvas = createCanvas(windowWidth,windowHeight);
-  POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
-  POSTS.push( new Post("Brachistochroneproblemet.html","hookle kookle").initiate() )
+  POSTS.push( new Post("Brachistochroneproblemet.txt","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
+  POSTS.push( new Post("FirstPost.txt","hookle kookle").initiate() )
 
 
 }
@@ -39,53 +40,40 @@ function Post(filename,title){
     this.header = createElement("a",this.title)
     this.header.class("link-entry")
     this.header.style("cursor","pointer")
-    this.header.mousePressed(this.mouseEvent);
     this.header.parent(this.li_elm);
+    console.log(filename)
+    this.header.mousePressed(function (){
+      console.log("In mouseEvent");
+      console.log(filename);
+      console.log("loading strings...");
+      loadStrings(filename,loadPost,loadPostError);
+    });
     return this
   }
 
-  this.mouseEvent = function(){
-    // console.log("---> TRYING 1")
-    // loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
-    console.log("---> TRYING 2")
-    loadStrings("Brachistochroneproblemet.txt",this.loadPost);
-    console.log("---> End mouse event")
-  }
-
-  this.loadCallback = function(result){
-    console.log("--> IN CALLBACK:")
-    console.log(result)
-    var txt = join(result," ")
-    console.log("--> got text:")
-    console.log(txt)
-    var div = createDiv(txt);
-    console.log("--> created Div")
-    div.parent(postEntry)
-    console.log("--> updated parental status for div")
-    text(txt,width/2,height/2)
-    console.log("--> local storage of div")
-    this.div = div
-    console.log("--> end")
-    return result
-  }
-
 }
-
 
 function loadPost(result){
-  console.log("--> IN CALLBACK:")
-  console.log(result)
+  console.log("TEST")
   var txt = join(result," ")
-  console.log("--> got text:")
-  console.log(txt)
-  var div = createDiv(txt);
-  console.log("--> created Div")
-  div.parent(postEntry)
-  console.log("--> updated parental status for div")
-  text(txt,width/2,height/2)
-  console.log("--> end")
-  return result
+  postDiv  = select('#postDiv');
+  console.log("TEST2")
+  postDiv.html(txt) // update html content
+  console.log("TEST3")
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
+  console.log("TEST4")
+  // return result
 }
+
+function loadPostError(){
+  var txt = "[Failed loading file... or something...]"
+  postDiv  = select('#postDiv');
+  postDiv.html(txt) // update html content
+  // MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
+  // return result
+}
+
+
 
 // function mousePressed(){
 //   POSTS[0].load();
