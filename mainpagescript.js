@@ -34,6 +34,7 @@ function Post(filename,title){
   this.DIV.position(width/2,height/2);
 
   this.load = function(){
+    console.log("TRYING")
     var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
   }
 
