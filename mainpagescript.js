@@ -39,16 +39,12 @@ function Post(filename,title){
     this.header = createElement("a",this.title)
     this.header.class("link-entry")
     this.header.style("cursor","pointer")
-    this.header.mousePressed(this.load);
+    this.header.mousePressed(this.mouseEvent);
     this.header.parent(this.li_elm);
     return this
   }
 
   this.mouseEvent = function(){
-    this.load();
-  }
-
-  this.load = function(){
     console.log("TRYING")
     var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
     console.log("IN LOAD:")
@@ -56,9 +52,16 @@ function Post(filename,title){
   }
 
   this.loadCallback = function(txt){
+    console.log("IN CALLBACK:")
+    console.log(result)
+    console.log("got text:")
+    console.log(txt)
     var div = createDiv(txt);
+    console.log("created Div")
     div.parent(postEntry)
+    console.log("updated parental status for div")
     text(txt,width/2,height/2)
+    console.log("end")
     // return txt;
     // console.log(this.DIV)
     // console.log("END PRINT")
