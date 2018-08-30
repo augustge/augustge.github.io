@@ -1,4 +1,13 @@
 
+/*
+ TODO:
+ * Add un-activating upon double-click on post title
+ * Automatically disqus-boxes for individual posts
+ * List directory for automatic post listing?
+*/
+
+
+
 // var canvas;
 
 var div;
