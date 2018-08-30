@@ -41,6 +41,7 @@ function Post(filename,title){
   this.loadCallback = function(txt){
     this.TEXT = txt
     text(txt,width/2,height/2)
+    console.log(this.DIV)
     this.DIV.html(txt);
   }
 }
