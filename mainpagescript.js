@@ -40,7 +40,9 @@ function Post(filename,title){
   this.loadCallback = function(txt){
     this.TEXT = txt
     text(txt,width/2,height/2)
-    // console.log("PRINT")
+    console.log("this is 'this.DIV':")
+    console.log(this.DIV)
+    console.log("--> end")
     // console.log(this.DIV)
     // console.log("END PRINT")
     // console.log(txt)
