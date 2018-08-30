@@ -20,8 +20,8 @@ function draw(){
 
 function mousePressed(){
   // var text = get_file("Brachistochroneproblemet.html",function(response){TEXT=response;});
-  fileSelect = createFileInput(gotFile, 'multiple');
-  // div.html(text)
+  infile = loadStrings("Brachistochroneproblemet.html");
+  div.html(infile)
 }
 
 
