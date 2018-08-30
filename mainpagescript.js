@@ -7,10 +7,6 @@ var POSTS = [];
 function setup(){
   canvas = createCanvas(windowWidth,windowHeight);
 
-  div = createDiv("BOBOBO TATATA")
-  div.position(width/2,height/2)
-  div.attribute("w3-include-html","Brachistochroneproblemet.html")
-
   POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet") )
 
 }
@@ -33,6 +29,5 @@ function Post(filename,title){
 }
 
 function mousePressed(){
-  // var text = get_file("Brachistochroneproblemet.html",function(response){TEXT=response;});
   POSTS[0].load();
 }
