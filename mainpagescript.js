@@ -22,9 +22,9 @@ function Post(filename,title){
   this.DIV.position(width/2,height/2);
 
   this.load = function(){
-    var infile = loadStrings("Brachistochroneproblemet.html",this.loadCallback);
+    var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
   }
-  
+
   this.loadCallback = function(text){
     this.DIV.html(text);
   }
