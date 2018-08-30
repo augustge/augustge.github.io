@@ -37,10 +37,10 @@ function Post(filename,title){
     var infile = loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
   }
 
-  this.loadCallback = function(text){
-    this.text = text
-    text(text,width/2,height/2)
-    this.DIV.html(text);
+  this.loadCallback = function(txt){
+    this.TEXT = txt
+    text(txt,width/2,height/2)
+    this.DIV.html(txt);
   }
 }
 
