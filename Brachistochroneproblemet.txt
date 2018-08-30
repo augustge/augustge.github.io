@@ -1,4 +1,4 @@
-<script id="dsq-count-scr" src="//augustg.disqus.com/count.js" async></script>
+<script id='dsq-count-scr' src='//augustg.disqus.com/count.js' async></script>
 
 <p></p>
 Isaac Newton ble i 1696 gitt følgende utfordring:
@@ -9,7 +9,7 @@ Isaac Newton ble i 1696 gitt følgende utfordring:
 
 Det sies at Newton kom opp med en løsning allerede neste dag. La oss se nærmere på problemet:
 
-<p id="image"><img id="IMG" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Brachistochrone.svg/600px-Brachistochrone.svg.png">
+<p id='image'><img id='IMG' src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Brachistochrone.svg/600px-Brachistochrone.svg.png'>
 
 <p>
 Vi beskriver punktene A og B med koordinatene
@@ -172,5 +172,5 @@ $$
 
 Dette er likningene for en sykloide - et punkt på en trillende sirkel.
 
-<p id="image"><img id="IMG" src="http://38.media.tumblr.com/739ac4cbb3ca3755c878217a51821e95/tumblr_n88735XnO61qd5dslo1_500.gif">
+<p id='image'><img id='IMG' src='http://38.media.tumblr.com/739ac4cbb3ca3755c878217a51821e95/tumblr_n88735XnO61qd5dslo1_500.gif'>
 <p>

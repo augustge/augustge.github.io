@@ -12,7 +12,7 @@ function preload(){
 
 function setup(){
   canvas = createCanvas(windowWidth,windowHeight);
-  POSTS.push( new Post("Brachistochroneproblemet.html","THIS IS A TEST!!"))//"Brachistochroneproblemet") )
+  POSTS.push( new Post("Brachistochroneproblemet.html","HOOPLA"))//"Brachistochroneproblemet") )
 
 
 }
