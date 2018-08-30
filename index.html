@@ -40,19 +40,35 @@
         <h2 id="design">For thoughts and other stuff </h2>
       </header>
 
-      <div id="Pages">
-        <h3 id="design" class="select" title="Pages"></h3>
-        <ul id="pagesList">
-
-        </ul>
+      <div class="summary" role="article">
+          <blockquote><p>
+          Euclid taught me that without assumptions there is no proof. Therefore, in any
+          argument, examine the assumptions.
+          <cite>E. T. Bell</cite>
+          </p></blockquote>
       </div>
 
-      <div id="Posts">
-        <h3 id="design" class="select" title="Posts"></h3>
-        <ul id="postsList">
 
-        </ul>
-      </div>
+
+      <aside class="sidebar" role="complementary">
+        <div class="wrapper">
+
+          <div class="page-selection" id="page-selection">
+            <nav role="navigation">
+
+              <h3 id="design" class="select" title="Pages">[dummy text]</h3>
+              <ul id="pagesList">
+              </ul>
+
+              <h3 id="design" class="select" title="Posts"></h3>
+              <ul id="postsList">
+              </ul>
+
+            </nav>
+          </div>
+        </div>
+      </aside>
+
 
     </section>
 
@@ -67,6 +83,26 @@
 
    </BODY>
 
+   <div id="disqus_thread"></div>
+     <script>
+     /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+     /*
+     var disqus_config = function () {
+     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+     };
+     */
+     (function() { // DON'T EDIT BELOW THIS LINE
+     var d = document, s = d.createElement('script');
+     s.src = 'https://augustg.disqus.com/embed.js';
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+     })();
+     </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
    <!-- <footer>
     <p>Posted by: August Geelmuyden</p>
     <p>Contact information: <a href="mailto:someone@example.com">
@@ -74,6 +110,6 @@
   </footer> -->
 
 
-  </script>
+
 
 </HTML>
