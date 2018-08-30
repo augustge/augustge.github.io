@@ -45,37 +45,46 @@ function Post(filename,title){
   }
 
   this.mouseEvent = function(){
-    console.log("TRYING")
-    try{
-      console.log("--> works")
-      loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
-      console.log("--> still works")
-    }
-    catch(err) {
-      console.log("--> catched error")
-      this.loadCallback(["<h2>[FAILED TO UPLOAD POST]</h2>"])
-      console.log("--> Compensated")
-    }
-
+    // console.log("---> TRYING 1")
+    // loadStrings("Brachistochroneproblemet.txt",this.loadCallback);
+    console.log("---> TRYING 2")
+    loadStrings("Brachistochroneproblemet.txt",this.loadPost);
+    console.log("---> End mouse event")
   }
 
   this.loadCallback = function(result){
-    console.log("IN CALLBACK:")
+    console.log("--> IN CALLBACK:")
     console.log(result)
     var txt = join(result," ")
-    console.log("got text:")
+    console.log("--> got text:")
     console.log(txt)
     var div = createDiv(txt);
-    console.log("created Div")
+    console.log("--> created Div")
     div.parent(postEntry)
-    console.log("updated parental status for div")
+    console.log("--> updated parental status for div")
     text(txt,width/2,height/2)
-    console.log("local storage of div")
+    console.log("--> local storage of div")
     this.div = div
-    console.log("end")
+    console.log("--> end")
     return result
   }
 
+}
+
+
+function loadPost(result){
+  console.log("--> IN CALLBACK:")
+  console.log(result)
+  var txt = join(result," ")
+  console.log("--> got text:")
+  console.log(txt)
+  var div = createDiv(txt);
+  console.log("--> created Div")
+  div.parent(postEntry)
+  console.log("--> updated parental status for div")
+  text(txt,width/2,height/2)
+  console.log("--> end")
+  return result
 }
 
 // function mousePressed(){
