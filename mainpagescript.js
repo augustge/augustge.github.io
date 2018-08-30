@@ -2,6 +2,7 @@
 var canvas;
 
 var div;
+var POSTS = [];
 
 function setup(){
   canvas = createCanvas(windowWidth,windowHeight);
@@ -10,7 +11,7 @@ function setup(){
   div.position(width/2,height/2)
   div.attribute("w3-include-html","Brachistochroneproblemet.html")
 
-
+  POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet") )
 
 }
 
@@ -18,19 +19,20 @@ function draw(){
   // background(0);
 }
 
-function mousePressed(){
-  // var text = get_file("Brachistochroneproblemet.html",function(response){TEXT=response;});
-  infile = loadStrings("Brachistochroneproblemet.html");
-  div.html(infile)
+function Post(filename,title){
+  this.filename = filename
+  this.title = title
+  this.DIV = createDiv(title)
+
+  this.load = function(){
+    var infile = loadStrings("Brachistochroneproblemet.html",this.loadCallback);
+  }
+  this.loadCallback = function(text){
+    this.DIV.html(text);
+  }
 }
 
-
-function gotFile(file) {
-  var fileDiv = createDiv(file.name + ' ' + file.type + ' ' + file.subtype + ' ' + file.size + ' bytes');
-  if (file.type === 'image') {
-    var img = createImg(file.data);
-    img.class('thumb');
-  } else if (file.type === 'text') {
-    createDiv(file.data);
-  }
+function mousePressed(){
+  // var text = get_file("Brachistochroneproblemet.html",function(response){TEXT=response;});
+  POSTS[0].load();
 }
