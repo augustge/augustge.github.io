@@ -1,5 +1,4 @@
 
-
 <HTML>
    <HEAD>
       <TITLE>AUGUST GEELMUYDEN</TITLE>
@@ -10,14 +9,12 @@
       <!-- css file -->
       <link rel="stylesheet" type="text/css" href="mystyle.css">
 
-      <!-- <script src="includeHTML.js"> -->
-
       <!-- MATHJAX for latex display -->
       <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
       <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
 
       <!-- jQuery -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 
       <!--  For Google font: Almendra Display -->
       <link href='https://fonts.googleapis.com/css?family=Almendra Display' rel='stylesheet'>
@@ -30,9 +27,12 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
       <!-- <script src="mainPageScript2.js"></script> -->
 
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
    </HEAD>
-   <BODY>
-     <script src="mainpagescript.js"></script>
+   <BODY ng-app="myApp">
+     <!-- <script src="mainscript.js"></script> -->
 
     <section class="intro">
       <header role="banner">
@@ -62,6 +62,11 @@
 
               <h3 id="design" class="select" title="Posts"></h3>
               <ul id="postsList">
+                <li>
+                  <a href="#!red" class="link-entry" style='cursor:pointer;'>Red</a>
+                  <a href="#!green" class="link-entry" style='cursor:pointer;'>Green</a>
+                  <a href="#!blue" class="link-entry" style='cursor:pointer;'>Blue</a>
+                </li>
               </ul>
 
             </nav>
@@ -74,16 +79,39 @@
 
 
     <div class="post texter" role="article" id="postEntry">
-      <div id="postDiv"></div>
+      <!-- <div id="postDiv"></div> -->
+      <!-- <iframe seamless id="postDiv" class="postFrame" scrolling="no" src="" onload="resizeIframe(this)"></iframe> -->
+      <!-- <iframe seamless id="postDiv" class="postFrame" scrolling="no" src=""></iframe> -->
+      <div ng-view></div>
     </div>
      <!-- <div w3-include-html="Brachistochroneproblemet.html">TEST</div> -->
 
 
 
 
+     <script>
+     var app = angular.module("myApp", ["ngRoute"]);
+     app.config(function($routeProvider) {
+         $routeProvider
+         .when("/", {
+             templateUrl : "Posts/FirstPost.html"
+         })
+         .when("/red", {
+             templateUrl : "Posts/Brachistochroneproblemet.html"
+         })
+         .when("/green", {
+             templateUrl : "Posts/FirstPost.html"
+         })
+         .when("/blue", {
+             templateUrl : "Posts/Brachistochroneproblemet.html"
+         });
+     });
+     </script>
+
+
    </BODY>
 
-   <div id="disqus_thread"></div>
+   <!-- <div id="disqus_thread"></div>
      <script>
      /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -101,14 +129,13 @@
      (d.head || d.body).appendChild(s);
      })();
      </script>
-   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
 
    <!-- <footer>
     <p>Posted by: August Geelmuyden</p>
     <p>Contact information: <a href="mailto:someone@example.com">
     someone@example.com</a>.</p>
   </footer> -->
-
 
 
 
