@@ -609,9 +609,20 @@ pre.prettyprint{
 
 
 
+/*-------------------------------------------
+    p5js specific
+-------------------------------------------*/
 
+/* STICKY CANVAS BACKGROUND */
+.stickyCanvasBackground{
+  position: fixed; top: 0; left: 0;
+  z-index: -1;
+}
 
-
+/* STICKY CANVAS BACKGROUND */
+.inlineCanvas{
+  display: block;
+}
 
 
 /**/

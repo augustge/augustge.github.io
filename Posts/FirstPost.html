@@ -1,0 +1,29 @@
+
+This is a simple post to test functionality. Does LaTex work?
+\[ f(x) \int fdx \]
+perhaps also inline? Given $x$, what is $x \mapsto y$ provided $x \in X$?
+This is a quote:
+<blockquote>
+  Quoted does not mean it's wise!
+</blockquote>
+bla bla
+
+
+And now....a simple canvas test:
+<div id="sketch-holder"></div>
+<script>
+  var myp5 = new p5(function (p){
+    var t = 0;
+    p.setup = function(){
+      canvas = p.createCanvas(window.innerWidth/1.5, 300);
+      canvas.class("inlineCanvas");
+      canvas.parent("sketch-holder");
+    }
+
+    p.draw = function(){
+      t += 1;
+      p.ellipse(10*t%width,7*t%height);
+    }
+  }, 'sketch-holder');
+
+</script>

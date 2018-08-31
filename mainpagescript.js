@@ -7,6 +7,7 @@
 
  DONE:
  * Add un-activating upon double-click on post title
+ * Add canvas background CSS class
 */
 
 
@@ -33,9 +34,13 @@ function preload(){
 }
 
 function setup(){
-  canvas = createCanvas(windowWidth,windowHeight);
-  canvas.style("top","0");
-  canvas.style("position","sticky");
+  canvas = createCanvas(window.innerWidth, window.innerHeight);
+  canvas.class("stickyCanvasBackground");
+  noLoop();
+  // canvas.position("fixed")
+  // canvas.style("position","fixed !important");
+  // canvas.style("z-index","-1");
+
   POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
   POSTS.push( new Post("FirstPost.html","hookle kookle").initiate() )
 
@@ -43,7 +48,7 @@ function setup(){
 }
 
 function draw(){
-  background(200);
+  // background(0);
 }
 
 function Post(filename,title){
@@ -65,25 +70,20 @@ function Post(filename,title){
         postDiv.html("");
         activePost = null;
       }else{
-        loadStrings(filename,loadPost,loadPostError);
+        loadStrings("POSTS/"+filename,loadPost,loadPostError);
         activePost = filename;
       }
-    });
+    },{passive: true});
     return this
   }
 
 }
 
 function loadPost(result){
-  console.log("TEST")
   var txt = join(result," ")
   postDiv  = select('#postDiv');
-  postDiv.html(txt)
-  console.log("TEST2")
   postDiv.html(txt) // update html content
-  console.log("TEST3")
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
-  console.log("TEST4")
   // return result
 }
 
