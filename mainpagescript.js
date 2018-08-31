@@ -1,14 +1,17 @@
 
 /*
  TODO:
- * Add un-activating upon double-click on post title
  * Automatically disqus-boxes for individual posts
+ * Tags for posts
  * List directory for automatic post listing?
+
+ DONE:
+ * Add un-activating upon double-click on post title
 */
 
 
 
-// var canvas;
+var canvas;
 
 var div;
 var POSTS = [];
@@ -16,6 +19,8 @@ var POSTS = [];
 var pagesElm,  pagesUl;
 var postsElm,  postsUl;
 var postEntry, postDiv;
+
+var activePost = null;
 
 function preload(){
   pagesElm    = document.getElementById('Pages');
@@ -28,7 +33,9 @@ function preload(){
 }
 
 function setup(){
-  // canvas = createCanvas(windowWidth,windowHeight);
+  canvas = createCanvas(windowWidth,windowHeight);
+  canvas.style("top","0");
+  canvas.style("position","sticky");
   POSTS.push( new Post("Brachistochroneproblemet.html","Brachistochroneproblemet").initiate() )//"Brachistochroneproblemet") )
   POSTS.push( new Post("FirstPost.html","hookle kookle").initiate() )
 
@@ -36,12 +43,13 @@ function setup(){
 }
 
 function draw(){
-  // background(200);
+  background(200);
 }
 
 function Post(filename,title){
   this.filename = filename
   this.title    = title;
+  // tags
 
   this.initiate = function(){
     this.li_elm = createElement("li","")
@@ -52,10 +60,14 @@ function Post(filename,title){
     this.header.parent(this.li_elm);
     console.log(filename)
     this.header.mousePressed(function (){
-      // console.log("In mouseEvent");
-      // console.log(filename);
-      // console.log("loading strings...");
-      loadStrings(filename,loadPost,loadPostError);
+      if(activePost==filename){
+        postDiv  = select('#postDiv');
+        postDiv.html("");
+        activePost = null;
+      }else{
+        loadStrings(filename,loadPost,loadPostError);
+        activePost = filename;
+      }
     });
     return this
   }
@@ -66,11 +78,7 @@ function loadPost(result){
   console.log("TEST")
   var txt = join(result," ")
   postDiv  = select('#postDiv');
-  if(postDiv.html==txt){
-    postDiv.html("");
-  }else{
-    postDiv.html(txt)
-  }
+  postDiv.html(txt)
   console.log("TEST2")
   postDiv.html(txt) // update html content
   console.log("TEST3")
@@ -82,4 +90,15 @@ function loadPost(result){
 function loadPostError(){
   postDiv  = select('#postDiv');
   // postDiv.html("");
+}
+
+function deActivateOthers(){
+  for(var i=0; i<POSTS.length; i++){
+    POSTS[i].active = false;
+  }
+}
+
+// async function
+function loadActivePost(activePost){
+  loadStrings(activePost.filename,loadPost,loadPostError);
 }
