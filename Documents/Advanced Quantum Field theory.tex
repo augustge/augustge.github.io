@@ -1,0 +1,320 @@
+
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{listings}
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage{esint}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+% \renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+\newcommand{\dd}{ \text{d} }
+\newcommand{\myfancysymbol}[3]{
+	\raisebox{-#3ex}{\includegraphics[height=#2ex]{#1}}
+}
+
+%%%%********************************************************************
+% fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{4}{\textcolor{quotemark}{''}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+				 \def\endfquote{%
+				 \endgroup\par%
+				 \makebox[0pt][l]{%
+				 \hspace{0.8\textwidth}%
+				 \begin{picture}(0,0)(0,0)%
+				 \put(15,15){\makebox(0,0){%
+				 \scalebox{4}{\color{quotemark}''}}}%
+				 \end{picture}}%
+				 \ifx\tempa\empty%
+				 \else%
+				 	 \ifx\tempc\empty%
+				 			\hfill \mbox{}\hfill\tempa\ \emph{\tempb}%
+				 	\else%
+				 			\hfill \mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+				 	\fi\fi\par%
+				 	\vspace{0.5em}%
+				 \end{list}%
+				 }%
+ %%%%********************************************************************
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{
+% \vspace{-15mm}
+\fontsize{22pt}{10pt}\selectfont
+Advanced Quantum Field Theory } % Article title
+
+\author{
+\large
+August Geelmuyden
+\\[2mm] % Your name
+\normalsize
+University of Oslo \\ % Your institution
+% \vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle % Insert title
+
+%
+% \begin{fquote}[Timothy Gowers]
+%  ... the atlas is a manifold. This is a typical mathematician's use of the word "is", and should not be confused with the normal use.
+% \end{fquote}
+
+
+%-------------------------------------------------------------------------------
+\section{Introduction}
+Quantum field theory is all about taking the vacuum seriously. That is, we allow for a lowest energy state $\ket{0}$ representing the empty space. Any interaction, or propagation, of quantum fields will be affected by the fluctuations of the vacuum state. This can be interpreted as particles borrowing energy from the vacuum as and returning it within the fuzziness of Heisenberg's uncertainty relations. These particles are referred to as {\it virtual} particles and do not generally satisfy the equations of motion. Sometimes they are also referred to as {\it off-shell}, then in the context of not satisfying the Einstein relation $E^2=m^2+\mathbf{p}^2$. Likewise, particles that are ''on their mass-shell'' refers to the fact that they do satisfy the equations of motion and their relativistic four-momentum $p^\mu$ is constrained by the relation\footnote{Here, and onwards, it should be noted that the metric is chosen to have signature diag$(1,-1,-1,-1)$, unlike the signature diag$(-1,1,1,1)$ favored by Cosmologists. The choice of signature for the metric does not affect physics as long as it is done consistent. It really amounts to a choice of whether translations in time or space is to be considered the most fundamental.  }
+$p^\mu p_\mu = m^2$.
+
+For a particle to be virtual does not mean that it is unreal. These particles, although never occurring as anything other than intermediate states in a process, affects physics in fundamental ways and are manipulatable.
+
+Consider the hight idealized scenario where two perfectly reflecting mirror are separated by a length $L$ of vacuum. In the vacuum both the electric and magnetic field vanishes. The energy density $\varepsilon_0$, however, does also depend on the variation of the electromagnetic field:
+\[
+\varepsilon_0 = \frac{1}{2}\left( \expe{\mathbf{E}^2}+\expe{\mathbf{B}^2} \right),
+\]
+which is not generally zero.
+
+
+\subsection{The Casimir force}
+Consider two perfectly reflecting mirrors separated by a length $L$ of vacuum. Inbetween these plates, we consider a scalar quantum field $\varphi$ with $\expe{\varphi}=0$. When quantizing this field, we promote the coefficients of the Fourier nodes to ladder operators $a^\dagger_k$ and $a_k$ in analogy with the quantum mechanical harmonic oscillator. As an implication of canonical quantization, these operators need to satisfy the canonical commutation relations
+\[
+\left[a^\dagger_p,a_k\right]_{pm}
+=a^\dagger_p a_k \pm a_k a^\dagger_p
+= (2\pi)^3\delta^{3}(\mathbf{p}-\mathbf{k}).
+\]
+It suffices to find an estimate of the expected energy of vacuum. Hence
+\[
+\varepsilon_0^\pm = \bra{0}\hat{H}_\pm\ket{0} = \hbar \sum_k \bra{0} \left(\hat{N}_k\pm \frac{1}{2}\right)\ket{0} = \pm \frac{\hbar}{2}\sum_k \omega_k,
+\]
+where $\pm$ refers to the field being bosonic or fermionic respectively. The next step is to take the continuum limit of the sum over the field momenta $\mathbf{k}$. The component of the momentum orthogonal to the plates, however, must be constrained to vanish a each mirror due to their reflectivity. Invoking the Einstein relation for massless field gives $\omega_k = \sqrt{k_1^1+k_2^2+k_3^2}$ and thus
+\[
+\varepsilon_0^\pm = \pm \frac{\hbar}{2}\frac{1}{L}\sum_{n=1}^\infty \int \frac{d^2p}{(2\pi)^2} 2 \sqrt{\mathbf{p}^2+k_n^2}
+\]
+where $k_n=\pi n/L$ and the factor $2$ is added to reflect the number of degrees of freedom of the field. Since the quantum field $\phi$ is constructed to describe an electromagnetic wave, it must have two internal degrees of freedom representing the polarization of the wave.
+The problem with this expression is, as with many quantum field theory calculations, that it is badly divergent. Salvation is found from either introducing a big cutoff parameter $\Lambda$ representing the maximal energy scale in which the theory is valid, or using the method of dimensional regularization. The latter, which is often preferred, involves doing the computation in a Minkowski space of arbitrary dimension $d$. In the end we may simply take the limit where $d\rightarrow 4$ and hope for a finite value. Doing this, one finds that
+\[
+\varepsilon_0 (d,L) = -\frac{\hbar \pi^{d/2}}{2^d L^{d+1}}\Gamma\left(-\frac{d}{2}\right)\zeta(-d)
+\]
+where $\Gamma(n)=\int_0^\infty x^{s-1}e^{-x}dx$ is the Gamma function and
+\begin{equation}
+\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s} \label{eq:zeta}
+\end{equation}
+is the zeta function. This means that we are presented with another problem. The zeta function diverges for $s\leq 1$, and is thus not defined in this region of the complex plane. The remedy is to reinterpret the zeta function as a much more general function than appears to for $s>1$. We simply define the analytic continuation of the zeta function as the function that satisfies (\ref{eq:zeta}) for $s>1$ and is complex differentiable everywhere. This amounts to using the symmetry $\xi(s)=\xi(1-s)$ of the function
+\[
+\xi(s)=\frac{s(s-1)}{2\pi^{s/2}}\Gamma(s/2)\zeta{s}.
+\]
+Doing this, we are left with an expression
+\[
+\varepsilon_0 (L) = -\frac{\pi^2 \hbar }{720 L^4}
+\]
+for the vacuum energy between the plates. This surprising result demonstrates that vacuum exerts a force per unit volume on the reflecting mirrors. Conventionally, we define the energy density per parallel area
+\[
+\frac{\expe{E}}{A}
+= \frac{\varepsilon_0}{L}
+= -\frac{\pi^2 \hbar }{720 L^3}.
+\]
+The force exerted on the plates per unit area is thus
+\[
+\frac{F}{A} = - \frac{d}{dL}\frac{\expe{E}}{A} = -\frac{\pi^2 \hbar }{240 L^4}.
+\]
+This attractive force is referred to as the {\it Casimir} force and is measured experimentally.
+
+The analysis performed here was done handwavingly and is generally not trustworthy. To do proper analysis of quantum field theory, we need to introduce a heavy computational machinery.
+
+
+
+
+
+\section{The Path Integral Formalism}
+In the language of classical mechanics we think of a system of $d$ degrees of freedom to be specified by canonical coordinates $\{q_1,...,q_d\}$ and their time derivatives $\dot{q}_i$. In terms of these coordinates, we can introduce the Lagrangian $L=T-V$, being the difference of kinetic energy $T$ and potential energy $V$ of the system. The equations of motion then follows from assuming nature extremizes the quantity
+\[
+S = \int dt L
+\]
+referred to as the {\it action}. It is straight forward to show that this is equivalent with demanding $L$ to satisfy the {\it Euler-Lagrange} equation
+\[
+\frac{d}{dt}\frac{\partial L}{\Partial \dot{q}_i} = \frac{\partial L}{\partial q_i} \text{ for all } i=1,2,...,d.
+\]
+
+Likewise, in any classical {\it field} theory we take the continuum limit of classical mechanics and obtain continuous indices $x$ for each canonical coordinate. We refer to the coordinates as fields $\phi^a(x)$ and think in terms of the {\it Lagrangian density} $\mathcal{L}$ related to the Lagrangian by the relation
+\[
+L = \int d^3 x \mathcal{L}.
+\]
+Otherwise, we stick to the same procedure. We introduce the action in terms of the Lagrangian density
+\[
+S = \int d^4 x \mathcal{L},
+\]
+where $x$ should be understood to be a four-dimensional point in Minkowskian spacetime. Demanding the action to be extremal, or stationary, we find the Euler-Lagrange equations for field:
+\[
+\partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^a)}=\frac{\partial \mathcal{L}}{\partial \phi^a} \text{ for all } a
+\]
+where Einsteins summing convention is used.
+
+The whole point of quantum mechanics can be captured by the fact that a quantum system does not need to extremize its action. The quantum system evolves in all possible ways at once. Big quantum systems, however, should reproduce the behavior of classical physics. To include this effect, it turn out that the contribution from a certain path to the total amplitude of the system should be weighted by a complex phase $e^{iS}$ or, if you like, $e^{\frac{iS}{\hbar}}$. We write this as
+\[
+U(q_a,q_b,t) = \int \mathcal{D}x(t) e^{iS[x(t)]}.
+\]
+where $\int \mathcal{D}x(t)$ should be interpreted as the sum of all possible paths $x$. We consider the construction of this by first dividing space into a lattice separated by a small distance $\varepsilon$. Then
+\[
+\int \mathcal{D}x(t)
+= \lim_{\underset{N\rightarrow \infty}{\varepsilon \rightarrow 0}} \frac{1}{C(\varepsilon)} \prod_k^N \int_{-\infty}^\infty \frac{dx_k}{C(\varepsilon)}
+\]
+where $C(\varepsilon)$ is some undetermined normalization factor.
+
+Now, let us see whether this expression even makes sense. Consider a lagrangian
+\[
+L = \frac{1}{2}mv^2-V(x),
+\]
+which in terms of the infinitesimally small time separation $\varepsilon$ and discretized positions $\{x_i\}$ can be written
+\[
+L = \frac{m}{2}\left(\frac{x_i-x_{i-1}}{\varepsilon}\right)^2-V\left(\frac{x_i+x_{i-1}}{2}\right).
+\]
+The action for a transition between points on the lattice thus takes the form
+\[
+S = \int_0^\varepsilon dt \left[ \frac{m}{2}\left(\frac{x_i-x_{i-1}}{\varepsilon}\right)^2-V\left(\frac{x_i+x_{i-1}}{2}\right) \right]
+\approx
+ \frac{m}{2}\frac{\left(x_i-x_{i-1}\right)^2}{\varepsilon}-\varepsilon V\left(\frac{x_i+x_{i-1}}{2}\right).
+\]
+Hence we can express the amplitude, in conventional units, for the system to evolve from point $x_a$ to $x_b$ in the time $t$ by
+\[
+U(x_a,x_b,t) = \int_{-\infty}^\infty \frac{dx_b}{C(\varepsilon)} \exp \left[
+\frac{im}{2\hbar}\frac{\left(x_b-x'\right)^2}{\varepsilon}-\frac{i}{\hbar}\varepsilon V\left(\frac{x_b+x'}{2}\right)
+\right]U(x_a,x',t-\varepsilon).
+\]
+If we expand the potential and amplitude around $x_b$ to second order in $\varepsilon$ we find
+\begin{equation*}
+\begin{align}
+U(x_a,x_b,t) &= \int_{-\infty}^\infty \frac{dx_b}{C(\varepsilon)} \exp \left[
+\frac{im}{2\hbar}\frac{\left(x_b-x'\right)^2}{\varepsilon}\right]
+\left[1-\frac{i\varepsilon}{\hbar} V\left(x_b\right)\right]\\
+&\left[1+(x'-x_b)\frac{\partial}{\partial x_b}\big|_{x_b}
++\frac{1}{2}(x'-x_b)^2\frac{\partial^2}{\partial x_b^2}\big|_{x_b}
+\right]
+U(x_a,x_b,t-\varepsilon).
+\end{align}
+\end{equation*}
+Happily, the second term in the last factor vanishes due to antisymmetry. The first term is a gaussian integral, which we know how to solve
+\[
+\int_{-\infty}^\infty \frac{dx_b}{C(\varepsilon)} \exp \left[
+\frac{im}{2\hbar}\frac{\left(x_b-x'\right)^2}{\varepsilon}\right]
+= \frac{1}{C(\varepsilon)}\sqrt{\frac{2\pi\hbar \varepsilon}{-im}}.
+\]
+Likewise, the we can solve the term
+\[
+\int_{-\infty}^\infty \frac{dx_b}{C(\varepsilon)} \frac{1}{2}(x'-x_b)^2\exp \left[
+\frac{im}{2\hbar}\frac{\left(x_b-x'\right)^2}{\varepsilon}\right]
+= \frac{1}{C(\varepsilon)}\frac{i\varepsilon\hbar}{2m}\sqrt{\frac{2\pi\hbar \varepsilon}{-im}}.
+\]
+Hence we have, up to third order in $\varepsilon$,
+\[
+U(x_a,x_b,t) = \frac{1}{C(\varepsilon)}\sqrt{\frac{2\pi\hbar \varepsilon}{-im}}\left[1-\frac{i\varepsilon}{\hbar} V\left(x_b\right)+\frac{i\varepsilon \hbar}{2m} \frac{\partial^2}{\partial x_b^2}\big|_{x_b}\right]
+U(x_a,x_b,t-\varepsilon).
+\]
+The first thing we should note is that we should have $U(x_a,x_a,0)=1$. Hence
+\[
+C(\varepsilon) = \sqrt{\frac{2 \pi \hbar \varepsilon }{-im}}.
+\]
+Moreover, since
+\[
+\lim_{\varepsilon \rightarrow 0} \frac{U(x_a,x_b,t)-U(x_a,x_b,t-\varepsilon)}{\varepsilon}
+= \frac{\partial U}{\partial t}\bigg|_{t},
+\]
+we see that
+\[
+i\hbar \frac{\partial}{\partial t} U = \left[-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x_b^2}+ V\left(x_b\right)\right]U,
+\]
+which is the Schr\"odinger equation. Hence the path integral reproduces the known, and well tested, laws for quantum physics. Surely, the Schr\"odinger equation is not {\it all} the laws of quantum mechanics, but this should serve as a good justification.
+
+A nice way, switching back no natural units, to treat the transition amplitudes of a quantum field $\phi$, it seems, is thus by studying the functional integral
+\[
+Z = \int \mathcal{D}\phi e^{iS[\phi]}.
+\]
+
+
+%
+% \section{The Functional Formalism}
+%
+% The partition function of statistical mechanics
+% \[
+% Z = \int dE e^{-\beta E }.
+% \]
+% can be considered as a zero-dimensional path integral.
+%
+% \section{Renormalization}
+
+
+
+\end{document}

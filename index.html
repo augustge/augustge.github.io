@@ -1,19 +1,28 @@
 <!--
 TODO:
+	-- FUNCTIONALITY:
 	* Tags for posts
-	* Add tag-dependent CSS for post-listings
-	* Add CSS-change for active post
-	* Add description on post-listing hover
+	  Add description on post-listing hover
 	* Migrate content from old page
-	* Make inline p5js canvas
+	  Make inline p5js canvas
 	* Add un-activating upon double-click on post title
-	* Improve CSS
 	* Make python-script to compile custom MD into [post].html format
 	* Automatic disqus-identification box
 	* List directory for automatic post listing?
+
+	-- DESIGN:
+	* Improve CSS
+	* Add tag-dependent CSS for post-listings
+	* Add CSS-change for active post
 	* Change disqus-box CSS?
 
-DONE:
+	-- POSSIBLE ADDED FUNCTIONALITY:
+	* http://animejs.com/documentation [Easy animations]
+
+	-- GOALS:
+	* Learn AngularJS properly
+
+
 
 -->
 
@@ -27,7 +36,7 @@ DONE:
 			<META name="author" content="August Geelmuyden">
 
 			<!-- css file -->
-			<link rel="stylesheet" type="text/css" href="mystyle.css">
+			<link rel="stylesheet" type="text/css" href="mystyle2.css">
 
 			<!-- MATHJAX for latex display -->
 			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
@@ -54,12 +63,12 @@ DONE:
 
 	 </HEAD>
 	 <BODY ng-app="myApp">
+		 <script src="my_angularjs_script.js"></script>
 		 <!-- <script src="mainscript.js"></script> -->
 
 		<section class="intro">
 			<header role="banner">
-				<h1 id="design">AUGUSTG</h1>
-				<h2 id="design">For thoughts and other stuff </h2>
+				<h1 id="design" title="AUGUSTG" subtitle="For thoughts and other stuff."></h1>
 			</header>
 
 			<div id="topquote" class="summary" role="article">
@@ -69,94 +78,122 @@ DONE:
 					<cite>E. T. Bell</cite>
 					</p></blockquote>
 			</div>
-
-
-
-			<aside class="sidebar" role="complementary">
-				<div class="wrapper">
-
-					<div class="page-selection" id="page-selection">
-						<nav role="navigation">
-
-							<h3 id="design" class="select" title="Pages">[dummy text]</h3>
-							<ul id="pagesList">
-							</ul>
-
-              <div href="#!"></div>
-							<h3 id="design" class="select" title="Posts"></h3>
-							<ul id="postsList">
-								<li>
-									<a href="#!POSTS/Brachistochroneproblemet" class="link-entry" style='cursor:pointer;'>Brachistochroneproblemet</a>
-									<a href="#!POSTS/FluidMechanics" class="link-entry" style='cursor:pointer;'>Fluid mechanics</a>
-                  <a href="#!POSTS/FirstPost" class="link-entry" style='cursor:pointer;'>FirstPost</a>
-                  <a href="#!POSTS/TEST" class="link-entry" style='cursor:pointer;'>TEST</a>
-								</li>
-							</ul>
-
-						</nav>
-					</div>
-				</div>
-			</aside>
-
-
 		</section>
 
 
+		<!-- ============================================================================================================================================================================================= -->
+
+		<h2 class="mainheader">Fullscreen Animations</h2>
+		<div class="container">
+			<a href="Animations/Black Hole Raytracing/" class="box"
+				description="A very simple raytracing simulation of a black hole attached to the mouse lensing a star in the Andromeda galaxy.">Black Hole Raytracing</a>
+
+			<a href="Animations/Chaos fractal generator/" class="box"
+				description="A visualization of how pretty fractals can emerge from probabilistic processes.">Chaos fractal generator</a>
+
+			<a href="Animations/Double Pendulum/" class="box"
+				description="A simple visualization of a double pendulum.">Double Pendulum</a>
+
+			<a href="Animations/Elastic collisions/" class="box"
+				description="Visualization of the physics of elastic collisions.">Elastic collisions</a>
+
+			<a href="Animations/Feigenbaum/" class="box"
+				description="Visualization of how chaos emerges from applying simple functions repeatedly.">Feigenbaum</a>
+
+			<a href="Animations/Interactive Fractals/" class="box"
+				description="Some famous fractals and sliders and knobs for controlling them.">Interactive Fractals</a>
+
+			<a href="Animations/Ising model/" class="box"
+				description="A real-time visualization of the Ising model for a two-dimensional grid of half-integer spin particles. You can control inverse temperature to discover the ferromagnetic phase transition.">Ising model</a>
+
+			<a href="Animations/Lennard Jones force networks/" class="box"
+				description="Just a silly simulation of particles interacting via the Lennard Jones potential.">Lennard Jones force networks</a>
+
+			<a href="Animations/The Wave Equation/" class="box"
+				description="Real-time simulation of the wave equation with custom barriers and damping.">The Wave Equation</a>
+
+			<a href="Animations/Planetary/" class="box"
+				description="Simulation of planets (or circles if you want) that interact gravitationally and merge conserving mass (area), momentum and center of mass.">Planetary</a>
+
+			<a href="Animations/Rainbow/" class="box"
+				description="A devoted rendering of how rays refracts and reflects through a drop of water.">Rainbow</a>
+
+
+
+		</div>
+
+		<!-- ============================================================================================================================================================================================= -->
+
+		<h2 class="mainheader">Documents</h2>
+		<div class="container">
+			<a href="Documents/Linearized gravity.pdf" class="box"
+				description="Notes on linear perturbations of Minkowskian spacetime and gravitational waves.">Linearized gravity</a>
+
+			<a href="Documents/Advanced Quantum Field theory.pdf" class="box"
+				description="A brief and incomplete introduction to quantum field theory.">Advanced Quantum Field theory</a>
+
+			<a href="Documents/Atomic modelling of Argon lattice.pdf" class="box"
+				description="A project in Computational physics about simulating thermodynamic properties of a FCC crystal of argon atoms.">Atomic modelling of Argon lattice</a>
+
+			<a href="Documents/Classical Mechanics and Minimal Action.pdf" class="box"
+				description="Brief and incomplete notes on Classical Mechanics.">Classical Mechanics and Minimal Action</a>
+
+			<a href="Documents/Classification of complex semisimple Lie algebras using Dynkin diagrams.pdf" class="box"
+				description="A project work on the mathematical classification of complex semisimple Lie algebras.">Classification of complex semisimple Lie algebras using Dynkin diagrams</a>
+
+			<a href="Documents/En hyllest til Euklid.pdf" class="box"
+				description="[Norwegian] A text on proposisjon 35 in book III of Euclid's Elements with some notes on the modern onderstanding of the statement.">En hyllest til Euklid</a>
+
+			<a href="Documents/Felttur i elektromagnetisme 2017.pdf" class="box"
+				description="[Norwegian] Notes for lectures held on a field trip in an introductory course on Electromagnetism">Felttur i elektromagnetisme 2017</a>
+
+			<a href="Documents/Flow in Porous Media.pdf" class="box"
+				description="Report from experimental work on porous media physics concerning fractal patterns emerging from drying of a wet granular medium.">Flow in Porous Media</a>
+
+			<a href="Documents/Lego Watt Balance.pdf" class="box"
+				description="Project in experimental physics about the construction and testing of a Lego Watt Balance.">Lego Watt Balance</a>
+
+			<a href="Documents/Spinntur.pdf" class="box"
+				description="[Norwegian] Notes for lectures held on a field trip about Angular Momentum.">Spinntur</a>
+
+			<a href="Documents/The Faddeev-Popov process.pdf" class="box"
+				description="Notes on the so-called Faddeev-Popov process that enables calculation of a non-divergent expression for the photon propagator.">The Faddeev-Popov process</a>
+
+			<a href="Documents/The Schwinger-Dyson equations.pdf" class="box"
+				description="Notes on the Schwinger-Dyson equations that serve as a quantum analogue of the equations of motion.">The Schwinger-Dyson equations</a>
+
+		</div>
+
+		<!-- ============================================================================================================================================================================================= -->
+
+		<h2 class="mainheader">Posts</h2>
+		<div class="container">
+			<a href="#!Brachistochroneproblemet" class="box"
+				description="This is a post about the famous Brachistochrone problem which introduced variational calculus. This includes a simple physics question -- what is the trajectory that makes a ball roll fastest from one point to another? We take a look at Newton's ingenious solution to this problem.">Brachistochroneproblemet</a>
+
+			<a href="#!FluidMechanics" class="box"
+				description="Text on basic equations in fluid dynamics.">Fluid mechanics</a>
+
+				<a href="#!FirstPost" class="box" description="This is just a post to test functionality of the web page.">Test post</a>
+
+				<a href="#!TEST" class="box" description="[This file does not exist]">TEST</a>
+		</div>
+
+
+
 		<div class="post texter" role="article" id="postEntry">
-			<!-- <div id="postDiv"></div> -->
-			<!-- <iframe seamless id="postDiv" class="postFrame" scrolling="no" src="" onload="resizeIframe(this)"></iframe> -->
-			<!-- <iframe seamless id="postDiv" class="postFrame" scrolling="no" src=""></iframe> -->
+			<!--  View-div for posts -->
 			<div ng-view></div>
 		</div>
-		 <!-- <div w3-include-html="Brachistochroneproblemet.html">TEST</div> -->
 
 
 
 
-		 <script>
-
-     var app = angular.module("myApp", ["ngRoute"]);
-		 app.config(function($routeProvider) {
-				 $routeProvider
-         .when("/POSTS/:post", {
-             templateUrl: function(params){return 'Posts/' + params.post +'.html';},
-             controller : "postController",
-				 }).
-         otherwise({
-           redirectTo: '/'
-         });
-		 });
-
-     var viewCtrl =  app.controller("postController", function ($scope,$route) {
-       console.log("FAFA")
-       MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
-     });
-
-
-   //---------------------------------------------------------------------------
-		 // var app = angular.module("myApp", ["ngRoute"]);
-		 // app.config(function($routeProvider) {
-			// 	 $routeProvider
-     //     .when("/POSTS/:post", {
-     //         templateUrl: function(params){return 'Posts/' + params.post +'.html';},
-     //         controller : "postController"
-			// 	 }).
-     //     otherwise({
-     //       redirectTo: '/'
-     //     });
-		 // });
-     //
-     // app.controller("postController", function ($scope,$route) {
-     //   console.log("FAFA")
-     //   MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
-     // });
-     //---------------------------------------------------------------------------
-
-		 </script>
 
 
 	 </BODY>
 
+	 <!-- DEFAULT DISQUS BOX -->
 	 <!-- <div id="disqus_thread"></div>
 		 <script>
 		 /**
@@ -176,13 +213,6 @@ DONE:
 		 })();
 		 </script>
 	 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
-
-	 <!-- <footer>
-		<p>Posted by: August Geelmuyden</p>
-		<p>Contact information: <a href="mailto:someone@example.com">
-		someone@example.com</a>.</p>
-	</footer> -->
-
 
 
 </HTML>

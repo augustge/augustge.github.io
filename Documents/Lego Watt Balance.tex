@@ -1,0 +1,226 @@
+
+\documentclass[twoside]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{multirow}
+\usepackage[ruled]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{tikz}
+%\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[utf8]{inputenc}
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage[hyperfootnotes=false]{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+
+
+
+\usetikzlibrary{shapes.geometric,calc}
+
+%----------------------------------------------------------------------------------------
+%	Renewcommands
+%----------------------------------------------------------------------------------------
+%\renewcommand{\abstractname}{Sammendrag}
+%\renewcommand{\contentsname}{Innhold}
+%\renewcommand{\figurename}{Figur}
+%\renewcommand{\tablename}{Tabell}
+%\renewcommand{\refname}{Kilder}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\roman{subsection}} % Roman numerals for subsections
+\renewcommand\thesubsection{\arabic{subsection}} % Roman numerals for subsections
+
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+  
+\newenvironment{Table}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
+%----------------------------------------------------------------------------------------
+%	Formatting
+%----------------------------------------------------------------------------------------
+\titleformat{\section}[block]{\Large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\normalsize\scshape\bfseries}{\thesubsection.}{1em}{} % Change the look of the subsection titles
+\titleformat{\subsubsection}[block]{\normalsize\scshape}{\thesubsubsection \ }{0.1em}{} % Change the look of the subsubsection titles
+
+%----------------------------------------------------------------------------------------
+%	Newcommands
+%----------------------------------------------------------------------------------------
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\NOTE}[1]{ { \scshape \color{red} #1 } }
+
+%%%%********************************************************************
+\usepackage{microtype} 
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+%%%%********************************************************************
+% fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{4}{\textcolor{quotemark}{''}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+ %%%%********************************************************************
+ \def\endfquote{%
+ \endgroup\par%
+ \makebox[0pt][l]{%
+ \hspace{0.3\textwidth}%
+ \begin{picture}(0,0)(0,0)%
+ \put(15,15){\makebox(0,0){%
+ \scalebox{4}{\color{quotemark}''}}}%
+ \end{picture}}%
+ \ifx\tempa\empty%
+ \else%
+    \ifx\tempc\empty%
+       \hfill \mbox{}\hfill\tempa\ \emph{\tempb}%
+   \else%
+       \hfill \mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+   \fi\fi\par%
+   \vspace{0.5em}%
+ \end{list}%
+ }%
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{
+LEGO Watt Balance \\ 
+\normalsize Special Report in Experimental Physics (FYS2150)
+}} % Article title
+\author{
+\large
+\textsc{\textbf{August Geelmuyden \& Sebastian G. Winther-Larsen}} \\
+\normalsize University of Oslo \\ % Your institution
+\vspace{-5mm}
+}
+
+\date{\today}
+
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\small
+\begin{abstract}
+\noindent
+
+As the kilogram is about to be redefined from 2018, we construct a
+LEGO version of the precise measurement device called the watt
+balance. The new definition of the kilogram will be realized through a
+fixed multiple of Planck's constant. This study is partially based on
+a LEGO watt balance design by NIST, with two systems for weight measurement; a shadow sensor and a coil system. 
+We found the process to be rewarding, but the LEGO watt balance was much less capable than promised. The problems arose mostly because of friction in the coils, and additionally from noise in the light sensitive diode output voltage. 
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\begin{multicols}{2}
+\begingroup
+\let\clearpage\relax
+\include{Introduction}
+\include{Theory}
+\include{Systems}
+\include{Calibration}
+\include{Results}
+\include{Improvements}
+\include{Conclusion}
+\endgroup
+
+\end{multicols}
+
+
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+
+\bibitem{Kibble}
+Kibble, B.,
+\newblock A Measurement of the Gyromagnetic Ratio of the Proton by the
+Strong Field Method,
+\newblock \textit{Atomic Masses and Fundamental constants} vol. 5,
+edited by Sanders, H. and Wapstra, A.H., pp. 454-551,
+\newblock New York: Plenum,
+\newblock 1976.
+
+\bibitem{SQUIRES}
+ Squires, G. L.  
+ \newblock \textit{Practical Physics},
+ \newblock Cambridge: Cambridge UP, 
+ \newblock 1985.
+
+\bibitem{NIST}
+Chao, L.S., Schlamminger, S., Newell, D.B., Pratt, J.R., Seifert,
+Zhang, X., Sineriz, G., Liu, M., and Haddad, D,.
+\newblock A LEGO Watt Balance: An Apparatus to determine a mass based
+on the new SI,
+\newblock \textit{American Journal of Physics} 83.11 pp. 913-922,
+\newblock 2015.
+
+\bibitem{Josephson}
+Josephson, B.D.,
+\newblock Possible new effects in superconductive tunnelling,
+\newblock \textit{Physics Letters 1} 7 pp. 251-253,
+\newblock 1962.
+
+\bibitem{vonKlitzing}
+von Klitzing, K., Dorda, G., and Pepper, M.
+\newblock Realisation of a resistance standard based on fundamental constants.
+\newblock \textit{Physical Review Letters} 45 p. 494
+\newblock 1980.
+
+\end{thebibliography}
+
+\end{document}

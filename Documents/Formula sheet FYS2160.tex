@@ -1,0 +1,341 @@
+
+
+
+\documentclass[a4paper, norsk, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel, textcomp, color, amsmath, amssymb, tikz, subfig, float,esint}
+\usepackage{amsfonts}
+\usepackage{eulervm}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split}
+#1  
+\end{split} \end{equation*} }
+ \newcommand{\DE}[1] {  \begin{description}  #1 \end{description} }
+ \newcommand{\IT}[2] { \item[\color{blue} #1]{#2} }
+ \newcommand{\vv}[1] { \mathbf{#1} }
+ \newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+ \newcommand{\expe}[1] { \left\langle#1\right\rangle }
+ \newcommand{\ket}[1] { |#1\rangle }
+  \newcommand{\bra}[1] { \langle #1 | }
+  \newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+  \newcommand{\commutator}[2]{ \left[ #1 , #2\right] }
+  \newcommand{\colvec}[2] { 
+  \left( \begin{matrix}
+ #1 \\
+ #2 \\
+  \end{matrix}\right) }
+ \newcommand{\PLOTS}[4]{ 
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = #3, %usally left
+    xlabel = #1,
+    ylabel = #2,
+]
+#4
+\end{axis}
+\end{tikzpicture}
+}
+
+
+\newcommand{\addPLOT}[4]{
+\addplot [domain=#1:#2,samples=200,color=#3,]{#4};}
+\newcommand{\addCOORDS}[1]{\addplot coordinates {#1};}
+\newcommand{\addDRAW}[1]{\draw #1;}
+\newcommand{\addNODE}[2]{ \node at (#1) {#2};}
+
+%		\PLOTS{x}{y}{left}{
+%			\ADDPLOT{x^2}{-2}{2}{blue}
+%			\ADDCOORDS{(0,1)(1,1)(1,2)}
+%		}
+
+
+
+
+\definecolor{svar}{RGB}{0,0,0}
+\definecolor{opgavetekst}{RGB}{109,109,109}
+\definecolor{blygraa}{RGB}{44,52,59}
+
+\hoffset = -60pt
+\voffset = -95pt
+\oddsidemargin = 0pt
+\topmargin = 0pt
+\textheight = 0.97\paperheight
+\textwidth = 0.97\paperwidth
+
+\begin{document}
+
+\begin{multicols*}{2}
+
+\subsection*{Begreper}
+\textbf{Isoterm:} $dT=0$, \textbf{Isobar:} $dP=0$, \textbf{Isochor:} $dV=0$ \\ 
+\textbf{Adiabat:} $\delta Q=0$,  \textbf{Isentropisk:} $d S=0$   \\
+\textbf{Kvasistatisk:} Indre likevekt, slik at trykk og temperatur er posisjonsuavhengig (uniforme) i hele systemet. \\
+\textbf{Reversibel}: Gjøres i ekvilibrium ($dS=0$).  \\
+\textbf{Irreversibel}: Universets totale entropi øker $dS>\delta Q/T$. \\
+\textbf{Spesifikk}: Per masse av stoffet i.e. Spesifikk varmekapasitet $c=C/m$.
+
+\subsection*{Termodynamikkens lover}
+\textbf{0. lov:} Termisk likevekt er en transitiv relasjon. \\
+\textbf{1. lov:} $\Delta U = Q+W$ der $Q$ er varme \textit{tilført} systemet og $W$ er arbeid gjort \textit{på} systemet. For en kvasistatisk ekspansjon/kompressjon er dette lik $dU=\delta Q-PdV$.  \\
+\textbf{2. lov:} $\Delta S \geq 0$ hvis systemet er lukket (Planck). Varme kan ikke gå fra et kaldere til et varmere legeme uten også en annen forandring. (Calusius) \\
+\textbf{3. lov:} Entropien er $0$ når termperaturen er $0$K.
+
+\subsection*{Termodynamiske identiteter}
+Helmholtz frie energi: $F=U-TS$\\
+Entalpi: $H=U+PV$ \\
+Gibbs frie energi: $G=U+PV-TS=H-TS=F+PV$\\ 
+Storkanonisk potensial: $\Phi=U-TS-\mu N = F-\mu N$.
+\EQU{
+dU &= TdS-PdV+ \mu dN \ \text{(mikrokanonisk)} \\
+dF &= -SdT-PdV+ \mu dN \ \text{(kanonisk)} \\
+dH &= TdS+VdP+ \mu dN \\
+dG &= -SdT+VdP+ \mu dN \\
+d\Phi &= -SdT-PdV- Nd\mu \ \text{(storkanonisk)} \\
+}
+
+
+\subsubsection*{Størrelser}
+\textbf{Ekstensiv:} Avhenger av stoffmengden: \\
+$U,V,N,S,H,F,G,m,...$ \\
+\textbf{Intensiv:} Uavhengig av stoffmengden: \\
+$T,P,\mu,\rho,...$ \\
+\EQU{
+U &= -\PAR{}{\beta}\ln Z = kT^2 \PAR{}{T} \ln Z \text{ (indre energi)}\\
+F &= -kT\ln Z \text{ (Helmholtz frie energi)}\\
+C_V & = \left(\PAR{U}{T}\right)_{V,N} \text{ (varmekapasitet)} \\
+C_P & = \left(\PAR{U}{T}\right)_{P,N} \text{ (varmekapasitet)} \\
+}
+
+
+\subsection*{Ensembler}
+\subsubsection*{Mikrokanonisk NVE-konst}
+Sannsynlighet: $P = 1/\Omega$ der $\Omega$ er antall mikrotilstander, Makrotilstander: $U(S,V,N)$. Entropien blir da $S=k\ln \Omega \rightarrow S_{max}$ mot likevekt.
+
+
+\subsubsection*{Kanonisk NVT-konst }
+Sannsynlighet: $P_s=e^\frac{F-E_s}{kT}=e^\frac{F}{kT}e^\frac{-E_s}{kT}=\frac{1}{Z}e^\frac{-E_s}{kT}$, Makrotilstand: $F(T,V,N)$. Systemet kan utvekse temperatur med omgivelsene og når likevekt når entropi er maksimal og $F=U-TS$ er minimal.
+
+\subsubsection*{Storkanonisk $\mu$VT-konst}
+Sannsynlighet: $P_s=e^\frac{\Omega+\mu N_s - E_s}{kT}=\frac{1}{\mathcal{Z}}e^\frac{\mu N_s-E_s}{kT}$,
+Makrotilstand: $\Phi$(T,V,N). Med $\mathcal{Z}=\sum_s e^\frac{\mu N_s-E_s}{kT}$. Beskriver tilstander i et system som er i termisk og kjemisk likevekt med omgivelsene. Når $V$ er konstant vil det storkanoniske ensemble søke minimalt ''storpotensial'' $\Phi=U-TS-\mu N = F-\mu N$.
+
+\subsubsection*{Andre ensembler}
+Isoterm-isobar NPT-konst $\Rightarrow $ Gibbs frie energi bevart. \\
+Isoentalpisk-isobar NPH-konst $\Rightarrow $ Entalpi bevart. \\
+
+\subsubsection*{Vekselvirkninger}
+\textbf{Termisk vekselvirkning} utveksler $U$ og utjevner $T$\\
+\textbf{Mekanisk vekselvirkning} utveksler $V$ og utjevner $P$\\
+\textbf{Diffusiv vekselvirkning} utveksler $N$ og utjevner $\mu$\\
+
+\subsection*{Sannsynlighet}
+Åtte kast av en sekssidet terning kan gi fire firere på $\binom{8}{4}P(4)^4P(\neg 4)^{4}$ måter
+
+\subsubsection*{Stirlings tilnærming}
+For store $N$ er $N! \sim \sqrt{2\pi N}\left(\frac{N}{e}\right)^N$
+for enda større $N$ er $\ln N! \sim N\ln N-N$
+
+
+\subsection*{Ekvipartisjon}
+(Gjelder kun når energien utelukkende avhenger av kvadratiske frihetsgrader) \\
+Hver kvadratiske frihetsgrad bidrar til en indre energi per partikkel lik $\frac{1}{2}kT$. For $f$ frihetsgrader er da $U=\frac{f}{2}NkT$.
+
+\subsection*{Entropi}
+\EQU{
+S = -k \sum_s P_s \ln P_s = k\ln \Omega
+}
+$dS=\delta Q/T$ En økning i entropien til et system medfører en varmeabsorbsjon $\delta Q$ fra systemets omgivelser. \\
+At entropi ikke er ekstensiv kan føre til problemer som \textit{Gibbs paradoks} -- Et lukket system kan få mindre entropi (kræsj med II. lov).
+
+\subsubsection*{Blandingsentropi}
+Dersom $N_A$ A-partikler og $N_B$ B-partikler blandes skaper dette en entropiendring
+$ \Delta S_{mix} = k\ln \Omega_{mix} $
+der $\Omega_{mix}$ er antall måter å arrangere $N_A$ A-partikler og  $N_B$ B-partikler. Dersom de to typene er identiske partikler blir $\Omega_{mix}=\binom{N_A+N_B}{N_A}$.
+
+\subsection*{Adiabatlikning}
+For en ideell gass er $PV^\gamma = $konstant, der $\gamma=\frac{C_P}{C_V}=\frac{f+2}{f}$ dersom prosessen er reversibel. Generelt er en adiabat gitt av $\delta Q=0$ som betyr at $dU=\delta W = -PdV$.
+
+\subsubsection*{Varmekapasiteter}
+
+
+
+\subsubsection*{Termisk og termodynamisk Likevekt}
+Når ingen varmeoverføring finner sted mellom systemene selv om det er mulig. Systemer i \textbf{termodynamisk likevekt} er alltid i termisk likevekt, men ikke alltid omvendt. Termodynamisk likevekt er når det relevante termodynamiske potensialet ($F,H,G,\Phi,...$) er minimalt, eller når entropi $S$ er maksimal (mikrokanonisk).
+
+\subsubsection*{Kjemisk Likevekt}
+Dersom 
+\EQU{
+\alpha A + \beta B &\rightleftharpoons \sigma S + \tau T \\
+ \text{ex: } CH_3CO_2H+H_2O &\rightleftharpoons CH_3 O_2^-+H_3O^+ 
+}
+er den kjemisk reaksjon er likevektskravet gitt av
+\EQU{
+\alpha \mu_A + \beta \mu_B = \sigma \mu_S + \tau \mu_T
+}
+
+\subsection*{Ideell gass}
+\EQU{
+NKT&=PV \\
+VT^{f/2} &= \text{konstant} \\
+PV^\gamma &= \text{konstant}, \gamma = \frac{C_P}{C_V} = \frac{f+2}{f} \\
+C_P-C_V &= Nk
+}
+
+
+\subsubsection*{Varmemaskiner}
+Effektivitet $e=\frac{W_{ut}}{Q_{inn}}=1-\frac{Q_{ut}}{Q_{inn}}$ der $Q<0$ er $Q_{ut}$ og $Q>0$ er $Q_{inn}$. En \textbf{Carnotsyklus} har $e=1-\frac{T_c}{T_h}$.
+
+
+\subsubsection*{Partisjonsfunksjonen}
+\EQU{
+Z &= \sum_s \exp\left( -\beta E_s \right) = \sum_U \Omega(U)e^{-U/kT} \\
+&= \int d^N \mathbf{x} d^N \mathbf{p} \exp \left( -\beta E \right)
+}
+\EQU{
+Z_{1} = Z_{e}Z_{rot}Z_{vib}Z_{trans} 
+}
+For uavhengige systemer $A$ og $B$ (ublandet) er den totale partisjonsfunksjonen et produkt $Z=Z_AZ_B$. For N adskillelige systemer er $Z_N = Z^N$ og for adskillelige er $Z_N = Z^N/N!$.
+
+
+\subsubsection*{Maxwell-relasjoner}
+Hvis en funksjon $F:\mathbb{R}^n\rightarrow \mathbb{R}$ har kontinuerlige partiellderiverte i et punkt $\mathbf{a}$ er
+\EQU{
+\left(\PAR{^2F}{B\partial A}\right)_\mathbf{a} = \left(\PAR{^2F}{A\partial B}\right)_\mathbf{a}
+}
+Det betyr for eksempel at
+\EQU{
+\left(\PAR{T}{V}\right)_{S,N} = \PAR{^2U}{S\partial V} = -\left(\PAR{P}{S}\right)_{V,N}
+}
+
+\subsubsection*{Fri energi som driv mot likevekt}
+
+
+
+\subsubsection*{Gibbs frie energi og kjemisk potensial}
+Fortegnet for $\Delta G$ avgjør om prosessen kan skje spontant eller ikke. Kjemisk potensial
+\EQU{
+\mu = \left(\PAR{G}{N}\right)_{T,P} = \left(\PAR{F}{N}\right)_{T,V} = \left(\PAR{U}{N}\right)_{S,V} 
+}
+er energiendringen ved å legge til én partikkel til systemet. 
+
+
+\subsubsection*{Damptrykk}
+Damptrykk er trykket i faselikevekt. Da må $\mu_1=\mu_2$ for de to fasene. 
+
+\subsubsection*{Sackur–Tetrode}
+Entropien i en ideell, monoatomisk, klassisk gass som tar hensyn til kvanteeffekter er
+\EQU{
+S = kN \left( \ln \left[ \frac{V}{N} \left(\frac{4 \pi m U}{3h^2 N}\right)^\frac{3}{2} \right] + \frac{5}{2} \right)
+}
+
+\subsubsection*{Clausius-Clapeyron}
+For damptrykket gjelder
+\EQU{
+\frac{dP}{dT} = \frac{S_g-S_s}{V_g-V_s} = \frac{L}{T\delta v} = \frac{\delta s}{\delta v}
+}
+med $Q=T\delta S = T(S_g-S_s) = L$ er den \textbf{latente varmen} eller \textbf{smeltevarmen}. $s$ og $v$ er henholdsvis entropi per partikkel $S/N$ og volum per partikkel $V/N$.
+
+
+\subsubsection*{Liouvilles teorem}
+''Tettheten i faserommet er konstant''. Hvis posisjonene blir tvunget til et mindre intervall må altså bevegelsesmengdene få et større intervall.
+
+
+\subsubsection*{Tilstandstetthet}
+Vi har $D(\epsilon)d\epsilon = D(n)dn = dN$ der $D(n)=2$ er typisk for fermioner. 
+\EQU{
+D(\epsilon)= \frac{dN}{d\epsilon}=\left(\frac{d\epsilon}{dn}\right)^{-1}\frac{dN}{dn}
+}
+
+\subsubsection*{Bosoner/fermioner/klassisk}
+\EQU{
+\Omega_{fermion} &= \frac{g!}{N!(g-N)!} \text{ med } N\leq g \\
+\Omega_{boson} &= \frac{(g+N-1)!}{N!(g-1)!} \\
+\Omega_{boltzmann} &= \frac{g^N}{N!} 
+}
+der det kan vises at $\Omega_{fermion}<\Omega_{boltzmann}<\Omega_{boson}$.
+
+\subsubsection*{Boltzmannpartikler}
+For $\mu = -kT \ln (Z_1/N)$ følger det at 
+\EQU{
+\overline{n}_{Boltz} = \frac{1}{e^{\frac{\epsilon-\mu}{kT}}}
+}
+som går mot $0$ når $\epsilon \rightarrow \infty$ og lik $1$ for $\epsilon = \mu$.
+
+\subsubsection*{Fermi-Dirac}
+Antallstetthet til fermioner. Hver energi har bare to mulige tilstander:  ''okkupert'' eller ''uokkupert''. Det gir $\mathcal{Z}_G=1+e^{-\beta(\epsilon-\mu)}$. Fordelingen er da $\overline{n}_{FD}=\sum_s n_s P_s $,
+\EQU{
+\overline{n}_{FD} = \frac{1}{e^{\frac{\epsilon-\mu}{kT}}+1}
+}
+Siden $\lim_{T\rightarrow 0}\overline{n}_{FD}=\mathbb{I}_{\{ \epsilon< \mu(0) \} }(\epsilon)$ kaller vi $\lim_{T\rightarrow 0}\mu = \epsilon_F$ for \textbf{fermi-energien}. Kravet som bestemmer $\mu$ blir 
+\EQU{
+N &= \int_0^\infty D(\epsilon)\bar{n}_{FD}d\epsilon \text{ (bestemmer $\mu$)} \\
+N &= \int_0^{\epsilon_F} D(\epsilon)d\epsilon \text{ (bestemmer $\epsilon_F$ eller $N$)}
+}
+Hvis fermi-gassen har så lav temperatur at $\overline{n}_{FD} \approx \mathbb{I}_{\{\epsilon<\epsilon_F\}}(\epsilon)$ kalles gassen \textbf{degenerert}. Temperaturen $T=\epsilon_F/k$ kalles da \textbf{fermi-temperaturen}. Hvis vi antar $T\ll T_F$ finner vi ved sommerfeldt-utviklingen:
+\EQU{
+\frac{\mu}{\epsilon_F} \approx 1-\frac{\pi^2}{12}\left( \frac{kT}{\epsilon_F} \right)^2.
+}
+
+
+\subsubsection*{Bose-Einstein}
+Alle $n\geq 0$ er tillatt. Da er $\epsilon_n=n\epsilon$ og $N_n = n$, slik at $Z=\sum_{n=0}^\infty e^{-n \beta\left( \epsilon-\mu\right)}$ og derfor
+\EQU{
+\overline{n}_{BE} = \sum_{n=0}^\infty n P(n) = \frac{1}{e^{\frac{\epsilon-\mu}{kT}}-1}
+}
+som går mot $\infty$ når $\epsilon \rightarrow \mu$ ovenfra.  
+
+\subsubsection*{Bose-Einstein kondensasjon}
+
+
+\subsubsection*{Planck-fordelingen for fotongass}
+Dersom en beholder med volum $V$ fylles med e.m. stråling i likevekt med temperatur T kan vi beskrive strålingen med frekvensene $f_{osc}=c/\lambda=cn/sL$ for $n\in \mathbb{N}$ og energier $\epsilon_m = mhf$ for $m \in \mathbb{Z}^+$. Planck-fordelingen gir da en fordeling
+\EQU{
+\overline{n}_{Planck} = \expe{E}/hf = \frac{1}{e^{hf/kT}-1} = \frac{1}{e^{\epsilon/kT}-1}
+}
+Med energiene $\epsilon(n)=\frac{hcn}{2L}=\frac{hcn}{2V^\frac{1}{3} }$ der $n=\sqrt{n_x^2+n_y^2+n_z^2}$ og to mulige polariseringer følger det at
+\EQU{
+U &= \int_{n\text{-space}} \epsilon(n) g(n) \overline{n}_{Planck} d^3n \\
+&= \int_0^\infty \frac{hcn}{2V^\frac{1}{3}}\pi n^2 \frac{dn}{e^{\epsilon(n)/kT}-1}.
+}
+Ved variabelskrifte til $\epsilon$ gir dette det såkalte \textbf{Plack spekteret}
+\EQU{
+u_\epsilon(T)=\frac{8\pi}{(hc)^3} \frac{\epsilon^3}{e^{\epsilon/kT}-1}
+}
+og siden $\lambda = hc/\epsilon$ må den energitettheten som funksjon av bølgelengde være gitt av
+\EQU{
+u_\lambda(T) = \frac{8\pi hc}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda kT}}-1}.
+}
+
+
+\subsubsection*{Stefans lov}
+Ut av et hull i en sort boks ved temperatur $T$ fylt med elektromagnetisk stråling kan det unnslippe en fluks
+\EQU{
+F = \frac{2\pi^5 k^4 T^4}{15h^3c^2} = \sigma T^4, \sigma \approx 5.67 \times 10^{-8}\frac{W}{m^2K^4}
+}
+
+\subsubsection*{Taylor}
+\EQU{
+\ln (1+x) &= x- \frac{x^2}{2} + \frac{x^3}{3}+\mathcal{O}(x^4) \\
+\sqrt{1+x} &= 1+\frac{1}{2}x-\frac{1}{8}x^2+\frac{1}{16}x^3 +\mathcal{O}(x^4) \\
+x^x & = 1+x \ln x + \frac{1}{2} x^2 \ln^2 x + +\frac{1}{6}x^3 \ln^3 x + \mathcal{O}(x^4)
+}
+
+\end{multicols*}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+

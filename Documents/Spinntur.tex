@@ -1,0 +1,447 @@
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+% \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.1} % Line spacing - Palatino needs more space between lines
+% \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+
+
+
+%----------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont Spinntur 2018 \\ \textbf{ROTASJONSBEVEGLSE} } % Article title
+
+\author{
+\large
+\textsc{August Geelmuyden}\\[2mm] % Your name
+\normalsize Universitetet i Oslo \\ % Your institution
+\vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+
+
+
+\part*{Teori}
+% Dette er ment som en gjennomgang av det dere allerede har lært, men forhåpentligvis formidlet på en litt annerledes måte.
+
+
+\section{Definisjon og bevaring}
+Newtons andre lov konstaterer at summen av kreftene $\mathbf{F}=\sum \mathbf{F}_i$ som virker på et legeme med masse $m$ er lik legemets endring i bevegelsesmengde $\mathbf{p}=m\mathbf{v}$ over tid. Dette kan skrives
+\[
+\mathbf{F} = \frac{d\mathbf{p}}{dt}.
+\]
+Dersom vi lar $\mathbf{r}$ være posisjonen til legemets massesenter kan vi, helt umotivert, dermed også skrive
+\[
+\mathbf{r}\times\mathbf{F} = \mathbf{r}\times\frac{d\mathbf{p}}{dt}.
+\]
+Siden produktregelen for derivasjon gir
+\[
+\frac{d}{dt}\left(\mathbf{r}\times \mathbf{p}\right)
+= \frac{d\mathbf{r}}{dt}\times \mathbf{p}
+ +\mathbf{r} \times \frac{d\mathbf{p}}{dt}
+\]
+og $\frac{d\mathbf{r}}{dt}=\mathbf{v}$ er parallell med $\mathbf{p}$ følger det at
+\[
+\frac{d}{dt}\left(\mathbf{r}\times \mathbf{p}\right)
+= \mathbf{r} \times \frac{d\mathbf{p}}{dt}.
+\]
+Med andre ord kan vi skrive
+\[
+\mathbf{r}\times\mathbf{F} = \frac{d}{dt}\left(\mathbf{r}\times\mathbf{p}\right).
+\]
+I situasjoner der $\mathbf{r}\times\mathbf{F}=0$ vil vektorstørrelsen $\mathbf{r}\times\mathbf{p}$ altså ikke endre seg over tid -- den er bevart! Siden slike størrelser har en tendens til å være veldig nyttige bør vi kalle denne størrelsen for noe. Det er her vanlig å bruke begrepet {\it angulærmoment} og symbolet $\mathbf{L}=\mathbf{r}\times\mathbf{p}$. Den vektoren som er null når angulærmomentet er bevart refereres til som {\it kraftmoment} eller {\it dreiemoment} og gis ofte symbolet $\tau=\mathbf{r}\times\mathbf{F}$.
+Legg merke til at siden begge størrelsene avhenger av posisjonen $\mathbf{r}$ vil de typisk endre seg, og $\mathbf{L}$ kanskje ikke lenger være bevart, dersom man ønsker å bytte referansesystem (gi Origo en ny plassering). Legg også merke til at dersom du har et system av $N$ punktmasser $\{m_i\}_i^N$ med posisjoner $\{\mathbf{r}_i\}_i^N$ kan alle likningene legges sammen slik at
+\[
+\sum_i \mathbf{r}_i\times\mathbf{F}_i = \frac{d}{dt} \sum_i \left( \mathbf{r}_i \times \mathbf{p}_i \right)= \frac{d}{dt} \sum_i \mathbf{L}_i.
+\]
+der $\mathbf{F}_i$ er summen av kreftene som virker på punktmassen $m_i$. Dette betyr at det gir mening å summére både angulærmoment og kraftmoment. Det betyr også at det totale angulærmomentet $\mathbf{L}=\sum \mathbf{L}_i$ er bevart dersom det totale kraftmomentet $\tau = \sum_i \tau_i$ er null.
+
+
+
+\section{Tolkning}
+Hver gang du snubler over en bevart størrelse i et fysisk system bør du stoppe og tenke over hva du har funnet. Bevarte størrelser tilbyr som regel både dyp innsikt i det fysiske systemet og nye, mer effektive måter å forutsi systemets adferd på. La oss derfor forsøke å tolke vektorstørrelsen
+\[
+\mathbf{L} = \mathbf{r}\times\mathbf{p}.
+\]
+Angulærmomentets retning står vinkelrett på legemets bevegelsesretning $\mathbf{p}$ og retningen fra Origo til legemets massesenter $\mathbf{r}$.
+Det betyr at dersom legemet beveger seg rett bort fra, eller rett mot, Origo må angulærmomentet være null uavhengig av avstanden $r=|\mathbf{r}|$ til Origo og farten $v=|\mathbf{p}|/m$. Videre kan vi se at for en gitt fart $v$ og avstand $r$ fra Origo vil $L=|\mathbf{L}|$ være størst dersom hastigheten står vinkelrett på posisjonen $\mathbf{r}$. Hvis dette skjer ved alle tidspunkter $t$ betyr det at legemet går i sirkelbane rundt Origo. Det virker altså rimelig å tolke angulærmomentet som en tallfesting av legemets rotasjon rundt Origo. Legg imidlertid merke til at legemer som beveger seg i en rett linje som ikke går gjennom Origo vil ha et angulærmoment ulik null.
+
+At vi kan tolke $\mathbf{L}$ som legemets rotasjon rundt Origo introduserer et mulig problem: Hva skal vi gjøre med legemer som roterer om seg selv? Hvis vi velger Origo i legemets massesenter vil $\mathbf{r}=\mathbf{0}$ og dermed også $\mathbf{L}=\mathbf{0}$. Det kan altså virke som om formalismen forsøker å lure oss til å tro at objekter ikke kan rotere om seg selv.
+
+For å løse dette problemet, som egentlig ikke er et problem i det hele tatt, må vi ta inn over oss hva den Newtonske teknologien egentlig dreier seg om.
+Det mirakuløse med Newtons lover er at de lar oss behandle utstrakte legemer som punktpartikler. For å studere hastigheten en satellitt med masse $m$ må ha for å bevege seg i sirkelbane med radius $r$ rundt jordens massesenter trenger vi ikke ta stilling til satellittens form. Vi trenger heller ikke ta stilling til at forskjellige punkter på satellitten kan komme til å ha ulik hastighet. Ifølge Newton kan vi like godt tenke på satellitten som en punktpartikkel med posisjon $\mathbf{r}$ og masse $m$, der $\mathbf{r}$ er satellittens massesenter. Deretter kan vi benytte Newtons lov for tyngekraft på denne punktpartikkelen for å bestemme bevegelseslikningen til satellitten. All informasjon om legemets utstrekning er altså absorbert i parameterene
+\[
+m = \int \rho(\mathbf{r}) dV
+\]
+og
+\[
+\mathbf{r} = \frac{1}{m}\int \mathbf{r} \rho(\mathbf{r}) dV,
+\]
+der $\rho$ er massetettheten til satellitten i $\mathbf{r}$.
+
+Siden en punktpartikkel ikke kan rotere om seg selv er det dermed ikke rart at $\mathbf{L}=0$ når $\mathbf{r}=0$\footnote{Den strenge leser vil finne at dette utsagnet er ikke helt riktig. I kvantemekanikken, for eksempel, åpner man for at partikler har angulermoment-liknende egenskaper selv om vi tenker på dem som punktpartkler. }. Problemet oppstår når vi ønsker å studere et utstrakt legemes rotasjon om seg selv. Da er vi nødt til å ta legemets form og massefordeling med i betraktningen. Hvis vi har flaks kan vi imidlertid finne nok en parameter som absorberer all informasjonen vi trenger slik at vi etter å ha funnet denne kan gå tilbake til å tenke på legemet som en punktpartikkel.
+
+
+
+\section{Rotasjon om seg selv}
+La oss begynne med å studere en samling av $N$ punktpartikler med masser $\{m_i\}$ og posisjoner $\{\mathbf{r}_i\}$, der Origo er satt til punktpartiklenes massesenter
+\[
+\mathbf{0}=\mathbf{R}=\frac{\sum_i^N m_i\mathbf{r_i}}{\sum_i^N m_i}.
+\]
+Som sett tidligere gir det mening å addere angulærmoment for å finne det totale angulærmomentet
+\[
+\mathbf{L} = \sum_i^N \mathbf{r}_i \times \mathbf{p}_i.
+\]
+La oss nå anta at samlingen av punktpartikler roterer som et fast legeme med vinkelhastighet $\omega$ om $z$-aksen. Det betyr at farten $v_i$ til punktpartikkel $i$ må tilfredsstille $v_i = s_i \omega$ der
+\[
+s_i = \sqrt{ |\mathbf{r}_i|^2 - r_z^2 }
+\]
+er avstanden til $z$-aksen. Vi begynner med å skrive $\mathbf{r}_i\times \mathbf{p}_i = r_i p_i \sin(\alpha_i)$ der $\alpha_i$ er vinkelen utspent av $\mathbf{r}_i$ og $\mathbf{p}_i$. Det betyr at
+\[
+\mathbf{L} = \sum_i^N r_i p_i \sin(\alpha_i) \mathbf{n}_i.
+\]
+der $\mathbf{n}_i$ er enhetsvektoren som peker i retningen til $\mathbf{r}_i\times\mathbf{p}_i$. Siden hver punktpartikkel går i sirkelbane rundt $z$-aksen vil $\mathbf{r}_i$ og $\mathbf{p}_i$ stå vinkelrett på hverandre. Det betyr at $\sin(\alpha_i)=1$ for alle $i$. Vi kan altså skrive
+\[
+\mathbf{L}
+= \sum_i^N r_i p_i  \mathbf{n}_i
+= \sum_i^N r_i m_i v_i  \mathbf{n}_i
+= \sum_i^N r_i m_i s_i \omega  \mathbf{n}_i.
+\]
+\mathbf{L} ser ut til bli et stygt uttrykk -- dette lover ikke godt! Vi vil imidlertid forvente at $L_z$, $\mathbf{L}$ sin $z$-komponent, vil ta en mer overkommelig form. Siden vi bare er interessert i å kvantifisere rotasjonen om $z$-aksen er det uansett rimelig bare å se på denne. Da må vi finne $z$-komponenten til enhetsvektorene $\mathbf{n}_i$, som tilfredsstiller
+\[
+n_{i,z} = \mathbf{n}_i \cdot \mathbf{e}_z = \cos \phi_i
+\]
+der $\phi_i$ er vinkelen utspent av $n_{i,z}$ og $\mathbf{e}_z$. Ved nærmere ettertanke vil du kunne overbevise deg selv om at
+\[
+r_i \cos \phi_i = s_i.
+\]
+
+Det betyr at angulærmomentets $z$-komponent er gitt ved
+\[
+L_z = \omega \sum_i^N m_i s_i^2.
+\]
+Dette er tegn på at ting går riktig vei. Vi kan nå absorbere informasjonen om legemets utstrekning inn i størrelsen
+\[
+I_z = \sum_i^N m_i s_i^2
+\]
+som herved refereres til som {\it treghetsmoment}. Legg imidlertid merke til at tregehetsmomentet til et utstrakt legeme avhenger av rotasjonsaksen. For å absorbere all informasjonen vi trenger vil vi i prinsippet måtte konstruere en matrise denne matrisens egenvektorer vil definere de stabile rotasjonsaksene mens egenverdiene vil gi treghetsmomentet assosiert med rotasjon om denne aksen. Den interesserte leser vil finne en diskusjon av dette mot slutten denne teksten.
+
+I en fullstendig analyse må vi undersøke de tre komponentene til det totale kraftmomentet $\tau$ for å se om angulærmomentet er bevart. Dersom $\mathbf{s}_i$ er avstandsvektoren fra punktpartikkel $i$ til rotasjonsaksen kan vi, under antagelsen om at punktene som utgjør legmet har fast avstand fra hverandre, bruke uttrykket for sentripetalkraft:
+\[
+\mathbf{F}_i = -\frac{\omega^2}{m_i}\mathbf{s}_i.
+\]
+Det totale kraftmomentet kan altså skrives
+\[
+\tau = -\sum_i^N \frac{\omega^2}{m_i} \mathbf{r}_i \times \mathbf{s}_i.
+\]
+Ved å overbevise deg om at $\mathbf{r}_i = r_z\mathbf{e}_z-\mathbf{s}_i$ vil du kunne oppdage at $\tau$ alltid er null i $z$-retning. Verdien av de andre komponentene til $\tau$ vil generelt sett avhenge av legemets form. Siden vi bare fant angulærmomentet langs rotasjonsaksen bør vi imildertid være fornøyd med at denne størrelsen er alltid er bevart.
+
+Realistiske legemer med utstrekning bør behandles som kontinuerlige og ikke som en samling av punktpartikler. I stedet for å dele opp den totale massen i punktmasser $m_i$ kan vi dele legemets masse i $N$ små biter $\Delta m_i = m/N$. I grensen der disse bitene blir uendelig mange, og uendelig små, kan vi gjenkjenne Riemannintegralet
+\[
+I
+= \lim_{N\rightarrow \infty} \frac{1}{N} \sum_i^N \Delta m_i s_i^2
+= \int s^2 dm.
+\]
+Treghetsmomentet assosiert med den bevarte komponeneten av angulærmomentet tar altså formen
+\[
+I_z = \int  s^2(\mathbf{r}) \rho dV
+\]
+der $s$ er avstanden fra punktet $\mathbf{r}$ til rotasjonsaksen og $\rho$ er massetettheten i $\mathbf{r}$.
+
+
+
+\section{Treghetsmoment}
+Vi kan, i analogi til masse, tenke på treghetsmomentet til et legeme som et mål på hvor vanskelig er det å få legemet til å rotere om en bestemt akse. At dette gir mening kan vi overbevise oss om ved å studere en tynn, lang stokk. Dersom stokken roteres om en akse som går gjennom massesenteret og står normalt på stokken vil det kreve mye kraft å igangsette rotasjonen. Punktene på stokken som er langt fra aksen må få en stor bevegelsesmengde for å henge med på rotasjonen, og for å oppnå stor bevegelsesmengde må man ha stor kraft. Dersom rotasjonsaksen ligger langs stokken vil det være mye lettere å få stokken til å rotere. Dette fordi vi ikke trenger å produsere like mye bevegelsesmengde for å oppnå samme rotasjonshastighet. Det er nøyaktig denne effekten kunstløpere utnytter når de trekker armene i løpet av en piruett -- de gjør treghetsmomentet sitt mindre. Siden angulærmomentet $L_z=\omega I_z$ er bevart betyr det at rotasjonshastigheten $\omega$ må bli større.
+
+\par
+
+Det er en siste ting vi ikke kan la forbli usagt i denne teksten. Hva skjer dersom rotasjonsaksen flyttes? Dersom et legemes rotasjon rundt en spesifikk akse har treghetsmoment $I_0$, hva er treghetsmomentet $I$ dersom aksen forskyves en avstand $\mathbf{r}_0$?
+Vi kan da skrive
+\[
+I = \int (\mathbf{s}-\mathbf{r}_0)^2 dm
+= \int s^2 dm - 2\mathbf{r}_0\cdot \int \mathbf{s}  dm + \int r_0^2 dm
+= I_0 - 2\mathbf{r}_0\cdot m\mathbf{R}' + mr_0^2
+\]
+der $\mathbf{R}'$ er massesenterets projeksjon på $xy$-planet. Det betyr at hvis den opprinnelige rotasjonsaksen gikk gjennom massesenteret til legemet, så må $\mathbf{R}'=\mathbf{0}$ og dermed
+\[
+I =  I_{CM} + mr_0^2
+\]
+der $I_{CM}$ er treghetsmomentet for rotasjon rundt legemets massesenter. Dette resultatet er så nyttig at det er gitt et eget navn: {\it Parallell-akse-teoremet}. Legg merke til at siden $mr_0^2$ aldri kan bli negativt kan treghetsmomentet aldri bli mindre enn når rotasjonsaksen går gjennom legemets massesenter.
+
+Det er ofte komplisert å beregne treghetsmomentet til et legeme. For de utålmodige eksisterer det av den grunn lister over treghetsmomentet til ulike legemers rotasjon om seg selv. Utrustet med parallell-akse-maskineriet kan du da finne treghetsmomentet for rotasjon om enhver akse.
+
+
+\section{Energi i Rotasjonsbevegelse}
+Dersom vi behandler et roterende legeme som utstrakt er det klart at det må ha en assosiert kinetisk energi. Punktpartiklene som utgjør legemet har tross alt en bevegelsesmengde. Vårt mål er imidlertid å absorbere informasjonen om legemets utstrekning i et lite knippe tall, slik at vi kan gå tilbake til å behandle legemet som om det var en punktpartikkel. La oss derfor gjenta gymnastikken ved å beregne den kinetiske energien i et fast legeme som roterer med vinkelhastighet $\omega$ om $z$-aksen.
+
+Siden den kinetiske energien til partikkel $i$ er gitt ved $K_i = \frac{1}{2}m_i \mathbf{v}_i\cdot \mathbf{v_i}$ må den totale kinetiske energien $K$ til legemet være gitt av
+\[
+  K = \sum_i \frac{1}{2}m_i |\mathbf{v}_i|^2.
+\]
+Siden legemet roterer om $z$-aksen har vi, som tidligere, at $|\mathbf{v}_i| = s_i \omega$ der $s_i$ er avstanden til $z$-aksen. Det betyr at den totale kinetiske energien er gitt av
+\[
+  K = \frac{1}{2} \left(\sum_i m_i s_i^2  \right)\omega^2 = \frac{1}{2}I_z \omega^2.
+\]
+Treghetsmomentet $I_z$ og vinkelhastigheten $\omega$ spiller altså rollen som massen og hastigheten til legemet.
+
+La oss nå se for oss to kuler med lik radius $R$ og masse $M$, men med ulikt treghetsmoment $I_1$ og $I_2$. Dersom disse trilles oppover et skråplan med samme massesenterhastighet $v$ kommer de altså ikke like langt opp på skråplanet. Mens begge har en kinetisk energi $\frac{1}{2}Mv^2$ assosiert med forflytningen av massesenteret, vil de i tillegg ha en rotasjonell energi $\frac{1}{2}I(v/R)^2$ som er ulik. Hvor høyt opp en trillende kule kommer finner vi fra energibevaring. Siden det koster en energi $mg$ per høydeenhet kan ikke kulen trille høyere enn
+\[
+  h_{maks} = \frac{v^2}{2g}\left( \frac{I}{MR^2}+1 \right).
+\]
+Kanskje mer relevant er det å tenke over hva som skjer dersom de to kulene begynner i ro i toppen av bakken. Siden den kulen med størst treghetsmoment må bruke mer av energien den får fra å bevege seg nedover i tyngdefeltet på å øke rotasjonshastigheten, vil den også bruke lengre tid på å trille nedover. Likningen over er faktisk en god motivasjon for hvorfor raske sykler bør ha tynne dekk. Siden vi er i ferd med å spore av sparer vi imidertid denne diskusjonen til oppgavene.
+
+
+
+
+
+\section{Stabile Akser og Annet Tullball (Ikke pensum)}
+Da vi fant uttrykket for treghetsmomentet gjorde vi unødvendig mange antagelser. Det totale angulærmomentet til en fast legeme bestående av punktpartikler med masser $\{m_i\}$, posisjoner $\{\mathbf{r}_i\}$ og hastigheter $\{\mathbf{v}_i\}$ er gitt av
+\[
+  \mathbf{L} = \sum_i m_i \mathbf{r}_i \times \mathbf{v}_i.
+\]
+For sirkelbevegelse med konstant vinkelhastighet $\omega$ og radius $s_i$ kan vi skrive hastigheten $|\mathbf{v}_i|=\omega s_i$. La oss nå opphøye $\omega$ til en vektorstørrelse $\pmb{\omega}$ med $|\pmb{\omega}|=\omega$ slik at den peker langs rotasjonsaksen i retningen $\mathbf{s}_i \times \mathbf{v}_i$, der $\mathbf{s_i}$ er vektoren med lengde $s_i$ og retning fra rotasjonsaksen til partikkelen.
+Vi kan da skrive $\mathbf{v}_i = \pmb{\omega}\times \mathbf{s}_i$. Hvis rotasjonsaksen går gjennom Origo kan man faktisk alltid skrive $\mathbf{v}_i=\pmb{\omega}\times \mathbf{r}_i$ der $\mathbf{r}_i$ nå er posisjonen til partikkelen som roterer ifølge $\pmb{\omega}$. For rotasjon rundt sin egen akse kan vi altså skrive
+\[
+  \mathbf{L} = -\sum_i m_i \mathbf{r}_i \times (\mathbf{r}_i  \times \pmb{\omega})
+\]
+dersom vi med $\mathbf{r}_i$ mener partikkelens posisjon sett fra massesenteret. Her er det mange måter å gå frem på, men la oss holde oss til noe som kanskje er kjent. Hvis vi tenker på en vektor som en matrise med bare én kolonne kan vi skrive skalarproduktet $\mathbf{a}\cdot \mathbf{b}$ som $\mathbf{a}^T \mathbf{b}$, der $\mathbf{a}^T$ betyr at vi omgjør vektoren til en matrise med bare én rad. Ved å benytte uttrykket
+\[
+  \mathbf{a}\times (\mathbf{b}\times \mathbf{c}) = \mathbf{b} \mathbf{a}^T \mathbf{c}- (\mathbf{a}^T \mathbf{b}) \mathbf{c}
+\]
+for triple kryssprodukt kan vi uttrykke det totale angulærmomentet ved
+\[
+  \mathbf{L} = \left[-\sum_i m_i (\mathbf{r}_i \mathbf{r}_i^T-\mathbf{r}_i^T \mathbf{r}_i)\right]\pmb{\omega}
+\]
+som betyr at vi har funnet et generelt uttrykk for treghetsmomentet
+\[
+  \hat{I} = -\sum_i m_i (\mathbf{r}_i \mathbf{r}_i^T-\mathbf{r}_i^T \mathbf{r}_i),
+\]
+nå som en matrise som virker på vektoren $\pmb{\omega}$. Se nå for deg et fast legeme som roterer med vinkelhastighet $\pmb{\omega}=\omega \mathbf{e}_z$ og anta at det det totale kraftmomentet $\pmb{\tau}$ som virker på legemet er null. Vi vet allerede at $L_z$, $z$-komponenten til angulærmomentet, må være bevart. Nå vet vi også at dersom $\pmb{\omega}$ er en egenvektor til $\hat{I}$ med egenverdi $I$ så må $\mathbf{L}=I\pmb{\omega}$.
+I fravær av et totalt kraftmoment $\pmb{\tau}$ vil da \textit{hele} angulærmomentvektoren $\mathbf{L}$ være bevart. Dette er selvfølgelig under antagelsen at du er i stand til å igangsette rotasjonen nøyaktig i retningen $\pmb{\omega}$.
+
+La oss gjøre en siste ting før vi gir oss -- nemlig demonstrere den såkalte \textit{tennisracket effekten}. For å gjøre dette må vi bytte til et referansesystem som roterer med legemet. For ikke å bruke for mye tid tar vi det for gitt at $\frac{d\mathbf{L}}{dt}$ uttrykt i referansesystemet som roterer med vinkelhastighet $\pmb{\omega}$ er gitt av
+\[
+  \left(\frac{d\mathbf{L}}{dt}\right)_{rot} + \pmb{\omega}\times \mathbf{L} = \pmb{\tau}
+\]
+der det første leddet er tidsendringen til angulærmomentet i det roterende referansesystemet, det andre uttrykker byttet av referansesystem og $\pmb{\tau}$ er det totale kraftmomentet\footnote{Igjen kan den kritiske leser overbevise seg om at dette stemmer ved å skrive $\mathbf{L}=\sum_i L_i\mathbf{e}_i$. Siden $\mathbf{e}_i$ roterer må både $L_i$ og $\mathbf{e}_i$ deriveres. Fra produktregelen og $\frac{d}{dt}\mathbf{e}_i=\pmb{\omega}\times \mathbf{e}_i$ når man da det ønskede uttrykket.}.
+
+Siden treghetsmomentmatrisen $\hat{I}$ er antisymmetrisk, som betyr at $\hat{I}^T=-\hat{I}$, kan vi bruke et resultat fra linjær algebra: Egenvektorene til en anti-symmetrisk matrise er orthogonale\footnote{Den skeptiske leser kan overbevise seg om at dette er sant ved å anta at $A$ er en antisymmetrisk matrise ($A^T=-A$) og bruke spektralteoremet ($A=PDP^{-1}$) til å overbevise seg om at man må ha $P^{-1}=P^T$ og at dette betyr at egenvektorene må være orthogonale.}. I visshet om at dette er sant kan vi velge $x$, $y$ og $z$-aksen til å peke langs egenvektorene til $\hat{I}$. I fravær av kraftmoment får vi da, ved å skrive likningen over på komponentform,
+\begin{align*}
+  & I_x \frac{d\omega_x}{dt} = (I_y-I_z)\omega_y \omega_z \\
+  & I_y \frac{d\omega_y}{dt} = (I_z-I_x)\omega_z \omega_y \\
+  & I_z \frac{d\omega_z}{dt} = (I_x-I_y)\omega_y \omega_x, \\
+\end{align*}
+der vi har brukt at $\mathbf{L}=\hat{I}\pmb{\omega}$ og $I_x$, $I_y$ og $I_z$ er egenverdiene til henholdsvis $\mathbf{e}_x$, $\mathbf{e}_y$ og $\mathbf{e}_z$. Disse likningene er så viktige at de er gitt et navn --  \textit{Eulerlikningene for faste legemer}. Hvis de tre treghetsmomentene er ulike, la oss si $I_x < I_y < I_z$, oppstår det da en pussig effekt. Se for deg at du roterer legemet i retningen $\mathbf{e}_y$. Du klarer imidertid aldri å treffe helt presist, så la oss si at $\omega_x$ får også en ørliten verdi.
+Kort tid senere vi da $\omega_z$ få en liten negativ verdi. Det leder til at $\omega_x$ øker mer, som igjen leder til at $\omega_z$ avtar mer. Resultatet er en ustabil rotasjon rundt $y$-aksen. Vi har altså oppdaget noe som alltid gjelder for legemer med tre ulike treghetsmoment -- rotasjon om den aksen med mellomstort trehetsmoment er alltid ustabil! Denne effekten kalles \textit{tennisracket effekten}. Du har muligens forsøkt å kaste mobilen din i luften imens den roterer. Du vil da ha erfart at rotasjonsaksen definert av mobilens bredde er ustabil.
+
+Det er nå fristende å snakke om hva som skjer når legemer roterer ekstremt fort eller når ekstremt små legemer roterer, men dette er overraskelser som får vente til kurs i relativitetsteori og kvantefysikk.
+
+
+
+
+
+% Det heldige er at det faktisk er mulig å skrive et kryss-produkt $\mathbf{a}\times \mathbf{b}$ som et matriseprodukt
+% \[
+%   \mathbf{a}\times \mathbf{b}
+%   = \left(\begin{matrix}
+%   0     & -b_z  & b_y \\
+%   b_z   & 0     & -b_x \\
+%   0     & b_x   & 0 \\
+%   \end{matrix}\right)
+%   \left(\begin{matrix}
+%   b_x \\
+%   b_y \\
+%   b_z \\
+%   \end{matrix}\right).
+% \]
+% La oss kalle denne matrisen for $[\mathbf{a}\times]$. Vi kan da skrive det totale angulærmomentet som
+% \[
+%   \mathbf{L}
+%   = \left(-\sum_i m_i [\mathbf{r}_i \times]^2 \right) \pmb{\omega}.
+% \]
+% Vi har altså funnet det generelle uttrykket for treghetsmomentet, nemlig
+% \[
+%   I = \left(-\sum_i m_i [\mathbf{r}_i \times]^2 \right).
+% \]
+% Dette ser imidlertid helt forferdelig ut!
+
+\newpage
+
+
+
+
+
+\part*{Formler}
+
+\begin{equation*}
+\begin{align}
+  \mathbf{L} & = \mathbf{r}\times \mathbf{p}  \ \     \text{(Punktpartikkel)} \\
+\end{align}
+\end{equation*}
+
+For å illustrere analogien mellom translasjons- og rotasjonsbevegelse er ulike størrelser listet opp parvis:
+
+\begin{multicols}{2}
+
+\begin{equation*}
+\begin{align}
+  & x                     \ \     \text{(Posisjon)}      \\
+  & v = \frac{dx}{dt}     \ \     \text{(Fart)}          \\
+  & a = \frac{d^2x}{dt^2} \ \     \text{(Akselerasjon)}   \\
+  & m                     \ \     \text{(masse)}         \\
+  & F                     \ \     \text{(Kraft)}         \\
+  & F_{tot} = ma = \frac{dp}{dt}    \ \ \text{(Newton II)}       \\
+  & E_K = \frac{1}{2}m v^2\ \ \text{(Kinetisk energi)}       \\
+  & p = m v               \ \ \text{(Bevegelsesmengde)}       \\
+\end{align}
+\end{equation*}
+
+\begin{equation*}
+\begin{align}
+  & \theta                            \ \ \text{(Vinkel)} \\
+  & \omega = \frac{d\theta}{dt}       \ \ \text{(Vinkelfart)}        \\
+  & \alpha = \frac{d^2\theta}{dt^2}   \ \ \text{(Vinkelakselerasjon)}\\
+  & I = \int s^2 dm                   \ \ \text{(Treghetsmoment)}     \\
+  & \tau   = r F_\perp                \ \ \text{(Kraftmoment)}       \\
+  & \tau_{tot} = I \alpha = \frac{d\tau}{dt} \ \ \text{(Newton II)}       \\
+  & E_K = \frac{1}{2}I \omega^2       \ \ \text{(Kinetisk energi)}       \\
+  & L = I \omega                      \ \ \text{(Angulærmoment)}       \\
+\end{align}
+\end{equation*}
+
+\end{multicols}
+
+
+
+
+\newpage
+
+
+
+
+\part*{Oppgaver}
+
+\section*{(1) Sykkelhjul}
+Vi studerer en sykkel med masse $m_s$ som har hjul med radius $r$.
+\begin{description}
+  \item[A)] Anta at hjulene på sykkelen ikke har masse. La nå en syklist med masse $m$ trille (uten å trå på pedalene) ned et skråplan med helningsvinkel $\theta$. Hva er farten til syklisten, dersom den begynner i ro, etter den har trillet en lengde $L$ langs skråplanet?
+
+  \item[B)] Hvor lang tid bruker syklisten på å trille en lengde $L$? Hvordan ville uttrykket endret seg dersom vi endret sykkelens masse $m_s$?
+
+  \item[C)] Kan du se et praktisk problem med historien over (utover det å lage masseløse hjul)? \\
+  {\it[HINT: Hvorfor pleier ikke sykler å velte når du sykler på dem?]}
+
+  \item[D)] Anta nå at dekkene er den eneste delen av sykkelen som har vekt og  at dekkene er uendelig tynne. Finn et uttrykk for treghetsmomentet til hjulene for aksen de roterer rundt.
+
+  \item[E)] Gjenta oppgave A), B) og C), men nå ved å ta med hjulenes rotasjon i beregningen. Blir farten større eller mindre?
+
+  \item[F)] Ekvivalensprinsippet konstaterer at ting med ulik masse faller like fort under påvirkning av tyngdekraft. Stemmer beregningene dine overens med ekvivalensprinsippet?
+\end{description}
+
+
+
+\section*{(2) Hvordan endre døgnets varighet}
+Vi skal i denne oppgaven studere alternative måter å endre døgnets varighet på. Du trenger da å vite at jordkloden har masse $M_e = 5.972 \times 10^{24}$kg og radius $R=6.371$km. Vi skal anta at jorden er en perfekt kule med konstant massetetthet.
+
+\begin{description}
+  \item[A)] Vis at treghetsmomentet til en kule med konstant massetetthet som roterer om sitt eget massesenter
+  \[ I = \frac{2}{5}MR^2. \]
+
+  \item[B)] Se nå for deg at vi skjærer av kuleskall med radius $\delta r$ fra jordkloden og fordeler massen i to like tårn som vi plasserer på nord- og sydpolen. Finn et uttrykk for treghetsmomentet jorden da ville hatt. Hvorfor kan du anta at tårnene ikke har innvirkning på treghetsmomentet. \\
+  {\it [HINT: Finn først massen et slikt kuleskall har og bruk formelen fra A)]}
+
+  \item[C)] Hvor tykt må kuleskallet vi skjærer bort være fort at ett døgn skal vare halvparten så lenge som det gjør nå?
+
+  \item[D)] Burj Khalifa i Dubai er med sin 829.8 meters høyde verdens høyeste bygning. Byggets masse er omlag 500 tusen tonn. Anta at Burj Khalifa er en uendelig tynn stokk. Hvor mye endret døgnets varighet seg da Burj Khalifa stod ferdig bygget? Anta at Dubai ligger på ekvator.
+
+  \item[E)] Når månen går i bane rundt jorden drar den med seg vann på jorden og skaper fenomenet tidevann. Dette skaper friksjonskrefter mellom vannet og jordoverflaten som fører til at jorden mister omlag $3 \times 10^{12}$ joule per sekund. Anta at all denne energien tas fra energien i jordens rotasjon om seg selv. Hvor mye endrer døgnets lengde seg per sekund på grunn av dette?
+
+  \item[F)] Med utgangspunkt i oppgave E), anslå hvor lenge døgnet varte da dinosaurene døde ut for 65 millioner år siden.
+
+  \item[G)] Månen mister også litt energi på dette, omlag $0.121 \times 10^{12}$ joule per sekund. Bruk dette til å anslå hvor mye tregere månens omløpstid rundt jorden blir per århundre. Månens masse er omlag $7.3 \times 10^{22}$kg.
+
+  \item[H)] Det er mange flere løvfellende trær på den norlige halvkule enn det er på den sydlige. Bruk dette til å avgjøre om døgnet varer lengst i løpet av den australske sommeren eller den norske.
+\end{description}
+
+
+\section*{(3) Solsystemet}
+\begin{description}
+  \item[A)] Vis at dersom den eneste kraften som virker mellom to punktpartikler er tyngdekraften, er angulærmomentet for rotasjon om massesenteret bevart.
+
+  \item[B)] Bruk det du vet om angulærmoment til å diskutere om det er sannsynlig at en asteroide som oppdages i nærheten av jorden kommer til å treffe jordkloden?
+\end{description}
+
+
+\section*{(4) Godt og blandet}
+\begin{description}
+  \item[A)] Du igangsetter en snurrebass med vinkelhastighet nedover. Den begynner gradvis å velte og massesenteret begynner å rotere rundt den vertikale aksen som går gjennom kontaktpunktet. Hvorfor skjer dette? Hvilken retning kommer massesenteret til å rotere? \\
+  {\it [HINT: kraftmoment er endring i angulærmoment]}
+
+  \item[B)] Et objekt har angulærmoment $L$ oppover. Plutselig deler objektet seg i to like store deler som flyr i hver sin retning. Hvor ble det av angulærmomentet?
+
+  \item[C)] En punktpartikkel med masse $m$ beveger seg med konstant hastighet $\mathbf{v}$ fra et punkt $\mathbf{r}_0$. Finn et uttrykk for angulærmomentet til punktpartikkelen og vis at det er bevart. Hva må til for at angulærmomentet skal være null?
+
+\end{description}
+
+
+\section*{(5) Geometriske i Planetbaner}
+\begin{description}
+  \item[A)] Se for deg en punktpartikkel med posisjon $\mathbf{r}\neq \mathbf{0}$ og konstant hastighet $\mathbf{v}$. Finn et uttrykk for arealet til trekanten utspent av $\mathbf{r}$ og forflytningen $\Delta \mathbf{r} = \mathbf{v} \Delta t$ partikkelen opplever i løpet av en tid $\Delta t$.
+
+  \item[B)] Anta at partikkelen har masse $m$ og uttrykk dens angulærmoment rundt Origo ved arealet fra oppgave A).
+
+  \item[C)] Overbevis deg om at for tilstrekkelig små tidssteg $\Delta t$ gjelder uttrykket fra B) også dersom partikkelen \textit{ikke} har konstant hastighet $\mathbf{v}$.
+  Keplers andre lov konstaterer at \textit{Linjen som forener en planet og solen sveiper ut like arealer over like tidsrom}. Kan du se en forbindelse til bevaring av angulærmoment?
+  % \item[D)] Jordens omløp rundt Jord-Sol massesenteret er elliptisk med eksentrisitet $e = (R_M-R_m)/(R_M+R_m) = 0.0167$ der $R_M\simeq 152.1\times 10^6 km$ er Jordens maksimale avstand fra solen og $R_m\simeq 147.1\times 10^6 km$ den minimale.
+\end{description}
+
+
+\end{document}

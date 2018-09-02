@@ -1,0 +1,602 @@
+
+
+
+\documentclass[a4paper, norsk, 8pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel, textcomp, color, amsmath, amssymb, tikz, subfig, float,esint}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split}
+#1  
+\end{split} \end{equation*} }
+ \newcommand{\DE}[1] {  \begin{description}  #1 \end{description} }
+ \newcommand{\IT}[2] { \item[\color{blue} #1]{#2} }
+ \newcommand{\vv}[1] { \mathbf{#1} }
+ \newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+  \newcommand{\DIFF}[2]{ \frac{d#1}{d#2} }
+ \newcommand{\expe}[1] { \left\langle#1\right\rangle }
+ \newcommand{\ket}[1] { |#1\rangle }
+  \newcommand{\bra}[1] { \langle #1 | }
+  \newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+  \newcommand{\commutator}[2]{ \left[ #1 , #2\right] }
+ 
+  \newcommand{\colvec}[2] { 
+  \left( \begin{matrix}
+ #1 \\
+ #2 \\
+  \end{matrix}\right) }
+ \newcommand{\PLOTS}[4]{ 
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = #3, %usally left
+    xlabel = #1,
+    ylabel = #2,
+]
+#4
+\end{axis}
+\end{tikzpicture}
+}
+
+
+\newcommand{\addPLOT}[4]{
+\addplot [domain=#1:#2,samples=200,color=#3,]{#4};}
+\newcommand{\addCOORDS}[1]{\addplot coordinates {#1};}
+\newcommand{\addDRAW}[1]{\draw #1;}
+\newcommand{\addNODE}[2]{ \node at (#1) {#2};}
+
+%		\PLOTS{x}{y}{left}{
+%			\ADDPLOT{x^2}{-2}{2}{blue}
+%			\ADDCOORDS{(0,1)(1,1)(1,2)}
+%		}
+
+
+
+
+\definecolor{svar}{RGB}{0,0,0}
+\definecolor{opgavetekst}{RGB}{109,109,109}
+\definecolor{blygraa}{RGB}{44,52,59}
+
+\hoffset = -60pt
+\voffset = -95pt
+\oddsidemargin = 0pt
+\topmargin = 0pt
+\textheight = 0.97\paperheight
+\textwidth = 0.97\paperwidth
+
+\begin{document}
+\footnotesize
+\begin{multicols*}{2}
+
+\subsection*{\footnotesize KOMPLEKS ANALYSE }
+\subsubsection*{\small Komplekse uendelige rekker}
+En uendelig kompleks potensrekke $\sum_{n=0}^{\infty}a_nz^n$ har konvergensradius gitt av $R=\lim_{n\rightarrow\infty}\left|\frac{c_n}{c_{n+1}}\right|$ eller $\frac{1}{R}=\limsup_{n\rightarrow\infty}\sqrt[n]{|c_n|}$
+
+\subsubsection*{\small Eksponensialfunksjonen of trigonometriske funksjoner}
+$e^{z}=e^{x+iy}=e^{x}\left(\cos y+i\sin y\right)$. Fra identitetsprinsippet følger det at sinus og cosinus har de vanlige definisjonene
+\[ \cos z = \frac{e^{iz}+e^{-iz}}{2}, \ \ \sin{z}=\frac{e^{iz}-e^{-iz}}{2i} \]
+
+\subsubsection*{\small Hyperbolske funksjoner}
+Sinus og cosinus har hyperbolske verdier langs imaginær akse
+\[ \cosh z = \frac{e^{z}+e^{-z}}{2}, \ \ \sinh{z}=\frac{e^{z}-e^{-z}}{2} \]
+
+\subsubsection*{\small Logaritmer}
+Helt som i $\mathbb{R}$, men må ha $\arg{z}=\theta\in[0,2\pi)$.
+
+\subsubsection*{\small Analytiske funksjoner}
+En funksjon $f:\mathbb{C}\rightarrow\mathbb{C}$ er analytisk/holomorf dersom $f'(z)=\lim_{\Delta z \rightarrow 0}\frac{\Delta f}{\Delta z}$ eksisterer. Hvis $f=u+iv$ er analytisk i et område, da må også $\PAR{u}{x}=\PAR{v}{y}$ og $\PAR{u}{y}=-\PAR{v}{x}$ (Cauchy Riemann). Hvis en funksjon $f$ tilfredsstiller Cauchy-Riemann og $u$ og $v$ har kontinuerlige partiellderiverte i det området, er $f$ analytisk.
+
+\subsubsection*{\small Konturintegraler}
+\textbf{Cauchys teorem:} Hvis $f$ er analytisk på og inni en kontur $\Gamma$, så er $\oint_\Gamma f(z)\mbox{d}z=0$.\\
+\textbf{Cauchys integralformel:} Hvis $f$ er analytisk på og på innsiden av en lekekontur $\Gamma$ har vi
+\[ f^{(n)}(z_0)=\frac{n!}{2\pi i}\oint_\Gamma \frac{f(z)\mbox{d}z}{(z-z_0)^{n+1}}. \]
+Fra dette følger det et nyttig integral
+\[
+\oint_{\partial \mathbb{D} }(z-z_0)^n dz = 2\pi i \delta_{n,\mbox{-1}}
+\]
+
+\subsubsection*{\small Fra reelle til komplekse integraler}
+La $\int_a^b f(x)dx$ være et reelt integral. Vi ønsker å skrive det om til det komplekst integral $\int_{\gamma}g(z)dz$. Dersom det $sin{x}$ og/eller $\cos{x}$ inngår er det lurt å bruke at 
+\[
+\sin{x}=\frac{1}{2i}\left(e^{ix}-e^{-ix}\right)\mbox{ og }\cos{x}=\frac{1}{2}\left( e^{ix}+e^{-ix} \right)
+\]
+med substitusjonen $z=e^{ix}$ blir får vi $\sin{x}=\frac{1}{2i}(z-1/z)$ og $\cos{x}=\frac{1}{2}(z+1/z)$ med $dz=izdx$. For eksempel
+\[
+\int_{-\pi}^{\pi}\frac{dx}{1+\cos{x}}\mapsto \oint_{\partial \mathbb{D} }\frac{dz}{iz(1+z/2+1/2z)}
+\]
+
+\subsubsection*{\small Laurentrekker}
+\[  f(z)=a_0+a_1(z-z_0)+a_2(z-z_0)^2+...+\frac{b_1}{z-z_0}+\frac{b_2}{(z-z_0)^2}+... \]
+Leddene med $b_i$ kalles \textit{prinsipaldelen} og verdien $b_1$ kalles \textit{residyen}.
+
+\subsubsection*{\small Residyteoremet}
+\[ \oint_C f(z)\mbox{d}z=2\pi i \sum_{i}\mbox{res}_i(f) \]
+
+\subsubsection*{\small Prinsipalverdi (PV)}
+Prinsipalverdien til et endelig integral om et punkt $c$ med $a\leq c \leq b$ er gitt av
+\EQU{
+& \mbox{PV }\int_a^b f(x)dx \equiv \lim_{\epsilon\rightarrow 0^+}\left[ \int_a^{c-\epsilon}f(x)dx+\int_{c+\epsilon}^b f(x)dx \right] \mbox{, eller} \\
+& \mbox{PV } \int_{-\infty}^{\infty}f(x)dx\equiv \lim_{R\rightarrow \infty} \int_{-R}^{R}f(x)dx.
+}
+Dersom bidraget fra øvre halvsirkel forsvinner når $R\rightarrow \infty$ kan vi skrive
+\EQU{
+\mbox{PV }\int_{-\infty}^{\infty}f(x)dx=2\pi i \sum_k \mbox{res}(z_k) + \pi i \sum_{i} \mbox{res}(z_i)
+}
+\includegraphics[width=0.1\textwidth]{Contour_750.png} \\
+der $z_k$ er polene i øvre halvplanet, og $z_i$ er polene på den reelle aksen. Det blir helt tilsvarende dersom man skulle ønske heller å integrere langs nedre halvsirkel. 
+
+\subsubsection*{\small Jordans lemma}
+Dersom $f(z)=g(z)e^{iaz}$ er:
+\[
+\left| \int_{\Gamma} f(z)dz \right| \leq \frac{\pi}{a}\max_{\theta\in[0,\pi]}\left|g(Re^{i\theta})\right|
+\]
+Hvis $a>0$ og $f(z)=P(x)/Q(x)$ med deg$(Q)\geq$deg$(P)+1$ så er $\lim_{\rho\rightarrow \infty} \int_{C_\rho^+}e^{iaz}P(z)/Q(z)dz=0$ hvor $C_\rho=\{z: |z|=\rho, \Im{z}\geq 0 \}$ er øvre halvsirkel. Hvis $a<0$ stemmer dette for nedre halvsirkel.
+
+\subsubsection*{\small Metoder for å finne residyer}
+\[ \mbox{res}_{z_0}=\lim_{z\rightarrow z_0} \frac{1}{(n-1)!}\left(\DIFF{}{z}\right)^{n-1}(z-z_0)^nf(z) \]
+
+\subsubsection*{\small Evaluering av noen integraler}
+\[\frac{1}{2\pi i}\oint_C\frac{f'(z)}{f(z)}\mbox{d}z=N-P\] der $N$ er $f$s antall nullpunkter i $C$ og $P$ er $f$s antall poler i $C$.
+Husk $\left|\oint_\gamma f \mbox{d}z\right|\leq \mbox{length}(\gamma)\cdot \sup_{z_0\in\gamma}|f(z_0)|$ og \textbf{Cauchys ulikhet} $\left|f^{(n)(z_0)}\right|\leq \frac{n!}{R^n}\sup_{z\in C}|f(z)| \forall z \in \mbox{int}(C)$.
+
+\subsubsection*{\small Punktet ved $\infty$ og residyene der}
+Funksjonen $f(z)$ har en pol i $\infty$ hvis $f(1/z)$ har en pol i $z=0$. Residyene er like.
+
+
+
+\subsection*{\footnotesize ORDINÆRE DIFFERENSIALLIKNINGER }
+\subsubsection*{\small Separable likninger}
+En differensiallikning kalles separabel dersom den kan skrives om til $f(y)dy=g(x)dx$, da løses den ved å integrere på begge sider.
+
+\subsubsection*{\small Lineære første ordens likninger}
+En lineær første ordens differensiallikning kan skrives generelt som $y'+Py=Q$ der $P$ og $Q$ er funksjoner av $x$. Ved å multiplisere begge sider med $\exp{\int P \mbox{d}x}$ kan man skrive $\DIFF{}{x}\left[y\exp{\int P \mbox{d}x}\right]=Q\exp{\int P \mbox{d}x}$.
+
+\subsubsection*{\small Andre metoder for første ordens likninger}
+\textbf{Bernoullilikningen} $y'+Py=Qy^n$. Ved å skrive $z=y^{1-n}$ blir $z'=(1-n)y^{-n}y'$. Det gir $z'+(1-n)Pz=(1-n)Q$ \\
+\textbf{Eksakte likninger} Hvis $\PAR{P}{y}=\PAR{Q}{x}$
+
+
+\subsubsection*{\small 2. ordens lineære DE med konstante koeffisienter}
+$y''+Ay'+By=0$ løses av $C_1e^{\lambda x}$. Dersom karakteristisk polynom bare har én løsning, forsøk $C_2xe^{\lambda x}$.
+
+\subsubsection*{\small 2. ordens lineære DE med konstante koeffisienter med partikluær løsning }
+Løsninger av $y''+Ay'+By=f(x)$ løses av $y=y_h+y_p$ der $y_h$ løser $y''+Ay'+By=0$ og $y_p$ er partikulær løsning. \\
+\textbf{Suksessiv integrasjon:} Hvis $\lambda^2+A\lambda+B=0$ løses av $\lambda_1$ og $\lambda_2$ kan vi skrive likningen som $\left(\DIFF{}{x}-\lambda_1\right)\left(\DIFF{}{x}-\lambda_2\right)y=f(x)$. Sett $u=\left(\DIFF{}{x}-\lambda_1\right)$ løs $\left(\DIFF{}{x}-\lambda_2\right)u=e^x$, da kan man forhåpentligvis løse $\left(\DIFF{}{x}-\lambda_1\right)y=u$. \\
+\textbf{Eksponensiell høyreside:} Anta $z_p$ lik $Ce^{cx}$ hvis $c\neq\lambda_1,\lambda_2$, $Cxe^{cx}$ hvis $c=\lambda_1$ og $\lambda_1\neq \lambda_2$, og $Cx^2e^{cx}$ hvis $c=\lambda_1=\lambda_2$. Hvis høyresiden er et polynom av grad $n$, anta polynom av grad $n+i$ der $i=0$ for ulik $\lambda$, $i=1$ for lik én $\lambda$ og $i=2$ for lik begge $\lambda$. 
+
+
+\subsubsection*{\small ''\textit{Variation of parameters}'' (for å finne $y_p$)}
+Hvis likningen er skrevet på standardform 
+\[
+y''+p(x)y'+q(x)y=g(x)
+\]
+Der vi har funnet at $y_1(x)$ og $y_2(x)$ er to uavhengige løsninger av den homogene likningen. Vi antar partikulærløsning på formen $y_p=v_1(x)y_1(x)+v_2(x)y_2(x)$ med krav om at $v_1'y_1+v_2'y_2=0$. Det gir
+\EQU{
+y_p'  & =v_1y_1'+v_2y_2' \\
+y_p'' & =v_1'y_1'+v_2'y'_2+v_1y''_1+v_2y''_2
+}
+som gir $v_1'y_1'+v_2'y_2'=g(x)$ og derfor
+\[
+v_1=-\int\frac{y_2g(x)}{y_1y_2'-y_2y_1'}dx, \ v_2=\int\frac{y_1g(x)}{y_1y_2'-y_2y_1'}dx 
+\]
+som gir den partikulære løsningen
+\[
+y_p(x)=y_2\int \frac{y_1 g(x) dx}{y_1y_2'-y_2y_1'}-y_1\int \frac{y_2 g(x) dx}{y_1y_2'-y_2y_1'}
+\]
+
+\subsubsection*{\small Andre 2. ordens likninger}
+\textbf{Hvis $y$ mangler:} Bruk $y'=p$ og $y''=p'$.\\
+\textbf{Hvis $x$ mangler:} Bruker $y'=p$ og $y''=p\DIFF{p}{y}$.\\
+\textbf{Euler-Cauchy:} Hvis $a_2 x^2 \DIFF{^2y}{x^2} + a_1x\DIFF{y}{x}+a_0y=f(x)$ kan man bruke $x=e^{z}$ med $x\DIFF{y}{x}=\DIFF{y}{z}$ og $x^2\DIFF{^2y}{x^2}=\DIFF{^2y}{z^2}-\DIFF{y}{z}$.
+
+\subsubsection*{\small Green funksjoner}
+Hvis $Dy=\DIFF{^2y}{x^2}+P(x)\DIFF{y}{x}+Q(x)y=R(x)$ kan man anta $y=D^{-1}R=\int_{a}^{b}G(x,z)R(z)dz,a\leq x,z\leq b$. Det gir $DD^{-1}R=R=\int_{a}^{b}DG(x,z)R(z)dz\Rightarrow DG=\delta(x-z)$. Ved å integrere opp en $\epsilon$-pølse rundt $z$ finner man 
+\[ \int_{z-\epsilon}^{z+\epsilon}\DIFF{^2G}{x}dx+\int_{z-\epsilon}^{z+\epsilon}P\DIFF{G}{x}dx+\int_{z-\epsilon}^{z+\epsilon}QGdx=\int_{z-\epsilon}^{z+\epsilon}\delta(x-z)dx=1 \]
+Hvis vi antar $G(x,z)$ er kontinuerlig ved $x=z$ får vi $\lim_{\epsilon\rightarrow 0}\left[\DIFF{G}{x}\right]_{z-\epsilon}^{z+\epsilon}=1$. \\
+$\bullet$ Løs $DG=\delta(x-z)$ for $x\neq z$ og krev diskontinuiteten $\lim_{\epsilon\rightarrow 0}\left[\DIFF{G}{x}\right]_{z-\epsilon}^{z+\epsilon}=1$.\\
+\textbf{Husk:} Pass på forskjellen $x<z$ og $x>z$. Når $x\in [a,b]$ er også $z\in [a,b]$. Hvis vi vet $G(a,z)$ gjelder altså dette for $a=x<z$. Hvis fysisk, dvs tidsavhengighet ($x\mapsto t, z\mapsto t'$), er intervallet gjerne i tidsrommet $t,t'\in [0,T]$.\\
+Løsningene blir: 
+\[
+y(x)=\int_x^b G_{1}(x,z)R(z)dz+\int_a^x G_{2}(x,z)R(z)dz
+\]
+der $G_1$ representerer $x<z$ og $G_2$ representerer $x>z$. Vi får fire kriterier: \\
+$\bullet$ $G_1(a,z)=A(z)y_1(a)+B(z)y_2(a)$ \\
+$\bullet$ $G_2(b,z)=C(z)y_1(b)+D(z)y_2(b)$ \\
+$\bullet$ $G_1(z,z)=G_2(z,z)$ \\
+$\bullet$ $\DIFF{}{x}G_2(x,z)\big|_{x=z}-\DIFF{}{x}G_1(x,z)\big|_{x=z}=1$
+
+\subsubsection*{\small Greenfunksjoner i 3D}
+Helt tilsvarende som for éndimensjonalt tilfelle. \\
+\textbf{Eksempel}: \textit{Poisson}\\
+\EQU{
+& \nabla^2 u(\mathbf{r})=-\rho(\mathbf{r})/\epsilon_0 \\
+\Rightarrow & u(\mathbf{r})=-\frac{1}{\epsilon_0}\int G(\mathbf{r},\mathbf{r}')\rho{\mathbf{r}'}\mbox{d}^3\mathbf{r}' \\
+\Rightarrow & \nabla^2 G(\mathbf{r},\mathbf{r}')=\delta(\mathbf{r}-\mathbf{r}') \\
+}
+Så hvis $\rho(\mathbf{r})=q\delta(\mathbf{r}-\mathbf{r}')$ er $u(\mathbf{r})=q/(4\pi\epsilon_0|\mathbf{r}-\mathbf{r}'|)$
+
+
+
+\subsubsection*{\small Legendres likning}
+\[ (1-x^2)y''-2xy'+l(l+1)y=0 \]
+Ved å anta $y=\sum_{i=0}^\infty a_ix^i$ finner vi $a_{n+1}=-\frac{(l-n)(l+n+1)}{(n+2)(n+1)}a_n$. Løsningen der $y=1$ når $x=1$ ($P_l(1)=1$) kalles \textit{Legendrepolynomene} $P_l(x)$. De første er $P_0(x)=1,P_1(x)=x,P_2(x)=\frac{1}{2}(3x^2-1)$.
+
+\subsubsection*{\small Fröbenius metode med generaliserte rekker}
+Anta løsninger på formen $y=x^s\sum_{n=0}^\infty a_nx^n$. Koeffisientene til laveste eksponent gir $s$. Hvis to: velg den laveste. \\
+\textbf{Hvis to distinkte løsninger for $s$ men ikke heltallsdifferanse:} Hvis $s_1-s_2>0$ og $s_1-s_2 \notin \mathbb{Z}$ gir metoden to lineært uavhengige løsninger. \\
+\textbf{Hvis to distinkte løsninger for $s$ med heltallsdifferanse:} Hvis $s_1-s_2>0$ og $s_1-s_2 \in \mathbb{Z}$ gir metoden ofte en komplett løsning for $s_2$. Prøv $s_2$ først, hvis det ikke gir alle, prøv $s_1$ etterpå. Dersom én løsning $y_1(x)$ er funnet kan den andre finnes ved å sette inn $y_2(x)=C(x)y_1(x)$. \\
+\textbf{Hvis én løsning for $s$:} Vi får én løsning $y_1(x)$. Finner den andre ved $y_2(x)=C(x)y_1(x)$.
+
+\subsubsection*{\small Bessels likning}
+\[ x^2y''+xy'+(x^2-p^2)y=0 \]
+Frobenius gir $s=\pm p$ og løsningen 
+\[ J_p(x)=\sum_{n=0}^\infty \frac{(-1)^n}{\Gamma(n+1)\Gamma(n+1+p)}\left(\frac{x}{2}\right)^{2n+p} \]
+
+\subsubsection*{\small Fuchs teorem (forbindelse: Frobenius)}
+$y''+f(x)y'+g(x)y=0$. Hvis $xf(x)$ og $x^2g(x)$ kan skrives som potensrekker da kan likningen løses av enten (1) To frobeniusrekker eller (2) én frobeniusrekke $S_1(x)$ og en løsning på formen $S_1(x)\ln{x}+S_2(x)$ der $S_2(x)$ er en annen frobeniusrekke.
+
+\subsection*{\footnotesize FOURIERREKKER }
+\subsubsection*{\small Gjennomsnittsverdien av funksjoner}
+Gjennomsnittsverdien til en funksjon $f$ på intervallet $(a,b)$ er \[ \mbox{average}_{(a,b)}(f)=\frac{\int_a^bf(x)dx}{b-a} \] Fra dette fremkommer det at $\sin^2x$ og $\cos^2x$ har gjennomsnittsverdi $1/2$ over én periode.
+
+\subsubsection*{\small Fourierkoeffisienter}
+Vi har $\int_{-\pi}^{\pi}\sin{mx}\cos{nx}dx=0$ med $\int_{-\pi}^{\pi}\sin{mx}\sin{nx}dx=\frac{1}{2}\delta_{nm}$ med $0$ hvis $n=m=0$ og $\int_{-\pi}^{\pi}\cos{mx}\cos{nx}dx=\frac{1}{2}\delta_{nm}$ med $1$ hvis $n=m=0$. Dette gir koeffisientene
+\EQU{
+& a_n =\frac{1}{\pi}\int_{-\pi}^\pi f(x)\cos{nx}\,dx, \ \ b_n = \frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin{nx}\, dx \\
+& \mbox{med } f(x)=\frac{a_0}{2}+\sum_{n=1}^\infty a_n \cos nx + \sum_{n=1}^{\infty}b_n \sin nx.
+}
+
+\subsubsection*{\small Dirichlets kriterier}
+Dersom $f(x)$ har et endelig antall toppunkter, og et endelig antall punktdiskontinuiteter (\textit{bounded}) vil fourierrekken til $f(x)$ konvergere. For andre intervaller og generelle funksjoner  får man da
+\[ f(x)=\sum_{n=-\infty}^{\infty}c_n e^{inx}, \ \ c_n=\frac{1}{2L}\int_{-L}^{L}f(x)e^{-\frac{in\pi x}{L}}dx \]
+eller
+\[  
+a_n=\frac{1}{L}\int_{-L}^L f(x)\cos{nx}\,dx, \ \ b_n = \frac{1}{L}\int_{-L}^L f(x)\sin{nx}\, dx
+\]
+
+\subsubsection*{\small Jevne og odde funksjoner}
+$\bullet$ Hvis $f(-x)=f(x)$ (\textbf{jevn}) må $\forall n: b_n=0 $. Det gir 
+\EQU{
+f(x) &=\frac{a_0}{2}+\sum_{n=1}^\infty a_n \cos \frac{n\pi x}{L} \mbox{ der } \\
+a_n &=\frac{2}{L}\int_0^L f(x)\cos \frac{n\pi x}{L}\, dx, \ b_n=0 \ \forall n.
+}
+$\bullet$ Hvis $f(-x)=-f(x)$ (\textbf{odd}) må $\forall n: a_n=0 $. Det gir
+\EQU{
+f(x) &=\sum_{n=1}^\infty b_n \sin \frac{n\pi x}{L} \mbox{ der } \\
+b_n &=\frac{2}{L}\int_0^L f(x)\sin \frac{n\pi x}{L}\, dx, \ a_n=0 \ \forall n.
+}
+
+\subsubsection*{\small Parsevals teorem}
+Helt generelt (generalisert pythagoras): 
+\[\expe{x,x}=\sum_{v\in \mathcal{B}}|\expe{x,v}|^2\]
+der $\mathcal{B}$ orthonormal og fullstendig basis for indreproduktrom.
+Gjennomsnittet over en periode, avg$\{f(x)^2\}$, er gitt av $\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)^2\, dx$. Siden
+\EQU{ 
+&\mbox{avg}\left\{\left(\frac{1}{2}a_0\right)^2\right\}=\left(\frac{1}{2}a_0\right)^2 \\
+&\mbox{avg}\left\{\left(a_n \cos nx\right)^2\right\}=\frac{1}{2}a_n^2 \\
+&\mbox{avg}\left\{\left(b_n \sin nx\right)^2\right\}=\frac{1}{2}b_n^2 \\
+}
+så vi kan bruke 
+\EQU{
+&\mbox{avg}\left\{ f(x)^2 \right\}=\left(\frac{a_0}{2}\right)^2+\frac{1}{2}\sum_{n=1}^\infty a_n^2+\frac{1}{2}\sum_{n=1}^\infty b_n^2  \\
+&\mbox{avg}\left\{ |f(x)|^2 \right\}=\sum_{-\infty}^{\infty}|c_n|^2.
+}
+\textbf{Parseval for fouriertransformasjoner:} 
+\[\int_{-\infty}^{\infty}|g(\alpha)|^2d\alpha=\frac{1}{2\pi}\int_{-\infty}^{\infty}|f(x)|^2dx\]
+
+
+\subsection*{\footnotesize INTEGRALTRANSFORMASJONER }
+\subsubsection*{\small Fouriertransformasjoner}
+\EQU{
+f(x)=& \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}g(\alpha)e^{i\alpha x}d\alpha \\
+g(\alpha)=\mathcal{F}\{f(x)\}=& \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(x)e^{-i\alpha x}dx
+}
+for odde funksjoner: $e^{\pm i \alpha x}\mapsto \sin \alpha x$\\
+for jevne funksjoner: $e^{\pm i \alpha x}\mapsto \cos \alpha x$ \\
+\textbf{Transformasjon av PDE:} 
+Ved å bruke delvis integrasjon og 
+\[
+\mathcal{F} \left\{ \PAR{^2u(x,t)}{x^2} \right\} = -\alpha^2 \mathcal{F} \left\{ u(x,t)\right\} =-\alpha^2U(\alpha,t)
+\]
+Mer generellt:
+\[
+\mathcal{F} \left\{ \PAR{^nu(x,t)}{x^n} \right\} = (i\alpha)^n \mathcal{F} \left\{ u(x,t)\right\} =(i\alpha)^n U(\alpha,t)
+\]
+så lenge $\int_{\mathbb{R}}|f|^2 dx < \infty$. \\
+\textbf{$\mathcal{F}$(Gaussian)=Gaussian:}
+\[
+\mathcal{F}\left\{ Ne^{-\gamma x^2} \right\} = \frac{N}{\sqrt{2\gamma}}e^{-\frac{\alpha^2}{4\gamma}}
+\]
+
+
+\subsubsection*{\small Laplace transformasjoner}
+\[
+\mathcal{L}\{f\}=\int_0^\infty f(t)e^{-pt}dt=F(p)
+\]
+Mest viktig er $\mathcal{L}\{y'\}=p\mathcal{L}\{y\}-y(0)=pY-y_0$ og dermed også $\mathcal{L}(y'')=p^2\mathcal{L}\{y\}-py(0)-y'(0)$. Gitt en DE, transformer hele likningen, løs likningen for $\mathcal{L}\{y\}=Y$ algebraisk, finn den inverstransformerte. Det vil si \\
+$\bullet$ Gitt $f(y^{(n)},...,y',x)=0$ finn $\mathcal{L}\{f\}=g(Y,p)=0$ \\
+$\bullet$ Løs $g(Y,p)=0$ for $Y$ og få $Y=H(p)$ \\
+$\bullet$ inverstransformér $Y=H(p)$ og få $y(x)=\mathcal{L}^{-1}\{Y\}=\mathcal{L}^{-1}\{H\}$. Dette gjøres gjerne ved å skrive $H$ på formen $H=\mathcal{L}\{h\}$. Da er $y=h$.
+
+\begin{tabular}{|l l l|}
+\hline
+$f(x)$ 			& $\mathcal{L}\{f(x)\}(p)$ 		& krav \\ \hline
+$1$    			& $\frac{1}{p}$ 				& $\Re\{p\}>0$  \\
+$x$    			& $\frac{1}{p^2}$ 				& $\Re\{p\}>0$  \\
+$e^{-ax}$ 		& $\frac{1}{p+a}$ 				& $\Re\{p+a\}>0$ \\
+$u(t-a)$ 		& $\frac{1}{p}e^{-pa}$ 			& $u$ er heaviside step function \\
+$g(t-a)u(t-a)$ 	& $e^{-pa}\mathcal{L}\{g\}(p)$  & $u$ er heaviside step function \\
+$\delta(x-a)$ 	& $e^{-pa}$ 					& \\
+$e^{-ax}g(x)$ 	& $\mathcal{L}\{g\}(p+a)$ 	& \\
+$t^n g(x)$ 		& $(-1)^n\DIFF{^n}{p^n}\mathcal{L}\{g\}(p)$ 	& \\
+$\int_0^x g(\tau)d\tau$ 	& $\frac{1}{p}\mathcal{L}\{g\}(p)$ 	& \\ 
+\hline
+\end{tabular}
+
+\subsubsection*{\small Konvolusjon}
+Anta vi ønsker å studere situasjoner av typen $H(p)=\mathcal{L}\{h(x)\},G(p)=\mathcal{L}\{g(x)\}$ og 
+\[
+\mathcal{L}\{g*h\}=\mathcal{L}\left\{g\right\} \mathcal{L}\left\{h\right\}
+\]
+der 
+\[
+g*h=\int_0^t g(t-\tau)h(\tau)d\tau, \ \mbox{ med } g*h=h*g. 
+\]
+
+\subsubsection*{\small Dirac delta funksjonen}
+\[
+\delta(x-x_0)=\frac{1}{2\pi}\int_{-\infty}^{\infty}e^{i(x-x_0)k}dk
+\]
+
+
+\subsection*{\footnotesize TENSORER }
+\subsubsection*{\small Kartesiske tensorer}
+\textbf{Kartesiske tensorer:} En kartesisk vektor $\mathbf{v}$ består av tre tall $V_1,V_2,V_3$ i ethvert rektangulært koordinatsystem. Hvis $V_1',V_2',V_3'$ er komponentene i et rotert koordinatsystem er samlingen av komponenter relatert ved $\mathbf{V'}=A\mathbf{V}$, der $A$ er en rotasjonsmatrise. Vi kan skrive $V_i'=\sum_{j=1}^3 a_{ij}V_j$. Med \[A_{ij}=\mathbf{e}_i'\cdot \mathbf{e}_j\] for $\{\mathbf{e}_1,\mathbf{e}_2,\mathbf{e}_3 \}\overset{A}{\mapsto}\{\mathbf{e}_1',\mathbf{e}_2',\mathbf{e}_3'  \}$. Dette generaliseres. Tensor av annen rang må transformere ved $T_{kl}'=A_{ki}A_{lj}T_{ij}$. Direkte produkt er gitt av 
+\[
+\left(\begin{matrix}
+U_1 \\ U_2 \\ U_3 \\
+\end{matrix}\right)
+\otimes
+\left(\begin{matrix}
+V_1 \\ V_2 \\ V_3 \\
+\end{matrix}\right)
+=
+\left(\begin{matrix}
+U_1V_1 & U_1V_2 & U_1V_3 \\
+U_2V_1 & U_2V_2 & U_2V_3 \\
+U_3V_1 & U_3V_2 & U_3V_3 \\
+\end{matrix}\right)
+\]
+
+\subsubsection*{\small Tensornotasjon og Operasjoner}
+En tensor som er symmetrisk tilfredsstiller $T_{ij}=T_{ji}$ og en antisymmetrisk tilfredsstiller $H_{ij}=-H_{ji}$, da også $H_{ii}=0$. \\
+\[
+(AB)_{ij})=A_{ij}B_{ij}, \ A^{-1}_{ij}A_{jk}=\delta_{ik}, \ X'_{i} = A_{ij}X_{j}
+\]
+
+\subsubsection*{\small Treghetsmomenttensoren}
+Fra $\mathbf{L}=I\mathbf{\omega}$ får vi $L_{j}=I_{jk}\omega_k$ og fra $\mathbf{L}=m\mathbf{r}\times (\mathbf{\omega}\times \mathbf{r})$ får vi 
+\[
+I_{xx}=m(y^2+z^2), \ I_{xy}=-mxy, \ I_{xz}=-mxz.
+\]
+Der
+\[
+[\mathbf{I}]=\left[\begin{matrix}
+I_{xx} & I_{xy} & I_{xz} \\
+I_{yx} & I_{yy} & I_{yz} \\
+I_{zx} & I_{zy} & I_{zz} \\
+\end{matrix}\right]
+=m\left[\begin{matrix}
+y^2+z^2 & -xy & -xz \\
+-yx & x^2+z^2 & -yz \\
+-zx & -zy & x^2+y^2 \\
+\end{matrix}\right]
+\]
+
+\subsubsection*{\small Kronecker delta og Levi-Civita symbolet}
+\[
+\delta_{ij}=\begin{cases}
+1 & \mbox{ hvis } i=j \\
+0 & \mbox{ hvis } i\neq j \\
+\end{cases}\]
+\[
+\epsilon_{ijk}=\begin{cases}
+1 & \mbox{ hvis } ijk=123,231, \mbox{ eller } 312 \\
+-1 & \mbox{ hvis } ijk=321,213, \mbox{ eller } 132 \\
+0 & \mbox{ hvis noen indekser er like} \\
+\end{cases}
+\]
+med
+\[
+\epsilon_{ijk}\epsilon_{imn}=\delta_{jm}\delta_{kn}-\delta_{jn}\delta_{km}
+\]
+Kan brukes til $(\mathbf{a}\times \mathbf{b})_i = a_j b_k \epsilon_{ijk}$ og 
+\[
+\mbox{det}\left(\begin{matrix}
+a_{11} & a_{12} & a_{13} & \cdots \\ 
+a_{21} & a_{22} & a_{23} & \cdots \\
+a_{31} & a_{32} & a_{33} & \cdots \\
+\vdots & \vdots & \vdots & \ddots \\
+\end{matrix}\right)=a_{1i}a_{2j}a_{3k}\epsilon_{ijk}
+\]
+
+\subsubsection*{\small Pseudovektorer og pseudotensorer}
+\textbf{''Polar vector'' (ekte vektor):} Oppfører seg fint \\
+\textbf{''Axial vector'' (pseudovektor):} Hvis $\mbox{det }A=-1$. Hvis $\mathbf{U}$ og $\mathbf{V}$ er polare vektorer er $\mathbf{U}\times \mathbf{V}$ en ''aksiell'' vektor (pseudovektor). \\
+Dersom tensorer ikke transformerer som tensorer skal, kalles de for \textit{Pseudotensorer}. Eksempler er\\
+\textbf{Levi-Civita:} siden $\epsilon'_{\alpha \beta \gamma}=(\mbox{det } A) a_{\alpha i} a_{\beta j} a_{\gamma k} \epsilon_{ijk}=\epsilon_{\alpha \beta \gamma}$.  \\
+\textbf{Kryssproduktet:} Siden $(\mathbf{U}'\times \mathbf{V}')_\alpha=(\mbox{det } A)a_{\alpha i}(\mathbf{U}\times \mathbf{V})_i$\\
+
+
+\subsection*{\footnotesize PARTIELLE DIFFERENSIALLIKNINGER }
+\textbf{MERK:} Når man antar stasjonær løsninger er den generelle løsningen en kombinasjon av de stasjonære (kompletthet).
+
+\subsubsection*{\small Laplaces likning}
+\[
+\nabla^2 u = 0
+\]
+I sylindriske koordinater:
+\[
+\frac{1}{r}\PAR{}{r}\left(r\PAR{u}{r}\right)+\frac{1}{r^2}\PAR{^2 u}{\theta^2}+\PAR{^2 u}{z^2}=0
+\]
+I kulekoordinater:
+\[
+\frac{1}{r^2}\PAR{}{r}\left(r^2\PAR{u}{r}\right)+\frac{1}{r^2 \sin \theta} \PAR{}{\theta}\left(\sin \theta \PAR{u}{\theta} \right)+\frac{1}{r^2 \sin^2 \theta}\PAR{^2u}{\phi^2}=0
+\]
+
+\subsubsection*{\small Varmelikningen}
+\[
+\nabla^2 u = \frac{1}{\alpha^2}\PAR{u}{t}
+\]
+Lurt å anta separasjonen $u(\mathbf{r},t)=F(\mathbf{r})T(t)$. Det gir 
+\[
+\nabla^2 F + k^2 F=0 \mbox{ og } T = e^{-k^2 \alpha^2 t}
+\]
+romlikningen kalles \textbf{Hermholtz likningen}. Gitt løsningen $u_k = F_k T_k$ er den generelle løsningen gitt som 
+\[
+u(\mathbf{r},t)=\sum_{n=0}^\infty C_n F_{k_n}(\mathbf{r})  T_{k_n}(t)
+\]
+
+\subsubsection*{\small Schrödingerlikningen}
+\[
+-\frac{\hbar^2}{2m}\nabla^2 \Psi + V\Psi = i\hbar \PAR{}{t}\Psi
+\]
+Ved å studere stasjonære løsninger $\Psi(\mathbf{r},t)=\psi(\mathbf{r})T(t)$ får vi $T=e^{-i E t /\hbar}$.
+\subsubsection*{\small Bølgelikningen}
+\[
+\nabla^2 u = \frac{1}{v^2}\PAR{^2u}{t^2}
+\]
+Anta separasjonen $u(\mathbf{r},t)=\Gamma(\mathbf{r})T(t)$ som gir
+\[
+\frac{1}{\Gamma}\nabla^2\Gamma = \frac{1}{v^2}\frac{1}{T}\PAR{^2T}{t^2}=-k^2
+\]
+\subsubsection*{\small Steady-state temperatur i en sylinder}
+Laplacelikningen i sylindriske koordinater med antakelsen $u=R(r)\Theta(\theta)Z(z)$ gir
+\[
+\frac{1}{R}\frac{1}{r}\DIFF{}{r}\left(r\DIFF{R}{r}\right)+\frac{1}{\Theta}\frac{1}{r^2}\DIFF{^2\Theta}{\theta^2}+\frac{1}{Z}\DIFF{^2 Z}{z^2}=0
+\]
+som gir 
+\EQU{
+& \frac{1}{Z}\DIFF{^2Z}{z^2}=K^2 \\
+& \frac{1}{\Theta} \DIFF{^2 \Theta}{\theta^2}=-n^2 \\
+& \frac{r}{R}\DIFF{}{r}\left(r\DIFF{R}{r}\right)-n^2+K^2 r^2=0
+}
+der $R(r)$ løses av Besselfunksjonene $J_n(Kr)$.
+
+
+\subsubsection*{\small Poissons likning}
+Dersom kraften $\mathbf{F}$ tilfredsstiller $\nabla \cdot \mathbf{F}=0$ får vi $\nabla^2V=0$ for potensialet $V$. Ved å benytte divergenseteoremet kan man vise det mer generelle $-\nabla^2V=\nabla \cdot \mathbf{F}_s$ der $\mathbf{F}_s$ er kraften fra massen inne i et legeme $S$.
+\[
+\nabla^2 u = f(x,y,z)
+\]
+Løses av
+\[
+u(x,y,z)=-\frac{1}{4\pi}\iiint \frac{f(x',y',z')}{\sqrt{(x-x')^2+(y-y')^2+(z-z')^2}}dx'dy'dz'
+\]
+EKSEMPLER: \\
+\textbf{punktladning utenfor jordet kule:} En punktladning $q$ befinner seg på $z$-aksen utenfor en jordet kule med radius $R$ og senter i Origo. Det elektrostatiske potensialet $V$ avhenger da av ladningstettheten $\rho$ ved $\nabla^2 V = -4\pi \rho$
+
+
+\subsection*{\footnotesize VARIASJONSREGNING }
+\subsubsection*{\small Eulerlikningen}
+Anta du ønsker å gjøre et integral av typen
+\[
+I=\int_{x_1}^{x_2}F(x,y,y')dx
+\]
+stasjonært. Da kan man bruke
+\[
+\DIFF{}{x}\PAR{F}{y'}-\PAR{F}{y}=0.
+\]
+\textbf{Hvis} $F(x,y',y)=F(y,y')$: velg\\
+\[x'=\left(\DIFF{y}{x}\right)^{-1}, \ y'=\frac{1}{x'}, \ dx= x dy \]
+
+\subsubsection*{\small Brachistokroneproblemet}
+Gitt punktene $(x_1,y_1)$ og $(x_2,y_2)$. Hva er den veien et objekt i et tyngdefelt må følge for å komme fra punkt 1 til punkt 2 på kortest mulig tid? \\
+Siden $T-V=\frac{1}{2}mv^2-mgy=0$ får vi $v=\sqrt{2gy}$ og derfor:\\
+$\int dt = \int \frac{ds}{v} = \int \frac{ds}{\sqrt{2gy}}=\frac{1}{\sqrt{2g}}\int_{x_1}^{x_2} \frac{\sqrt{1+(y')^2}}{\sqrt{y}}dx$. Det gir $x'=\sqrt{cy/(1-cy)}$ og med kravet om at kurven går gjennom origo får vi $x=\frac{1}{2c}(\theta-\sin \theta)$ og $y=\frac{1}{2c}(1-\cos \theta)$ som er parametriseringen av en \textit{cycloid}.
+
+
+\subsection*{\footnotesize ORTHOGONALE FUNKSJONER }
+Det finnes en spesiell underklasse av homogene differensiallikninger
+\[
+y''+P(x)y'+Q(x)y=0,
+\]
+klassen kan skrives på formen
+\[
+\DIFF{}{x}\left[ p(x)y' \right]+\left[ q(x)+\lambda r(x) \right]y = 0 \mbox{ med } r(x)>0.
+\]
+EKSEMPLER:\\
+\textbf{Legendre:} \\
+$(1-x^2)y''-2xy'+n(n+1)y=0$ \\
+her er $\lambda=n(n+1), p(x)=1-x^2, q(x)=0, r(x)=1$. \\
+\textbf{Fourier:} \\
+$y''+(n\pi/L)^2y=0$ \\
+her er $\lambda=(n \pi/L)^2, p(x)=1, q(x)=0, r(x)=1$. \\
+\textbf{Hermite:} \\
+$y''-2xy'+2ny=0$ (multiplikasjon med $e^{-x^2}$ gir riktig form) \\
+$e^{-x^2}y''-2xe^{-x^2}y'+2ne^{-x^2}y=0$ \\
+her er $\lambda=2n, p(x)=e^{-x^2}, q(x)=0, r(x)=e^{-x^2}$. \\
+\textbf{Laguerre:} \\
+$xy''+(1-x)e^{-x}y'+\lambda e^{-x} y=0$ (multiplikasjon med $e^{-x}$ gir riktig form)\\
+$xe^{-x}y''+(1-x)e^{-x}y'+\lambda e^{-x}y = 0$ \\
+her er $p(x)=xe^{-x}, q(x)=0, r(x)=e^{-x}$. \\
+\textbf{FELLESTREKK:}\\
+Vi studerer egentlig egenverdilikningene med generell form
+\[
+Dy+\lambda r(x) y = 0
+\]
+der 
+\[
+D = p(x)\DIFF{^2}{x^2}+p'(x)\DIFF{}{x}+q(x)
+\]
+med randbetingelser for $x=a$ og $x=b$, dvs $x\in[a,b]$.\\
+\textbf{Legendre:} $x\in[-1,1]$\\
+\textbf{Fourier:} $x\in[-L,L]$\\
+\textbf{Hermite:} $x\in(-\infty,\infty)$\\
+\textbf{Laguerre:} $x\in[0,\infty)$\\
+Hvis differensialoperatoren $D$ tilfredsstiller
+\[
+\int_{a}^{b}y_n(x)^*D y_m(x) dx = \int_{a}^{b} y_m(x) D y_n(x)^* dx
+\]
+for randbetingelsene $x=a$ og $x=b$ kalles $D$ for en \textit{Hermitisk operator}. Da tilfredsstiller den følgende: \\
+$\bullet$ Egenverdiene er reelle. \\
+$\bullet$ Egenfunksjonene er orthogonale på $x\in[a,b]$. \\
+$\bullet$ Egenfunksjonene utgjør et komplett sett på $x\in[a,b]$. \\
+\subsubsection*{\small Legendre}
+\textbf{Egenfunksjoner:} \\
+Legendrepolynomer $y_n(x)=P_n(x)$ for $x\in[-1,1]$. \\
+\[ \mbox{\textbf{Orthogonalitet: }}  \int_{-1}^1 P_n(x)P_m(x)dx=\frac{2}{2n+1}\delta_{nm}.\] 
+\EQU{
+\mbox{\textbf{Kompletthet: }} & f(x)=\sum_{n=0}^\infty a_nP_n(x),x\in[-1,1] \\
+& \mbox{med } a_n=\frac{2n+1}{2}\int_{-1}^1 f(x) P_n(x)dx
+}
+
+\subsubsection*{\small Hermite}
+\textbf{Egenfunksjoner:}\\ 
+Hermitepolynomer $y_n(x)=H_n(x)$ for $x\in(-\infty,\infty)$. \\
+\[\mbox{\textbf{Orthogonalitet: }}\int_{-1}^1 e^{-x^2}H_n(x)H_m(x)dx=2^n n! \sqrt{\pi}\delta_{nm}\] \\
+\textbf{Kompletthet:} \EQU{
+&f(x)=\sum_{n=0}^\infty a_nH_n(x),x\in(-\infty,\infty)\\ 
+& \mbox{med } a_n=\frac{1}{2^n n! \sqrt{\pi}}\int_{-\infty}^\infty f(x) e^{-x^2} H_n(x)dx
+}
+\subsection*{\small FOURIER TRANSFORMS}
+\includegraphics[scale=1.5]{SHEET.png}
+
+\end{multicols*}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+

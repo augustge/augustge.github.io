@@ -1,0 +1,98 @@
+
+
+\documentclass[a4paper, norsk, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel, textcomp, color, amsmath, amssymb, tikz, subfig, float,esint}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split}
+#1  
+\end{split} \end{equation*} }
+ \newcommand{\DE}[1] {  \begin{description}  #1 \end{description} }
+ \newcommand{\IT}[2] { \item[\color{blue} #1]{#2} }
+ \newcommand{\vv}[1] { \mathbf{#1} }
+ \newcommand{\PAR}[2]{ \frac{\partial #2}{\partial #1}}
+ \newcommand{\ket}[1] { |#1\rangle }
+  \newcommand{\bra}[1] { \langle #1 | }
+  \newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+  \newcommand{\colvec}[2] { 
+  \left( \begin{matrix}
+ #1 \\
+ #2 \\
+  \end{matrix}\right) }
+ \newcommand{\PLOTS}[4]{ 
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = #3, %usally left
+    xlabel = #1,
+    ylabel = #2,
+]
+#4
+\end{axis}
+\end{tikzpicture}
+}
+
+\newcommand{\addPLOT}[4]{
+\addplot [domain=#1:#2,samples=200,color=#3,]{#4};}
+\newcommand{\addCOORDS}[1]{\addplot coordinates {#1};}
+\newcommand{\addDRAW}[1]{\draw #1;}
+\newcommand{\addNODE}[2]{ \node at (#1) {#2};}
+
+%		\PLOTS{x}{y}{left}{
+%			\ADDPLOT{x^2}{-2}{2}{blue}
+%			\ADDCOORDS{(0,1)(1,1)(1,2)}
+%		}
+
+
+
+
+\definecolor{svar}{RGB}{0,0,0}
+\definecolor{opgavetekst}{RGB}{109,109,109}
+\definecolor{blygraa}{RGB}{44,52,59}
+
+
+\title{ \color{blue} \Huge ENT3R \\ \large abstakt algebra}
+\author{ \color{blue} August Geelmuyden }
+\date{}
+\begin{document}
+  \maketitle
+\subsection*{Et eksempel}
+Behovet for å abstrahere algebra kan vises ved et eksempel. Tenk deg at du ønsker å undersøke symmetriene til et kvadrat. Det vil si, alle operasjonene du kan gjøre på et kvadrat slik at det ser likt ut før og etter operasjonen. la oss betegne kvadratets tilstand ved dets fire hjørner $(1,2,3,4)$. Vi kan rotere kvadratet med klokken ved hjelp av tranformasjonen \[ (1,2,3,4) \overset{\rho}{\rightarrow} (4,1,2,3). \] Dersom vi fortsetter å rotere kvadratet vil vi se følgende mønster \[ (1,2,3,4) \overset{\rho}{\rightarrow} (4,1,2,3) \overset{\rho}{\rightarrow} (3,4,1,2) \overset{\rho}{\rightarrow} (2,3,4,1) \overset{\rho}{\rightarrow} (1,2,3,4). \]
+Ikke overraskende ser vi at fire rotasjoner tilsvarer ingenting-operasjonen, den såkalte identitetsoperasjonen. Videre ser vi at kvaratet kan snus opp ned. Denne operasjonen kan vi skrive slik \[ (1,2,3,4) \overset{\mu}{\rightarrow} (2,1,4,3).  \]
+Dette er imidlertid en nokså tungvin måte å behande operasjonene på. Vi kan heller la $\rho$ være en rotasjon med klokken, og $\mu$ være opp-ned-snuing og utarbeide en algebra hved hjelp av sammenhengene mellom disse. Vi gir identitetsoperasjonen symbolet $e$ og ser at $\rho^4 = \mu^2 = e$ dersom eksponenter nå betyr hvor mange ganger vi bruker operasjonen. videre har vi $\mu \rho \mu = \rho^{-1}$ siden 
+\[ 
+(1,2,3,4) \overset{\mu}{\rightarrow} (2,1,4,3) \overset{\rho}{\rightarrow} (3,2,1,4) \overset{\mu}{\rightarrow} (2,3,4,1) = (1,2,3,4) \overset{\rho^{-1}}{\rightarrow} (2,3,4,1).
+\]
+Vi har altså utarbeidet regneregler for symmetriene til et kvadrat. Vi kan ved hjelp av disse reglene fort finne de åtte ulike symmetriene til kvadratet:
+\[ Sym(\blacksquare) = \{e,\rho,\rho^2,\rho^3, \mu \rho, \mu \rho^2, \mu \rho ^3 \}. \]
+
+\subsection*{Generelt}
+La oss først innføre litt notasjon. Dersom du har to mengder $X$ og $Y$, disse kan for eksempel være reelle tall ($\mathbb{R}$), ønsker vi ofte å omtale alle mulige kombinasjoner av elementer fra $X$ og $Y$. Denne mengden kalles {\it det kartesiske produktet} $X\times Y$ og består av elementer på formen $x\times y$ der $x$ er i $X$ og $y$ er i $Y$. Selv om dette virker rart kjenner dere godt til konseptet. Når dere tegner grafer lager dere en $x$- og en $y$-akse. Hvert punkt på grafen kan da tenkes på som en unik kombinasjon av én $x$-verdi og én $y$-verdi, og er derfor en delmengde av kartesiske produktet $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$, der $\mathbb{R}$ er mengden som inne holder alle ''reelle'' tall. \par 
+Dette bringer oss til begrepet om binærrelasjon. En binærrelasjon på en mengde $X$ er en delmengde $\mathcal{R}$ av $X \times X$. Dersom vi lar $X$ være mengden bestående av alle mennesker kan vi for eksempel la $\mathcal{R}$ være en relasjonen ''er forelder til''. Dersom $x$ er forelder til $y$ kan man enten skrive $x \times y \in \mathcal{R}$ eller simpelthen $x\mathcal{R} y$. Eksempler på slike relasjoner er ''$\geq$'' på tall, ''$=$'' på tall, ''kommer etter'' i enhvert samling av hendelser i tid, osv...   
+
+\subsection*{Grupper}
+En mengde $X$ sammen med en binærrelasjon $*:X\times X\rightarrow X$ kalles en gruppe $G=\langle X,*\rangle$ dersom:
+\begin{itemize}
+\item[I.] For alle elementer $g_1,g_2,g_3$ i $G$ er slik at $(g_1*g_2)*g_3=g_1*(g_2*g_3)$.
+\item[II.] Det eksisterer et identitetselement $e$ i $G$ som er slik at for alle $g$ i $G$ er $e*g=g*e=g$.
+\item[III.]	For alle elementer $g$ i $G$ eksisterer det et element $g^{-1}$ i $G$ som er slik at $g*g^{-1}=g^{-1}*g=e$.
+\end{itemize}
+  
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+

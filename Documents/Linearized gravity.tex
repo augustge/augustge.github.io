@@ -1,0 +1,434 @@
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+% \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.1} % Line spacing - Palatino needs more space between lines
+% \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont  Notes on General Relativity\\
+\textbf{Linearized Gravity and Gravitational waves} } % Article title
+
+\author{
+\large
+\textsc{August Geelmuyden}\\[2mm] % Your name
+\normalsize Universitetet i Oslo \\ % Your institution
+\vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+
+
+
+
+
+
+
+
+
+
+%===============================================================================
+\section{Perturbation theory}
+%===============================================================================
+
+Solving the Einstein equation for the spacetime metric is tremendously difficult. Actually, there are only a few known analytic solutions corresponding to different symmetry situations. Amongst these are the {\it Minkowski} metric of flat spacetime, the {\it Schwarzschild} metric of vacuum around a point mass in a static, spherically symmetric spacetime, the {\it Kerr} metric which generalizes Schwarzschild to a rotating mass, the maximally symmetric vacuum solution, {\it de Sitter}, with a positive cosmological constant, and the {\it Friedmann–Lemaitre–Robertson–Walker} metrics describing a homogeneous, isotropic expanding or contracting universe that is path connected.
+
+If in possession of a known solution, one is often interested in the effect of a small perturbation of the system. For instance, in the case of weak gravitational fields one expects the metric to resemble the Minkowski metric $\eta_{\mu\nu}$. Hence we may consider a small perturbation of flat spacetime
+\[
+g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu} \text{ for } |h_{\mu\nu}|\ll 1
+\]
+and try to solve the Einstein equation to linear order in $h$. For obvious reasons, this theory is referred to as {\it linearized gravity}.
+
+First note that in order to construct the inverse metric, one has to have
+\[
+g^{\mu\nu} = \eta^{\mu\nu} - h^{\mu\nu}.
+\]
+Moreover, the metric $g^{\mu\nu}$ is tensorial under any coordinate change $x^\mu \mapsto x'^\mu$ meaning that it transforms according to the relation
+\[
+g'_{\mu\nu} =
+\frac{\partial x^\rho}{\partial x'^\mu}
+\frac{\partial x^\sigma}{\partial x'^\nu}
+g_{\rho \sigma}.
+\]
+In the presence of gravitational fields, this is not the case for $\eta$ and $h$. By definition $\eta$ is tensorial under Lorentz tranformations, so if $x^\mu \mapsto x'^\mu$ is a lorentz transformation, then
+\[
+h'_{\mu\nu}
+=
+\frac{\partial x^\rho}{\partial x'^\mu}
+\frac{\partial x^\sigma}{\partial x'^\nu}
+h_{\rho \sigma}
+=
+\Lambda^{\rho}_{\ \mu}
+\Lambda^{\sigma}_{\ \nu}
+h_{\rho \sigma}.
+\]
+Now, let us derive the linearized Einstein equation. Note first that since $\partial_\rho g_{\mu\nu} =\partial_\rho h_{\mu\nu}$ the Christoffel symbols cannot contain terms of zeroth order in $h$. Hence
+\begin{align*}
+  \Gamma^{\rho}_{\mu\nu}
+  & \equiv \frac{1}{2}g^{\rho \sigma}
+  \left(
+  \partial_\mu g_{\nu \sigma} + \partial_\nu g_{\sigma \nu} - \partial_\sigma g_{\nu \mu}
+  \right) \\
+  & = \frac{1}{2}\eta^{\rho \sigma}
+  \left(
+  \partial_\mu h_{\nu \sigma} + \partial_\nu h_{\sigma \nu} - \partial_\sigma h_{\nu \mu}
+  \right) + \mathcal{O}(h^2).
+\end{align*}
+As for the Riemann tensor, the terms quadratic in the Christoffel symbols will be quadratic in $h$ so
+\begin{align*}
+  R_{\mu \nu \rho \sigma}
+ &= \eta_{\mu \tau} R^{\tau}_{ \ \nu \rho \sigma}
+  =
+    \eta_{\mu \tau} \partial_\rho \Gamma^\tau_{\nu \sigma}
+  + \eta_{\mu \tau} \Gamma^\tau_{\rho \lambda} \Gamma^\lambda_{\sigma \nu}
+  - \eta_{\mu \tau} \partial_\sigma \Gamma^\tau_{\nu \rho}
+  - \eta_{\mu \tau} \Gamma^\tau_{\sigma \lambda} \Gamma^\lambda_{\rho \nu} \\
+ &= \eta_{\mu \tau} \partial_\rho \Gamma^\tau_{\nu \sigma}
+  - \eta_{\mu \tau} \partial_\sigma \Gamma^\tau_{\nu \rho} + \mathcal{O}(h^2) \\
+ &= \frac{1}{2}\left( \partial_\rho \partial_\nu h_{\mu\sigma} + \partial_\sigma \partial_\mu h_{\nu \rho} - \partial_\sigma \partial_\nu h_{\mu\rho} - \partial_\rho \partial_\mu h_{\nu \sigma}   \right).
+\end{align*}
+Upon contraction of indices, this yields the Ricci tensor
+\begin{align*}
+  R_{\nu \sigma}
+ &= R^{\mu}_{ \ \nu \mu \sigma}
+  = \frac{1}{2}\left( \partial^\mu \partial_\nu h_{\mu\sigma} + \partial_\sigma \partial^\mu h_{\nu \mu} - \partial_\sigma \partial_\nu h - \partial^\mu \partial_\mu h_{\nu \sigma}   \right) \\
+ &= \frac{1}{2}\left( \partial^\mu \partial_\nu h_{\mu\sigma} + \partial_\sigma \partial^\mu h_{\nu \mu} - \partial_\sigma \partial_\nu h - \Box h_{\nu \sigma}   \right)
+\end{align*}
+where $\Box = -\partial_t^2+\partial_x^2+\partial_y^2+\partial_z^2$ is the d'Alembertian operator and $h=h^\mu_{\ \mu}$ is the trace of the perturbed metric. Hence, we are left with the curvature scalar
+\[
+R = R^\nu_{\ \nu}
+= \partial_\mu \partial_\nu h^{\mu\nu} - \Box h.
+\]
+In the end, we are thus equipped with an Einstein tensor of the form
+\begin{align}
+  G_{\mu\nu}
+  &= R_{\mu\nu}-\frac{1}{2}\eta_{\mu\nu} R
+  = \frac{1}{2}\left( \partial^\rho \partial_\mu h_{\rho\nu} + \partial_\nu \partial^\rho h_{\mu \rho} - \partial_\nu \partial_\mu h - \Box h_{\mu \nu}
+  -\eta_{\mu\nu}\partial_\rho \partial_\sigma h^{\rho \sigma} + \eta_{\mu\nu}\Box h  \right), \label{eq:EinsteinTensor}
+\end{align}
+meaning that the Einstein equation states that
+\begin{align}
+  16\pi G T_{\mu\nu}
+  = \partial^\rho \partial_\mu h_{\rho\nu} + \partial_\nu \partial^\rho h_{\mu \rho} - \partial_\nu \partial_\mu h - \Box h_{\mu \nu}
+  -\eta_{\mu\nu}\partial_\rho \partial_\sigma h^{\rho \sigma} + \eta_{\mu\nu}\Box h. \label{eq:EinsteinEq}
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+%===============================================================================
+\section{Gauge invariance}
+%===============================================================================
+In the previous section, we bravely defined a perturbation $h_{\mu\nu}$ on a flat background spacetime by the relation
+\[
+g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}.
+\]
+Although this works fine, we should bear in mind that there might be many different coordinate systems for which this equation is true. That is, $h$ is not completely specified by this relation.
+
+Let $M_b$ be the background spacetime and $M_p$ the physical spacetime and consider a diffeomorphism $\phi:M_b \rightarrow M_p$. As manifolds, the two spacetimes are the same, but they possess different tensor fields. For instance, $M_b$ is equipped with the Minkowski metric $\eta_{\mu\nu}$, while on $M_p$ the metric is $g_{\mu\nu}$ -- a tensor that obeys the linearized Einstein equation (\ref{eq:EinsteinEq}). We want to construct a linearized theory on the flat background spacetime, so our main concern is the pullback $(\phi^*g)_{\mu\nu}$ of the physical metric $g_{\mu\nu}$. The perturbation can then be defined as the difference
+\begin{align}
+h_{\mu\nu} \equiv (\phi^*g)_{\mu\nu}-\eta_{\mu\nu}. \label{eq:hPerturbation}
+\end{align}
+If the gravitational fields on $M_p$ are weak, then for some diffeomorphisms $\phi$, we will have the desired $|h_{\mu\nu}|\ll 1$. Now consider a vector field $\xi^\mu(x)$ on $M_b$. This vector field generates a one-parameter family of diffeomorphisms
+\[
+\psi_\epsilon : M_b \rightarrow M_b
+\]
+describing the flow along the integral curves of $\xi^\mu(x)$ parametrized by $\epsilon$. Since $\psi_0$ corresponds to the identity map, the perturbation $h_{\mu\nu}$ will be small if the parameter $\epsilon$ is small. Hence we can, for any vector field $\xi^\mu(x)$ on $M_b$ define a family of perturbations
+\[
+h_{\mu\nu}^{(\epsilon)}
+\equiv [(\phi \circ  \psi_\epsilon)^*g]_{\mu\nu}-\eta_{\mu\nu}
+=      [\psi_\epsilon^*(\phi^*g)]_{\mu\nu}-\eta_{\mu\nu}
+\]
+parametrized by $\epsilon$. By virtue of equation (\ref{eq:hPerturbation}) we thus have the relation
+\begin{align*}
+h_{\mu\nu}^{(\epsilon)}
+&= [\psi_\epsilon^*(h+\eta)]_{\mu\nu}-\eta_{\mu\nu}
+ = \psi_\epsilon^*(h_{\mu\nu})+\psi_\epsilon^*(\eta_{\mu\nu})-\eta_{\mu\nu} \\
+&= \psi_\epsilon^*(h_{\mu\nu}) + \epsilon\left[\frac{\psi_\epsilon^*(\eta_{\mu\nu})-\eta_{\mu\nu}}{\epsilon}\right],
+\end{align*}
+where, as $\epsilon\rightarrow 0$, the last term becomes the Lie derivative $\mathcal{L}_\xi \eta_{\mu\nu}$ of $\eta$ describing how the flat spacetime metric $\eta_{\mu\nu}$ changes along the flow of $\xi^\mu(x)$. Using that $\mathcal{L}_\xi \eta_{\mu\nu} = 2\nabla_{(\mu}\xi_{\nu)}=2\partial_{(\mu}\xi_{\nu)}$, and $\psi_\epsilon^*(h_{\mu\nu}) \rightarrow h_{\mu\nu}$ as $\epsilon \rightarrow 0$, we are left with the expression
+\begin{align}
+  h_{\mu\nu}^{(\epsilon)} = h_{\mu\nu}+2\epsilon \partial_{(\mu}\xi_{\nu)}. \label{eq:GaugeInvariance}
+\end{align}
+This means that in order to completely specify the perturbed metric $h$, we must choose a condition that fixes the vector $\xi^\mu$. Such a condition is referred to as a {\it Gauge fixing condition}, and the vector $\xi^\mu$ is referred to as the {\it gauge}.
+
+The concept of gauge invariance is not confined to General relativity. In Electrodynamics, a gauge transformation $A_\mu \mapsto A_\mu + \partial_\mu \alpha$ of the vector potential leaves the field strength tensor $F_{\mu\nu}$ invariant. Similarly, we could have observed that the linearized Riemann tensor $R_{\mu \nu \rho \sigma}$ derived in the last section is left invariant under the gauge transformation $h_{\mu\nu} \mapsto h_{\mu\nu}+2\partial_{(\mu}\xi_{\nu)}$.
+
+Gauge invariance should be considered a nice property of the theory. When faced with a difficult calculation, choosing a wise gauge will often simplify the calculation tremendously.
+
+
+
+
+
+
+
+
+
+
+
+%===============================================================================
+\section{Field Decomposition and Dynamical Degrees of Freedom}
+%===============================================================================
+In studying the electromagnetic field tensor, it turns out to be a good idea to consider how the components behave under spatial rotations. In particular, separating the degrees of freedom that do not mix under such rotations. This ultimately leads to the distinction between the electric and magnetic field corresponding to the time-space and space-space parts of the field tensor respectively. Inspired by the triumph of approach in electromagnetism, we try to do the same analysis of the perturbed metric $h_{\mu\nu}$. We now expect more degrees of freedom arising from the fact that $h_{\mu\nu}$ is symmetric, and not antisymmetric like the electromagnetic field tensor. Hence we may define
+\begin{align*}
+  h_{00} &= -2\Phi \\
+  h_{0i} &= w_i \\
+  h_{ij} &= 2s_{ij}-2\Psi \delta_{ij}
+\end{align*}
+where
+\[
+s_{ij} = \frac{1}{2}\left( h_{ij}-\frac{1}{3}\delta^{kl}h_{kl}\delta_{ij} \right)
+\]
+is the traceless part of $h_{ij}$ and thus
+\[
+\Psi = -\frac{1}{6}\delta^{ij}h_{ij}.
+\]
+This allows us to express the line element by
+\begin{align}
+  ds^2 = -(1+2\Phi)dt^2+w_i(dtdx^i+dx^idt)+[(1-2\Psi)\delta_{ij}+2s_{ij}]dx^idx^j. \label{eq:LineElement}
+\end{align}
+As for the decomposition of the time-time component of the Einstein tensor we find
+\begin{align*}
+  2G_{00}
+  &= \partial^\rho \partial_0 h_{\rho 0} + \partial_0 \partial^\rho h_{0 \rho} - \partial_0 \partial_0 h - \Box h_{00}
+  -\eta_{00}\partial_\rho \partial_\sigma h^{\rho \sigma} + \eta_{00}\Box h \\
+  &= 2\partial^\rho \partial_t h_{\rho 0} - \partial_t^2 h - \Box h - \Box h_{00}
+  +\partial_\rho \partial_\sigma h^{\rho \sigma} \\
+  &= 2\partial^\rho \partial_t h_{\rho 0} - \nabla^2 h - \Box h_{00}
+  +\partial_\rho \partial_t h^{\rho 0}
+  +\partial_\rho \partial_i h^{\rho i} \\
+  &= -\partial_t^2 h_{0 0} + \partial^i \partial_t h_{i 0}
+  - \nabla^2 (-h_{00}+h_{ij}\delta^{ij}) - \Box h_{00}
+  +\partial_t \partial_i h^{0 i}
+  +\partial_j \partial_i h^{j i}\\
+  &= 2\partial_t^2 \Phi + \partial^i \partial_t w_i
+  - \nabla^2 (2\Phi-6\Psi) +2 \Box \Phi
+  -\partial_t \partial_i w^i
+  +\partial_j \partial_i (2s^{ij}-2\Psi \delta^{ij})\\
+  &= 4\nabla^2 \Psi
+  +2 \partial_j \partial_i s^{ij}. \\
+\end{align*}
+Performing the same kind of decomposition of the other components, we are left with the following decomposition of the Einstein tensor:
+\begin{align*}
+  G_{00} &= 2\nabla^2 \Psi + \partial_j \partial_i s^{ij} \\
+  G_{0j} &= -\frac{1}{2}\nabla^2 w_j + \frac{1}{2}\partial_j\partial_i w^i
+            +2\partial_t \partial_j \Psi + \partial_t \partial_i s_j^{\ i} \\
+  G_{ij} &= (\delta_{ij}\nabla^2-\partial_i\partial_j)(\Phi-\Psi)
+            +\delta_{ij}\partial_t \partial_k w^k - \partial_t\partial_{(i}w_{j)} + 2\delta_{ij}\partial_t^2 \Psi \\
+         & \ \ \ -\Box s_{ij} + 2\partial_k \partial_{(i}s_{j)}^{\ k} -\delta_{ij}\partial_{k}\partial_{l}s^{kl}.
+\end{align*}
+Looking closely you may find this somewhat surprising. The first equation is an equation for $\Psi$, but it does not contain any time derivatives. Hence, knowing the values of $T_{\mu\nu}$ and $s_{ij}$ at certain point in time, we can determine $\Psi$. This means that $\Psi$ is {\it not} a dynamical degree of freedom. The first equation, when forced to equal $8\pi T_{00}$, should hence be interpreted not as an equation of motion, but a constraint equation for $\Psi$. Likewise, the second equation constrains $w_i$ without the presence of time derivatives. Hence also $w_i$ is not a propagating degree of freedom. In a similar fashion, the last equation robs $\Phi$ of its possibility to be a dynamical degree of freedom. We are thus forced to conclude that the only dynamical degree of freedom in linearized gravity is the traceless, spatial part of the perturbed metric.
+
+The equations above looks complicated, but remember, we have not chosen a gauge yet. Under a gauge transformation $h_{\mu\nu} \mapsto h_{\mu\nu}+2\partial_{(\mu}\xi_{\nu)}$ the constituents of $h$ transform according to
+\begin{align*}
+  \Phi    & \mapsto \Phi - \partial_{t}\xi_{0}  \\
+  w_i     & \mapsto w_i + \partial_t \xi_i + \partial_i \xi_0 \\
+  \Psi    & \mapsto \Psi - \frac{1}{3}\partial_i \xi^i \\
+  s_{ij}  & \mapsto s_{ij} + \partial_{(i}\xi_{j)}-\frac{1}{3}\partial_k\xi^k\delta_{ij}.
+\end{align*}
+Now, different gauges are appropriate in different circumstances. We could in principle choose any demand that amounts to constraining the four degrees of freedom in $\xi^\mu$\footnote{Even in the presence of four constraints, the gauge is not perfectly fixed. One also has to supply boundary conditions in order for a unique fixing of the gauge freedom.}. Choosing a bad gauge, however, may prove fatal.
+
+
+
+
+
+
+
+
+%===============================================================================
+\section{Gravitational Waves}
+%===============================================================================
+One particularly nice choice of gauge would be to fix the strain to be spatially transverse: $\partial_i s^{ij}=0$ by choosing $\xi^j$ to satisfy
+\[
+\partial^i \left( s_{ij} + \partial_{(i}\xi_{j)}-\frac{1}{3} \partial_k\xi^k\delta_{ij}\right) = 0,
+\]
+or equivalently,
+\[
+\nabla^2 \xi^j + \frac{1}{3}\partial_j \partial_i \xi^i = -2\partial_i s^{ij}.
+\]
+Now that we have used three constaint, there is only one remaining. For consistency, we constrain $w_i$ to also be transverse ($\partial_iw^i=0$) by demanding
+\[
+\nabla^2 \xi^0 = \partial_i w^i + \partial_t \partial_i \xi^i.
+\]
+In this gauge, the vacuum solutions ($T_{\mu\nu}=0$) of linearized gravity takes a nice form. The time-time equation states that
+\[
+2\nabla^2 \Psi = 0,
+\]
+meaning that $\Psi=0$. Furthermore, the time-space equation demands
+\[
+-\frac{1}{2}\nabla^2 w_j=0,
+\]
+which is solved by $w_j=0$. What remains of the Einstein equation is thus
+\[
+(\delta_{ij}\nabla^2-\partial_i\partial_j)\Phi
+-\Box s_{ij}
+= 0.
+\]
+Still should remain true when $i=j$, in which case
+\[
+2\nabla^2\Phi
+= 0,
+\]
+since $s_{ij}$ is traceless. Hence we also have $\Phi=0$. This illustrates the power of choosing a wise gauge. The equation for linearized gravity in vacuum, expressed in transverse gauge, is simply
+\[
+\Box s_{ij} = 0 \text{ for } \partial_i s^{ij}=0.
+\]
+This is the wave equation! Any solution to this equation can be written as a superposition of plane waves
+\[
+s_{ij} = C_{ij}e^{ik_\mu x^\mu},
+\]
+where the dispersion relation can be found by inserting the solution back into the equation. The result is $k_\mu k^\mu = 0$. That is, gravitational waves propagate in the speed of light.
+
+Invoking the criterion $\partial_i s^{ij}=0$ on the plane wave solution yields the constraint $k^i C_{ij} = 0$. If the wave propagates in the $z$-direction, giving $k^\mu=(\omega,0,0,\omega)$, this means that $C_{3j}=C_{j3}=0$. In other words, the ''polarization'' of gravitational waves are, just like for electromagnetic waves, always perpendicular to the direction of propagation.
+
+We have now found that the polarization matrix $C_{ij}$ of gravitational plane waves propagating in the $z$-direction can, at most, have four degrees of freedom:
+\[
+(C_{ij})=
+\left(\begin{matrix}
+  C_{11} &  C_{21} &  0 \\
+  C_{12} &  C_{22} &  0 \\
+  0      &  0      &  0 \\
+\end{matrix}\right).
+\]
+Furthermore, $s_{ij}$ is by definition traceless, meaning that $C_{11}=-C_{22}$. Since $s_{ij}$ is the spatial, traceless part of $h_{\mu\nu}$ $s_{ij}$ must be symmetric. This means that $C_{12}=C_{21}$. This means that the polarization of gravitational waves have only two degrees of freedom. It is conventional, for reasons that will become clear later, to use the naming convention $C_{11}=-C_{22}=h_{+}$ and $C_{12}=C_{21}=h_{\times}$. The perturbed metric for gravitational plane waves propagating in the $z$-direction expressed in the transverse gauge, thus takes the form
+\[
+(h_{\mu\nu})
+= \left(\begin{matrix}
+  0      &  0      &  0      &  0 \\
+  0      &  h_+    & h_\times&  0 \\
+  0      & h_\times& -h_+    &  0 \\
+  0      &  0      &  0      &  0 \\
+\end{matrix}\right)e^{ik_\mu x^\mu} \text{ for } k_\mu = (\omega,0,0,\omega).
+\]
+
+
+
+
+
+
+
+
+%===============================================================================
+\section{The Effect of Gravitational Waves on Objects at rest}
+%===============================================================================
+Consider two particles at rest. Being at rest, they travel along geodesics in spacetime with four-velocity $U_\mu=(1,0,0,0)$. The distance between the particles is thus given by the equation of geodesic deviation:
+\[
+\frac{D^2S^\mu}{d\tau^2}
+=R^{\mu}_{\ \nu \rho \sigma} U^\nu U^\rho S^\sigma
+=R^{\mu}_{\ 00 \sigma} S^\sigma.
+\]
+For a gravitational wave in transverse gauge, we have
+\[
+R_{\mu 0 0 \sigma}
+=\frac{1}{2}\left( \partial_t \partial_t h_{\mu\sigma} + \partial_\sigma \partial_\mu h_{00} - \partial_\sigma \partial_t h_{\mu0} - \partial_t \partial_\mu h_{0 \sigma}   \right)
+=\frac{1}{2} \partial_t^2 h_{\mu\sigma}.
+\]
+The spatial part of the equation for geodesic deviation thus becomes
+\[
+\frac{\partial^2S_j}{\partial\tau^2} = \frac{1}{2} S^\sigma \partial_t^2 h_{j\sigma}.
+\]
+For $h_\times=0$ we this becomes
+\begin{align*}
+\frac{\partial^2S^1}{\partial\tau^2} &= \frac{1}{2} S^1 \partial_t^2 h_+ e^{ik_\mux^\mu} \\
+\frac{\partial^2S^2}{\partial\tau^2} &=-\frac{1}{2} S^2 \partial_t^2 h_+ e^{ik_\mux^\mu}.
+\end{align*}
+To lowest order, the solution is
+\begin{align*}
+S^1_+ &= \left( 1 + \frac{1}{2}A \cos(k_\mu x^\mu) \right)S^1(0) \\
+S^2_+ &= \left( 1 - \frac{1}{2}A \cos(k_\mu x^\mu) \right)S^2(0),
+\end{align*}
+where $A$ is fixed by the initial conditions. Hence, the effect on a ring of test particles in the $xy$-plane can be illustrated by the following diagram:
+{\par
+\centering\includegraphics[width=0.4\textwidth]{gravWave+.png}
+\par}
+where the time evolution of the images are from left to right.
+
+Similarly, for a $h_\times$ polarized gravitational wave, the solution is
+\begin{align*}
+S^1_\times &= \left( 1 + \frac{1}{2}A \cos(k_\mu x^\mu) \right)S^1(0) \\
+S^2_\times &= \left( 1 + \frac{1}{2}A \cos(k_\mu x^\mu) \right)S^2(0).
+\end{align*}
+This amounts to the following effect on a ring of test particles in the $xy$-plane:
+{\par \centering
+\includegraphics[width=0.4\textwidth]{gravWavex.png}
+\par}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

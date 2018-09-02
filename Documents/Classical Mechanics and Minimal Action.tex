@@ -1,0 +1,278 @@
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{listings}
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+% \renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+
+\newcommand{\myfancysymbol}[3]{
+	\raisebox{-#3ex}{\includegraphics[height=#2ex]{#1}}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{
+% \vspace{-15mm}
+\fontsize{22pt}{10pt}\selectfont
+Classical Mechanics and Minimal Action } % Article title
+
+\author{
+\large
+August Geelmuyden
+\\[2mm] % Your name
+\normalsize
+University of Oslo \\ % Your institution
+% \vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle % Insert title
+
+
+%-------------------------------------------------------------------------------
+\section{The Action}
+A big breakthrough in the formal description of physical processes is the Lagrange-Hamilton formalism of Classical mechanics. The main idea is that for any system with $d$ dimensions of freedom $\{q_i\}$, the evolution of the system from time $t_A$ to time $t_B$ is such that the quantity
+\[
+S = \int_{t_A}^{t_B} L(\mathbf{q},\dot{\mathbf{q}},t)dt
+\]
+is minimal. The quantity $S$ is referred to as the {\it Action} and the integrand $L(\mathbf{q},\dot{\mathbf{q}},t)$ the {\it Lagrangian}. The Lagrangian of a physical system is defined to be the difference between kinetic- and potential energy. That is, if $T$ is the kinetic energy and $V$ the potential energy, then $L=T-V$.
+
+%
+% A quantity that is closely linked to the Lagrangian is the {\it Hamiltonian}
+% \[
+% H(\mathbf{q},\mathbf{p},t) = \sum_i \dot{q_i}p_i - L(\mathbf{q},\dot{\mathbf{q}},t),
+% \]
+% where $p_i=\frac{dL}{d\dot{q_i}}$ for $i=1,...,d$ are referred to as the {\it canonical momenta} of the system.
+
+
+The principle that $S$ is minimal for the path of any classical system, conveniently dubbed {\it the principle of least Action}, should be considered more fundamental than the Newtonian prescription of nature. To see this, we first have to find the differential equation that describes the path of minimal action from time $t_A$ to time $t_B$. This is done by considering a tiny change in the path resulting from a variation $\delta q_i$ of the $i$'th coordinate of the system. Such a variation in path leads to a variation in action given by
+\begin{equation*}
+\begin{aligned}
+\delta S
+&= \int
+\left(
+\frac{\partial L}{\partial q_i}\delta q_i
++
+\frac{\partial L}{\partial \dot{q}_i}\delta \dot{q}_i
+\right)dt
+= \int
+\left(
+\frac{\partial L}{\partial q_i}\delta q_i
++
+\frac{\partial L}{\partial \dot{q}_i}\frac{d}{dt}\delta q_i
+\right)dt \\
+&=\int
+\left(
+\frac{\partial L}{\partial q_i}\delta q_i
++
+\frac{d}{dt}\left[\frac{\partial L}{\partial \dot{q}_i}  \delta q_i \right]
+-
+\frac{d}{dt}\left[\frac{\partial L}{\partial \dot{q}_i} \right] \delta q_i
+\right)dt \\
+&=
+\left[\frac{\partial L}{\partial \dot{q}_i}  \delta q_i \right]_{t_A}^{t_B}
++
+\int
+\left(
+\frac{\partial L}{\partial q_i}
+-
+\frac{d}{dt}\left[\frac{\partial L}{\partial \dot{q}_i} \right]
+\right) \delta q_idt.
+\end{aligned}
+\end{equation*}
+Keeping the configuration of the system fixed at the endpoints means that $\delta q_i(t_A)=\delta q_i(t_B)=0$ so that
+\[
+\delta S = \int
+\left(
+\frac{\partial L}{\partial q_i}
+-
+\frac{d}{dt}\left[\frac{\partial L}{\partial \dot{q}_i} \right]
+\right) \delta q_idt.
+\]
+In order for $S$ to be at a minimum, we must have $\delta S = 0$ which implies the relation
+\[
+\frac{\partial L}{\partial q_i}
+-
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_i} = 0,
+\]
+hereby referred to as the {\it Euler-Lagrange equation}.
+Considering a point mass $m$, described by three spatial coordinates $\mathbf{r}=(x,y,z)$, which is subject to a potential $V(\mathbf{r})$, the Lagrangian can be expressed as
+\[
+L(\mathbf{r},\dot{\mathbf{r}})=\frac{1}{2}m\dot{\mathbf{r}}^2-V(\mathbf{r}).
+\]
+The Euler-Lagrange equation then reads
+\[
+\frac{d}{dt}m\dot{x_i}=-\frac{dV}{dx_i},
+\]
+which is Newton's second law of motion for a point particle subjected to conservative forces only.
+
+%-------------------------------------------------------------------------------
+\section{Lagrange-Hamilton formalism}
+
+Since $L$ is of crucial importance, we might benefit from considering how it changes in time. First note that
+\begin{equation*}
+\begin{aligned}
+\frac{dL}{dt}
+&= \sum_i\left[
+ \frac{\partial L}{\partial q_i}\dot{q_i}
++\frac{\partial L}{\partial\dot{q_i}}\ddot{q_i}\right]
++\frac{\partial L}{\partial t}
+= \sum_i\left[
+\frac{\partial L}{\partial q_i}\dot{q_i}
++\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{q_i}}\dot{q_i}\right)-\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q_i}}\right)\dot{q_i} \right]
++\frac{\partial L}{\partial t} \\
+&=
+\sum_i\left[
++\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{q_i}}\dot{q_i}\right)\right]
++
+\sum_i \dot{q}_i
+\underbrace{\left[
+\frac{\partial L}{\partial q_i}-\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q_i}}\right)\right]}_{0}
++
+\frac{\partial L}{\partial t} \\
+&=
+\frac{d}{dt}\sum_i
+\left(\frac{\partial L}{\partial\dot{q_i}}\dot{q_i}\right)
++
+\frac{\partial L}{\partial t}.
+\end{aligned}
+\end{equation*}
+This means that the Legendre transform
+\[
+H(\mathbf{q},\mathbf{p}) = \sum_i\left(\frac{\partial L}{\partial\dot{q_i}}\dot{q_i}\right) - L,
+\]
+where $p_i=\frac{\partial L}{\partial \dot{q}_i}$, referred to as the {\it Hamiltonian}, satisfies
+\[
+\frac{dH}{dt} = -\frac{\partial L}{\partial t}.
+\]
+That is, if $L$ does not explicitly depend on time, then the Hamiltonian of the system is conserved. Now note that if the constraints of the system is time independent, then the physical velocities $\dot{\mathbf{r}}_k$ satisfies
+\[
+\dot{\mathbf{r}}_k = \sum_i \frac{\partial \mathbf{r}_k}{\partial q_i} q_i.
+\]
+Hence, since the kinetic energy is always given by $T=\sum_k \frac{1}{2}m\dot{\mathbf{r}}_k^2$, the kinetic energy must be quadratic in generalized velocity $\dot{q}$. Hence we can write
+\[
+L = \sum_{ij}g_{ij}(\mathbf{q})\dot{q}_i\dot{q}_j - V(\mathbf{q})
+\text{ where }
+g_{ij}(\mathbf{q}) = \sum_{k} \frac{\partial \mathbf{r}_k}{\partial q_i} \frac{\partial \mathbf{r}_k}{\partial q_j}.
+\]
+Using this, we find that
+\[
+\sum_i \frac{\partial L}{\partial \dot{q}_i} \dot{q}_i
+=
+\sum_{ij} g_{ij} \dot{q}_j \dot{q}_i
+= 2T.
+\]
+This means that the Hamiltonian, in the case of time independent constraints, equals the total energy of the system
+\[
+H = T+V.
+\]
+If the Lagrangian of the system do not depend explicitly on time, then we are forced to conclude that the total energy of the system is a conserved quantity.
+
+Now define the {\it canonical momenta}
+\[
+p_i = \frac{\partial L}{\partial \dot{q}_i},
+\]
+which, from the Euler-Lagrange equation, has the property of being conserved if the Lagrangian does not explicitly depend on the generalized coordinate $q_i$. Then, by definition of $H$, we have
+\[
+\frac{\partial H}{\partial p_i} = \dot{q}_i
+\]
+and
+\[
+\frac{\partial H}{\partial q_i}
+= -\frac{\partial L}{\partial q_i}
+= -\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_i}
+= -\dot{p}_i,
+\]
+which is referred to as {\it Hamilton's equations of motion}. By introducing the {\it Possion bracket}
+\[
+\{A,B\}=\sum_j \left( \frac{\partial A}{\partial q_j} \frac{\partial B}{\partial p_j} - \frac{\partial A}{\partial p_j} \frac{\partial B}{\partial q_j} \right),
+\]
+we may use the fact the properties
+\[
+\frac{\partial p_i}{\partial p_j} = \frac{\partial q_i}{\partial q_j} = \delta_{ij}
+\text{ and }
+\frac{\partial q_i}{\partial p_j} = \frac{\partial p_i}{\partial q_j} = 0
+\]
+to write Hamilton's eqations in the form
+\[
+\frac{\partial H}{\partial p_i} = \{q_i,H\}, \ \
+\frac{\partial H}{\partial q_i} = \{p_i,H\}.
+\]
+
+By virtue of Hamilton's equations of motion, any function $F=F(\mathbf{q},\dot{\mathbf{q}},t)$ of the generalized coordinates satisfies
+\begin{equation*}
+\begin{aligned}
+\{F,H\}
+&= \sum_j\left(
+  \frac{\partial F}{\partial q_j} \frac{\partial H}{\partial p_j}
+- \frac{\partial F}{\partial p_j} \frac{\partial H}{\partial q_j}
+\right)
+=
+\sum_j\left(
+  \frac{\partial F}{\partial q_j} \frac{d q_j}{dt}
+- \frac{\partial F}{\partial p_j} \frac{d p_j}{dt}
+\right)
+=
+\frac{dF}{dt}-\frac{\partial f}{\partial t}.
+\end{aligned}
+\end{equation*}
+That is, its time evolution is completely determined by its explicit time dependence and its Poisson bracket with the Hamiltonian
+\[
+\frac{dF}{dt}=\{F,H\}+\frac{\partial F}{\partial t}.
+\]
+In this sense, the Hamiltonian can be seen as the generator of time-translations.
+
+
+
+\end{document}

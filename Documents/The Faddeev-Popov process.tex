@@ -1,0 +1,337 @@
+
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{listings}
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage{esint}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+% \renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+\newcommand{\dd}{ \text{d} }
+\newcommand{\myfancysymbol}[3]{
+	\raisebox{-#3ex}{\includegraphics[height=#2ex]{#1}}
+}
+
+%%%%********************************************************************
+% fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{4}{\textcolor{quotemark}{''}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+				 \def\endfquote{%
+				 \endgroup\par%
+				 \makebox[0pt][l]{%
+				 \hspace{0.8\textwidth}%
+				 \begin{picture}(0,0)(0,0)%
+				 \put(15,15){\makebox(0,0){%
+				 \scalebox{4}{\color{quotemark}''}}}%
+				 \end{picture}}%
+				 \ifx\tempa\empty%
+				 \else%
+				 	 \ifx\tempc\empty%
+				 			\hfill \mbox{}\hfill\tempa\ \emph{\tempb}%
+				 	\else%
+				 			\hfill \mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+				 	\fi\fi\par%
+				 	\vspace{0.5em}%
+				 \end{list}%
+				 }%
+ %%%%********************************************************************
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{
+% \vspace{-15mm}
+\fontsize{22pt}{10pt}\selectfont
+The Faddeev-Popov process } % Article title
+
+\author{
+\large
+August Geelmuyden
+\\[2mm] % Your name
+\normalsize
+University of Oslo \\ % Your institution
+% \vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle % Insert title
+
+%
+% \begin{fquote}[Timothy Gowers]
+%  ... the atlas is a manifold. This is a typical mathematician's use of the word "is", and should not be confused with the normal use.
+% \end{fquote}
+
+
+%-------------------------------------------------------------------------------
+
+\section{A Symptom of Disease}
+
+Classically, the electromagnetic action $S_{EM}$ is expressed by
+\[
+S_{EM} = \int d^4x \left\{ -\frac{1}{4}F_{\mu\nu}F^{\mu\nu}\right\}
+\]
+where $ F_{\mu\nu}=\partial_\mu A_\nu - \partial_\nu A_\mu $ is the electromagnetic field tensor and $A_\mu=(\phi,\mathbf{A})$. The partition function thus becomes
+\[
+Z = \int \mathcal{D}A e^{iS_{EM}}
+\]
+where $\mathcal{D}A=\mathcal{D}A^0 \mathcal{D}A^1 \mathcal{D}A^2 \mathcal{D}A^3$. As we shall see, integrating over all $A^i$ is an overcounting of field configurations.
+
+In order to find the photon propagator, we must first massage the action into the form of a gaussian. First, consider the manipulation
+\begin{equation*}
+\begin{align}
+S_{EM}
+&= -\frac{1}{4}\int d^4 x F^2
+ = -\frac{1}{4}\int d^4 x (\partial_\mu A_\nu - \partial_\nu A_\mu)F^{\mu\nu} \\
+&= -\frac{1}{4}\int d^4 x \left[ \partial_\mu (A_\nu F^{\mu\nu}) - A_\nu \partial_\mu F^{\mu\nu} - \partial_\nu (A_\mu F^{\mu\nu}) + A_\mu \partial_\nu F^{\mu\nu} \right]  \\
+&= -\frac{1}{4}\int d^4 x \left[ A_\mu \partial_\nu F^{\mu\nu} - A_\nu \partial_\mu F^{\mu\nu} \right]  \\
+\end{align}
+\end{equation*}
+where the last equality was reached by demanding the surface terms to vanish at the boundary of spacetime. In terms of $A_\mu$, we thus have
+\begin{equation*}
+\begin{align}
+S_{EM}
+&= -\frac{1}{4}\int d^4 x \left[
+A_\mu \partial_\nu (\partial^\mu A^\nu-\partial^\nu A^\mu)
+- A_\nu \partial_\mu (\partial^\mu A^\nu-\partial^\nu A^\mu)
+\right] \\
+&= -\frac{1}{4}\int d^4 x \left[
+ A_\mu \partial_\nu \partial^\mu A^\nu- A_\mu \partial^2 A^\mu
+- A_\nu \partial^2 A^\nu + A_\nu \partial_\mu \partial^\nu A^\mu
+\right] \\
+&= \frac{1}{4}\int d^4 x \left[
+ 2A_\mu \partial^2 A^\mu- 2A_\mu \partial_\nu \partial^\mu A^\nu
+\right] \\
+&= \frac{1}{2}\int d^4 x A_\mu \left[
+ g^{\mu\nu}\partial^2 - \partial^\nu \partial^\mu
+\right] A_\nu. \\
+\end{align}
+\end{equation*}
+This is a really bad sign. The quadratic form is not invertible. This can be seen from considering the functional determinant
+\[
+\det \left( \partial^\mu \partial^\nu - g^{\mu\nu}\partial^2 \right) = 0.
+\]
+This symptom of disease can be seen more clearly when studying the Fourier transformed fields
+\[
+A_\mu(x) = \int \frac{d^4 k}{(2\pi)^4}\tilde{A}_\mu(k)e^{-ikx}.
+\]
+In terms of the Fourier transformed fields, the action takes the form
+\begin{equation*}
+\begin{align}
+S
+&= \frac{1}{2}\int d^4 x \int \frac{d^4 p}{(2\pi)^4}\tilde{A}_\mu(p)e^{-ipx} \left[
+ g^{\mu\nu}\partial^2 - \partial^\nu \partial^\mu
+\right] \int \frac{d^4 k}{(2\pi)^4}\tilde{A}_\nu(k)e^{-ikx} \\
+&= \frac{1}{2}\int \frac{d^4 k}{(2\pi)^4} \tilde{A}_\mu(-k) \left[
+ k^\nu k^\mu - g^{\mu\nu} k^2
+\right] \tilde{A}_\nu(k).
+\end{align}
+\end{equation*}
+Recall that the physics of electromagnetism is not affected by gauge transformations of the vector potential
+\[
+A_\mu(x) \mapsto A'_\mu(x)=A_\mu(x)+\partial_\mu \alpha(x).
+\]
+Hence, if $A_\mu(x)$ is the null-configuration, then $A_\mu(x)=\partial_\mu \alpha(x)$ for any $\alpha(x)$, which is referred to as {\it pure gauge}. Since the Fourier transformation of a pure gauge gives $\tilde{A}_\mu(k) = -ik_\mu \tilde{\alpha}(k)$, we have
+\[
+S
+= \frac{1}{2}\int \frac{d^4 k}{(2\pi)^4} k_\mu \alpha(-k) \left[
+ k^\nu k^\mu - g^{\mu\nu} k^2
+\right] k_\nu \alpha(k) = 0,
+\]
+for all fields in pure gauge. It does not look good for the photon propagator.
+
+
+
+
+%-------------------------------------------------------------------------------
+
+\section{The Remedy}
+As seen in previous section, what goes wrong is the counting of all gauges of the same field configuration. Hence, the solution should be to separate the summation over field configurations into the distinct physical configurations and pure gauges. Our final goal can thus be stated unsystematically as writing
+\[
+\mathcal{D}A = \mathcal{D}A_{\text{physical}} \mathcal{D}A_{\text{pure gauge}}.
+\]
+We begin our attack by defining the gauge field
+\[
+A^\alpha_\mu(x)=A_\mu(x)+\partial_\mu \alpha(x).
+\]
+and a function $G(A^\alpha)$ which equals the expression that is set to zero by gauge fixing. In Lorentz gauge, for example, we will have $G(A)=\partial_\mu A^\mu$. Just as in the finite dimensional case, where
+\[
+\prod_i^N \int da_i \delta(\mathbf{g}(\mathbf{a}))\det \left(\frac{\partial \mathbf{g}}{\partial \mathbf{a}}\right)
+= \prod_i^N \int dg_i \delta(\mathbf{g}) = 1,
+\]
+we have the identity
+\[
+1 = \int \mathcal{D}\alpha(x) \delta\left(G(A^\alpha)\right)\det \left[\frac{\delta G(A^\alpha)}{\delta \alpha}\right].
+\]
+Hence we may express the partition function as
+\begin{equation*}
+\begin{align}
+Z = \int \mathcal{D}\alpha \int \mathcal{D}A e^{iS[A]} \delta\left(G(A^\alpha)\right)\det \left[\frac{\delta G(A^\alpha)}{\delta \alpha}\right].
+\end{align}
+\end{equation*}
+The functional determinant may, as in the case of Lorentz gauge, depend on the derivatives of $A^\mu$ and $\alpha$, but (in the abelian case) not the field themselves. Hence, we may treat is as a constant with respect to the path integrals. That is,
+\[
+Z = \det \left[\frac{\delta G(A^\alpha)}{\delta \alpha}\right] \int \mathcal{D}\alpha \int \mathcal{D}A e^{iS[A]} \delta\left(G(A^\alpha)\right).
+\]
+Next, we choose a class of gauge-fixing functions where
+\[
+G(A) = \partial_\mu A^\mu(x)-\omega(x)
+\]
+for any scalar function $\omega(x)$. This serves as a generalization of the Lorentz gauge. In this case we have
+\[
+\det \left[\frac{\delta G(A^\alpha)}{\delta \alpha}\right] = \det \partial^2
+\]
+just as in the Lorentz gauge. Moreover, if we perform a shift in variables from $A$ to $A^\alpha$, we have
+\begin{equation*}
+\begin{align}
+Z
+&=
+\det \partial^2 \left(\int \mathcal{D}\alpha \right)  \int \mathcal{D}A^\alpha e^{iS[A]} \delta\left(G(A^\alpha)\right) \\
+&=
+\det \partial^2 \left(\int \mathcal{D}\alpha \right)  \int \mathcal{D}A e^{iS[A]} \delta\left(\partial_\mu A^\mu(x)-\omega(x)\right). \\
+\end{align}
+\end{equation*}
+This expression will generally be dependent on the choice of gauge fixing criterion. This expression should thus be unaffected by when integrating over all possible scalar functions $\omega(x)$ as long as the integral is normalized. In particular, we may integrate over all functions $\omega$ with a gaussian weighting function with standard deviation $\sigma=\sqrt{\xi}$. If $N(\xi)$ is the normalization constant associated with this integral, then
+\begin{equation*}
+\begin{align}
+Z
+&=
+N(\xi)\int \mathcal{D}\omega e^{-i\int d^4x\frac{\omega^2}{2\xi}} \det \partial^2 \left(\int \mathcal{D}\alpha \right)  \int \mathcal{D}A e^{iS[A]} \delta\left(\partial_\mu A^\mu(x)-\omega(x)\right) \\
+&=
+N(\xi) \det \partial^2 \left(\int \mathcal{D}\alpha \right)  \int \mathcal{D}A \exp\left\{i\int d^4x \left[\mathcal{L}-\frac{(\partial_\mu A^\mu(x))^2}{2\xi} \right]\right\}. \\
+\end{align}
+\end{equation*}
+Hence, if $\mathcal{O}(A)$ is a gauge invariant operator, then the correlation function will take the form
+\begin{equation*}
+\begin{align}
+\bra{\Omega}\mathbb{T}\mathcal{O}(A)\ket{\Omega}
+&=
+\lim_{T\rightarrow \infty(1-i\varepsilon)}
+\frac{
+\int \mathcal{D}A \mathcal{O}(A)\exp\left\{i\int_{-T}^T d^4x \left[\mathcal{L}-\frac{(\partial_\mu A^\mu(x))^2}{2\xi} \right]\right\}
+}{
+\int \mathcal{D}A \exp\left\{i\int_{-T}^T d^4x \left[\mathcal{L}-\frac{(\partial_\mu A^\mu(x))^2}{2\xi} \right]\right\}
+}
+\end{align}
+\end{equation*}
+where $\mathbb{T}$ is the time-ordering operator. Now it's time to give the propagator another try. Repeating the steps from the previous section, we find that
+\begin{equation*}
+\begin{align}
+\int d^4x \left[\mathcal{L}-\frac{(\partial_\mu A^\mu(x))^2}{2\xi} \right]
+&=
+\int \frac{d^4 k}{(2\pi)^4} \tilde{A}_\mu(-k) \left\{
+\frac{1}{2}\left[
+ k^\nu k^\mu - g^{\mu\nu} k^2
+\right]-\frac{1}{2}\frac{k^\nu k^\mu}{\xi}
+\right\}
+\tilde{A}_\nu(k) \\
+&=
+\frac{1}{2} \int \frac{d^4 k}{(2\pi)^4} \tilde{A}_\mu(-k) \left\{
+ \left(1-\frac{1}{\xi}\right)k^\nu k^\mu - g^{\mu\nu} k^2
+\right\}
+\tilde{A}_\nu(k).
+\end{align}
+\end{equation*}
+Using that the propagator $\tilde{D}_F^{\nu\rho}(k)$ is the Green's function for this operator gives
+\[
+\left\{
+ \left(1-\frac{1}{\xi}\right)k_\nu k_\mu - g_{\mu\nu} k^2
+\right\} \tilde{D}_F^{\nu\rho}(k) = i\delta^\rho_\mu
+\]
+one can verify that is solved by
+\[
+\tilde{D}_F^{\mu\nu}(k) = \frac{-i}{k^2}\left\{
+g^{\mu\nu} -\left(1-\xi\right)\frac{k^\nu k^\mu}{k^2}
+\right\}.
+\]
+As a reminder of the desired pole prescription, we often write
+\[
+\tilde{D}_F^{\mu\nu}(k) = \frac{-i}{k^2+i\varepsilon}\left\{
+g^{\mu\nu} -\left(1-\xi\right)\frac{k^\nu k^\mu}{k^2}
+\right\}.
+\]
+This is the general photon propagator. The two most common choices of gauge fixing $\xi$ is $\xi=0$ for Landau gauge and $\xi=1$ for Feynman gauge. Due to its great simplicity, Feynman gauge is often preferred. In that case, the photon propagator takes the form
+\[
+\tilde{D}_F^{\mu\nu}(k) = \frac{-ig^{\mu\nu}}{k^2+i\varepsilon}.
+\]
+
+
+
+
+
+
+
+
+\end{document}

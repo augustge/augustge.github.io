@@ -1,11 +1,12 @@
 <!-- ********************************************************************** -->
 <!--  CSS stylesheet -->
-<link rel="stylesheet" type="text/css" href="../mystyle.css">
+<!-- <link rel="stylesheet" type="text/css" href="../mystyle.css"> -->
 <!-- MATHJAX for latex display -->
-<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+<!-- <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script> -->
+<!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script> -->
 <!--  For comment box -->
-<script id="dsq-count-scr" src="//augustg.disqus.com/count.js" async></script>
+<!-- <script id="dsq-count-scr" src="//augustg.disqus.com/count.js" async></script> -->
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 
 <!-- ********************************************************************** -->
 
@@ -20,23 +21,89 @@ bla bla
 
 
 And now....a simple canvas test:
-<div id="sketch-holder"></div>
+<div id="p5jsAnim"></div>
+
 <script>
-  var myp5 = new p5(function (p){
+  var t = 0;
+  setup = function(){
+    var cnt = select("#p5jsAnim") // pick canvas holder
+    canvas = createCanvas(cnt.width, 300); // set width to canvas holder
+    canvas.parent("p5jsAnim"); // put canvas in canvas holder
+  }
+
+  draw = function(){
+    background(0)
+    t += 1;
+    fill(255)
+    ellipse(10*t%width,7*t%height,50,50);
+    ellipse(mouseX,mouseY,30,30);
+  }
+</script>
+
+And now the fun is over... Or is it? Let's try another p5js sketch...
+I will now be using the p5js instance mode. That is
+<code>
+  var s =
+  new p5( function( p ) {
     var t = 0;
     p.setup = function(){
-      canvas = p.createCanvas(window.innerWidth/1.5, 300);
-      canvas.class("inlineCanvas");
-      canvas.parent("sketch-holder");
+      var cnt = p.select("#p5jsAnim2") // pick canvas holder
+      canvas = p.createCanvas(cnt.width, 300); // set width to canvas holder
     }
 
     p.draw = function(){
+      p.background(255,0,0)
       t += 1;
-      p.ellipse(10*t%p.width,7*t%p.height);
+      p.fill(255)
+      p.ellipse(10*t%p.width,7*t%p.height,50,50);
+      p.ellipse(p.mouseX,p.mouseY,30,30);
     }
-  }, 'sketch-holder');
+  },'p5jsAnim2');
+</code>
 
+And here is the result:
+
+<div id="p5jsAnim2"></div>
+<script>
+  var s =
+  new p5( function( p ) {
+    var t = 0;
+    p.setup = function(){
+      var cnt = p.select("#p5jsAnim2") // pick canvas holder
+      canvas = p.createCanvas(cnt.width, 300); // set width to canvas holder
+    }
+
+    p.draw = function(){
+      p.background(255,0,0)
+      t += 1;
+      p.fill(255)
+      p.ellipse(10*t%p.width,7*t%p.height,50,50);
+      p.ellipse(p.mouseX,p.mouseY,30,30);
+    }
+  },'p5jsAnim2');
 </script>
+
+In fact we could have shown the code using Google's prettyprint:
+<code class="prettyprint">
+  var s =
+  new p5( function( p ) {
+    var t = 0;
+    p.setup = function(){
+      var cnt = p.select("#p5jsAnim2") // pick canvas holder
+      canvas = p.createCanvas(cnt.width, 300); // set width to canvas holder
+    }
+
+    p.draw = function(){
+      p.background(255,0,0)
+      t += 1;
+      p.fill(255)
+      p.ellipse(10*t%p.width,7*t%p.height,50,50);
+      p.ellipse(p.mouseX,p.mouseY,30,30);
+    }
+  },'p5jsAnim2');
+</code>
+
+
 
 
 
@@ -47,7 +114,7 @@ And now....a simple canvas test:
   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
   var disqus_config = function () {
-    this.page.url = "https://augustge.github.io/AUGUSTG/#!/POSTS/FirstPost";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.url = "https://augustge.github.io/AUGUSTG/#!/FirstPost";  // Replace PAGE_URL with your page's canonical URL variable
     this.page.identifier = "FirstPost"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
   };
 

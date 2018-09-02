@@ -1,0 +1,542 @@
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+% \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.1} % Line spacing - Palatino needs more space between lines
+% \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+\renewcommand{\thefootnote}{\roman{footnote}}
+
+\newcommand{\mystar}{{\fontfamily{lmr}\selectfont$\star$}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont Felttur 2017 \\ \textbf{Elektromagnetisme} } % Article title
+
+\author{
+\large
+\textsc{August Geelmuyden}\\[2mm] % Your name
+\normalsize Universitetet i Oslo \\ % Your institution
+\vspace{-15mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+
+
+
+\part*{Teori}
+
+\section{Påvirkning uten berøring}
+Når to objekter påvirker hverandre uten å være i berøring er det ofte naturlig å introdusere konseptet {\it felt}. Feltets rolle er å formidle påvirkningen fra det ene objektet til det andre. På den måten kan man unngå den litt problematiske ideen om at romlig separerte objekter påvirker hverandre, ved heller å tenke på hendelsen som at objektet påvirker feltet, feltet brer seg utover og feltet påvirker det andre objektet. Det fine med dette synspunktet er at ideen om påvirkning som et lokalt konsept er ivaretatt.
+
+Et eksempel på en situasjon der det er naturlig å introdusere et felt er for å forklare samspillet mellom elektriske ladninger. Vi er her interessert i kreftene de elektriske ladningene utfører på hverandre, noe som betyr at vi bør studere et {\it vektorfelt}. Feltet for elektrisitet kalles {\it elektrisk felt} og betegnes ofte ved
+$\mathbf{E}=\mathbf{E}(t,\mathbf{r})$. Kraften det elektriske feltet utøver på et punktlegeme med ladning $q$  er gitt ved $\mathbf{F}=q\mathbf{E}$.
+Likningen $\mathbf{F}=q\mathbf{E}$ er matematisk ekvivalent med Newtons andre lov $\mathbf{F}=m\mathbf{a}$, bare med den ekstra muligheten at $m < 0$. Et vektorfelt som på mange måter likner det elektriske feltet er {\it tyngdefeltet}. Tyngdefeltet til en punktmasse $m$ kan tenkes på som tyngdeakselerasjonen massen gir opphav til. I analogi til likningen
+$$
+|\mathbf{g}| \propto \frac{m}{r^2}
+$$
+kan vi altså skrive
+$$
+|\mathbf{E}| \propto \frac{q}{r^2}.
+$$
+Dette er loven den franske fysikeren Charles Augustin de Coulomb oppdaget i 1784. Loven, som i ettertid har blitt kjent under navnet {\it Coulombs lov}, kan også skrives
+$$
+\mathbf{F} = \frac{1}{4 \pi \varepsilon_0 } \frac{q_1 q_2}{r^2}\hat{r}
+$$
+der $\mathbf{F}$ er kraften mellom to punktpartikler med ladning  $q_1$ og $q_2$ som befinner seg i en avstand $r$ fra hvarandre. Proporsjonalitetskonstanten, $k_e=1/4 \pi \varepsilon_0$, kalles {\it Coulombs konstant}. På samme måte som tyngdefeltet har et potensial, kan vi konstruere et elektrisk potensial slik at $\mathbf{E}=-\nabla V$. Størrelsen på det elektriske potensialet kalles {\it spenning} og måles i {\it Volt}\footnote{Volt er oppkalt etter den italienske fysikeren Alessandro Volta(1745-1827), som kanskje er mest kjent for å ha oppdaget batteriet ved å stable sink- og kobberplater med saltvann mellom. For mer informasjon, se \href{https://en.wikipedia.org/wiki/Voltaic_pile}{Voltaic Pile}}. Fra Coulombs lov finner vi at
+$$
+V = \frac{1}{4\pi \varepsilon_0} \frac{q}{r}
+$$
+for en punktladning $q$. Ha imidlertid i tankene at det elektriske feltets direkte avhengighet av det elektriske potensialet ikke lenger stemmer i nærvær av et magnetisk felt. Da må også et vektorpotensial introduseres.
+
+
+
+\section{Maxwells lover}
+\subsection{Gauss lov}
+
+Fra definisjonen av det elektriske feltet følger det at den elektriske fluksen ut av et volum må være proporsjonal med ladningen volumet inneholder. Faktisk er
+$$
+\iint _{\partial V} \mathbf{E}\cdot d\mathbf{S} = \frac{q_{int}}{\varepsilon_0}
+$$
+der $\partial V$ er overflaten til volumet, $\mathbf{E}$ er det elektriske feltet, $d\mathbf{S}$ er en uendelig liten bit $dA$ av $\partial V$ med retning vinkelrett, ut av volumet på den relevante delen av $\partial V$. $q_{int}$ er den totale ladningen volumet inneholder og $\varepsilon_0$ er en proporsjonalitetskonstant kalt {\it vakuumpermittiviteten}.
+
+
+  Som nevnt er det elektriske feltet og tyngdefeltet av matematisk lik form. Det er derfor ikke overraskende at også tyngefeltet har en {\it Gauss lov}:
+  $$
+  \iint _{\partial V} \mathbf{g}\cdot d\mathbf{S} = -4 \pi G m
+  $$
+  der $\mathbf{g}$ er tyngdeakselerasjonen, $G$ er gravitasjonskonstanten og $m$ er massen inneholdt i volumet.
+
+
+  Gauss lov kombinert med et symmetri-argument er et veldig nyttig verktøy for å beregne det elektriske feltet til et ladet legeme. Eksempelvis kan vi finne det elektriske feltet til et kuleskall med radius $R$ og uniformt fordelt totalladning $q$ en avstand $r>R$ fra kulen ved å velge $\partial V$ til å være et kuleskall av radius $r$. Fra sfærisk symmetri følger det at
+  $$
+  \iint _{\partial V} \mathbf{E}\cdot d\mathbf{S}
+  =
+  |\mathbf{E}| \iint _{\partial V} d\mathbf{S}
+  =
+  |\mathbf{E}| 4\pi r^2
+  =
+  4 \pi r^2 |\mathbf{E}|
+  =
+  \frac{q}{\varepsilon_0}.
+  $$
+  Med andre ord setter et uniformt ladet kuleskall opp et elektrisk felt som er identisk med feltet fra en punktladning i sentrum av kulen, altså
+  $$
+  \mathbf{E} = \frac{1}{4\pi \varepsilon_0} \frac{q}{r^2}\hat{\mathbf{r}}.
+  $$
+  Dette resultatet gjelder naturligvis også for tyngdekraften. Det er denne egenskapen, da under navnet {\it Birkhoffs teorem}, som ligger til grunn for at man i generell relativitetsteori behandler alle planetene i solsystemet som sorte hull.
+
+
+
+  Ved å introdusere konseptet om ladnings{\it tetthet} $\rho$ kan vi relatere et legemes totale ladning $q$ med dets ladningstetthet ved å observere at
+  $$
+  q = \iiint_V \rho dV.
+  $$
+  Gauss lov kan dermed skrives
+  $$
+  \iint_{\partial V} \mathbf{E}\cdot d\mathbf{S} = \iiint_V \frac{\rho}{\varepsilon_0} dV,
+  $$
+  som ved å benytte {\it divergensteoremet} gjør at vi kan skrive
+  $$
+  \iiint_{V} \nabla \cdot \mathbf{E} dV = \iiint_V \frac{\rho}{\varepsilon_0} dV.
+  $$
+  Siden begge sider integreres over det samme kan vi samle de to integralene til ett:
+  $$
+  \iiint_{V} \left( \nabla \cdot \mathbf{E} - \frac{\rho}{\varepsilon_0} \right)dV=0.
+  $$
+  Legg merke til at dette skal stemme for absolutt alle volumer $V$. Det må bety at dette egentlig er en egenskap som angår objektene inni integralet. Altså
+  $$
+  \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}.
+  $$
+  Dette er Gauss lov på differensialform.
+
+
+  Nøyaktig hva som skjer med det elektriske feltet når det penetrerer et materiale er imidlertid uklart når loven er skrevet på denne formen. Iblant er det derfor ønskelig å introdusere en distinksjon mellom ladningstettheten til de frie ladningene $\rho_{f}$ og de bundne ladningene $\rho_b$. Hvis $\mathbf{E}_b$ er det elektriske feltet laget av de bundne ladningene introduserer man ofte en størrelse $\mathbf{P}=-\mathbf{E}_b$, kalt {\it polariseringstetthet}. Polariseringstettheten til et medie er bestemt av mediets såkalte {\it elektriske susceptibilitet} $\chi_e$ gjennom relasjonen $\mathbf{P}=\varepsilon_0 \chi_e \mathbf{E}$\footnote{Som alltid er det viktig å huske at matematiske formler er modeller som beskriver virkeligheten med varierende nøyaktighet. Mange materialers polarisering blir under påvirkning av veldig kraftige $\mathbf{E}$-felt mettet. I slike tilfeller vil det være urimelig å forvente at polariseringstettheten er proporsjonal med det elektriske feltet.}. Et materiales susceptibilitet vitner altså om dets evne til å sette opp interne elektriske felt for å motvirke eksterne elektriske felt. Det bør derfor ikke anses som overraskende at susceptibiliteten i vakuum er null.
+
+  Ved å benytte Gauss lov for frie og bundne ladninger enkeltvis kan loven skrives på den eksplisitt material-avhengige formen
+  \[
+    \nabla \cdot \mathbf{D} = \rho_f,
+  \]
+  der $\mathbf{D}\equiv \varepsilon_0 (1+\chi_e)\mathbf{E}$ kalles {\it Elektrisk forskyvning} eller {\it Elektrisk flukstetthet}.
+
+
+
+
+
+\subsection{Gauss lov for magneter}
+Ved å resirkulere argumentene i begynnelsen av denne teksten bør det, siden magnetisme er en form for påvirkning uten berøring, være mulig å forklare magnetisme ved hjelp av et {\it magnetisk felt} $\mathbf{B}$. I likhet med det elektriske feltet ble det magnetiske feltets $1/r^2$-avhengighet bekreftet på slutten av 1700-tallet. Derfor er det ikke overraskende at det også finnes en variant av Gauss lov for det magnetiske feltet. Grunnet magnetfeltets retning kan det imidlertid ikke forklares av en potensialfunksjon. Det forklares i stedet av et vektorpotensial $\mathbf{A}$ slik at $\mathbf{B}=\nabla \times \mathbf{A}$. Det betyr at divergensen av det magnetiske feltet er null. Altså
+$$
+\nabla \cdot \mathbf{B} = 0,
+$$
+eller, om du vil,
+$$
+\iint_{\partial V} \mathbf{B} \cdot d\mathbf{S} = 0.
+$$
+Dette betyr at den størrelsen som spiller rollen som magnetfeltets masse, eller ladning, er konstant null. Av den grunn lar denne loven seg best formulere med ord, nemlig: {\it Det finnes ikke magnetiske monopoler}.
+
+
+  Legg merke til at magnetfeltet allerede ser litt merkelig ut. Ut av ethvert volum vil det "sprute" like mye magnetfelt ut, som det "spruter" inn. Ytteligere, og mer seriøse, komplikasjoner ved magnetfeltet vil dukke opp når vi senere studerer kraften magnetfeltet utøver.
+
+
+
+
+\subsection{Faradays induksjonslov}
+På begynnelsen av 1830-tallet oppdaget fysikerene Michael Faraday og Joseph Henry et forhold mellom elektrisitet og magnetisme uavhengig. De oppdaget at spenningen over en krets er proporsjonal med endringen i magnetfeltets fluks ut av arealet kretsen omslutter.
+Da Gustav Kirchhoff i 1847 formulerte sin spenningslov, som sier at summen av spenningen over en strømsløyfe alltid er lik null, visste han altså at dette ikke alltid stemmer. I nærvær av et magnetisk felt i endring sier nemlig loven at summen av spenningen over en strømsløyfe er gitt av hvor mye magnetfeltfluksen gjennom arealet utspent av sløyfen {\it avtar}.
+
+
+  La oss forsøke å skrive dette matematisk. Vi har sett at spenning, $V$, er det elektriske feltets potensialfunksjon, som betyr at
+  $$
+  \int_a^b \mathbf{E} \cdot d\mathbf{\ell} = V(b)-V(a)
+  $$
+  der $d\mathbf{\ell}$ er en differensial vektor som peker langs kurven som forbinder punktet $a$ med punktet $b$. Hvis kurven er lukket følger det altså at
+  $$
+  \oint_\gamma \mathbf{E} \cdot d\mathbf{\ell} = 0.
+  $$
+  Dette er Kirchhoffs spenningslov. Faradays induksjonslov sier at dette bare er et spesialtilfelle av den mer generelle loven
+  $$
+  \oint_\gamma \mathbf{E} \cdot d\mathbf{\ell} = -\frac{d}{dt}\iint_S \mathbf{B} \cdot d\mathbf{S}
+  $$
+  der $S$ er ethvert areal med rand $\gamma$. Dette er {\it Maxwell-Faradays lov} på integralform.
+
+
+
+  Ved å benytte Stokes sats kan vi skrive om integralet langs sløyfen $\gamma$ som et integral over flaten $S$:
+  $$
+  \oint_\gamma \mathbf{E} \cdot d\ell = \iint_S \nabla \times \mathbf{E} \cdot d\mathbf{S} = -\frac{d}{dt}\iint_S \mathbf{B} \cdot d\mathbf{S}.
+  $$
+  Vi kan like gjerne utføre derivasjonen med hensyn på tid {\it før} integrasjonen, men da må vi passe på ikke å derivere noen av de variablene som integreres bort. Dette betyr at derivasjonen kan omgjøres til en partiell derivasjon inne i integralet slik at loven sier
+  $$
+  \iint_S \left( \nabla \times \mathbf{E} + \frac{\partial \mathbf{B}}{\partial t} \right)\cdot d\mathbf{S} = 0,
+  $$
+  der de to uttrykkene har blitt samlet under et felles integraltegn. Siden dette skal gjelde for {\it alle} flater $S$ følger det at
+  $$
+  \nabla \times \mathbf{E} =- \frac{\partial \mathbf{B}}{\partial t},
+  $$
+  som er Faradays induksjonslov på differensialform.
+
+
+
+
+\subsection{Ampèré-Maxwells lov}
+Som du kanskje allerede har gjettet bar den originale loven bare navnet til én av fysikerene, nemlig Ampèré. Ampèré oppdaget på begynnelsen av 1800-tallet at integralet rundt en lukket sløyfe er proporsjonal med strømmen gjennom sløyfen. Altså
+$$
+\oint_\gamma \mathbf{B} \cdot d\mathbf{\ell} = \mu_0 I_{enc}
+$$
+der $I_{enc}$ er strømmen gjennom sløyfen $\gamma$ og $\mu_0$ proporsjonalitetskonstanten, kalt {\it vakuumpermeabiliteten}. Strøm, definert som ladningsendring per tid, kan tenkes på som fluks av strømtetthet $\mathbf{J} \propto \mathbf{E}$\footnote{Denne relasjonen er for viktig til bli forbigått i taushet. Proporsjonalitetskonstanten, $\sigma$, er en leders såkalte {\it konduktivitet}. Inversen, $\rho=1/\sigma$, kalt {\it resistivitet} gir den material-avhengige delen av motstanden i en elektrisk ledning. Franskmannen Claude Pouillet oppdaget nemlig at motstanden er gitt av $R=\rho \ell /A$, der $A$ er ledningens tverrsnittareal og $\ell$ er lederens lengde. }. Altså
+$$
+I = \iint_S \mathbf{J}\cdot d\mathbf{S}.
+$$
+Uttrykt ved strømtettheten sier Ampèrés lov dermed at
+$$
+\oint_\gamma \mathbf{B} \cdot d\mathbf{\ell} = \mu_0 \iint_S \mathbf{J}\cdot d\mathbf{S}.
+$$
+Det er her Maxwell kommer inn i bildet. Maxwell oppdaget nemlig at dette ikke stemmer i nærheten av et elektrisk felt i endring. I det tilfellet må loven ta den mer generelle formen
+$$
+\oint_\gamma \mathbf{B} \cdot d\mathbf{\ell}
+=
+\mu_0 \iint_S
+\mathbf{J}\cdot d\mathbf{S}
++
+\mu_0 \varepsilon_0 \frac{d}{dt}\iint_S
+\mathbf{E}\cdot d\mathbf{S}
+=
+\mu_0 \iint_S \left(
+\mathbf{J}
++\varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\right)\cdot d\mathbf{S}.
+$$
+I likhet med Faradays induksjonslov kan denne likningen skrives på formen
+$$
+\iint_S \left(\nabla \times \mathbf{B}
+-\mu_0\mathbf{J}
+-\mu_0\varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\right)\cdot d\mathbf{S} = 0
+$$
+som, ettersom dette må gjelde for alle overflater $S$, betyr at
+$$
+\nabla \times \mathbf{B}
+=
+\mu_0\mathbf{J} + \mu_0\varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}.
+$$
+Dette er Ampèré-Maxwells lov på differensialform.
+
+
+  Loven sier at magnetfeltet rundt en lukket sløyfe er proporsjonal med summen av strømmen og endringen i den elektriske fluksen gjennom sløyfen. Legg merke til likhetstrekket med Faradays induksjonslov. Hvis strømtettheten er null, er begge feltenes vridning proporsjonal med endringen i det andre feltet. En konsekvens av denne likningen er Biot-Savarts lov,
+  $$
+  \mathbf{B}(\mathbf{r}) = \frac{\mu_0}{4\pi}\int_\gamma \frac{I d\mathbf{\ell} \times \mathbf{r}'}{|\mathbf{r}'|^3},
+  $$
+  der I er strømmen langs en lukket sløyfe $\gamma$ hvorav $d\mathbf{\ell}$ er en infinitesimal vektor som peker langs sløyfen, mens $\mathbf{r}'=\mathbf{r}-\mathbf{\ell}$. Loven følger ved å anta stasjonært elektrisk felt og bruke at $\nabla \times \mathbf{B}=-\nabla^2 \mathbf{A}$ stemmer for $\nabla \cdot \mathbf{A} = 0$, såkalt {\it Coulomb gauge}. Selv om beviset utelates her er resultatet såpass viktig at det fortjener en plass i denne teksten: {\it Enhver elektrisk strøm gir opphav til et magnetfelt som står vinkelrett på strømretningen}.
+
+
+
+\section{Lys som elektromagnetiske bølger}
+La oss si at vi, helt umotivert, skulle ønske å undersøke uttrykket $\nabla \times (\nabla \times \mathbf{E})$. Ved å huske at
+$$
+\mathbf{a}\times (\mathbf{b} \times \mathbf{c}) = \mathbf{b}(\mathbf{a}\cdot \mathbf{c})-\mathbf{c}(\mathbf{a} \cdot \mathbf{b})
+$$
+ville vi først kunne observere at
+$$
+\nabla \times (\nabla \times \mathbf{E}) = \nabla (\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E} = \nabla \frac{\rho}{\varepsilon_0} - \nabla^2 \mathbf{E}.
+$$
+I et område med jevnt fordelt ladningstetthet ($\nabla \rho = 0$) vil altså
+$$
+\nabla \times (\nabla \times \mathbf{E}) = - \nabla^2 \mathbf{E}.
+$$
+På den annen side har vi at
+$$
+\begin{aligned}
+\nabla \times (\nabla \times \mathbf{E})
+=
+- \nabla \times \frac{\partial \mathbf{B}}{\partial t}
+=
+- \frac{\partial}{\partial t} \nabla \times \mathbf{B}
+=
+- \frac{\partial}{\partial t}
+\left(
+\mu_0 \mathbf{J}
++
+\mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\right)
+\end{aligned}
+$$
+Hvis også strømtettheten i området er null, $\mathbf{J}=0$, vil altså det elektriske feltet tilfredsstille likningen
+$$
+\nabla^2 \mathbf{E}
+=
+\mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}.
+$$
+Dette likner veldig på den kjente partielle differensiallikningen
+$$
+\nabla^2 F
+=
+\frac{1}{c^2} \frac{\partial^2 F}{\partial t^2}
+$$
+kalt {\it bølgelikningen}. Bølgelikningen beskriver utviklingen til en bølge med hastighet $c$ i rom og tid. Vi har med andre ord funnet at det elektriske feltet oppfører seg som en bølge med hastighet
+$$
+c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}}
+$$
+i områder uten strømtetthet og med jevnt fordelt ledningstetthet. Til alles store overraskelse, er verdien av hastigheten nøyaktig lik den målte verdien for lyshastigheten i vakuum:
+$$
+c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} = 299792458 m/s.
+$$
+Dette er første steg i erkjennelsen om at lys er elektromagnetiske bølger. Legg merke til at siden det ikke er noen annen romlig avhengighet enn lyshastgheten i bølgelikningen for $\mathbf{E}$ kan dette også ses på som første skritt mot relativitetsteorien. For oss, som vet at lyshastigheten er den samme i alle referansesystemer, er det mulig å se at dette er tilfellet fra denne likningen -- det er faktisk en konsekvens av Maxwells lover!
+
+Legg også merke til at lyshastigheten endres dersom permittiviteten eller permeabiliteten endrer seg. Lyshastigheten, $c'$, i et medium med permittivitet $\varepsilon$ og permeabilitet $\mu$ er med andre ord gitt ved
+$$
+	c' = \frac{1}{\sqrt{\varepsilon\mu}}.
+$$
+Endelig kan vi også gi litt mening til begrepet {\it brytningsindeks}. Siden brytningsindeksen $n$ til et medium er forholdet $c/c'$ mellom lyshastigheten $c$ i vakuum og lyshastigheten $c'$ i mediet kan vi nemlig uttrykke brytningsindeksen ved
+$$
+n = \sqrt{\frac{\varepsilon\mu}{\varepsilon_0\mu_0}}.
+$$
+
+\section{Polarisering}
+En pussig konsekvens av at lys er elektromagnetiske bølger er at lys er en vektorstørrelse. Med andre ord har lys en skjult retning -- retningen til det oscillerende $\mathbf{E}$-feltet! Parameteren som bestemmer denne retningen er gitt navnet {\it polarisering}. Vanlig, upolarisert lys, består av bølger med elektrisk komponent i alle retninger. I enkelte tilfeller hender det imidlertid at lyset blir polarisert i den forstand at $\mathbf{E}$-feltet til alt lyset har samme retning i hvert punkt. Et typisk eksempel er fenomenet {\it Brewstervinkel}. Ved en bestemt innfallsvinkel, $\theta_B=\arctan (n_{fra}/n_{til})$, går den komponenten av $\mathbf{E}$-feltet som ikke er parallell med overflaten rett inn i mediet uten å bli reflektert. Det er denne effekten man utnytter når man bruker polariserte solbrilleglass. Sollyset som reflekteres fra snøen er lineært polarisert. Dersom solbrilleglassene stopper lys med denne polariseringen vil refleksjonene fra snøen bli svekket.
+
+
+
+
+\section{Magnetisk kraft}
+Kraften $\mathbf{F}$ det elektriske feltet $\mathbf{E}$ utøver på et legeme med ladning $q$ er gitt ved $\mathbf{F}=q \mathbf{E}$. Dette minner om Newtons andre lov, der $q$ spiller rollen som masse og $\mathbf{E}$ spiller rollen som legemets akselerasjon.
+Den tilsvarende kraften fra et magnetfelt $\mathbf{B}$ er fundamentalt annerledes fra $\mathbf{E}$-feltets. Først og fremst er kraften fra et magnetfelt vinkelrett på magnetfeltets retning. Desto mer spesielt er det at kraften avhenger av det påvirkede legemets hastighet. Uttrykket for kraften er $\mathbf{F}=q\mathbf{v}\times \mathbf{B}$.
+Dette er en katastrofe! Kraften på legemet avhenger av legemets hastighet. Sett fra legemets perspektiv er det altså ingen magnetkraft som virker på det. Dette høres svært inkonsistent ut.
+
+
+  La oss se nærmere på et eksempel og prøve å se hva som foregår. Gitt en punktladning $q$ som beveger seg med hastighet $v$ parallellt med en uendelig lang og rett strømførende ledning med strøm $I$ som ligger i en avstand $r$ fra punktpartikkelen. La oss si at strømmen i ledningen er slik at de positive ladningene har samme hastighet $v$ som punktpartikkelen, mens de negative ladningene beveger seg like fort den andre veien. Strømmen kan da skrives $I=2\lambda v$ der $\lambda$ er ladningstettheten (ladning per lengde) for de positive ladningene. Siden de negative og positive ladningene i ledningen har samme ladningstetthet, men med forskjellig fortegn, er det altså ikke noe elektrisk felt som virker på punktpartikkelen. Punktladningen er imidlertid utsatt for en magnetisk kraft $F=-qvB$ der $B=\mu_0I/2\pi r$. Sett fra punktladningens ståsted utgjøres strømmen kun av de elektriske ladningenes bevegelse. Siden punktladningen, sett fra sitt eget perspektiv, ikke beveger seg kan det imidlertid ikke virke noen magnetisk kraft på punktladningen. Dette ser ut til å være et seriøst problem!
+
+
+  Problemet løses av relativitetsteori. Når vi endrer referansesystem må huske at lengder sammentrekkes. At avstanden mellom de negative ledningene sammentrekkes mer enn de positive gjør at ledningen får en negativ ladning sett fra punktladningen. Denne ladningen setter opp et elektrisk felt som utøver en elektrisk kraft på den stillestående punktladningen. Med andre ord er magnetisme bare elektrisitet sett fra et referansesystem som beveger seg.
+
+
+Dersom man tar behovet for relativitetsteori seriøst vil man fort finne at den relevante størrelsen er den såkalte {\it Elektromagnetiske felttensoren}:
+\[
+  F_{\mu\nu}=\partial_\mu A_\nu - \partial_\nu A_\mu
+  =
+  \left(\begin{matrix}
+  0               & -\frac{1}{c}E_x     & -\frac{1}{c}E_y   & \frac{1}{c}E_z  \\
+  \frac{1}{c}E_x  & 0                   & -B_z              & B_y             \\
+  \frac{1}{c}E_y  & B_z                 & 0                 & -B_x            \\
+  \frac{1}{c}E_z  & -B_y                & B_x               & 0               \\
+  \end{matrix}\right)
+\]
+der $A_\mu = (V,\mathbf{A})$. Alle Maxwells fire lover kan da kombineres til én, nemlig $\partial_\nu F^{\nu\mu} = \mu_0 j^\mu$, der $j^\mu = (c\rho,\mathbf{J})$\footnote{Strengt tatt er dette bare Gauss- og Ampères lov. De to andre lovene er ekvivalente med $\partial_{[\alpha}F_{\beta \gamma]}=0$, som er trivielt sann. }. Nå bør vi imidlertid stoppe før vi befinner oss i helt andre områder av fysikken.
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+
+\part*{Formler}
+
+\begin{multicols}{2}
+Maxwells lover
+\begin{equation*}
+\begin{aligned}
+& \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+\ \ \ \ \ \ \ \ \ \ \ \ \text{(Gauss)} \\
+& \nabla \cdot \mathbf{B} = 0
+\ \ \ \ \ \ \ \ \ \ \ \ \text{(Magnetiske monopoler)}  \\
+& \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}
+\ \ \ \ \ \ \ \text{(Faraday)} \\
+& \nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \frac{1}{c^2}\frac{\partial \mathbf{E}}{\partial t}
+\ \ \  \text{(Ampèré-Maxwell)}   \\
+\end{aligned}
+\end{equation*}
+
+Andre formler:
+\begin{equation*}
+\begin{aligned}
+& \mathbf{F} = q\left(\mathbf{E}+\mathbf{v}\times \mathbf{B}\right)
+\ \ \  \text{(Lorentz)}  \\
+& \mathbf{B} = \frac{\mu_0}{4\pi}\int_\gamma \frac{I d\mathbf{\ell} \times \mathbf{r}'}{|\mathbf{r}'|^3}
+\ \ \  \text{(Biot-Savart)}  \\
+& \nabla^2 f = \frac{1}{c^2} \frac{\partial^2 f}{\partial t^2}
+\ \ \ \ \ \ \ \ \ \text{(Bølgelikningen)} \\
+& \mathbf{D} = \varepsilon_0 (1+\chi_e)\mathbf{E}
+\ \ \ \ \ \ \ \ \ \text{(Elektrisk forskyvning)} \\
+& \mathbf{B} = \nabla \times \mathbf{A}
+\ \ \ \ \ \ \ \ \ \text{(Elektromagnetisk vektorpotensial)} \\
+& \mathbf{E} = -\nabla V - \frac{\partial \mathbf{A}}{\partial t}
+\ \ \ \ \ \  \text{(Elektromagnetiske potensialer)} \\
+\end{aligned}
+\end{equation*}
+
+\end{multicols}
+
+
+
+
+
+\part*{Oppgaver}
+
+
+\subsection{Gauss lov}
+La
+
+\begin{equation}
+\mathbf{E}(r) =
+\begin{cases}
+\frac{Qr}{4\pi \epsilon_0 R^3} \mathbf{e}_r &\text{ for } r \leq R \\
+\frac{Q}{4\pi \epsilon_0 r^2} \mathbf{e}_r  &\text{ for } r > R
+\end{cases}
+\label{eq:Esphere}\end{equation}
+
+være det elektriske feltet fra ladning $Q$, hvor $r$ er avstanden fra origo, $\epsilon_0$ er vakuumpermittiviteten og $R$ er et eller annet positivt tall. Gradienten i kulekoordinater er:
+\begin{equation}
+\nabla =
+ \mathbf{e}_r \frac{1}{r^2}\frac{\partial}{\partial r}r^2
++\mathbf{e}_\theta \frac{1}{r\sin \theta}\frac{\partial}{\partial\theta}\sin \theta
++\mathbf{e}_\phi \frac{1}{r\sin \theta}\frac{\partial}{\partial\phi}.
+\label{eq:sphereNabla}\end{equation}
+
+\begin{description}
+	\item[a)] Hva er ladningstettheten $\rho(r)$?
+		[Hint: {\it Se på de to tilfellene $r\leq R$ og $r>R$ hver for seg. }]
+	\item[b)] Hvilken form har det ladede legemet?
+	\item[c)]
+	Man kan også gå den andre veien ved å finne det elektriske feltet $\mathbf{E}$ for et ladet legeme av en bestemt form. Hva må vi anta om ladningstettheten inne i figuren for å finne tilbake til uttrykket i likning (\ref{eq:Esphere})?
+\end{description}
+
+
+
+\subsection{Ampèrés Lov}
+Bruk Ampèrés lov til å finne det magnetiske feltet $\mathbf{B}$ i en avstand $r$ fra en uendelig lang, rett ledning med strøm $I$.
+
+
+
+\subsection{Sære Ladninger}
+\begin{description}
+  \item[a)] Bruk Maxwells lover på differensialform til å vise at $\nabla^2 V = \rho/\varepsilon_0$.
+  \item[b)] Du finner et ladet gull-egg og nøler med å plukke det opp -- hvor på egget er det mest ladning? Bruk at overflaten til en leder er en ekvipotensialflate til å bestemme hvor ladningstettheten er størst.
+  \item[c)] Hva kan være grunnen til at de frie ladningene på en leder ''ønsker'' å klynge seg sammen på dette punktet?
+\end{description}
+
+
+
+\subsection{Biot-Savarts Lov}
+  I denne oppgaven skal vi utlede Biot-Savarts lov. Du vil, antageligvis, trenge å vite at likningen $\nabla^2 \mathbf{F} = \mathbf{A}$ har løsning
+  \[
+    \mathbf{F}(\mathbf{r}) = \frac{1}{4\pi}\int \frac{\mathbf{A}(\mathbf{r}')d^3r'}{|\mathbf{r}-\mathbf{r}'|}.
+  \]
+\begin{description}
+  \item[a)] Bruk at $\nabla \cdot \mathbf{A}=0$ (Coulomb gauge) til å vise at $\nabla \times \mathbf{B} = - \nabla^2 \mathbf{A}$.
+  \item[b)] Fjern $\nabla \times \mathbf{B}$ fra uttrykket over ved å benytte Maxwells lover og bruk resultatet til å finne et uttrykk for vektorpotensialet $\mathbf{A}$ når det elektriske feltet er statisk.
+  \item[c)] Bruk identiteten
+  \[
+    \nabla \times \frac{\mathbf{F}}{|\mathbf{r}-\mathbf{r}'|}
+    = \frac{ \mathbf{F}\times (\mathbf{r}-\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|^3},
+  \]
+  til å finne et uttrykk for det magnetiske feltet.
+\end{description}
+
+
+
+\subsection{Faradays Lov}
+Vi legger en strømførende sløyfe langs randen av en sirkel $S$ slik at den lukkes med én vinding.
+Sløyfen ligger innenfor et justerbart homogent magnetfelt som peker parallelt med normalvektoren til $S$.
+Vi endrer magnetfeltet slik at feltstyrken er gitt av $B(t)=B_0 \cos (\omega t)$.
+\begin{description}
+	\item[a)] Finn et uttrykk for det elektriske feltet $\mathbf{E}$ som induseres langs strømsløyfen.
+		[Hint: {\it Faradays induksjonslov på integralform }]
+	\item[b)] Finn et uttrykk for den induserte spenningen i strømsløyfen.
+	\item[c)] Hvordan vil spenningen endre seg dersom vi øker vinkelfrekvensen $\omega$?
+	\item[d)] Hva skjer dersom strømsløyfens radius blir større? La $r\rightarrow \infty$, er svaret realistisk?
+	\item[e)] Hva endrer seg i uttrykket for spenningen dersom den strømførende sløyfen i stedet lukkes med $N$ vindinger?
+	\item[f)] Hva endrer seg i uttrykket for det elektriske feltet dersom den strømførende sløyfen i stedet lukkes med $N$ vindinger?
+\end{description}
+
+
+
+
+\subsection{Elektromagnetiske bølger}
+\begin{description}
+	\item[a)] Anta at $\mathbf{J}=0$ og $\rho=0$ og bruk Maxwells lover til å vise at også $\mathbf{B}$-feltet tilfredsstiller en bølgelikning.
+	\item[b)] Hvordan ser likningen ut dersom vi ikke antar noe om $\mathbf{J}$ og $\rho$?
+	\item[c)] Hvilken differensiallikning må $\mathbf{J}$ og $\rho$ tilfredsstille for at det magnetiske feltet skal oppføre seg som en bølge?
+		[Hint: {\it Hva må være null for at uttrykket fra b) blir en bølgelikning? }]
+	\item[d)] Hva er vinkelen mellom $\mathbf{E}$ og $\mathbf{B}$ dersom magnetfeltets retning ikke endrer seg over tid? At magnetfeltets retning ikke endrer seg over tid betyr at $\partial \mathbf{B}/\partial t = \hat{\mathbf{n}} \partial B/\partial t$ der $\hat{\mathbf{n}}$ er magnetfeltets retning.
+		[Hint: {\it Bruk Faradays induksjonslov på differensialform. }]
+\end{description}
+
+
+
+\subsection{Polarisering}
+\begin{description}
+	\item[a)] Vis at $\mathbf{E}(r,x)=E_0\cos(kz-\omega t) \mathbf{e}_x$ tilfredstiller bølgelikningen. Hva må $c$, $k$ og $\omega$ i såfall tilfredsstille?
+	\item[b)] I hvilken retning beveger bølgen seg?
+	\item[c)] I hvilken retning peker $\mathbf{E}$-feltet?
+	\item[a)] Vis at $\mathbf{E}(r,x)=E_0\cos(kz-\omega t) \mathbf{e}_x+E_0\sin(kz-\omega t) \mathbf{e}_y$ tilfredstiller bølgelikningen.
+	\item[c)] I hvilken retning peker $\mathbf{E}$-feltet nå?
+\end{description}
+
+
+\subsection{Ladningstetthet}
+\begin{description}
+	\item[a)] Bruk Ampèré-Maxwells lov til å uttrykke divergensen til $\nabla \times \mathbf{B}$ ved $\mathbf{J}$ og $\mathbf{E}$.
+	\item[b)] Bruk at divergensen til en virvling alltid er null til å bli kvitt $\mathbf{B}$ fra uttrykket for $\mathbf{J}$ og $\mathbf{E}$.
+	\item[c)] Bruk Gauss lov til å finne en likning som relaterer strømtettheten $\mathbf{J}$ med ladningstettheten $\rho$.
+	\item[d)] Bruk at $\mathbf{J}=\rho \mathbf{v}$, der $\rho$ er ladningstetthet og $\mathbf{v}$ er ladningens gjennomsnittlige drivhastighet, til å skrive om likningen slik at den bare avhenger av $\rho$ og $\mathbf{v}$. Kjenner du igjen likningen? Hva betyr dette for mengden ladning i universet?
+		[Hint: {\it Kontinuitetslikningen}]
+\end{description}
+
+
+
+
+\end{document}

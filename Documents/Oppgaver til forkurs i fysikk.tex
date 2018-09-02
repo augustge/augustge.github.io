@@ -1,0 +1,252 @@
+
+
+\documentclass[a4paper, norsk, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel, textcomp, color, amsmath, amssymb, tikz, subfig, float,esint}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{collectbox}
+
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=red!60!black,colback=white,arc=4pt,boxrule=1pt}}
+\definecolor{myblue}{rgb}{.9529, .9333, 0.8274}
+\newcommand*\mybluebox[1]{%
+\colorbox{myblue}{\hspace{1em}#1\hspace{1em}}}
+% USEAGE:
+%		\begin{empheq}[box=\mybluebox]{align}
+%		A =  \left( \frac{1}{ 2\pi a^2}\right)^{\frac{1}{4}}
+%		\end{empheq}
+
+\makeatletter
+
+\newcommand{\BOX}[1]{
+\begin{empheq}[box=\mybluebox]{align}
+#1
+\end{empheq}
+}
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split}
+#1  
+\end{split} \end{equation*} }
+ \newcommand{\DE}[1] {  \begin{description}  #1 \end{description} }
+ \newcommand{\IT}[2] { \item[\color{blue} #1]{#2} }
+ \newcommand{\vv}[1] { \mathbf{#1} }
+ \newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+ \newcommand{\ket}[1] { |#1\rangle }
+ \newcommand{\expe}[1]{ \langle #1 \rangle }
+  \newcommand{\bra}[1] { \langle #1 | }
+  \newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+  \newcommand{\colvec}[2] { 
+  \left( \begin{matrix}
+ #1 \\
+ #2 \\
+  \end{matrix}\right) }
+ \newcommand{\PLOTS}[4]{ 
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = #3, %usally left
+    xlabel = #1,
+    ylabel = #2,
+]
+#4
+\end{axis}
+\end{tikzpicture}
+}
+
+\newcommand{\addPLOT}[4]{
+\addplot [domain=#1:#2,samples=200,color=#3,]{#4};}
+\newcommand{\addCOORDS}[1]{\addplot coordinates {#1};}
+\newcommand{\addDRAW}[1]{\draw #1;}
+\newcommand{\addNODE}[2]{ \node at (#1) {#2};}
+
+%		\PLOTS{x}{y}{left}{
+%			\ADDPLOT{x^2}{-2}{2}{blue}
+%			\ADDCOORDS{(0,1)(1,1)(1,2)}
+%		}
+
+
+
+
+\definecolor{svar}{RGB}{0,0,0}
+\definecolor{opgavetekst}{RGB}{109,109,109}
+\definecolor{blygraa}{RGB}{44,52,59}
+
+
+\title{ 
+\Huge ---------------OPPGAVER--------------- \\ \large FORKURS I FYSIKK}
+\author{August Geelmuyden, Niels Bonten}
+\date{onsdag 12. august 2015}
+\begin{document}
+  \maketitle
+
+
+
+\section{Newtons andre lov}
+
+Denne oppgaven handler om Newtons andre lov. Loven sier at akselerasjonen $a$ til et legeme avhenger av to ting: legemets masse $m$, og summen av kreftene som virker på legemet. Den totale kraften som virker på legemet er legemets akelerasjon skalert med dets masse. Loven er dermed,
+\EQU{\sum_{\textrm{krefter}}F = ma = m\frac{dv}{dt} = m\frac{d^2x}{dt^2},}
+hvor $v$ er farten til massen, og $x$ er posisjonen til massen. Vi minner om at
+\EQU{v'(t) = \frac{d}{dt}v = \frac{dv}{dt} = \dot{v},}
+er den deriverte av funksjonen $v(t)$ med hensyn på $t$.
+\begin{description}
+\item[a)] En bil med masse $m$ står i ro. Hva kan du si om kraften $F$ på bilen? \\
+(\textit{ \footnotesize Hint: $v = 0$} )
+
+\item[b)] Bilen har konstant fart. Hva du si om kraften $F$ på bilen? \\
+(\textit{ \footnotesize Hint: $v = $konst.})
+
+\item[c)] Forklar hvorfor tilfellet i oppgave b) dekker tilfellet i oppgave a).
+
+\item[d)] Bilen akselererer. Hva kan du si om kraften på bilen?
+\end{description}
+Bevegelsesmengde er en interessant størrelse i fysikk. Bevegelsesmengden $p$ til en masse $m$ med fart $v$ er definert som
+\EQU{p = mv}
+\begin{description}
+
+\item[e)] Hva forteller Newtons andre lov oss om en konstant masse med konstant bevegelsesmengde? 
+(\textit{\footnotesize Hint: konstant bevegelsesmengde betyr at den tidsderiverte bevegelsesmengden $dp/dt = 0$.})
+
+\item[f)] Anta at massen ikke endres. Finn Newtons andre lov uttrykt ved bevegelsesmengde\footnote{
+Newton formulerte faktisk sin andre lov ved hjelp av bevegelsesmengde. En engelsk oversettelse av den originale loven er som følger: ''\textit{The alteration of motion is ever proportional to the motive force impressed; and is made in the direction of the right line in which that force is impressed}''.
+}.
+
+\end{description}
+
+
+
+
+
+
+\section{Fjærkraft}
+En masse henger i en fjær i likevekt (i ro). Vi minner om at fjærkraften
+\EQU{
+F=-kx
+}
+\begin{description}
+\item[a)] Finn summen av kreftene som virker på massen. Hva er summen av kreftene lik ifølge Newtons andre lov?
+
+\end{description}
+Definer høyden til massen når den henger i likevekt som $x_0$. Gi nå massen et utslag. Matematisk kan det skrives som $x_0 \mapsto x_0 + x$, hvor $x$ er en koordinat som markerer utslaget bort fra likevekt. Fordi likevekten forstyrret, vil summen av kreftene nå være forskjellig fra null.
+\begin{description}
+
+\item[b)] Finn summen av kreftene i dette tilfellet. \\
+({\it \footnotesize Hint: Erstatt $x_0$ med $x_0+x$ fra forrige oppgave. Hva sier Newtons andre lov? })
+
+\item[c)] Vis at Newtons andre lov i dette tilfellet gir følgende differensiallikning
+\EQU{
+m\ddot{x}=-kx
+}
+\end{description}
+Vi skal nå forsøke å reprodusere resulatet over, men nå ved å anta energibevaring. Hvis en kraft $F$ har en tilhørende potensiell energi $V$ er sammenhengen mellom dem gitt av 
+\EQU{
+F=-\frac{d}{dx}V
+}
+\begin{description}
+
+\item[d)] Bruk relasjonen over til å vise at den potensielle energien til fjærkraften er gitt som 
+\[V=\frac{1}{2}kx^2\]
+
+\item[e)] Finn den totale energien $E=K+V$ uttrykt ved konstantene $k$,$m$ og variablene $x$ og $\dot{x}$. \\
+({\it \footnotesize Hint: Kinetisk energi er alltid gitt som $K=\frac{1}{2}mv^2$  } )
+
+\item[f)] Finn et uttrykk for hvordan den totale energien endrer seg over tid.\\
+({\it \footnotesize Hint: Energiens endring over tid kan skrives som $\frac{dE}{dt}$  })
+
+\item[g)] Bruk energibevaring til å finne den samme differensiallikningen som i oppgave c).\\
+({\it \footnotesize Hint: Energibevaring kan uttrykkes ved $\frac{dE}{dt}=0$ })
+
+\end{description}
+
+
+
+
+
+
+
+\section{Pendel}
+Vi fester et lite lodd med konstant masse $m$ i en masseløs snor slik som vist på figuren under.
+
+\begin{figure}[H]
+\centerline{
+\begin{tikzpicture}
+\draw[thick,dashed] (0,-5) -- (0,0);
+\draw[thick] (-3.53,-3.53) -- (0,0);
+\draw[thick] (-0.707,-0.707) arc (225:270:1) node[anchor=north east]{$\theta$ \ \ };
+\draw[dashed] (-5,0) arc (180:360:5);
+\filldraw (-3.53,-3.53) circle (0.2) node[anchor=east]{$m$ \ \ };
+\draw (-1.7677,-1.7677) node[anchor=south east]{$L$};
+\draw[thick,dashed] (-3.53,-3.53) -- (0,-3.53);
+\draw[thick,<->] (0.2,-3.53) -- (0.2,-4.2) node[anchor=west]{$h$} -- (0.2,-5);
+\draw[thick,<->] (0.2,-3.53) -- (0.2,-2) node[anchor=west]{$L\cos \theta$} -- (0.2,0);
+\end{tikzpicture}}
+\end{figure}
+Ved ethvert tidspunkt er energien $E$ til en masse $m$ definert som summen av kinetisk og potensiell energi, dvs
+\EQU{E = \frac{1}{2}mv^2 + mgz, \label{Energi}}
+hvor $v$ er farten til massen $m$, $z$ er høyden og $g$ er gravitasjonskonstanten. Legg merke til at når loddet slippes, så vil $v$ og $z$ være i stadig endring og kunne beskrives som funksjoner av tid, men $E$ skal holdes konstant.
+
+
+\begin{description}
+
+\item[a)] Gitt at loddet begynner i ro med posisjon som vist på figuren. Finn et utrykk for et vilkårlig tidspunkt etterpå som inneholder $v$ og $z$. \\
+(\textit{ \footnotesize Hint: fra energibevaring vet vi at $dE/dt = 0$. Finn to lure tidspunkter, og bruk at energien alltid har samme verdi.})
+
+\item[b)] Hva er farten når loddet passerer den stiplede linjen?
+
+\end{description}
+
+
+
+
+
+\section{Energi}
+Vi skal i denne oppgaven vise at vi får energibevaring hvis summen av kreftene kan relateres til et potensial. La det være gitt at
+
+\begin{align}
+\sum_{\textrm{krefter}} F = -\frac{d}{dx}V, \label{kraft}
+\end{align}
+hvor $V$ er potensialfunksjonen (den potensielle energien) til summen av kreftene.
+
+\begin{description}
+
+\item[a)] Vis at \EQU{\frac{d}{dt}\left( \frac{1}{2}mv^2 \right) = mav. }
+(\textit{ \footnotesize Hint: kjerneregelen for derivasjon. } )
+
+\item[b)] Vis at Newtons andre lov gir oppgav til uttrykket
+\EQU{ v\sum_{\textrm{krefter}} F = \frac{d}{dt}\left( \frac{1}{2}mv^2 \right). }
+(\textit{ \footnotesize Hint: multipliser Newtons andre lov med $v$. })
+
+
+\item[c)] Bruk uttrykket for potensiell energi i likning (\ref{kraft}) at $dE/dt = 0$. Nedenfor står to ligninger som er nyttige i denne oppgaven.
+
+\begin{itemize}
+\item Derivasjon tilfredsstiller\footnote{Formelt sier vi at derivasjonsoperatoren er distributiv med hensyn på addisjon} \EQU{\frac{d}{dt}\left(A + B \right) &= \frac{d}{dt} A + \frac{d}{dt} B.}
+\item Vi minner også om kjerneregelen for derivasjon \EQU{\frac{dx}{dt}\frac{dV}{dx} &= \frac{dV}{dt}.}
+\end{itemize}
+
+
+\item[d)] I denne deloppgaven skal vi se at at det ikke endrer fysikken når vi legger til et konstantledd i energien. La først
+\EQU{ E = \frac{1}{2}mv^2 + V. }
+Hva sier energibevaring dersom vi legger til et konstantledd i energien? Det vil si, $E \mapsto E + A,$ hvor $A$ er en konstant.
+\end{description}
+  
+  
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+

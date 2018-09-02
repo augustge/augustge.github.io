@@ -1,0 +1,1318 @@
+
+
+
+\documentclass[a4paper, norsk, 8pt, landscape]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel, textcomp, color, amsmath, amssymb, tikz, subfig, float,esint}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{slashed}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split}
+#1
+\end{split} \end{equation*} }
+ \newcommand{\DE}[1] {  \begin{description}  #1 \end{description} }
+ \newcommand{\IT}[2] { \item[\color{blue} #1]{#2} }
+ \newcommand{\vv}[1] { \mathbf{#1} }
+ \newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+ \newcommand{\expe}[1] { \left\langle#1\right\rangle }
+ \newcommand{\ket}[1] { |#1\rangle }
+  \newcommand{\bra}[1] { \langle #1 | }
+  \newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+  \newcommand{\commutator}[2]{ \left[ #1 , #2\right] }
+  \newcommand{\colvec}[2] {
+  \left( \begin{matrix}
+ #1 \\
+ #2 \\
+  \end{matrix}\right) }
+ \newcommand{\PLOTS}[4]{
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = #3, %usally left
+    xlabel = #1,
+    ylabel = #2,
+]
+#4
+\end{axis}
+\end{tikzpicture}
+}
+
+
+\newcommand{\addPLOT}[4]{
+\addplot [domain=#1:#2,samples=200,color=#3,]{#4};}
+\newcommand{\addCOORDS}[1]{\addplot coordinates {#1};}
+\newcommand{\addDRAW}[1]{\draw #1;}
+\newcommand{\addNODE}[2]{ \node at (#1) {#2};}
+
+%		\PLOTS{x}{y}{left}{
+%			\ADDPLOT{x^2}{-2}{2}{blue}
+%			\ADDCOORDS{(0,1)(1,1)(1,2)}
+%		}
+
+
+
+
+\definecolor{svar}{RGB}{0,0,0}
+\definecolor{opgavetekst}{RGB}{109,109,109}
+\definecolor{blygraa}{RGB}{44,52,59}
+
+\hoffset = -60pt
+\voffset = -95pt
+\oddsidemargin = 0pt
+\topmargin = 0pt
+\textheight = 0.97\paperheight
+\textwidth = 0.97\paperwidth
+
+\begin{document}
+% \tiny
+\footnotesize
+\begin{multicols*}{3}
+
+\subsection*{\footnotesize  DIMENSIONAL ANALYSIS}
+Natural units: $c=\hbar=1 \implies L=t=E^{-1}=m^{-1}$. \\
+Fields [units of energy]: $[\phi] \sim [A_\mu^a] \sim 1$ and $[\psi] \sim 3/2$. \\
+Cross section: $\sigma \sim -2$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize QUANTUM MECHANICS}
+$E=i\partial_t$, $p_j=-i\partial_j$, combined into $p^\mu = i \partial^\mu$. \\
+ {\textbf{Pauli matrices:}} \\
+$
+\sigma^1 =
+\left(\begin{matrix}
+0 & 1 \\
+1 & 0 \\
+\end{matrix}\right),
+\sigma^2 =
+\left(\begin{matrix}
+0 & -i \\
+i & 0 \\
+\end{matrix}\right) \text{ and }
+\sigma^1 =
+\left(\begin{matrix}
+1 & 0 \\
+0 & -1 \\
+\end{matrix}\right)
+$ \\
+satisfying $\sigma^i \sigma^j= \delta^{ij}+i\varepsilon^{ijk}\sigma^k$.
+\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize MATHEMATICAL}
+ {\textbf{Dirac delta:}} \\
+$\int d^4 x e^{ikx} = (2\pi)^4\delta^{(4)}(k)$, \ \
+$\delta(f(x)-f(x_0))=\frac{\delta(x-x_0)}{|f'(x_0)|}$ \\
+If $g(x)$ has real zeros $\{x_i\}$ then
+\[\delta(g(x))=\sum_i \frac{\delta(x-x_i)}{|g'(x_i)|}\]
+ {\textbf{Fourier transform:}} \\
+$\mathcal{F}(f)=\int d^4xe^{ikx}f(x)$, \ \
+$\mathcal{F}^{-1}(\hat{f})=\int \frac{d^4k}{(2\pi)^4}e^{-ikx}\hat{f}(k)$
+ \\
+ {\textbf{Euler-Lagrange:}}
+The action $S=\int L dt$ is extremal when \\
+\[
+\partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^a)}
+- \frac{\partial \mathcal{L}}{\partial \phi^a }=0.
+\]
+Momentum density conjugate $\pi(\mathbf{x})=\partial \mathcal{L}/\partial \dot \phi(\mathbf{x})$.
+Hamiltonian: $\mathcal{H}=\pi(\mathbf{x})\dot{\phi}(\mathbf{x})-\mathcal{L}$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize DIRAC BILINEARS AND TRACE TECHNOLOGY}
+ {\textbf{Gamma matrices:}}
+Satisfies the Lorentz algebra. In the Weyl basis \\
+$
+\gamma^0 =
+\left(\begin{matrix}
+0 & \mathbb{I}_2 \\
+\mathbb{I}_2 & 0 \\
+\end{matrix}\right),
+\gamma^k =
+\left(\begin{matrix}
+0 & \sigma^k \\
+-\sigma^k & 0 \\
+\end{matrix}\right) \text{ and }
+\gamma^5 =
+\left(\begin{matrix}
+-\mathbb{I}_2 & 0\\
+0 & \mathbb{I}_2 \\
+\end{matrix}\right)
+$ \\
+satisfying $\{\gamma^\mu, \gamma^\nu \} = 2g^{\mu \nu} \mathbb{I}_4$, and
+$(\gamma^\mu)^\dagger = \gamma^0 \gamma^\mu \gamma^0$.
+\\
+ {\textbf{Dirac bilinears:}} Since complex $4\times 4$ matrices has 32
+degrees of freedom. Imposing $(\gamma^k)^\dagger = - \gamma^k$ and
+$(\gamma^0)^\dagger=\gamma^0$ leaves 16 degrees of freedom. These are \\
+\begin{tabular}{l l r}
+  $\Gamma_i$                                        & $\overline{\psi}\Gamma_i \psi$  & Number\\    \hline
+  $\mathbb{I}$                                      & scalar                          & 1    \\
+  $\gamma^\mu$                                      & vector                          & 4    \\
+  $S^{\mu\nu}=\frac{i}{2}[\gamma^\mu,\gamma^\nu]$   & tensor                          & 6    \\
+  $\gamma^5$                                        & pseudo-scalar                   & 1    \\
+  $\gamma^5\gamma^\mu$                              & pseudo-vector                   & 4    \\
+\end{tabular} \\
+Here we have defined $\gamma^5 = i \gamma^0 \gamma^1 \gamma^2 \gamma^4$. This satisfies: \\
+$\{\gamma^5,\gamma^\mu\}=0$. Note also that $P_{R/L}=\frac{1\pm \gamma^5}{2}$ projects to lower two, or upper two
+components respectively. With $\gamma^\mu P_{R/L} = P_{L/R} \gamma^\mu$
+\\
+ {\textbf{Contraction identities:}} \\
+$\gamma^\mu \gamma_\mu = 4 \times \mathbb{I}$, \ \ \
+$\gamma^\mu \gamma^\nu \gamma_\mu = -2 \gamma^\nu$, \ \ \
+$\gamma^\mu \gamma^\nu \gamma^\rho \gamma_\mu = 4g^\rho \nu \mathbb{I}$, \ \ \
+\\
+ {\textbf{Useful ''slashed''-tricks:}} \\
+$\slashed{p}\slashed{p}=p^2\mathbb{I}$, \ \ \
+$\gamma^\mu \slashed{p} \gamma_\mu = -2\slashed{p}$, \ \ \
+$\{\slashed{A},\slashed{B}\}=\slashed{A}\slashed{B}+\slashed{B} \slashed{A}=2A \cdot B$, \ \ \
+$\gamma^\mu \slashed{p} \gamma_\mu = -2\slashed{p}$
+\\
+ {\textbf{Trace technology:}} \\
+$\text{tr}(A+B)=\text{tr}(A)+\text{tr}(B)$ \\
+$\text{tr}(cA)=c\text{tr}(A)$ \\
+$\text{tr}(\gamma^\mu \gamma^\nu) = 4g^{\mu\nu}$ \\
+$\text{tr}(\gamma^\mu \gamma^\nu \gamma^\rho \gamma^\sigma)
+=
+4(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\rho}g^{\nu\sigma}+g^{\mu\sigma}g^{\nu\rho})$ \\
+$\text{tr}(\text{any odd \# of }\gamma\text{-matrices})=0$ \\
+$\text{tr}(\gamma^5)=0$ \\
+$\text{tr}(\slashed{a}\slashed{b})=4(a\cdot b)$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize  WEYL SPINORS}
+Set $\psi_R = P_R \psi$ and $\psi_L= P_L \psi$ and write the Dirac equation as
+\[
+\left(\begin{matrix}
+-m                                  &   i\sigma^\mu \partial_\mu \\
+i\overline{\sigma}^\mu \partial_\mu &   -m \\
+\end{matrix}\right)
+\left(\begin{matrix}
+\psi_L \\
+\psi_R \\
+\end{matrix}\right)=0
+\]
+where $\sigma^\mu \equiv (1,\sigma^j)$ and $\overline{\sigma}^\mu \equiv (1,-\sigma^j)$. Note that for $m=0$
+this separates into two independent equations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize  PLANE WAVE SOLUTIONS (Dirac eq)}
+The plane wave solutions are $\psi(x)=u(p)e^{-ipx}$ for positive frequency (particles) and
+$\psi(x)=v(p)e^{ipx}$ for negative frequency (anti-particles). Here we have
+\EQU{
+u^s(p) &=
+\left(\begin{matrix}
+\sqrt{p_\mu \sigma^\mu }\xi^s \\
+\sqrt{p_\mu \overline{\sigma}^\mu }\xi^s \\
+\end{matrix}\right)
+=
+\frac{1}{\sqrt{2(m+E_\mathbf{p})}}
+\left(\begin{matrix}
+[E+m-\mathbf{p}\cdot \vec{\sigma}]\xi^s \\
+[E+m+\mathbf{p}\cdot \vec{\sigma}]\xi^s \\
+\end{matrix}\right) \\
+v^s(p) &=
+\left(\begin{matrix}
+\sqrt{p_\mu \sigma^\mu }\eta^s \\
+-\sqrt{p_\mu \overline{\sigma}^\mu }\eta^s \\
+\end{matrix}\right)
+=
+\frac{1}{\sqrt{2(m+E_\mathbf{p})}}
+\left(\begin{matrix}
+[E+m-\mathbf{p}\cdot \vec{\sigma}]\xi^s \\
+-[E+m+\mathbf{p}\cdot \vec{\sigma}]\xi^s \\
+\end{matrix}\right). \\
+}
+These satisfy
+$\overline{u}^r(p)u^s(p)=2m\delta^{rs}$, \
+$\overline{v}^r(p)v^s(p)=-2m\delta^{rs}$, \
+$\overline{v}^r(p)u^s(p)=\overline{u}^r(p)v^s(p)=0$, \
+$u^{r\dagger}(p)u^s(p)=2E_\mathbf{p}\delta^{rs}$, \
+$v^{r\dagger}(p)v^s(p)=2E_\mathbf{p}\delta^{rs}$.
+Perhaps more important is
+\[
+\sum_{s=1,2} u^s(p) \overline{u}^s(p) = \slashed{p}+m
+\text{ and }
+\sum_{s=1,2} v^s(p) \overline{v}^s(p) = \slashed{p}-m
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize  COMMUTATION RELATIONS}
+Ladder operators for bosons:
+$[a_\mathbf{p},a_\mathbf{k}^\dagger]=(2\pi)^3 \delta^{(3)}(\mathbf{p}-\mathbf{k})$.
+\\
+Bosonic fields:
+$[\phi(\mathbf{x}),\pi(\mathbf{y})]=i\delta^{(3)}(\mathbf{x}-\mathbf{y})$ with
+$[\phi(\mathbf{x}),\phi(\mathbf{y})]
+=[\pi(\mathbf{x}),\pi(\mathbf{y})]=0$. \\
+Bosonic hamiltonian:
+$[H,a^\dagger_\mathbf{p}] = E_\mathbf{p}a_\mathbf{p}^\dagger$
+and
+$[H,a_\mathbf{p}] = -E_\mathbf{p}a_\mathbf{p}^\dagger$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize  TRANSFORMATIONS}
+\textbf{Lorentz group:} \\
+$ x^\mu \mapsto \Lambda^\mu_{\ \nu} x^\nu$,\\
+$\phi(x) \mapsto \phi(\Lambda^{-1}x)$, \\
+$\partial_\mu \phi(x) \mapsto (\Lambda^{-1})_\mu^{\ \nu}(\partial_\nu \phi)(\Lambda^{-1}x)$.
+\\
+\textbf{Spinor transformations:} \\
+$\Lambda_{1/2}=\exp\left(-\frac{i}{2}\omega_{\mu\nu}S^{\mu\nu}\right)$, \\
+$\Lambda^{-1}_{1/2}\gamma^\mu \Lambda_{1/2} = \Lambda^\mu_{\ \nu} \gamma^\nu$
+\\
+\textbf{Gauge transformations:} \\
+$\psi \mapsto V\psi = e^{i\alpha^a t^a}\psi \simeq (1+i\alpha^a t^a) \psi$, \\
+$A_\mu^a t^a \mapsto V(x) \left( A_\mu^a(x)t^a + \frac{i}{g}\partial_\mu \right)V^\dagger(x)$ (finite) \\
+$A_\mu^a \mapsto A_\mu^a + \frac{1}{g}\partial_\mu  \alpha^a +f^{abc}A_\mu^b \alpha^c$ (infinitesimal) \\
+Set $t^a = 1$ and $f^{abc}=0$ for abelian. Possibly also $g \mapsto -e$.
+
+
+
+
+
+
+
+\subsection*{\footnotesize  SYMMETRIES}
+ {\textbf{Noethers theorem:}}
+Under an infinitesimal transformation $\phi \mapsto \phi'=\phi+\alpha \Delta \phi$ the
+Lagrangian transforms with $\mathcal{L}\mapsto \mathcal{L}'=\mathcal{L}+\alpha \partial_\mu \mathcal{J}^\mu$.
+Then $\partial_\mu j^\mu=0$ for conserved current $j^\mu(x)=\frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi)} \Delta \phi - \mathcal{J}^\mu$.
+Conserved charge $Q=\int j^0 d^3 x$.
+\\
+ {\textbf{CONTINUOUS SYMMETRIES:}} \\
+ {\textbf{Dirac equation:}}
+$\psi \mapsto e^{i\alpha}\psi$ gives conservation of $j^\mu = \overline{\psi}\gamma^\mu\psi$. \\
+$\psi \mapsto e^{i\alpha\gamma^5}\psi$ is symmetry when $m=0$. Then $\overline{\psi}\gamma^\mu \gamma^5 \psi$ is conserved. \\
+$x^\mu \mapsto x^\mu + a^\mu$ gives $\phi(x) \mapsto a^\mu \partial_\mu \phi(x)$. Four conserved currents:
+$T_\nu^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} \partial_\nu \phi - \mathcal{L}\delta_\nu^\mu$.
+Conserved charges are $H = \int d^3 x T^{00} $ (energy) and $P^i = \int d^3 x T^{oi}$ (physical momentum).
+\\
+ {\textbf{DISCRETE SYMMETRIES:}} \\
+ {\textbf{C (charge conjugation):}} $C\psiC=-i(\overline{\psi}\gamma^0 \gamma^2)^T$ \\
+Constructed from $a_\mathbf{p}^s \mapsto b_{\mathbf{p}}^s$ and
+$b_\mathbf{p}^s \mapsto a_{\mathbf{p}}^s$.
+\\
+ {\textbf{P (parity):}} $P\psi(t,\mathbf{x}) P = \eta_a \gamma^0 \psi(t,-\mathbf{x})$ \\
+with $|\eta|^2=1$. Constructed from $a_\mathbf{p}^s \mapsto \eta_a a_{-\mathbf{p}}^s$ and
+$b_\mathbf{p}^s \mapsto \eta_b b_{-\mathbf{p}}^s$. Parity is mirror symmetry.
+\\
+Examples of even:
+$t$, $m$, $E$, $P$ (power), $\rho$, $V$, $\mathbf{L}$, $\mathbf{B}$, ... \\
+Examples of odd:
+$h$ (helicity), $\mathbf{x}$, $\mathbf{v}$, $\mathbf{p}$, $\mathbf{F}$, $\mathbf{E}$, $\mathbf{A}$, ...
+\\
+ {\textbf{T (time reversal):}} $T\psi(t,\mathbf{x})T=(-\gamma^1 \gamma^3)\psi(-t,\mathbf{x})$ \\
+Constructed from $a_\mathbf{p}^s \mapsto a_{-\mathbf{p}}^{-s}$ and
+$b_\mathbf{p}^s \mapsto \eta_b b_{-\mathbf{p}}^{-s}$ with \\$Tc=c^*T$ for $c\in\mathbb{C}$.
+Then $Te^{iHt}=e^{-iHt}T$. \\
+Examples of even:
+$\mathbf{x}$, $\mathbf{a}$, $\mathbf{F}$, E, $\mathbf{E}$, $\rho$, ... \\
+Examples of odd:
+t, $\mathbf{v}$, $\mathbf{p}$, $\mathbf{L}$, $\mathbf{A}$, $\mathbf{B}$, $\mathbf{j}$, ...
+\\
+ {\textbf{Summary:}}
+If $(-1)^\mu=1$ for $\mu=0$ and $(-1)^\mu=-1$ for $\mu=1,2,3$ then \\
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{l | r r r r r r}
+    & $\overline{\psi}\psi$ & $i\overline{\psi}\gamma^5\psi$  & $\overline{\psi}\gamma^\mu\psi$ & $\overline{\psi}\gamma^\mu \gamma^5 \psi$   & $\overline{\psi}S^{\mu\nu}\psi$     & $\partial_\mu$  \\  \hline
+P   & $+1$                  & $-1$                            & $(-1)^\mu$                      & $-(-1)^\mu$                                 & $(-1)^\mu (-1)^\nu$                 & $(-1)^\mu$      \\
+T   & $+1$                  & $-1$                            & $(-1)^\mu$                      & $(-1)^\mu$                                  & $-(-1)^\mu (-1)^\nu$                & $-(-1)^\mu$     \\
+C   & $+1$                  & $+1$                            & $-1$                            & $+1$                                        & $-1$                                & $+1$            \\
+CPT & $+1$                  & $+1$                            & $-1$                            & $-1$                                        & $+1$                                & $-1$            \\
+\end{tabular}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\footnotesize  LAGRANGIANS}
+ {\textbf{Free scalar field (Klein-Gordon):}}
+$\mathcal{L}_{\text{KG}}=\frac{1}{2}(\partial_\mu \phi)^2-\frac{1}{2}m^2 \phi^2$.
+\\
+ {\textbf{$\phi^4$-Theory:}}
+$\mathcal{L}=\mathcal{L}_{\text{KG}}-\frac{\lambda}{4!}\phi^4 =\frac{1}{2}(\partial_\mu \phi)^2-\frac{1}{2}m^2 \phi^2 -\frac{\lambda}{4!}\phi^4$.
+\\
+ {\textbf{Free Dirac theory:}}
+$\mathcal{L}_{\text{Dirac}}=\overline{\psi}(i\slashed{\partial}-m)\psi$.
+\\
+ {\textbf{Maxwell theory (electromagnetism):}}
+$\mathcal{L}_{\text{Maxwell}}=- \frac{1}{4}(F_{\mu\nu})^2$.
+\\
+ {\textbf{Yukawa theory:}}
+$\mathcal{L}_{\text{Yukawa}}=\mathcal{L}_{\text{KG}}+\mathcal{L}_{\text{Dirac}}-g\overline{\psi}\psi \phi$.
+\\
+ {\textbf{QED:}}
+$\mathcal{L}_{\text{QED}}=\overline{\psi}(i\slashed{\partial}-m)\psi
+- \frac{1}{4}(F_{\mu\nu})^2-e\overline{\psi}\gamma^\mu \psi A_\mu$ \\
+or
+$\mathcal{L}_{\text{QED}}=\overline{\psi}(i\slashed{D}-m)\psi
+- \frac{1}{4}(F_{\mu\nu})^2$. Here $D_\mu=\partial_\mu+ieA_\mu$.
+\\
+ {\textbf{Complex scalar QED:}}
+$\mathcal{L}= -\frac{1}{4}(F_{\mu\nu})^2 +(D_\mu \phi)^* (D^\mu \phi) -m^2 \phi^* \phi$ \\
+where $D_\mu = \partial_\mu + ie A_\mu$.
+\\
+ {\textbf{Yang-Mills for fermion multiplet:}}
+$\mathcal{L}_{\text{YM}}= \overline{\psi}(i\slashed{D}-m)\psi-\frac{1}{4}(F_{\mu\nu}^a)^2$ \\
+where $(D_\mu \psi)_a = \partial_\mu \phi_a + gf^{abc}A_\mu^b \psi_c
+= \partial_\mu \phi_a - igA_\mu^a t^a \psi_c$. Written out: \\
+$\mathcal{L}_{\text{YM}}=
+\mathcal{L}_{\text{Dirac}}
+-\frac{1}{4}(\partial_\mu A_\nu^a - \partial_\nu A_\mu^a)^2
++gA_\mu^a\overline{\psi}\gamma^\mu t^a \psi
+-gf^{abc}(\partial_\mu A_\nu^a)A^{\mu b}A^{\nu c}
+-\frac{1}{4}g^2(f^{eab}A_\mu^a A_\nu^b)(f^{ecd}A^{\mu c}A^{\nu d}).$
+\\
+ {\textbf{Faddeev-Popov (non-abelian ghosts):}} \\
+$\mathcal{L}_{FP} = \mathcal{L}_{\text{YM}}
+- \frac{1}{2\xi}\left(\partial^\mu A_\mu^a\right)^2
+- \overline{c}(\partial^\mu D_\mu)c$. $c$ and $\overline{c}$ are grassmann
+valued scalar fields (wrong spin-statistics). $\xi$ determines the specific gauge
+(e.g. $\xi=1$ for Feynman gauge). Ghosts are adjoint.
+\\
+ {\textbf{Linear sigma model:}} \\
+$\mathcal{L}_{LSM} = \frac{1}{2}(\partial_\mu \sigma^i)^2+\frac{1}{2}\mu^2(\phi^i)^2-\frac{\lambda}{4}[(\phi^i)^2]^2$
+for $N$ real scalar fields $\phi^i$. Potential has minimum for $(\phi_0)^i=\frac{\mu^2}{\lambda}$.
+Invariant under $\phi^i \mapsto R^{ij}\phi^j$ for orthogonal matrices $R$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  OPERATORS}
+ {\textbf{Helicity:}}
+$h=\hat{p}\cdot \mathbf{S}=\frac{1}{2}\hat{p}_i
+\left(\begin{matrix}
+\sigma^i &        0 \\
+0        & \sigma^i \\
+\end{matrix}\right)$
+\\
+ {\textbf{Dirac spinors:}} \\
+$\psi(x)=\int \frac{d^3 p}{(2\pi)^3}
+\frac{1}{\sqrt{2E_\mathbf{p}}}
+\sum_s^2\left(a_\mathbf{p}^s u^s(p)e^{-ipx}+b_\mathbf{p}^{s\dagger}  v^s(p)e^{ipx}\right)$ \\
+$\overline{\psi}(x)=\int \frac{d^3 p}{(2\pi)^3}
+\frac{1}{\sqrt{2E_\mathbf{p}}}
+\sum_s^2\left(b_\mathbf{p}^s \overline{v}^s(p)e^{-ipx}+a_\mathbf{p}^{s\dagger} \overline{u}^s(p)e^{ipx}\right)$
+\\
+ {\textbf{Real scalar field:}} \\
+$\phi(x)=\int \frac{d^3 p}{(2\pi)^3} \frac{1}{\sqrt{2E_\mathbf{p}}}
+\left(a_\mathbf{p}e^{-ipx}+a_\mathbf{p}^\dagger e^{ipx}\right)$
+\\
+ {\textbf{Electromagnetic gauge field:}} \\
+$A_\mu(x)=\int \frac{d^3 p}{(2\pi)^3}
+\frac{1}{\sqrt{2E_\mathbf{p}}}
+\sum_r^3\left(a_\mathbf{p}^r \varepsilon^r(p)e^{-ipx}+(a_\mathbf{p}^r)^\dagger \varepsilon^{r*}(p) e^{ipx}\right)$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  PROPAGATORS}
+ {\textbf{Klein-Gordon propagator:}} \\
+$D_F(x-y)
+=\int \frac{d^4 p}{(2\pi)^4}\frac{ie^{-ip(x-y)}}{p^2-m^2+i\varepsilon}
+=\bra{0}\mathbb{T} \phi(x)\phi(y)\ket{0}$ \\
+is the Green's function for KGeq: \\
+$(-\partial^2-m^2)D_F(x-y)=i\delta^{(4)}(x-y)$
+\\
+ {\textbf{Dirac propagator:}} \\
+$S_F(x-y)
+=\int \frac{d^4 p}{(2\pi)^4}\frac{i(\slashed{p}+m)e^{-ip(x-y)}}{p^2-m^2+i\varepsilon}
+=\bra{0}\mathbb{T} \psi(x)\overline{\psi}(y)\ket{0}$ \\
+is the Green's function of the Dirac operator: \\
+$(i\slashed{\partial}-m)S_F(x-y)=i\delta^{(4)}(x-y)$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  GROUP THEORY}
+Associated to any Lie group $G$ is its Lie algebra $\mathfrak{G}$,
+defined to be the tangent space of $G$ at the identity. Generally $[t^a,t^b]=if^{abc}t^{c}$ and \\
+$f^{ade}f^{bcd}+f^{bde}f^{cad}+f^{cde}f^{abd}=0$ (Jacobi identity).
+\begin{itemize}
+  \item
+    $SU(n)$ has $n^2-1$ independent matrices:\\
+    $SU(n)=\{M\in GL(n,\mathbb{C})|MM^\dagger=\mathbb{I}\}$ \\
+    $\mathfrak{su}(n)=\{M\in \mathfrak{gl}(n,\mathbb{C})|M+M^\dagger=0\}$
+  \item
+    $SO(n)$ has $n(n-1)/2$ independent matrices:\\
+    $SO(n)=\{M\in GL(n,\mathbb{R})|MM^T=\mathbb{I}\}$ \\
+    $\mathfrak{so}(n)=\{M\in \mathfrak{gl}(n,\mathbb{R})|M+M^T=0\}$
+  \item
+    $SP(n)$ has $n(n-1)/2$ independent matrices:\\
+    $SP(n)=\{M\in GL(2n,\mathbb{R})|MJM^T=\mathbb{I}\}$ \\
+    $\mathfrak{sp}(n)=\{M\in \mathfrak{gl}(2n,\mathbb{R})|MJ+JM^T=0\}$ \\
+    for $J=\left(\begin{matrix}
+    0 & \mathbb{I}_n \\
+    -\mathbb{I}_n & 0 \\
+    \end{matrix}\right)$
+\end{itemize}
+\\
+ {\textbf{Lorentz algebra:}} \\
+$\frac{1}{i}[J^{\mu\nu},J^{\rho \sigma}]=
+g^{\nu\rho}J^{\mu\sigma}-g^{\mu\rho}J^{\nu\sigma}-g^{\nu\sigma}J^{\mu\rho}+g^{\mu\sigma}J^{\nu\rho}$ \\
+Ordinary four-vectors:
+$(\mathcal{J}^\mu\nu)_{\alpha \beta} = i(\delta^\mu_\alpha \delta^\nu_\beta-\delta^\nu_\alpha \delta^\mu_\beta)$. \\
+General transformation:
+$V^\alpha \mapsto \left(\delta^{\alpha}_\beta - \frac{i}{2}\omega_{\mu\nu}(\mathcal{J}^{\mu\nu})^\alpha_{\ \beta} \right)V^\beta$.
+\\
+ {\textbf{Dirac algebra:}} \\
+$\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}\mathbb{I}_{n\times n}$ \\
+Here $S^{\mu\nu}=\frac{i}{4}[\gamma^\mu,\gamma^\nu]$ gives the transformation
+$L = \exp \left(-\frac{i}{2}\omega_{\mu\nu}J^{\mu\nu}\right)$. Represented by $\gamma^{j}=i\sigma^{j}$
+in two dimensions. This works because $\{\gamma^i, \gamma^j \}=-2\delta^{ij}$
+\\
+ {\textbf{REPRESENTATIONS:}} \\
+$t_r^a$ is, and can, always be chosen hermitian! \\
+ {\textbf{Conjugate representation:}} \\
+$t_{\overline{r}}^a = -(t_r^a)^* = -(t_r^a)^T$ \\
+ {\textbf{Fundamental representation:}} \\
+The lowest dimensional representation. For $\mathfrak{su}(n)$, $t_r^a$ is a $n\times n$ matrix.
+For $n=2$ it is exactly $\sigma^a /2$. \\
+For $\mathfrak{so}(n)$ it is strictly real $n\times n$ matrices.
+\\
+ {\textbf{Adjoint representation:}} \\
+$(t_G^b)_{ac} \equiv if^{abc}$ where $[t^a,t^b]=if^{abc}t^c$. \\
+Vector bosons are always in the adjoint representation. \\
+$\frac{1}{i}(t_G^b)_{ac}=f^{abc}=\varepsilon^{abc}$ for $\mathfrak{su}(2)$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  WICK-PICTURE}
+Coefficients of Fourier nodes are ladder operators (second quantization).
+\includegraphics[width=0.2\textwidth]{WickContraction.png} \\
+\includegraphics[width=0.3\textwidth]{Wick.png}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  PATH INTEGRALS}
+Diagrammatically, the relation between path integrals and the second quantized theory is
+\[
+\bra{...}\mathbb{T}\{...\}\ket{...} \longleftrightarrow \int \mathcal{D}\phi
+\text{ and }
+-\int dt H_I \longleftrightarrow  S=\int d^4x \mathcal{L}.
+\]
+An illustrational example is that of a scalar theory: \\
+\includegraphics[width=0.27\textwidth]{PathAndWick.png} \\
+This gives
+\EQU{
+&\bra{\Omega}\mathbb{T}\{\phi(x_1)...\phi(x_n)\} \ket{\Omega} \\
+&=
+\underset{T\rightarrow \infty(1-i\varepsilon)}{\text{lim}}
+\frac{
+\int \mathcal{D}\phi \phi(x_1)...\phi(x_n)\exp \left[i\int_{-T}^T\mathcal{L}d^4x \right]
+}{
+\int \mathcal{D}\phi \exp \left[i\int_{-T}^T\mathcal{L}d^4x \right]
+}
+}
+\\
+ {\textbf{Functional calculus:}} \\
+A functional is a mapping from the space of functions to a real number
+$F: D(\Omega) \rightarrow \mathbb{R}$ (or possibly $\mathbb{C}$) by $f\mapsto F[f]$.
+A countinuous, linear functional is said to be a distribution. A "regular" distribution is one where there exists
+a locally integrable function $\phi$ so that $F[f]=\int_{\Omega \subset \mathbb{R}}\phi(x)f(x)dx$
+for all $f(x)\in D(\Omega)$. In that case
+\[
+\frac{\delta }{\delta f(y)}F[f]
+= \frac{\delta }{\delta f(y)} \int \phi(x)f(x)dx \equiv \phi(y).
+\]
+More generally (in four dimensions)
+\[
+\frac{\delta }{\delta f(y)}f(x)=\delta^{(4)}(x-y).
+\]
+In this sense, the product rule and the chain rule still holds. Also
+\[
+\frac{\delta }{\delta f(x)} \int d^4 y (\partial_\mu f(y)) V^\mu(y) = -\partial_\mu V^\mu(x).
+\]
+\\
+ {\textbf{Generating function:}}
+For each independent field $\phi$, define a generating functional \\
+\[
+Z[J]=\int \mathcal{D}\phi \exp \left[i\int d^4 x \left(\mathcal{L}+J(x)\phi(x)\right)\right]
+\]
+where $J(x)$ is called a {\it source term}.
+Generating functional for free scalar theory:
+\[
+Z[J] = Z[0]\exp \left[-\frac{1}{2}\int d^4 x \int d^4 y J(x)D_F(x-y)J(y)\right]
+\]
+The $\frac{1}{2}$ factor comes directly from the Lagrangian $\mathcal{L}=\frac{1}{2}\phi(-\partial^2-m^2)\phi$.
+Generating functional for free Dirac theory:
+\[
+Z[\overline{\eta},\eta] = Z[0,0]\exp \left[-\int d^4 x \int d^4 y \overline{\eta}(x)S_F(x-y)\eta(y)\right]
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  GRASSMANN NUMBERS}
+Defined by $\theta \eta = -\eta \theta$ which implies $\theta^2=0$ for all $\theta$. \\
+ {\textbf{Integration:}}\\
+Every Taylor expansion terminates after at the quadratic term: $f(\theta)=A+B\theta$. Then
+\[
+\int d\theta f(\theta) = \int d\theta (A+B\theta) \equiv B
+\]
+from wanting to preserve invariance under shift $\theta \mapsto \theta + \eta$.
+Furthermore
+\[
+\int d\theta \int d\eta \eta \theta = +1.
+\]
+Note also that $(\theta \eta)^* = -\theta^* \eta^*$.
+\\
+ {\textbf{Differentiation:}}\\
+Really the same as integration
+\[
+\frac{d}{d\theta}\theta \eta = \eta = -\frac{d}{d\theta}\eta\theta.
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  INTEGRALS}
+ {\textbf{Integrals of commuting numbers:}}
+\EQU{
+& \left(\prod_k^N \int d\xi_k\right)\exp \left(-\xi_i B_{ij} \xi_j \right)
+= \pi^{\frac{N}{2}}(\text{det} B)^{-\frac{1}{2}} \\
+& \left(\prod_k^N \int d\xi_k\right)\xi_l \xi_m \exp \left(-\xi_i B_{ij} \xi_j \right)
+= \text{const}\times (\text{det} B)^{-\frac{1}{2}} (B^{-1})_{lm}
+}
+\\
+ {\textbf{Grassmann integrals:}}
+\EQU{
+& \int d \theta^* d\theta e^{-\theta^* b \theta} = b \\
+& \left(\prod_i \int d\theta^*_i \theta_i\right) \exp \left(-\theta^*_i B_{ij}\theta_j\right)
+= \text{det} B \\
+& \left(\prod_i \int d\theta^*_i \theta_i\right)\theta_k \theta^*_l \exp \left(-\theta^*_i B_{ij}\theta_j\right)
+= (\text{det} B)(B^{-1})_{kl} \\
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  CORRELATION FUNCTIONS}
+Building blocks to describe (not only) interactions! \\
+ {\textbf{Interaction picture:}}
+If $H=H_0+H_1$ in Schr\"odinger picture then a state in the interaction picture is
+$\ket{\Psi_I}=e^{iH_0t/\hbar}\ket{\Psi}$ and an operator $O_I=e^{iH_0t/\hbar}Oe^{-iH_0t/\hbar}$.
+\\
+ {\textbf{Correlation functions (Wick-picture):}} \\
+\EQU{
+&\bra{\Omega}\mathbb{T}\{\phi(x_1)...\phi(x_n)\}\ket{\Omega} \\
+&=
+\underset{T\rightarrow \infty(1-i\varepsilon)}{\text{lim}}
+\frac{
+\bra{0}\mathbb{T}\left\{\phi_I(x_1)...\phi_I(x_n)\exp \left[-i\int_{-T}^Tdt H_I(t) \right] \right\}\ket{0}
+}{
+\bra{0}\mathbb{T}\left\{\exp \left[-i\int_{-T}^Tdt H_I(t) \right] \right\}\ket{0}
+}
+}
+Which amounts to finding all {\it connected} Feynman diagrams.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  S-MATRIX}
+\[
+\bra{\mathbf{p}_1...\mathbf{p}_n}S \ket{\mathbf{k}_\mathcal{A}\mathbf{k}_\mathcal{B}}
+=
+\lim_{T\rightarrow \infty}
+\braket{\underbrace{\mathbf{p}_1...\mathbf{p}_n}_{\text{time } T}}{\underbrace{\mathbf{k}_\mathcal{A}\mathbf{k}_\mathcal{B}}_{\text{time } -T}}
+\]
+We often use $S=\mathbb{I}+iT$. Then $\bra{...}iT\ket{...}\propto (2\pi)^4 \delta^{(4)}(\sum p_{in}-\sum p_{out})$.
+Constant of proportionality is $i\mathcal{M}$ (amplitude).
+The non-trivial part of the $S$ matrix can be written in terms of Feynman diagrams: \\
+
+\EQU{
+&\bra{\mathbf{p}_1...\mathbf{p}_n}iT\ket{\mathbf{p}_\mathcal{A}\mathbf{p}_\mathcal{B}} \\
+&=
+\underset{T\rightarrow \infty(1-i\varepsilon)}{\text{lim}}
+_0\bra{\mathbf{p}_1...\mathbf{p}_n}
+\mathbb{T}\left\{\exp \left[-i\int_{-T}^Tdt H_I(t) \right] \right\}
+\ket{\mathbf{p}_\mathcal{A}\mathbf{p}_\mathcal{B}}_0
+\bigg|_{\substack{\text{Connected} \\ \text{amputated}} }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  CROSS SECTION}
+Cross section $\sigma$ is the constant of proportionality:
+\[
+\text{Number of events} \propto \frac{N_\mathcal{A}N_\mathcal{B}}{A}.
+\]
+Generally we want to determine $\mathcal{P}=|\braket{\phi_1...\phi_n}{\phi_\mathcal{A}\phi_\mathcal{B}}|^2$.
+It is then often convenient to write
+$_{out}\bra{\phi_1...\phi_n} = \left( \prod_f \int \frac{d^3p_f}{(2\pi)^3} \frac{\phi_f(\mathbf{p}_f)}{\sqrt{2E_f}} \right) \ _{out}\bra{\mathbf{p}_1...\mathbf{p}_n}$
+\\
+ {\textbf{Differential cross section:}} \\
+\resizebox{\columnwidth}{!}{
+\[
+d\sigma =
+\frac{1}{ 2E_\mathcal{A} 2E_\mathcal{B} |v_\mathcal{A}-v_\mathcal{B}| }
+\left(\prod_f \frac{d^3p_f}{(2\pi)^3}\frac{1}{2E_f}\right)
+|\mathcal{M}|^2
+(2\pi)^4 \delta^{(4)}(p_\mathcal{A}+p_\mathcal{B}-\sum p_f)
+\]
+}
+where $|v_\mathcal{A}-v_\mathcal{B}|=
+\left|\frac{\overline{k_\mathcal{A}^z}}{\overline{E_\mathcal{A}}}-\frac{\overline{k_\mathcal{B}^z}}{\overline{E_\mathcal{B}}}\right|$
+is understood to have the constraints $\overline{k_\mathcal{A}^z}+\overline{k_\mathcal{B}^z}=\sum p_f^z$
+and $\overline{E_\mathcal{A}}+\overline{E_\mathcal{B}}=\sum E_f$. \\
+The cross section for two final-state particles: \\
+\resizebox{\columnwidth}{!}{\[
+\left(\frac{d\sigma}{d\Omega}\right)_{CM} =
+\frac{1}{ 2E_\mathcal{A} 2E_\mathcal{B} |v_\mathcal{A}-v_\mathcal{B}| }
+\frac{|\mathbf{p}_1|}{(2\pi)^2 4 E_{cm}}
+|\mathcal{M}(p_\mathcal{A},p_\mathcal{B}\rightarrow p_1,p_2)|^2
+\]}
+The two-body phase space is given by $\int d\Pi_2=\int d(\cos \theta) \frac{1}{16\pi}\frac{2|\mathbf{p}_1|}{E_{cm}}$.
+\\
+When, in an $2\rightarrow 2$ process, all four masses are equal, then:
+\[
+\left(\frac{d\sigma}{d\Omega}\right)_{CM} = \frac{|\mathcal{M}|^2}{64\pi^2E^2_{cm}}.
+\]
+A $2\rightarrow 2$ process may also be expressed in terms of integration over Mandelstam variables:
+\[
+\sigma = \frac{1}{64\pi s}\frac{1}{\mathbf{p}_{1,cms}^2}\int_{t_{min}}^{t_{max}} dt |\mathcal{M}|^2
+\]
+where
+\EQU{
+t_{max} &= m_1^2 + m_3^2 -2E_1E_3 + 2 |\mathbf{p}_1| |\mathbf{p}_3| \\
+t_{min} &= m_1^2 + m_3^2 -2E_1E_3 - 2 |\mathbf{p}_1| |\mathbf{p}_3| \\
+}
+ {\textbf{Differential decay rate:}} \\
+\resizebox{\columnwidth}{!}{\[
+d\Gamma =
+\frac{1}{2m_\mathcal{A}}
+\left(\prod_f \frac{d^3p_f}{(2\pi)^3}\frac{1}{2E_f}\right)
+|\mathcal{M}(p_\mathcal{A}\rightarrow \{p_f\})|^2
+(2\pi)^4 \delta^{(4)}(p_\mathcal{A}+p_\mathcal{B}-\sum p_f)
+\]}
+ {\textbf{Phase space:}} \\
+For identical particles, remember to put a factor $\frac{1}{n!}$ in front!
+\[
+\int d\Pi_n = \left(\prod_{final \ f} \int \frac{d^3 p_f}{(2\pi)^3} \frac{1}{2E_f}\right)
+(2\pi)^4 \delta^{(4)}\left(\sum_i p_i - \sum_f p_f\right).
+\]
+This makes it possible to write
+\[
+\frac{d\sigma}{d\Pi_n} = \frac{|\mathcal{M}|^2}{2E_\mathcal{A}2E_\mathcal{B}|v_\mathcal{A}-v_\mathcal{B}|}
+\text{ and }
+\frac{d\Gamma}{d\Pi_n} = \frac{|\mathcal{M}|^2}{2m_\mathcal{A}}.
+\]
+ {\textbf{Tricks:}} \\
+$E_\mathcal{A}E_\mathcal{B}|v_\mathcal{A}-v_\mathcal{B}|
+=|E_\mathcal{B}p^z_\mathcal{A}-E_\mathcal{A}p^z_\mathcal{B}|
+=|\varepsilon_{\mu x y \nu}p^\mu _\mathcal{A} p^\nu _\mathcal{B}|$ \\
+$\delta(E_f-E_i)=\frac{E_f}{|\mathbf{p}_f|}\delta(|\mathbf{p}_f|-|\mathbf{p}_i|)$ for equal masses. \\
+$\sum_{polarizations} \epsilon_\mu ^* \epsilon_\nu \mapsto -g_{\mu\nu}$ in QED.
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  INTERACTIONS}
+For theories involving only scalars $\mu \phi^3$ and $\lambda \phi^4$ are the only allowed renormalizable interactions.
+The $\mu$ has dimension $1$ where $\lambda$ is dimensionless. Spinor self-interactions are not allowed since $\psi^3$
+(besides violating Lorentz invariance) has dimension $9/2$. Only allowable new interaction between spinors and scalars
+is $g\overline{\psi}\psi \phi$. Adding vector fields we can have scalar couplings like $eA^\mu \phi \partial_\mu \phi^*$
+and $e^2 |\phi|^2 A^2$. With spinors we have $e\overline{\psi}\gamma^\mu \psi A_\mu$ and self coupling:
+$A^2(\partial_\mu A^\mu)$ and $A^4$.
+\\
+ {\textbf{Vertex factors:}} \\
+If all momenta are assigned to be ingoing (this means they are all initial states). Remember that antiparticles
+and particles are defined by anti-aligned and aligned momenta with the particle number flow.
+\\
+ {\textbf{Mandelstam variables:}} \\
+$s=(p_1+p_2)^2$, $t=(p_1-p_3)^2$ and $u=(p_1-p_4)^2$.
+When on shell: $s+u+t=\sum_i m_i^2$. \\
+\includegraphics[width=0.25\textwidth]{Mandelstam.png}  \\
+\includegraphics[width=0.15\textwidth]{Mandelstam2.png}
+\includegraphics[width=0.08\textwidth]{Mandelstam3.png}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  QED}
+ {\textbf{Definitions:}}
+Tensor field $F_{\mu\nu} \equiv \partial_\mu A_\nu - \partial_\nu A_\mu$. \\
+Fine structure constant $\alpha=e^2/4\pi$.
+$A^\mu=(\Phi,\mathbf{A})$ where $\Phi=Q/4\pi r$. Maxwells equations
+$\varepsilon^{\mu\nu\rho \sigma}\partial_\nu F_{\rho \sigma}=0$ and
+$\partial_\mu F^{\mu \nu}=ej^{\nu}$ with $j^{\nu}=\overline{\psi}\gamma^\nu \psi$
+current density and field tensor $F^{\mu \nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$. \\
+ {\textbf{Ward identity:}}
+$k_\mu \mathcal{M}^\mu=0$ where $\mathcal{M}=\varepsilon_\mu\mathcal{M}^\mu$.
+Can also define $\mathcal{M}_\mu=\int d^4 x \bra{f}j^{\mu} \ket{i}$.
+Physical significance: Longitudal polarization of the photon which arises in the $\xi$-gauge is unphysical
+and disappears from the $S$-matrix. \\
+The Ward identity implies that:
+$\sum_\varepsilon \varepsilon^{*\mu}\varepsilon^\nu \mapsto -g^{\mu\nu}$ (not mathematical equivalence).
+Also: True for QED, but not for any theory!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  FADEEV-POPOV PROCESS}
+Insert identity into functional integral: \\
+\[
+1 = \int \mathcal{D}\alpha \delta(G(A^\alpha))\text{det}\left(\frac{\delta G(A^\alpha)}{\delta \alpha}\right)
+\]
+where $A^\alpha_\mu = A_\mu + \frac{1}{e}\partial_\mu \alpha$.
+So that \\
+\[\int \mathcal{D}A e^{iS[A]}
+= \int \mathcal{D}\alpha \int \mathcal{D}A e^{iS[A]} \delta(G(A^\alpha))\text{det}\left(\frac{\delta G(A^\alpha)}{\delta \alpha}\right)\]
+Now choose the gauge fixing $G(A)=\partial^\mu A_\mu(x)-\omega(x)$ and integrate over all possible
+$\omega(x)$ with a gaussian weighting function $\exp\left( -i\int d^4 x \frac{\omega^2}{2\xi} \right)$.
+This results in \\
+$\tilde{D}_F^{\mu \nu}(k)=\frac{-i}{k^2}(g^{\mu\nu}-(1-\xi)\frac{k^\mu k^\nu}{k^2})$\\
+in momentum space. We are free to choose $\xi$.
+For example $\xi=0$ (Landau gauge) and $\xi=1$ (Feynman gauge).
+\\
+ {\textbf{Non-abelian case:}}
+In the non-abelian case $\text{det}\left(\frac{\delta G(A^\alpha)}{\delta \alpha}\right)$ is not independent of the $A$'s.
+We can, however, recognise the determinant as a functional integral of a grassmann gaussian
+\[
+\text{det}\left(\frac{1}{g}\partial^\mu D_\mu \right)
+=
+\int \mathcal{D}c \mathcal{D}\overline{c} \exp \left[ i\int d^4x \overline{c}(-\partial^\mu D_\mu)c \right].
+\]
+Hence this problem
+can be solved by introducing a new field in the Lagrangian: \\
+\[
+\mathcal{L} \supset
+\overline{c}^a (-\partial^\mu D_\mu^{ac})c^c.
+\]
+These are the Faddeev-Popov ghost fields exhibiting fermi-dirac statistics and being scalars (this is sad).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection*{\small SPONTANEOUS SYMMETRY BREAKING (SSB)}
+For a Lagrangian of a set of $N$ fields $\phi^a$, set $V(\phi^a)$ equal to the
+terms that don't involve derivatives. Change the mass coefficient
+$m^2 \rightarrow - \mu^2$. $\phi^a_0=(0,0,...,v)$ minimizes this field, and we
+call this the \textit{vacuum expectation value} og $\phi^a$. Shift the fields by
+$\phi^a \rightarrow \phi^a(x) = (\pi^k(x), v+ \sigma(x))$ where $k=1,...,N-1$.
+Rewriting the Lagrangian gives $N-1$ massless fields, and one massive field $\sigma$.
+Explicitly:
+\EQU{
+&\mathcal{L}_{LSM} =
+\frac{1}{2}(\partial_\mu\pi^k)^2+\frac{1}{2}(\partial_\mu \sigma)^2
+-\frac{1}{2}(2\mu^2)\sigma^2-\sqrt{\lambda}\mu\sigma^3\\
+&-\sqrt{\lambda}\mu (\pi^k)^2 \sigma - \frac{\lambda}{4}\sigma^4
+-\frac{\lambda}{2}(\pi^k)^2 \sigma^2-\frac{\lambda}{4}[(\pi^k)^2]^2.
+}
+
+
+
+\subsubsection*{\small GOLDSTONE'S THEOREM}
+{\textbf{Global:}}
+For every spontaneously broken continuous symmetry, there theory must contain a
+massless particle. Before the symmetry breaking the system has symmetry group
+$O(N)$, and after it has $O(N-1)$. $O(N)$ can rotate in $N(N-1)/2$  directions,
+and $O(N-1)$ in $(N-1)(N-2)/2$, so the number of broken symmetries is the
+difference: $N-1$.
+\\
+{\textbf{Local (gauge):}}
+
+
+\subsubsection*{\small THE HIGGS MECHANISM}
+Introduce a complex field with $\mathcal{L}=|D_\mu \phi|^2 -V(\phi)$ that obeys the symmetries
+and shifts the vacuum away from zero. If we choose the Mexican hat potential
+\[
+V(\phi) = -\mu |\phi|^2 + \frac{\lambda}{2}|\phi|^4
+\]
+we get a vacuum expectation value of $\expe{\phi}=\phi_0 = \left(\frac{\mu^2}{\lambda}\right)^\frac{1}{2}$.
+We then break the symmetry (SSB style), knowing that this is only possible if we have a massless
+scalar particle, not possible with intact symmetry (SSB $\rightarrow$ Goldstone boson).
+Here it is conventional to set $\phi = \phi_0 + \frac{1}{\sqrt{2}}(\phi_1+i\phi_2)$. We can then write
+\EQU{
+|D_{\mu} \phi|^2 &= \frac{1}{2} (\partial_{\mu} \phi_1)^2 + \frac{1}{2}(\partial_{\mu} \phi_2)^2\\
+& + \sqrt{2}e \phi_0 A_{\mu} \partial^{\mu} \phi_2 + e^2 \phi_0^2 A_{\mu} A^{\mu}+...
+}
+The 3rd term gives the coupling of Goldstone and massive gauge, and the fourth
+term is the mass of the gauge.
+To diagonalize the mass matrix, pick unitary gauge so that $\phi$ is real-valued. Then $\phi_2$ is removed and
+we are left with
+\[
+|D_{\mu} \phi|^2-V(\phi)
+=
+(\partial_\mu \phi)^2 + e^2\phi^2 A_\mu A^\mu -V(\phi).
+\]
+In this case, the Goldstone boson vanishes, but it still provides the pole in the vacuum
+polarization amplitude. This is the Higgs mechanism. The kinetic energy term of
+$\mathcal{L}$ for the vacuum expectation value of $\phi$
+\begin{align*}
+|D_{\mu} \phi|^2 &= \frac{1}{2} (\partial_{\mu} \phi_1)^2 + \frac{1}{2}(\partial_{\mu} \phi_2)^2\\
+& + \sqrt{2}e \phi_0 A_{\mu} \partial^{\mu} \phi_2 + e^2 \phi_0^2 A_{\mu} A^{\mu}+...
+\end{align*}
+We can always introduce
+$\phi(x)=U(x)\frac{1}{\sqrt{2}}
+\left(\begin{matrix}
+0 \\ v + h(x)
+\end{matrix}\right)$
+where $U(x)$ is some $SU(N)$ transformation and $h$ is the physicsal Higgs field.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  NON-ABELIAN GAUGE THEORIES}
+The Lagrangian of a renormalizable theory can contain no terms of mass dimension higher than 4.
+The terms that don't involve derivatives are invariant under local gauge. To make derivatives invariant
+we introduce
+\[(D_\mu \phi)_a
+= \partial_\mu \phi_a - ig A_\mu^b (t^b)_{ac} \phi_c
+= \partial_\mu\phi_a + gf^{abc}A_\mu^b \phi_c\]
+for any field multiplet $\phi$. The result (for fermions) is the Yang-Mills lagrangian. Here \\
+$[D_\mu,D_\nu] \equiv -ig F_{\mu\nu}^a t^a$, \\
+$F_{\mu\nu}^a = \partial_\mu A_\nu^a - \partial_\nu A_\mu^a + g f^{abc}A_\mu^b A_\nu^c$. \\
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  GLASHOW-WEINBERG-SALAM THEORY (GWS)}
+Gauge theory for $SU(2)\times U(1)$. General transformation is then
+$\phi \mapsto e^{i\alpha^a \tau^a}e^{iY\beta}\phi$ for hypercharge $Y=Q-T^3=1/2$ and $\tau^a=\frac{1}{2}\sigma^a$.
+This gives
+$D_\mu \phi = (\partial_\mu -igA_\mu^a\tau^a - i \frac{1}{2}g'B_\mu)\phi$.
+The vaccuum expectation value
+$\expe{\phi}=\frac{1}{\sqrt{2}}
+\left(\begin{matrix}
+0 \\ v
+\end{matrix}\right)$
+is left invariant if $\alpha_1 = \alpha_2 = 0$ and $\alpha_3 = \beta$.
+
+The covariant derivative is
+\[
+D_\mu \phi = \left( \partial_\mu - igA_\mu^a\tau^a - iYg'B_\mu \right) \phi
+\]
+for $Y=1/2$ this gives
+\begin{align*}
+W_{\mu}^{\pm}&= \frac{1}{\sqrt{2}}(A_{\mu}^1 \mp iA_{\mu}^2),     \ \ \ \ m_W = g \frac{v}{2}\\
+Z_{\mu}^0 &= \frac{1}{\sqrt{g^2 + g'^2}}(gA_{\mu}^3 -g'B_{\mu}),  \ \ \ \ m_Z= \sqrt{g^2+g'^2}\frac{v}{2}\\
+A_{\mu} &= \frac{1}{\sqrt{g^2+g'^2}}(g'A_{\mu}^3+gB_{\mu}),       \ \ \ \ m_A=0
+\end{align*}
+as mass eigenstates. We may write this in terms of the weak mixing angle $\theta_w$
+\EQU{
+\left(\begin{matrix}
+Z^0 \\ A
+\end{matrix}\right)
+=
+\left(\begin{matrix}
+  \cos \theta_w   & -\sin \theta_w \\
+  \sin \theta_w   &  \cos \theta_w \\
+\end{matrix}\right)
+\left(\begin{matrix}
+A^3 \\ B
+\end{matrix}\right)
+\text{ with }
+\begin{matrix}
+\cos \theta_w = \frac{g}{\sqrt{g^2 +g'^2}}
+\\
+\sin \theta_w = \frac{g'}{\sqrt{g^2 +g'^2}}
+\end{matrix}
+}
+We may then relate the two coupling constants by $e = g \sin \theta_w$. In this basis
+\EQU{
+D_\mu &= \partial_\mu
+- i \frac{g}{\sqrt{2}}\left(W_\mu^+T^++W_\mu^-T^-\right)\\
+&- i \frac{g}{\cos \theta_w } Z_\mu (T^3-Q \sin^2 \theta_w)
+- ie A_\mu Q,
+}
+having defined $T^\pm = T^1 \pm i T^2$ and $t^a_{ij}=iT^a_{ij}$ so that $T^a$ are real and antisymmetric.
+$T^3$ are the eigenvalues of $T^3$.
+\\
+\textbf{Fermionic coupling: }
+Since $\overline{\psi}i\slashed{\partial}\psi = \overline{\psi}_R i\slashed{\partial}\psi_R + \overline{\psi}_L i\slashed{\partial}\psi_L$
+Dirac fermions split into separate pieces (left- and right-handed fields) when they are massless. In GWS we assign
+the left-handed fermion fields to doublets of $SU(2)$, while making the right-handed fermion fields singlets under
+this group ($SU(2)_L \times U(1)_Y$). Once $T^3$ is chosen, then $Y$ is determined. Hence $Y$ may differ for the left- and right-handed fields.
+Note that no mass is allowed if $\psi_L \leftrightarrow \psi_R$ is to be maintained as a symmetry. This is because
+\[
+m \overline{\psi}\psi = m( \overline{\psi}_L \psi_R + \overline{\psi}_R \psi_L )
+\]
+The right-handed neutrino $\nu_R$ has isospin $I^3=0$, hence $Y=Q$, but since $Q=0$ we have
+$T^3=Q=Y=0$. Hence $\nu_R$ cannot couple to anything. Fermions get their mass from a term
+\[
+\mathcal{L} \supset -\lambda_e \overline{E}^j_{aL} \phi^j e_{aR}
+\]
+for electrons. $-\lambda_e$ is the Yukawa coupling. $\overline{E}$ is the left-handed electron multiplet,
+$E_L=(\nu_L,e_L)^T$, in spinor representation ($j$), $\phi$ is the higgs (scalar field) in the spinor
+representation and $e$ is the right-handed electron singlet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{\small  FEYNMAN RULES}
+\includegraphics[width=0.3\textwidth]{FeynRules1.png} \\
+\includegraphics[width=0.25\textwidth]{FeynRules2.png} \\
+\includegraphics[width=0.3\textwidth]{FeynRules3.png} \\
+\includegraphics[width=0.2\textwidth]{FeynRules4.png} \\
+
+For complex scalar QED: \\
+\includegraphics[width=0.3\textwidth]{ComplexScalarQED.png} \\
+
+
+Example of complete rules: (Yukawa theory)\\
+\includegraphics[width=0.3\textwidth]{FeynCompleteYukawa.png} \\
+
+
+
+
+
+
+
+
+\subsection*{\small  SOME RESULTS:}
+\textbf{Breit-Wigner}: \\
+$f(E)\propto \frac{1}{E-E_0+i\Gamma/2}
+\approx \frac{1}{2E_\mathbf{p}(p^0-E_\mathbf{p}+i(m/E_\mathbf{p})\Gamma/2)}$ \\
+$\sigma \propto \frac{1}{(E-E_0)^2+\Gamma^2/4}$ \\
+
+\subsection*{\small COMPTON SCATTERING: $e^- \gamma \rightarrow e^- \gamma$}
+If $\omega$ is the energy of the photon, $\omega'$ is the energy of the final photon the
+\textbf{Klein-Nishima} formula is
+\[
+\frac{d \sigma}{d \cos \theta}
+= \frac{\pi \alpha^2}{m^2} \left(\frac{\omega'}{\omega} \right)^2
+\left[\frac{\omega'}{\omega} + \frac{\omega}{\omega'} - \sin^2 \theta \right]
+\]
+Thomson cross section for scattering of classical electromagnetic radiation by a free electron
+\[
+\frac{d \sigma}{d \cos \theta}
+= \frac{\pi \alpha^2}{m^2}(1+\cos^2 \theta) \text{ for } \alpha=\frac{e^2}{4\pi \hbar c} = \frac{e^2}{4\pi}.
+\]
+Note also Compton's formula for shift in the photon wavelength
+\[
+\frac{1}{\omega'} + \frac{1}{\omega} = \frac{1}{m}(1-\cos \theta).
+\]
+
+\subsection*{\small EXAMPLE: $e^+e^- \rightarrow \mu^+ \mu^-$}
+\begin{itemize}
+\item Correlation = $\bar{v}^{s'}(p')(-ie\gamma^{\mu})u^s(p)\big( \frac{-ig_{\mu \nu}}{q^2} \big) \bar{u}^r(k) (-ie\gamma^{\nu})v^{r'}(k')$
+\item Squared matrix element \\
+      $|\mathcal{M}|^2 = \frac{e^4}{q^4}\big( \bar{v}(p')\gamma^{\mu}u(p) \bar{u}(p)\gamma^{\mu} v(p') \big) \big(\bar{u}(k) \gamma_{\mu} v(k') \bar{v}(k') \gamma_{\nu} u(k) \big)$.
+\item Sum over spins $\sum_{s,s'} \bar{v}_a^{s'}(p')\gamma^{\mu}_{ab} u_b^s(p )\bar{u}^s_c(p)\gamma^{\mu}_{cd}v_d^{s'}(p')$
+\item This gives for \\
+      $\frac{1}{4} \sum|\mathcal{M}|^2 = \frac{e^4}{4q^4} tr\big[(\cancel{p}' - m_e)\gamma^{\mu}(\cancel{p}+m_e) \gamma^{\nu} \big] tr \big[ (\cancel{k}+m_{\mu}) \gamma_{\mu}(\cancel{k}'-m_{\mu})\gamma^{\nu} \big]$.
+\item Use trace magic and set $m_e=0$ to get \\
+      $\frac{1}{4} \sum |\mathcal{M}|^2 = \frac{8e^4}{q^4} \big[(p \cdot k)(p' \cdot k') + (p \cdot k')(p' \cdot k) + m_{\mu}^2(p \cdot p') \big] $.
+\item Total cross section $\sigma_{total} = \frac{4 \pi \alpha^2}{3E_{cm}^2} \sqrt{1-\frac{m_{\mu}^2}{E^2}}\big( 1+ \frac{1}{2} \frac{m_{\mu}^2}{E^2} \big)$
+\end{itemize}
+
+
+
+\end{multicols*}
+
+
+
+
+\end{document}

@@ -1,0 +1,340 @@
+
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+\usepackage{tensor}
+\usepackage{calc}
+
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{listings}
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{slashed}
+\usepackage{simplewick}
+\usepackage{esint}
+\usepackage[force]{feynmp-auto}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+% \renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+\newcommand{\creation   }[1]{ a_\mathbf{ #1 }^\dagger }
+\newcommand{\destruction}[1]{ a_\mathbf{ #1 } }
+\newcommand{\dd}{ \text{d} }
+\newcommand{\myfancysymbol}[3]{
+	\raisebox{-#3ex}{\includegraphics[height=#2ex]{#1}}
+}
+
+%%%%********************************************************************
+% fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{4}{\textcolor{quotemark}{''}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+				 \def\endfquote{%
+				 \endgroup\par%
+				 \makebox[0pt][l]{%
+				 \hspace{0.8\textwidth}%
+				 \begin{picture}(0,0)(0,0)%
+				 \put(15,15){\makebox(0,0){%
+				 \scalebox{4}{\color{quotemark}''}}}%
+				 \end{picture}}%
+				 \ifx\tempa\empty%
+				 \else%
+				 	 \ifx\tempc\empty%
+				 			\hfill \mbox{}\hfill\tempa\ \emph{\tempb}%
+				 	\else%
+				 			\hfill \mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+				 	\fi\fi\par%
+				 	\vspace{0.5em}%
+				 \end{list}%
+				 }%
+ %%%%********************************************************************
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{
+% \vspace{-15mm}
+\fontsize{22pt}{10pt}\selectfont
+The Schwinger-Dyson equations
+ } % Article title
+
+\author{
+\large
+August Geelmuyden
+\\[2mm] % Your name
+\normalsize
+University of Oslo \\ % Your institution
+% \vspace{-5mm}
+}
+\date{}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle % Insert title
+
+
+
+%-------------------------------------------------------------------------------
+\section{Symmetries}
+
+Correlation functions in Quantum field theory can be computed from the functional formalism, bypassing the Hamiltonian, Hilbert space of states and the equations of motion. The nice thing about this is that the symmetries of the Lagrangian is manifest. Any invariance of the Lagrangian is an invariance of the Quantum mechanics.
+
+
+
+%-------------------------------------------------------------------------------
+\section{Classical Field Theory and N\"oether's Theorem}
+
+The dynamics of a classical field theory is determined by how the action depends on the fields in question. If $\phi^a$ are fields for $a=1,...,n$, then
+the action is expressed in terms of the lagrangian density $\mathcal{L}$ by
+\[
+S = \int d^4 x \mathcal{L},
+\]
+where the integration is over Minkowskian spacetime. The expression is thus relativistic, but not quantum. It is in this sense that the field theory is classical -- it is not quantized.
+
+The equations of motion are found by demanding the action to be stationary under any infinitesimal change of fields $\phi^a \mapsto \phi^a + \delta \phi^a$. The resulting change in the action is then given by
+\begin{equation*}
+	\begin{align}
+	\delta S
+	&= \int d^4 x \left[\frac{\partial \mathcal{L}}{\partial \phi^a}\delta \phi^a + \frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}\delta \partial_\mu \phi^a\right] \\
+	&= \int d^4 x \left[\frac{\partial \mathcal{L}}{\partial \phi^a}\delta \phi^a
+	- \delta \phi^a \partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}
+	+ \partial_\mu\left(\frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}\delta \phi^a \right) \right] \\
+	&=
+	\int d^4 x \partial_\mu\left(\frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}\delta \phi^a \right)
+	+
+	\int d^4 x \delta \phi^a\left[\frac{\partial \mathcal{L}}{\partial \phi^a}
+	-  \partial_\mu\frac{\partial \mathcal{L}}{\partial(\partial_\mu\phi^a)}
+	\right]
+	\end{align}
+\end{equation*}
+Since the integral should be understood to go from a fixed time $t_0$ to a fixed time $t_1$ while the spatial part extends to the boundary of spacetime, we may safely say that the boundary vanishes. After all, it would be unreasonable to expect the boundary of spacetime to affect the dynamics of the field here. In that case the equations of motion, obtained by setting $S$ to be stationary, amounts to saying that the integrand is zero. That is
+\[
+\frac{\partial \mathcal{L}}{\partial \phi^a}
+= \partial_\mu\frac{\partial \mathcal{L}}{\partial(\partial_\mu\phi^a)}
+\]
+for all $a$.
+
+Now consider a symmetry $\phi^a \mapsto \phi^a + \alpha \Delta \phi$
+for an infinitesimally small $\alpha$. That it is a symmetry refers to the property that the Lagrangian only attains an additional total divergence under this transformation. That is
+\[
+\mathcal{L} \mapsto \mathcal{L} + \alpha \partial_\mu \mathcal{J}^\mu.
+\]
+On one hand, the Lagrangian changes by a factor $\delta \mathcal{L}=\alpha \partial_\mu \mathcal{J}^\mu$ and on the other
+\[
+\delta \mathcal{L}
+=
+ \partial_\mu\left(\frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}\alpha \Delta \phi \right)
++
+\alpha \Delta \phi \left[\frac{\partial \mathcal{L}}{\partial \phi^a}
+-  \partial_\mu\frac{\partial \mathcal{L}}{\partial(\partial_\mu\phi^a)}
+\right].
+\]
+If the fields satisfy the equations of motion, then the last term vanishes, which by equating the two expressions for $\delta \mathcal{L}$ yields
+\[
+\alpha \partial_\mu \mathcal{J}^\mu = \partial_\mu\left(\frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)}\alpha \Delta \phi \right).
+\]
+This means that we have found a conserved current
+\[
+j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)} \Delta \phi - \mathcal{J}^\mu.
+\]
+This is what is referred to as {\it N\"oether's theorem}. In analogy with electrodynamics, one usually thinks of the spatial integral of the time component of the N\"oether current as the conserved {\it charge}. That is
+\[
+Q = \int d^3 j^0.
+\]
+As an example, consider the four translations $x^\mu \mapsto x^\mu + a^\mu$ to be a symmetry of the Lagrangian. In that case $\phi(x)\mapsto \phi(x)+a^\mu \delta^\nu_\mu \partial_\nu \phi(x)$ and $\mathcal{L}(x)\mapsto \mathcal{L}(x)+a^\mu \partial_\nu \delta^\nu_\mu \mathcal{L}(x)$. Hence the conserved currents can be written
+\[
+T^{\mu\nu} = \frac{\partial \mathcal{L}}{\partial (\partial_\mu\phi^a)} \partial^\nu \phi(x) - \eta^{\nu\mu} \mathcal{L}(x)
+\]
+which is referred to as the {\it Energy-momentum} tensor. This will give four conserved charges. The time translation represents conservation of energy, while the three spatial translations represents conservation of physical momentum.
+
+
+%-------------------------------------------------------------------------------
+\section{Equations of motion for correlation functions}
+We now set off to look for a quantum analogue of equations of motion by invoking the functional machinery. First consider a three point correlation function of a scalar field theory. We have
+\[
+\bra{\Omega} T\phi_1\phi_2\phi_3\ket{\Omega}
+=
+\frac{1}{Z}\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}[\phi]} \phi_1 \phi_2 \phi_3
+\]
+where $\phi_i = \phi(x_i)$ and $\mathcal{L}=\frac{1}{2}(\partial_\mu \phi)^2-\frac{1}{2}m^2 \phi^2$. Just as in classical field theory we consider an infinitesimal change of fields $\phi(x)\mapsto \phi'(x)=\phi(x)+\epsilon(x)$. Since this is just a shift in values it does not affect the measure, hence $\mathcal{D}\phi = \mathcal{D}\phi'$. Insisting that the action is stationary under this variation of fields thus amounts to saying that
+\[
+\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}[\phi]} \phi_1 \phi_2 \phi_3
+=
+\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}[\phi']} \phi'_1 \phi'_2 \phi'_3
+\]
+Expanding to first order in $\epsilon$ then gives
+\begin{equation*}
+	\begin{align}
+	0
+	=&
+	\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}} \left\{
+	i\int d^4x \epsilon\left(-\partial^2-m^2\right)\phi \phi_1 \phi_2 \phi_3
+	+\epsilon_1 \phi_2 \phi_3
+	+\phi_1 \epsilon_2 \phi_3
+	+\phi_1 \phi_2 \epsilon_3
+	\right\} \\
+	&=
+	\frac{1}{i}\int d^4x\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}}  \epsilon \big\{
+	\left(\partial^2+m^2\right)\phi \phi_1 \phi_2 \phi_3 \\
+ &+i\delta(x-x_1) \phi_2 \phi_3
+	+i\delta(x-x_2) \phi_1 \phi_3
+	+i\delta(x-x_3) \phi_1 \phi_2
+	\big\} \\
+	\end{align}
+\end{equation*}
+This must hold for any possible choice of $\epsilon(x)$, so
+\begin{equation*}
+	\begin{align}
+	0
+	&=
+	\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}} \big\{
+	\left(\partial^2+m^2\right)\phi \phi_1 \phi_2 \phi_3
+  +i\delta(x-x_1) \phi_2 \phi_3
+	+i\delta(x-x_2) \phi_1 \phi_3
+	+i\delta(x-x_3) \phi_1 \phi_2
+	\big\}. \\
+	\end{align}
+\end{equation*}
+This clearly holds for any number of fields. Hence, let us consider the case of only one field. In that case
+\begin{equation*}
+	\begin{align}
+	0
+	&=
+	\int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}} \big\{
+	\left(\partial^2+m^2\right)\phi \phi_1
+  +i\delta(x-x_1)
+	\big\}. \\
+	\end{align}
+\end{equation*}
+Taking the operator $\left(\partial^2+m^2\right)$ out of the integral then yields
+\begin{equation*}
+	\begin{align}
+	\left(\partial^2+m^2\right) \int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}}
+	\left(\partial^2+m^2\right)\phi \phi_1
+	=
+	-i  \delta(x-x_1) \int \mathcal{D}\phi e^{i\int d^4x\mathcal{L}}.
+	\end{align}
+\end{equation*}
+Dividing the equation by $Z$ therefore leaves us with the identity
+\begin{equation*}
+	\begin{align}
+	\left(\partial^2+m^2\right) \bra{\Omega} T \phi(x)\phi(x_1) \ket{\Omega}
+	=
+	-i\delta(x-x_1).
+	\end{align}
+\end{equation*}
+This is the quantum analogue of the equations of motion. Notice that whenever $x\new x_1$, this corresponds to the classical equation of
+motion for a Klein-Gordon $\bra{\Omega} \phi(x)\phi(x_1) \ket{\Omega}$. If the two points coincide, however, then the correlation function does not satisfy the equations of motion. The modification of the Klein-Gordon operator equation in this point is called a {\it contact term}.
+
+The generalization of this result to any $n+1$ point correlation function states that
+\begin{equation*}
+	\begin{align}
+	\left(\partial^2+m^2\right) \bra{\Omega} T \phi(x)\phi(x_1)...\phi(x_n) \ket{\Omega}
+	=
+	\sum_{i=1}^n \bra{\Omega} T\phi(x_1)...(-i\delta(x-x_i))...\phi(x_n) \ket{\Omega}.
+	\end{align}
+\end{equation*}
+
+We can actually generalize this result to any field theory of the field $\phi(x)$. Consider the $n$ point correlation function
+\[
+\bra{\Omega} T\phi_1 ... \phi_n\ket{\Omega}
+= \frac{1}{Z}\int \mathcal{D}\phi e^{i\int d^4x \mathcal{L}} \phi_1 ... \phi_n.
+\]
+Demanding the integral in the denominator to be stationary yields
+\begin{equation*}
+	\begin{align}
+	0
+	&=
+	\int \mathcal{D}\phi e^{i\int d^4x \mathcal{L}}
+	\bigg\{
+	i\int d^4 x \epsilon \frac{\delta}{\delta \phi}\left(\int d^4x \mathcal{L}\right) \phi_1 ... \phi_n + \sum_{i=0}^n \phi_1 ... \epsilon_i ... \phi_n.
+	\bigg\}
+	\end{align}
+\end{equation*}
+Continuing just as before, we find that
+\begin{equation}
+	\begin{align}
+	\left\langle \frac{\delta}{\delta \phi}\left(\int d^4x \mathcal{L}\right) \phi_1 ... \phi_n \right\rangle_\Omega
+  =
+	\sum_{i=0}^n \langle \phi_1 ... (i\delta(x-x_i)) ... \phi_n \rangle_\Omega.
+	\end{align}
+	\label{eq:SchwingerDyson}
+\end{equation}
+where
+\[
+\frac{\delta}{\delta \phi}\left(\int d^4x \mathcal{L}\right)
+=
+\frac{\partial \mathcal{L}}{\partial \phi}
+-\partial_\mu\frac{\partial \mathcal{L}}{\partial(\partial_\mu\phi)}
+\]
+refers to the classical equations of motion. The equations (\ref{eq:SchwingerDyson}) are referred to as the {\it Schwinger-Dyson equations} and should be understood as the quantum equations of motion for Green's functions with proper contact terms included.
+
+
+
+%-------------------------------------------------------------------------------
+% \section{Conservation laws}
+
+
+
+
+
+%-------------------------------------------------------------------------------
+\end{document}
