@@ -41,18 +41,14 @@ TODO:
 			<link rel="stylesheet" type="text/css" href="mystyle2.css">
 
 			<!-- MATHJAX for latex display -->
-
-			<!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script> -->
 			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
 			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-
-
-			<!-- jQuery -->
-			<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+			<!-- For Computer Modern (Serif) Font -->
+			<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cmu-serif" type="text/css"/>
 
 			<!--  For Google font: Almendra Display -->
-			<link href='https://fonts.googleapis.com/css?family=Almendra Display' rel='stylesheet'>
+			<!-- <link href='https://fonts.googleapis.com/css?family=Almendra Display' rel='stylesheet'> -->
 
 			<!--  For comment box -->
 			<script id="dsq-count-scr" src="//augustg.disqus.com/count.js" async></script>
@@ -68,7 +64,7 @@ TODO:
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
 	 </HEAD>
-	 <BODY ng-app="myApp">
+	 <BODY ng-app="myApp" ng-controller="mainCtrl">
 		 <script src="my_angularjs_script.js"></script>
 		 <!-- <script src="mainscript.js"></script> -->
 
@@ -90,49 +86,39 @@ TODO:
 		<!-- ============================================================================================================================================================================================= -->
 
 		<h2 class="mainheader">Fullscreen Animations</h2>
-		<div class="container">
-			<a href="Animations/Black Hole Raytracing/" class="box"
-				description="A very simple raytracing simulation of a black hole attached to the mouse lensing a star in the Andromeda galaxy.">Black Hole Raytracing</a>
-
-			<a href="Animations/Chaos fractal generator/" class="box"
-				description="A visualization of how pretty fractals can emerge from probabilistic processes.">Chaos fractal generator</a>
-
-			<a href="Animations/Double Pendulum/" class="box"
-				description="A simple visualization of a double pendulum.">Double Pendulum</a>
-
-			<a href="Animations/Elastic collisions/" class="box"
-				description="Visualization of the physics of elastic collisions.">Elastic collisions</a>
-
-			<a href="Animations/Feigenbaum/" class="box"
-				description="Visualization of how chaos emerges from applying simple functions repeatedly.">Feigenbaum</a>
-
-			<a href="Animations/Interactive Fractals/" class="box"
-				description="Some famous fractals and sliders and knobs for controlling them.">Interactive Fractals</a>
-
-			<a href="Animations/Ising model/" class="box"
-				description="A real-time visualization of the Ising model for a two-dimensional grid of half-integer spin particles. You can control inverse temperature to discover the ferromagnetic phase transition.">Ising model</a>
-
-			<a href="Animations/Lennard Jones force networks/" class="box"
-				description="Just a silly simulation of particles interacting via the Lennard Jones potential.">Lennard Jones force networks</a>
-
-			<a href="Animations/The Wave Equation/" class="box"
-				description="Real-time simulation of the wave equation with custom barriers and damping.">The Wave Equation</a>
-
-			<a href="Animations/Planetary/" class="box"
-				description="Simulation of planets (or circles if you want) that interact gravitationally and merge conserving mass (area), momentum and center of mass.">Planetary</a>
-
-			<a href="Animations/Rainbow/" class="box"
-				description="A devoted rendering of how rays refracts and reflects through a drop of water.">Rainbow</a>
-
-
-
+		<div style="text-align: center; padding: 0.5em 1em 0.5em 1em;">
+			<span class="checkboxContainer" ng-repeat="tag in tags" tag="{{tag.indicator}}">
+				{{tag.name}} <input type="checkbox" ng-checked="true" ng-model="tag.checkedAnim" tag="{{tag.indicator}}">
+			</span>
 		</div>
+		<div class="container">
+				<a	ng-repeat="item in animItems | filter: {tag:{checkedAnim:true}}"
+						href="Documents/{{item.reference}}"
+						class="box"
+						description="{{item.description}}"
+						tag="{{item.tag.indicator}}">{{item.name}}</a>
+		</div>
+
 
 		<!-- ============================================================================================================================================================================================= -->
 
 		<h2 class="mainheader">Documents</h2>
-		<div class="container">
-			<a href="Documents/Linearized gravity.pdf" class="box"
+			<div style="text-align: center; padding: 0.5em 1em 0.5em 1em;">
+				<span class="checkboxContainer" ng-repeat="tag in tags" tag="{{tag.indicator}}">
+					{{tag.name}} <input type="checkbox" ng-checked="true" ng-model="tag.checkedDoc" tag="{{tag.indicator}}">
+				</span>
+				<span class="checkboxContainer" ng-repeat="lang in languages">
+					{{lang.name}} <input type="checkbox" ng-checked="true" ng-model="lang.checkedDoc" tag="{{item.tag.indicator}}">
+				</span>
+			</div>
+			<div class="container">
+					<a	ng-repeat="item in docItems | filter: {tag:{checkedDoc:true}} | filter: {language:{checkedDoc:true}}"
+							href="Documents/{{item.reference}}"
+							class="box"
+							description="{{item.description}}"
+							tag="{{item.tag.indicator}}">{{item.name}}</a>
+			</div>
+			<!-- <a href="Documents/Linearized gravity.pdf" class="box"
 				description="Notes on linear perturbations of Minkowskian spacetime and gravitational waves.">Linearized gravity</a>
 
 			<a href="Documents/Advanced Quantum Field theory.pdf" class="box"
@@ -166,25 +152,26 @@ TODO:
 				description="Notes on the so-called Faddeev-Popov process that enables calculation of a non-divergent expression for the photon propagator.">The Faddeev-Popov process</a>
 
 			<a href="Documents/The Schwinger-Dyson equations.pdf" class="box"
-				description="Notes on the Schwinger-Dyson equations that serve as a quantum analogue of the equations of motion.">The Schwinger-Dyson equations</a>
-
-		</div>
+				description="Notes on the Schwinger-Dyson equations that serve as a quantum analogue of the equations of motion.">The Schwinger-Dyson equations</a> -->
 
 		<!-- ============================================================================================================================================================================================= -->
 
 		<h2 class="mainheader">Posts</h2>
+		<div style="text-align: center; padding: 0.5em 1em 0.5em 1em;">
+			<span class="checkboxContainer" ng-repeat="tag in tags" tag="{{tag.indicator}}">
+				{{tag.name}} <input type="checkbox" ng-checked="true" ng-model="tag.checkedPost" tag="{{tag.indicator}}"></input>
+			</span>
+			<span class="checkboxContainer" ng-repeat="lang in languages">
+				{{lang.name}} <input type="checkbox" ng-checked="true" ng-model="lang.checkedPost" tag="{{item.tag.indicator}}">
+			</span>
+		</div>
 		<div class="container">
-			<a href="#!Brachistochroneproblemet" class="box"
-				description="This is a post about the famous Brachistochrone problem which introduced variational calculus. This includes a simple physics question -- what is the trajectory that makes a ball roll fastest from one point to another? We take a look at Newton's ingenious solution to this problem.">Brachistochroneproblemet</a>
+				<a	ng-repeat="item in postItems | filter: {tag:{checkedPost:true}} | filter: {language:{checkedPost:true}}"
+						href="#!{{item.reference}}"
+						class="box"
+						description="{{item.description}}"
+						tag="{{item.tag.indicator}}">{{item.name}}</a>
 
-				<a href="#!Baselproblemet" class="box">Baselproblemet</a>
-
-			<a href="#!FluidMechanics" class="box"
-				description="Text on basic equations in fluid dynamics.">Fluid mechanics</a>
-
-				<a href="#!FirstPost" class="box" description="This is just a post to test functionality of the web page.">Test post</a>
-
-				<a href="#!TEST" class="box" description="[This file does not exist]">TEST</a>
 		</div>
 
 

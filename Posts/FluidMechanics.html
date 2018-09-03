@@ -1,3 +1,14 @@
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125128411-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125128411-1');
+</script>
+
+
 <!-- <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: {
@@ -25,10 +36,9 @@ Now, keeping the volume fixed, it will be time-independent and thus
 \]
 Our criterion for conservation of mass is therefore
 
-\begin{equation}
+\[
   \int_V \partial_t \rho dV + \int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S} = 0.
-  \label{eq:MassProduction}
-\end{equation}
+\]
 
 Invoking Gauss' theorem we can make the two integrals be over the same domain.
 \[
@@ -38,7 +48,7 @@ Since this should hold for any choice of volume $V$, evaluation to zero must be 
 \[
   \partial_t \rho + \nabla \cdot \rho \mathbf{v}  = 0.
 \]
-This equation is sometimes referred to as the <b>Continuity equation</b>. Note, however, that the volume $V$ may enclose a sink, or a source, in which case the change in mass inside the volume does not correspond to the flux out of the volume. In that case, there will be an additional source-term contributing to the change in mass. 
+This equation is sometimes referred to as the <b>Continuity equation</b>. Note, however, that the volume $V$ may enclose a sink, or a source, in which case the change in mass inside the volume does not correspond to the flux out of the volume. In that case, there will be an additional source-term contributing to the change in mass.
 
 
 
