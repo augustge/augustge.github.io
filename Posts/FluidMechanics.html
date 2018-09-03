@@ -1,7 +1,65 @@
+<!-- <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+     equationNumbers: {  autoNumber: "AMS"  },
+     extensions: ["AMSmath.js"]
+  }
+});
+</script> -->
 
-This is a text about fluid mechanics. Lets start with mass conservation.
-The produced mass inside any volume $V$ must correspond to the flux
+
+<h1>Basic relations of Fluid Mechanics</h1>
+
+This is a short text about the basic relations and properties of fluids. We will treat a fluid as a field for which the velocity $\mathbf{v}$ is the velocity of fluid particles relative to some coordinate position $\mathbf{x}$.
+
+Let's start with mass conservation. The produced mass $dM/dt$ inside any volume $V$ must correspond to the flux
 out of the volume. That is
 \[
-  \int_V \rho dV = -\int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S}
+  \frac{dM}{dt} = \frac{d}{dt}\int_V \rho dV = -\int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S}.
 \]
+Now, keeping the volume fixed, it will be time-independent and thus
+\[
+   \frac{d}{dt}\int_V \rho dV
+   =
+   \int_V \partial_t \rho dV.
+\]
+Our criterion for conservation of mass is therefore
+
+\begin{equation}
+  \int_V \partial_t \rho dV + \int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S} = 0.
+  \label{eq:MassProduction}
+\end{equation}
+
+Invoking Gauss' theorem we can make the two integrals be over the same domain.
+\[
+  \int_V \left( \partial_t \rho + \nabla \cdot \rho \mathbf{v} \right) dV = 0.
+\]
+Since this should hold for any choice of volume $V$, evaluation to zero must be due to the vanishing of the integrand. That is
+\[
+  \partial_t \rho + \nabla \cdot \rho \mathbf{v}  = 0.
+\]
+This equation is sometimes referred to as the <b>Continuity equation</b>. Note, however, that the volume $V$ may enclose a sink, or a source, in which case the change in mass inside the volume does not correspond to the flux out of the volume. In that case, there will be an additional source-term contributing to the change in mass. 
+
+
+
+
+
+  <div id="disqus_thread"></div>
+    <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+    var disqus_config = function () {
+    this.page.url = "https://augustge.github.io/AUGUSTG/#!/FluidMechanics";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "Fluid Mechanics"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://augustg.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
