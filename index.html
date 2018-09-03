@@ -1,19 +1,12 @@
 <!--
 TODO:
 	-- FUNCTIONALITY:
-	* Tags for posts
-	  Add description on post-listing hover
-	  Migrate content from old page
-	  Make inline p5js canvas
-	* Add check-boxes for tags [norwegian,math,physics,simulation,programming,other,...]
 	* Add un-activating upon double-click on post title
 	* Make python-script to compile custom MD into [post].html format
 	* Automatic disqus-identification box
 	* List directory for automatic post listing?
 
 	-- DESIGN:
-	* Improve CSS
-	* Add tag-dependent CSS for post-listings
 	* Add CSS-change for active post
 	* Change disqus-box CSS?
 	* Add cycling of header-quotes
@@ -63,6 +56,15 @@ TODO:
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
+			<!-- Google Analytics Tab Manager -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125128411-1"></script>
+			<script>
+			  window.dataLayer = window.dataLayer || [];
+			  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+			  gtag('config', 'UA-125128411-1');
+			</script>
+
 	 </HEAD>
 	 <BODY ng-app="myApp" ng-controller="mainCtrl">
 		 <script src="my_angularjs_script.js"></script>
@@ -93,7 +95,7 @@ TODO:
 		</div>
 		<div class="container">
 				<a	ng-repeat="item in animItems | filter: {tag:{checkedAnim:true}}"
-						href="Documents/{{item.reference}}"
+						href="Animations/{{item.reference}}"
 						class="box"
 						description="{{item.description}}"
 						tag="{{item.tag.indicator}}">{{item.name}}</a>
