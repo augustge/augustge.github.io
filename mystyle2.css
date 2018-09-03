@@ -525,6 +525,7 @@ blockquote cite:before {
   border-radius: 10px;
   color: white;
   content: attr(description);
+  min-width: 200px;
   /* text-align: justify; */
   font-size: 12px;
   text-transform: none;

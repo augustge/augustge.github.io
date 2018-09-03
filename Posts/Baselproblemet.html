@@ -1,0 +1,115 @@
+<!-- MATHJAX for latex display -->
+<h1>Baselproblemet</h1>
+
+I 1644 fremsatte den italienske matematikeren Pietro Mengoli et tilsynelatende uskyldig problem som først ble løst 90 år senere av en 28 år gammel Leonhard Euler. Problemet, som er gitt navnet Baselproblemet, er å finne verdien av følgende sum
+
+$$
+    1+\frac{1}{4}+\frac{1}{9}+\frac{1}{16}+\frac{1}{25}+...=\sum_{n=1}^{\infty}\frac{1}{n^2}
+$$
+
+Euler angrep problemet som han pleide: ved å begynne med noe helt annet.
+
+<p>Vi vet at funksjonen
+
+$$
+    \sin(x)/x \mbox{ har nullpunkter i } x=\pm \pi,\pm 2\pi, \pm 3\pi,...
+$$
+
+Vi gjør da som vi pleier å gjøre når vi kjenner et polynoms nullpunkter - vi faktoriserer polynomet:
+
+$$
+    \frac{\sin x}{x} =\left( 1+\frac{x}{\pi}\right)\left( 1-\frac{x}{\pi}\right)\left( 1+\frac{x}{2\pi}\right)\left( 1-\frac{x}{2\pi}\right)\left( 1+\frac{x}{3\pi}\right)\left( 1-\frac{x}{3\pi}\right)...
+$$
+
+Ved å parvis multiplisere sammen de faktorene med lik tallverdi får vi altså
+
+$$
+    \frac{\sin x}{x} =\left( 1-\frac{x^2}{\pi^2}\right)\left( 1-\frac{x^2}{4\pi^2}\right)\left( 1-\frac{x^2}{9\pi^2}\right)...
+$$
+
+På den annen side vet vi at sinus kan skrives som følgende Taylorrekke
+
+$$
+    \sin{x}=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+...
+$$
+
+noe som betyr at
+
+$$
+    \frac{\sin{x}}{x}=1-\frac{x^2}{3!}+\frac{x^4}{5!}-\frac{x^6}{7!}+...
+$$
+
+Vi kan altså sette de to uttrykkene vi har funnet lik hverandre
+
+$$
+    1-\frac{x^2}{3!}+\frac{x^4}{5!}-\frac{x^6}{7!}+...=\left( 1-\frac{x^2}{\pi^2}\right)\left( 1-\frac{x^2}{4\pi^2}\right)\left( 1-\frac{x^2}{9\pi^2}\right)...
+$$
+
+Siden dette må holde for alle <i>x</i>, kan vi studere hver enkelt grad av <i>x</i> separat.
+La oss studere leddene som inneholder $ x^2 $
+
+$$
+    -\frac{x^2}{3!}=-\left( \frac{1}{\pi^2}+\frac{1}{4\pi^2}+\frac{1}{9\pi^2}+...\right)x^2
+$$
+
+Ved å forkorte med $ -x^2 $ og trekke $ 1/\pi^2 $
+ut av summen på høyre side kjenner vi plutselig igjen Pietro Mengolis problem
+
+$$
+    \frac{1}{3!}=\frac{1}{\pi^2}\left( 1+\frac{1}{4}+\frac{1}{9}+\frac{1}{16}...\right)=\frac{1}{\pi^2}\sum_{n=1}^{\infty}\frac{1}{n^2}
+$$
+
+Altså må verdien av summen være
+
+$$
+    \sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6}
+$$
+
+Euler fortsatte på denne måten for $ x^4,x^6,$ osv og fant
+
+$$
+    \sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{90}, \ \ \sum_{n=1}^\infty \frac{1}{n^6} = \frac{\pi^6}{945}
+$$
+
+Han lette trolig etter et mønster helt til han i 1744 fant at
+
+$$
+    \sum_{n=1}^\infty \frac{1}{n^{26}}=\frac{2^{24}76977927\pi^{26}}{27!}
+$$
+
+Det har blitt funnet at det generelle uttrykket for partallseksponenter er gitt av
+
+$$
+    \sum_{n=1}^\infty \frac{1}{n^{2k}}=\frac{(-1)^{k+1}B_{2k}(2\pi)^{2k}}{2(2k)!}
+$$
+
+der $ B_{2k}$ er Bernoullitall nummer $ 2k $.
+Mer interessant er det å høre at man aldri har funnet en eksakt verdi for
+
+$$
+    \sum_{n=1}^\infty \frac{1}{n^{2k+1}}
+$$
+
+altså oddetallseksponenter.
+
+
+
+  <div id="disqus_thread"></div>
+    <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+    var disqus_config = function () {
+    this.page.url = "https://augustge.github.io/AUGUSTG/#!/Baselproblemet";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "Baselproblemet"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://augustg.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
