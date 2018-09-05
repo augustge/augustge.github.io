@@ -1,4 +1,4 @@
-<!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125128411-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -8,46 +8,248 @@
 </script>
 
 
-<!-- <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: {
-     equationNumbers: {  autoNumber: "AMS"  },
-     extensions: ["AMSmath.js"]
-  }
-});
-</script> -->
 
 
-<h1>Basic relations of Fluid Mechanics</h1>
+<h1 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Basic relations of Fluid Mechanics</h1>
 
-This is a short text about the basic relations and properties of fluids. We will treat a fluid as a field for which the velocity $\mathbf{v}$ is the velocity of fluid particles relative to some coordinate position $\mathbf{x}$.
-
-Let's start with mass conservation. The produced mass $dM/dt$ inside any volume $V$ must correspond to the flux
-out of the volume. That is
+A fluid can be treated in two different ways. One can either express all fluid properties in terms of the position $\mathbf{r}$ of the particles in the fluid (Lagrangian, or particle, description), or one can treat the fluid properties as time dependent fields (Eulerian, or field, description). We will mostly use the latter in this text, although some fluid properties are easier to write down in the Lagrangian description. Frequently we will use the velocity field $\mathbf{v}$ of the fluid. This should be understood as the Lagrangian velocity field $d\mathbf{r}/dt$ evaluated at an Eulerian field position $\mathbf{x}$. Let us start by considering a general fluid property $F_L(\mathbf{r}(\mathbf{x},t),t)$ expressed in the particle description and try to find how changes in the corresponding Lagrangian property $F_L(\mathbf{x},t)$ relates to changes in the Eulerian property $F_E$. That is, what is $\partial F_L/\partial t$ in terms of $\mathbf{r}$ and $\mathbf{t}$, provided that $F_E(\mathbf{x},t)=F_L(\mathbf{r}(\mathbf{x},t),t)$?
 \[
-  \frac{dM}{dt} = \frac{d}{dt}\int_V \rho dV = -\int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S}.
+  \frac{\partial F_L}{\partial t}
+  = \frac{\partial F_E}{\partial t}
+  + \frac{\partial F_E}{\partial \mathbf{x}} \frac{\partial \mathbf{x}}{\partial \mathbf{r}}
+  \frac{\partial \mathbf{r}}{\partial t}.
 \]
-Now, keeping the volume fixed, it will be time-independent and thus
+Here, $\partial \mathbf{x}/\partial \mathbf{r}$ is the matrix transforming a vector expressed in the Lagrangian basis to a vector expressed in the Eulerian basis. Assuming the two reference frames are neither relatively scaled or rotated, this is just the identity matrix. In that case
 \[
-   \frac{d}{dt}\int_V \rho dV
-   =
-   \int_V \partial_t \rho dV.
+  \frac{\partial F_L}{\partial t}
+  = \frac{\partial F_E}{\partial t}
+  + \frac{\partial F_E}{\partial \mathbf{x}} \frac{\partial \mathbf{r}}{\partial t}
+  = \left(\frac{\partial }{\partial t} + \mathbf{v}\cdot \nabla\right) F_E.
 \]
-Our criterion for conservation of mass is therefore
+This is what is sometimes referred to as the <b>Material derivative</b>. Although we will not use this notation a lot, let's give it a name
+\[
+  \frac{D}{Dt} = \frac{\partial }{\partial t} + \mathbf{v}\cdot \nabla.
+\]
+To demonstrate the power of sometimes working in the Lagrangian picture, let us consider the relative change
+\[
+  \frac{1}{\delta V_L} \frac{\partial}{\partial t} \delta V_L
+\]
+of a tiny, comoving volume $\delta V$. This quantity, by the way, commonly goes under the name of <b>volumetric strain rate</b> or <b>bulk strain rate</b>.
+Writing the volume as a tiny box, we have $\delta V_L = \delta r_1 \delta r_2 \delta r_3$, which, by virtue of the product rule, gives
+\[
+  \frac{1}{\delta V_L} \frac{\partial}{\partial t} \delta V_L
+  =
+  \frac{1}{\delta r_i}\frac{\partial}{\partial t}\delta r_i
+\]
+where summation over equal indices should be understood. Since derivatives distributes over sums
+\[
+  \frac{\partial}{\partial t}\delta r_i
+  =
+  \delta\left(\frac{\partial r_i}{\partial t}\right)
+  = \delta v_i
+\]
+so that the volumetric strain rate takes the form
+\[
+  \frac{1}{\delta V_L} \frac{\partial}{\partial t} \delta V_L
+  = \frac{\delta v_i}{\delta r_i}
+  = \frac{\delta v_i}{\delta x_i}
+\]
+where we have used that $\delta r_i = \delta x_i$, or equivalently, $\delta V_L = \delta V_E$, when no changes in time are considered. Taking the limit $\delta V_L \rightarrow 0$, the ratio of change turns into the definition of the derivative. Hence
+\[
+  \lim_{\delta V_L \rightarrow 0}\frac{1}{\delta V_L} \frac{\partial}{\partial t} \delta V_L
+  =
+  \frac{\partial v_i}{\partial x_i}
+  = \nabla \cdot \mathbf{v}.
+\]
+Now let us move on to the most important relations in physics: Conservation laws.
 
-\[
-  \int_V \partial_t \rho dV + \int_{\partial V} \rho \mathbf{v} \cdot d\mathbf{S} = 0.
-\]
 
-Invoking Gauss' theorem we can make the two integrals be over the same domain.
+<h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Conservation of Mass</h2>
+
+We are actually very close to having an expression for the conservation of mass already. Considering a tiny amount of comoving mass $\delta M_L$, conservation of mass then states
 \[
-  \int_V \left( \partial_t \rho + \nabla \cdot \rho \mathbf{v} \right) dV = 0.
+  \frac{1}{\delta M_L} \frac{\partial}{\partial t} \delta M_L = 0.
 \]
-Since this should hold for any choice of volume $V$, evaluation to zero must be due to the vanishing of the integrand. That is
+Now, we can write the mass $\delta M_L$ in terms of the density $\rho_L$ and a tiny volume $\delta V_L$ and let $\delta V_L \rightarrow 0$ to find that
+\[
+  \frac{1}{\delta M_L} \frac{\partial}{\partial t} \delta M_L
+  =
+  \frac{1}{\rho} \frac{\partial}{\partial t} \rho_L
+  +
+  \frac{1}{\delta V_L} \frac{\partial }{\partial t}\delta V_L
+  =
+  \frac{1}{\rho} \left(\frac{\partial \rho}{\partial t} + \mathbf{v}\cdot \nabla \rho \right)
+  +
+  \nabla \cdot \mathbf{v}
+\]
+by virtue of our expression for the volumetric strain rate. Conservation of mass can thus be expressed as
+\[
+  \frac{\partial \rho}{\partial t} + \mathbf{v}\cdot \nabla \rho
+  +
+  \rho \nabla \cdot \mathbf{v} = 0,
+\]
+or, if you like,
+\[
+  \frac{\partial \rho}{\partial t} + \nabla \cdot \rho \mathbf{v} = 0.
+\]
+To make sure we are right, let us discover this equation with a different approach as well.
+<p/>
+The produced mass $dM/dt$ inside any comoving volume $V$ must either be a change in density $\rho$, a deformation of volume. That is
+\[
+  \frac{dM}{dt}
+  =
+  \frac{d}{dt} \int_V \rho dV
+  = \int_V \frac{\partial}{\partial t} \rho dV + \int_{\partial V} \rho \left(\mathbf{v} \cdot d\mathbf{S}\right),
+\]
+where $\partial V$ is the boundary of $V$ and $d\mathbf{S}=\mathbf{n}dS$, where $\mathbf{n}$ is a unit vector pointing out of $\partial V$. If you are more mathematically minded, you may think of this as a generalization of the one-dimensional <i>Leibniz rule</i>
+\[
+  \frac{d}{dt} \int_a^b F(x,t) dx
+  = \int_a^b \frac{\partial}{\partial t}F(x,t) dx + \frac{\partial b}{\partial t} F(b,t) - \frac{\partial a}{\partial t} F(a,t).
+\]
+Strictly speaking, the velocity $\mathbf{v}$ is therefore not the Langrangian fluid velocity, but the velocity of the boundary of the volume $V$. Since the volume is assumed to be comoving, however, these two are the same. We could, in fact, reinterpret the whole thing. A very similar statement also holds true for a fixed volume in the Eulerian formalism. Since the volume is fixed, the time derivative can be taken as a partial derivative inside the volume integral. The surface term then becomes the flux of mass through the boundary of the volume. Accounting for the mass inside the fixed volume, under the assumption that mass is conserved, thus becomes
+\[
+  \frac{dM}{dt} = \frac{d}{dt} \int_V \rho dV
+  = -\int_{\partial V} \rho \left(\mathbf{v} \cdot d\mathbf{S}\right)
+\]
+and not
+\[
+  \frac{dM}{dt}
+  =
+  \int_V \frac{\partial \rho}{\partial t} dV + \int_{\partial V} \rho \left(\mathbf{v} \cdot d\mathbf{S}\right) = 0,
+\]
+as in our original interpretation. Forgetting about the $dM/dt$ term, these are obviously the same statement.
+
+Now, invoking the Divergence theorem we can make the two integrals be over the same domain
+\[
+  \int_V \left( \frac{\partial \rho}{\partial t} + \nabla \cdot \rho \mathbf{v} \right) dV = 0.
+\]
+Since this should hold for any choice of volume $V$, evaluation to zero must be due to the vanishing of the integrand. Hence we recover the same expression as before:
 \[
   \partial_t \rho + \nabla \cdot \rho \mathbf{v}  = 0.
 \]
 This equation is sometimes referred to as the <b>Continuity equation</b>. Note, however, that the volume $V$ may enclose a sink, or a source, in which case the change in mass inside the volume does not correspond to the flux out of the volume. In that case, there will be an additional source-term contributing to the change in mass.
+
+
+<h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Equations of Motion</h2>
+
+On point-like objects, the classical equations of motion are determined by Newtons second law, $\mathbf{F}=\frac{d}{dt}m\mathbf{v}$. For fluids, we should consider a control volume $V$. Let this volume be comoving with the fluid (Lagrangian desciption). There are two ways to change the momentum $m\mathbf{v}$ inside a volume $V$. There can both be a change in internal momentum, or an increase in momentum due to deformation of the boundary of the volume
+\[
+  \frac{d}{dt} \int_{V} \rho \mathbf{v} dV
+  =
+  \int_{V} \frac{\partial}{\partial t}\rho \mathbf{v} dV
+  +
+  \int_{\partial V} \rho \mathbf{v} (\mathbf{v} \cdot d\mathbf{S}).
+\]
+Invoking the Divergence theorem, as before, the change in momentum can be written in the form
+\[
+  \int_{V}  \frac{\partial}{\partial t}\rho \mathbf{v} dV + \int_V \left(\nabla \cdot \rho \mathbf{v}\mathbf{v}\right)dV.
+\]
+where $\mathbf{v}\mathbf{v}$ is a dyadic product. To write it in a more suggestive form, we may use the product rule
+\[
+  \nabla \cdot \rho \mathbf{v}\mathbf{v}
+  =
+  \frac{\partial}{\partial x_i} \rho v_i \mathbf{v}
+  =
+  \rho v_i \frac{\partial}{\partial x_i} \mathbf{v}
+  +
+  \mathbf{v} \frac{\partial}{\partial x_i} \rho v_i
+  =
+  \rho \mathbf{v} \cdot \nabla \mathbf{v}
+  +
+  \mathbf{v} \nabla \cdot \rho \mathbf{v}
+\]
+leaving us with
+\[
+  \frac{d}{dt} \int_{V} \rho \mathbf{v} dV
+  =
+  \int_V \left(
+    \frac{\partial}{\partial t}\rho \mathbf{v}
+    + \mathbf{v} \nabla \cdot \rho \mathbf{v}
+    + \rho \mathbf{v} \nabla \cdot \mathbf{v}
+  \right ) dV
+\]
+Now, according to Newton, this should correspond to the net force $\mathbf{F}$ acting on the fixed control volume. Our next problem is therefore to figure out a nice way to express the forces involved. First, let us divide the possible forces into two groups: Those acting on the surface of the volume ($\partial V$), and those acting on the bulk ($V$)
+\[
+  \mathbf{F} =
+  \int_V \frac{\partial \mathbf{F}_v}{\partial V} dV
+  +
+  \int_{\partial V} \frac{\partial \mathbf{F}_s}{\partial S} dS.
+\]
+Let us hereby write $\mathbf{f}$ for the force density $\partial \mathbf{F}_s/\partial V$ acting on the bulk. Notice that the force per surface element $\mathbf{T}=\partial \mathbf{F}_s/\partial S$ should generally depend on the direction $\mathbf{n}$ normal to the surface. Since this may quickly become ugly let us assume, which is reasonable, that the surface force $\mathbf{T}$ is well described by its local linearization. That is
+\[
+  \mathbf{T}(\mathbf{n}) \simeq \mathbf{T}_0 + \tau \mathbf{n},
+\]
+where $\mathbf{T}_0$ is a constant vector and $\tau$ the Jacobian matrix of $\mathbf{T}$. This means that for a given point $\mathbf{x}$, the surface force $\mathbf{T}$ at $\mathbf{x}$ should be the same for every smooth surface that has normal vector $\mathbf{n}$ at $\mathbf{x}$. Our assumption means, therefore, that $\mathbf{T}$ does not depend on other things than $\mathbf{n}$, like, for instance, the local curvature at $\mathbf{x}$. By Newtons third law, the force exerted on the surface should be the same as the force the surface exerts on the surroundings, so that $-\mathbf{T}(\mathbf{n})=\mathbf{T}(-\mathbf{n})$. From this, it follows that $\mathbf{T}_0=0$. The moral of the story is this: For each point $\mathbf{x}$ on the surface, the local linearization of the surface force $\mathbf{T}$ can be expressed as $\mathbf{T}=\tau \mathbf{n}$, where $\tau$ is independent of the normal vector $\mathbf{n}$. Now, let us use index notation to ease the manipulation to come. This means that $\tau \mathbf{n} = \tau_{ij} n_j \mathbf{e}_{(i)}$, where summation over equal indices are understood, and $\mathbf{e}_{(i)}$ is the unit basis vector in the $i$'th direction. From the Divergence theorem we then find
+\[
+  \int_{\partial V} \frac{\partial \mathbf{F}}{\partial S} dS
+  =
+  \int_{\partial V} \tau_{ij} n_{j} \mathbf{e}_{(i)}dS
+  =
+  \int_{V} \frac{\partial \tau_{ij}}{\partial x_j}\mathbf{e}_{(i)}dV.
+\]
+This means that the equation of motion becomes
+\[
+  \int_V \left(
+    \frac{\partial}{\partial t}\rho \mathbf{v}
+    + \rho \mathbf{v} \cdot \nabla \mathbf{v}
+    + \mathbf{v} \nabla \cdot \rho \mathbf{v}
+  \right ) dV
+  =
+  \int_V \left(
+    \mathbf{f}
+    +\frac{\partial \tau_{ij}}{\partial x_j}\mathbf{e}_{(i)}
+  \right ) dV
+\]
+and, as before, since this must hold for any volume $V$, the integrand must vanish independent of $V$
+\[
+\frac{\partial}{\partial t}\rho \mathbf{v}
++ \rho \mathbf{v} \cdot \nabla \mathbf{v}
++ \mathbf{v} \nabla \cdot \rho \mathbf{v}
+=
+\mathbf{f}
++\frac{\partial \tau_{ij}}{\partial x_j}\mathbf{e}_{(i)}.
+\]
+In fact, we may factor out the expression which vanishes according to conservation of mass
+\begin{align}
+  & \frac{\partial}{\partial t}\rho \mathbf{v}
+  + \rho \mathbf{v} \cdot \nabla \mathbf{v}
+  + \mathbf{v} \nabla \cdot \rho \mathbf{v} \\
+  & =
+  \rho\frac{\partial}{\partial t} \mathbf{v}
+  + \rho \mathbf{v} \cdot \nabla \mathbf{v}
+  + \mathbf{v} \underbrace{ \left( \frac{\partial}{\partial t}\rho + \nabla \cdot \rho \mathbf{v} \right) }_{\text{Conservation of mass}} \\
+  & =
+  \rho\frac{\partial}{\partial t} \mathbf{v}
+  + \rho \mathbf{v} \cdot \nabla \mathbf{v}.
+\end{align}
+Hence, our final expression for the equations of motion is
+\[
+  \rho\frac{\partial v_i}{\partial t}
+  + \rho v_j \frac{\partial v_i}{\partial x_j}
+  =
+  f_i
+  +\frac{\partial \tau_{ij}}{\partial x_j},
+\]
+or, if you prefer,
+\[
+  \rho \frac{D \mathbf{v}}{Dt} =
+  \mathbf{f}+\frac{\partial \tau_{ij}}{\partial x_j}\mathbf{e}_{(i)}.
+\]
+These are the so-called <b>Cauchy equations</b>. Before starting to understand and simplify equation, we should spend some words on what just happened. We have derived the equations of motion valid for any comoving chunk of a fluid. Notice that we could also have considered the change in momentum thorugh a fixed control volume $V$. The interpretation of the equation
+\[
+  \mathbf{F} = \frac{d}{dt}\int_V \rho \mathbf{v} dV + \int_{\partial V} \rho \mathbf{v}(\mathbf{v}\cdot d\mathbf{S})
+\]
+then becomes that $\mathbf{F}$ is the net force acting on the fixed volume, the first integral term is the internal change in momentum, and the last integral term is the transport of momentum out of the volume.
+<!-- Momentum principle for fixed volume: Practical: Compute drag -->
+<!-- Navier-Stokes Equation -->
+<!-- Euler Equation -->
+<!-- Streamlines -->
+<!-- Simulation -->
+
+
+
+
+
 
 
 
