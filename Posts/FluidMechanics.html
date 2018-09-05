@@ -181,7 +181,7 @@ Let us hereby write $\mathbf{f}$ for the force density $\partial \mathbf{F}_s/\p
 \]
 where $\mathbf{T}_0$ is a constant vector and $\tau$ the Jacobian matrix of $\mathbf{T}$. This means that for a given point $\mathbf{x}$, the surface force $\mathbf{T}$ at $\mathbf{x}$ should be the same for every smooth surface that has normal vector $\mathbf{n}$ at $\mathbf{x}$. Our assumption means, therefore, that $\mathbf{T}$ does not depend on other things than $\mathbf{n}$, like, for instance, the local curvature at $\mathbf{x}$. By Newtons third law, the force exerted on the surface should be the same as the force the surface exerts on the surroundings, so that $-\mathbf{T}(\mathbf{n})=\mathbf{T}(-\mathbf{n})$. From this, it follows that $\mathbf{T}_0=0$. The moral of the story is this: For each point $\mathbf{x}$ on the surface, the local linearization of the surface force $\mathbf{T}$ can be expressed as $\mathbf{T}=\tau \mathbf{n}$, where $\tau$ is independent of the normal vector $\mathbf{n}$. Now, let us use index notation to ease the manipulation to come. This means that $\tau \mathbf{n} = \tau_{ij} n_j \mathbf{e}_{(i)}$, where summation over equal indices are understood, and $\mathbf{e}_{(i)}$ is the unit basis vector in the $i$'th direction. From the Divergence theorem we then find
 \[
-  \int_{\partial V} \frac{\partial \mathbf{F}}{\partial S} dS
+  \int_{\partial V} \frac{\partial \mathbf{F}_s}{\partial S} dS
   =
   \int_{\partial V} \tau_{ij} n_{j} \mathbf{e}_{(i)}dS
   =
@@ -239,12 +239,109 @@ These are the so-called <b>Cauchy equations</b>. Before starting to understand a
 \[
   \mathbf{F} = \frac{d}{dt}\int_V \rho \mathbf{v} dV + \int_{\partial V} \rho \mathbf{v}(\mathbf{v}\cdot d\mathbf{S})
 \]
-then becomes that $\mathbf{F}$ is the net force acting on the fixed volume, the first integral term is the internal change in momentum, and the last integral term is the transport of momentum out of the volume.
-<!-- Momentum principle for fixed volume: Practical: Compute drag -->
+then becomes that $\mathbf{F}$ is the net force acting on the fixed volume, the first integral term is the internal change in momentum, and the last integral term is the transport of momentum out of the volume. This is a statement that is very practical for engineers. Suppose, for instance, that you are building a pole in the middle of a steadily flowing river. You will be interested in how much force the flow exerts on the pole. Since the flow is steady, there is no internal momentum change. This is, of course, assuming the absense of forces acting on the bulk. If you imagine a large volume enclosing the flow around the pole, but not the pole itself, the momentum flux out of the boundary must therefore equal the drag force on the pole.
+<p/>
+Generally, in the absence of forces on the bulk, $\partial \mathbf{F}_v/\partial V=0$, then, assuming steady flow ($\partial (\rho\mathbf{v})/\partial t=0$) makes integrated Cauchy equations take the following form
+\[
+  \int_{\partial V} \left(\rho \mathbf{v}\mathbf{v}-\frac{\partial \mathbf{F}_s}{\partial S}\right) \cdot d\mathbf{S} = 0.
+\]
+Let us now consider an object in the fluid enclosed by the volume $V$. Let us simply exclude the object from the volume, such that we have an outer boundary area $A_{out}$ and an inner boundary area $A_{obj}$ separating the fluid from the object. Now, since the fluid velocity at $A_{obj}$ is perpendicular to $A_{obj}$, the force exerted on the body by the fluid is
+\[
+  \mathbf{F} = -\int_{A_{obj}} \frac{\partial \mathbf{F}_s}{\partial S} \cdot d\mathbf{S}.
+\]
+On the other hand, we know that
+\[
+  \int_{A_{obj}} \frac{\partial \mathbf{F}_s}{\partial S} \cdot d\mathbf{S}
+  =
+  \int_{A_{out}} \left(\rho \mathbf{v}\mathbf{v}-\frac{\partial \mathbf{F}_s}{\partial S}\right) \cdot d\mathbf{S}
+\]
+meaning that we may find the force $\mathbf{F}$ the fluid exerts on the object by computing
+\[
+  \mathbf{F} = -\int_{A_{out}} \left(\rho \mathbf{v}\mathbf{v}-\frac{\partial \mathbf{F}_s}{\partial S}\right) \cdot d\mathbf{S}
+\]
+for some possibly distant surface $A_{out}$ that encapsulates both the object and the fluid.
+<p/>
+
+
+<h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">The Navier-Stokes Equation</h2>
+Now that we are so close, it is irresistible not to derive the Navier-Stokes Equation. 
 <!-- Navier-Stokes Equation -->
 <!-- Euler Equation -->
 <!-- Streamlines -->
 <!-- Simulation -->
+
+<div id="p5jsAnim"></div>
+<script>
+var U = 5.0;
+var R = 50;
+var t = 0;
+var W,H;
+var PARTICLES = [];
+var play = false;
+function setup(){
+  var cnt = select("#p5jsAnim") // pick canvas holder
+  W = cnt.width;
+  H = 300;
+  canvas = createCanvas(W,H); // set width to canvas holder
+  canvas.parent("p5jsAnim"); // put canvas in canvas holder
+  for(var n=0; n<1000; n++){
+    var x = random(-W/2,W/2);
+    var y = random(-H/2,H/2);
+    if(sq(x)+sq(y)>sq(R)){
+      PARTICLES.push( new Particle(x,y) )
+    }
+  }
+  textAlign(CENTER);
+  noLoop();
+}
+
+function draw(){
+  background(247,248,249,10)
+  translate(W/2,H/2);
+  if(play){
+    noStroke();
+    fill(38,47,58)
+    ellipse(0,0,2*R,2*R)
+    for(var i=0; i<PARTICLES.length; i++){
+      PARTICLES[i].move(0.1)
+      PARTICLES[i].display()
+    }
+  }else{
+    stroke(0)
+    fill(0)
+    text("PRESS TO START ANIMATION",0,0)
+  }
+}
+
+function Particle(x,y){
+  this.x = x;
+  this.y = y;
+  this.move = function(dt){
+    var th = atan2(this.x,this.y)
+    var r = sqrt(sq(this.x)+sq(this.y))
+    var rx = this.x/r
+    var ry = this.y/r
+    var tx = ry
+    var ty = -rx
+    var vr =  U*(1-sq(R/r))*cos(th+PI/2)
+    var vt = -U*(1+sq(R/r))*sin(th+PI/2)
+    var vx = vr*rx + vt*tx
+    var vy = vr*ry + vt*ty
+    this.x += vx*dt
+    this.y += vy*dt
+    if(this.x<-W/2){this.x=W/2;}
+  }
+  this.display = function(){
+    stroke(93,179,255)
+    fill(93,179,255)
+    ellipse(this.x,this.y,2,2)
+  }
+}
+function mousePressed(){
+  loop();
+  play = !play
+}
+</script>
 
 
 
