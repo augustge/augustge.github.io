@@ -14,7 +14,6 @@ app.config(function($routeProvider) {
 var viewCtrl =  app.controller("postController", function ($scope,$route,$routeParams) {
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]); // redo mathjax typesetting
   gtag('event', 'postClicked', {'postID': $routeParams.post,'value':$routeParams.post});
-  console.log("**INFORMING:")
   gtag('config', 'UA-125128411-1', {'page_path': 'Posts/' + $routeParams.post +'.html'});
 });
 
