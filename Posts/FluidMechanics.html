@@ -266,7 +266,7 @@ for some possibly distant surface $A_{out}$ that encapsulates both the object an
 
 <h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Stress and Newtonian fluids</h2>
 
-A fluid at rest cannot have off-diagonal terms in the surface, or stress, force $\tau_{ij}$. Actually, this can be taken as the definition of a fluid: A substance that deformes under any form of shear stress. Shear stress being exactly the off-diagonal terms in $\tau_{ij}$. Moreover, if there are only diagonal terms in $\tau_{ij}$, the force will always be parallel to the surface. This is a force we know from before. It is the force due to a pressure $p$. If we assume the pressure not to depend on the orientation of the surface,  we can safely say that, for a static fluid,
+A fluid at rest cannot have off-diagonal terms in the surface, or stress, force $\tau_{ij}$. Actually, this can be taken as the definition of a fluid: A substance that deformes under any form of shear stress. Shear stress being exactly the off-diagonal terms in $\tau_{ij}$. Moreover, if there are only diagonal terms in $\tau_{ij}$, the force will always be parallel to the surface. This is a force we know from before. It is the force due to a thermodynamic pressure $p$. If we assume the pressure not to depend on the orientation of the surface,  we can safely say that, for a static fluid,
 \[
   \tau_{ij} = -p\delta_{ij}.
 \]
@@ -289,11 +289,40 @@ The anti-symmetric part
 of the velocity gradients correspond to rotations, and not deformations. This can be seen from realizing that the force $\sigma_{ij}n_{j}$ of an anti-symmetric stress-tensor $\sigma_{ij}$ must be orthogonal to the normal vector $\mathbf{n}$ of the surface. Assuming rotational equilibrium, we can therefore discard the anti-symmetric part. If we further assume the material to be isotropic, we are left with only two degrees of freedom in the coefficients $C_{ijkl}$:
 \[
    C_{ijkl}
-   = \lambda \delta_{ij}\delta{kl}
-   + \mu \left( \delta_{ik}\delta{jl}+\delta_{il}\delta{jk} \right)
+   = \lambda \delta_{ij}\delta_{kl}
+   + \mu \left( \delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk} \right)
 \]
-where we refer to $\mu$ as the <b>dynamic stress viscosity</b>.
+where we refer to $\mu$ as the <b>dynamic stress viscosity</b>. This means that the deviatoric stress tensor takes the form
+\[
+  \sigma_{ij}
+  = \lambda \delta_{ij}\delta_{kl}\frac{\partial v_k}{\partial x_l}
+  + \mu \left( \delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk} \right)\frac{\partial v_k}{\partial x_l}
+  =
+  \lambda \delta_{ij} \nabla \cdot \mathbf{v}
+  +
+  \mu \left( \frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i} \right)
+\]
+The symmetric part of the gradient velocities,
+\[
+  e_{ij} = \frac{1}{2}\left(  \frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i} \right),
+\]
+is, by the way, often referred to as the <b>Strain rate tensor</b> $e_{ij}$. Hence, the total stress on an isotropic, newtonian fluid can be written
+\[
+\tau_{ij} = -p \delta_{ij} + \lambda \delta_{ij}\nabla \cdot \mathbf{v} + 2 \mu e_{ij}.
+\]
+Here, we can recognize $\lambda$ as the coefficient determining the strength of the surface force resulting from a volumetric strain rate $\nabla \cdot \mathbf{v}$. Let us try to understand more about these quantities by computing the trace $\tau_{ii}$ of the stress:
+\[
+  \tau_{ii}
+  = -p \delta_{ii} + \lambda \delta_{ii}\nabla \cdot \mathbf{v} + 2 \mu e_{ii}
+  = -3p + \left(3\lambda + 2 \mu \right)\nabla \cdot \mathbf{v}.
+\]
+This seems to be one of those confusing thermodynamic situations. One the one hand, we have a mechanical pressure $\overline{p}\equiv -\tau_{ii}/3$, and on the other, a thermodynamic pressure $p$
+\[
+  p - \left(-\frac{\tau_{ii}}{3}\right) = \left(\frac{2}{3}\mu+\lambda\right) \nabla \cdot \mathbf{v}
+\]
 
+
+<!-- https://archive.org/stream/cbarchive_39179_onthetheoriesoftheinternalfric1849/onthetheoriesoftheinternalfric1849#page/n15 -->
 
 
 <h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">The Navier-Stokes Equation</h2>
