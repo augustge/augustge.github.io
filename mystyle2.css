@@ -7,71 +7,57 @@
   #FF0000 #FF950B #2FA88C #DEEB00 #4B2C04
 
   #555555 #7BB38E #F4F1D7 #F8AB65 #F15C4C
+
+  #EB5937 #1C1919 #403D3C #456F74 #D3CBBD
+
+  #2C3E50 #FC4349 #D7DADB #6DBCDB #FFFFFF
+
+  #405952 #9C9B7A #FFD393 #FF974F #F54F29
+
+  #325A66 #FFF8B2 #DEA140 #A32B26 #590D0B
+
+  #F16663 #F48D6C #F2E07B #8ABE9B #4A6D8B
+
+  #E5DD00 #8CB202 #008C74 #004C66 #332B40
+
+  #B0CC99 #677E52 #B7CA79 #F6E8B1 #89725B
+
+  #588C7E #F2E394 #F2AE72 #D96459 #8C4646
+
+  #302B2F #696153 #FFA600 #9BB58F #FFD596
+
+  #60655F #AB9675 #FFE0C9 #D4CCBA #CF8442
+
+  #25CCF7 #EAB543 #55E6C1 #D6A2E8 #BDC581 #F8EFBA #FD7272
 */
 
 :root {
-    --white: #FFFFFF;
-    --black: #000000;
+    --bodyBgColor:            #FFFFFF;
+    --bodyTextColor:          #453B3D;
+    --headerColor:            #453B3D;
+    --subHeaderColor:         #C4C4BD;
+    --postsBgColor:           #F7EFF6;
+    --postHeaderColor:        #453B3D;
+    --boxHoverBgColor:  transparent;
+    --boxTextColor:     #453B3D;
+    --boxTextColorH:    #453B3D;
+    --boxBorderColorH:  #FF950B;
+    --tagDefaultC:      #000000;
+    --tagUncheckedC:    #FFFFFF;
+    --tag1C:            #60655F;
+    --tag2C:            #AB9675;
+    --tag3C:            #FFE0C9;
+    --tag4C:            #D4CCBA;
+    --tag5C:            #CF8442;
+    --descriptionTextColor:   #FFFFFF;
+    --descriptionBgColor:     rgba(0,0,0,.62);
 
-    --c1_1: #253D59;
-    --c1_2: #4B688A;
-    --c1_3: #F4F4F2;
-    --c1_4: #A6793D;
-    --c1_5: #724C2A;
+    --QuoteColor:             #A6793D;
+    --linkColor:              #724C2A;
+    --codeColor:              #4B688A;
 
-    --c2_1: #F7EFF6;
-    --c2_2: #C4C4BD;
-    --c2_3: #56BED7;
-    --c2_4: #D43215;
-    --c2_5: #453B3D;
 
-    --c3_1: #FF0000;
-    --c3_2: #FF950B;
-    --c3_3: #2FA88C;
-    --c3_4: #DEEB00;
-    --c3_5: #4B2C04;
 
-    --c4_1: #555555;
-    --c4_2: #7BB38E;
-    --c4_3: #F4F1D7;
-    --c4_4: #F8AB65;
-    --c4_5: #F15C4C;
-
-    --c5_1: #F16663;
-    --c5_2: #F48D6C;
-    --c5_3: #F2E07B;
-    --c5_4: #8ABE9B;
-    --c5_5: #4A6D8B;
-
-    --c6_1: #E5DD00;
-    --c6_2: #8CB202;
-    --c6_3: #008C74;
-    --c6_4: #004C66;
-    --c6_5: #332B40;
-
-    --C1: var(--c2_1);
-    --C2: var(--c2_2);
-    --C3: var(--c2_3);
-    --C4: var(--c2_4);
-    --C5: var(--c2_5);
-
-    --postsBgColor:       #F7EFF6;
-    --QuoteColor:         #A6793D;
-    --navigationColor:    #453B3D;
-    --LinkFocus:          #A6793D;
-    --linkColor:          var(--c1_5);
-    --postHeaderColor:    #453B3D;
-    --headerColor:        var(--c7_5);
-    --codeColor:          var(--C2);
-    -contentHeaderColor:  #A6793D;
-
-    --tagDefaultC:    #000000;
-    --tagUncheckedC:  #FFFFFF;
-    --tag1C:          #F8AB65;
-    --tag2C:          #7BB38E;
-    --tag3C:          #008C74;
-    --tag4C:          #F15C4C;
-    --tag5C:          #A6793D;
 
 }
 
@@ -92,8 +78,8 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 16px;
   font-weight: 300;
-  color: var(--C5);
-  /* background: var(--linkColor); */
+  color: var(--bodyTextColor);
+  background-color: var(--bodyBgColor);
 }
 
 
@@ -154,8 +140,6 @@ a:after {
 	 -o-transition: all 0.25s linear;
 }
 
-a:hover, a:focus { color: var(--LinkFocus); }
-a:hover:after, a:focus:after { opacity: 1; bottom: 0; }
 
 img { display: block; margin: 0 10px 10px 0; max-width: 100%; }
 
@@ -219,12 +203,12 @@ sub, sup { line-height: 0; }
   content: attr(subtitle);
   visibility: visible;
   display: block;
-  color: #aaa;
+  color: var(--subHeaderColor);
   letter-spacing: 0.5em;
   font-size: 1.4rem;
   font-weight: normal;
   margin: 0.5em 0 3em;
-  color: rgba(24, 46, 79, 0.4); }
+}
 
 
 
@@ -264,7 +248,7 @@ sub, sup { line-height: 0; }
 
 .box {
   /* flex:         1 1 */
-  color:              var(--C5);
+  color:              var(--boxTextColor);
   font-size: calc(10vw+10vh+10vmin);
   padding: 5px 5px;
   text-decoration: none;
@@ -303,9 +287,9 @@ sub, sup { line-height: 0; }
 
 .box:hover{
   border-radius: 60px 60px 60px 60px;
-  background-color: var(--C1);
-  border-color: var(--C5);
-  color: var(--C5);
+  background-color: var(--boxHoverBgColor);
+  border-color: var(--boxBorderColorH);
+  color: var(--boxTextColorH);
 }
 
 
@@ -529,12 +513,10 @@ h1 {
 /* ====================================================*/
 
 .texter {
-    /* display: none; */
     list-style: none;
     text-align: left;
     word-wrap: break-word;
-    /* text-decoration: none; */
-    font-family: "CMUSerifRoman";
+    font-family: "CMUSerifRoman", Georgia;
 }
 
 
@@ -542,7 +524,6 @@ h1 {
 
 /*CSS Blockquote Template*/
 blockquote {
-    /*background: rgba(0, 0, 0, 0.1);*/
     color: var(--QuoteColor);
     margin: 1.5em 10px;
     padding: .5em 10px;
@@ -597,7 +578,7 @@ blockquote cite:before {
 [description]:after {
   border-right: 12px solid transparent;
   border-left: 12px solid transparent;
-  border-bottom: 12px solid rgba(0,0,0,.62);
+  border-bottom: 12px solid var(--descriptionBgColor);
   overflow-y:hidden; /* Prevent toolbar from affecting scroller */
   height: 0;
     top: 25px;
@@ -606,9 +587,9 @@ blockquote cite:before {
   z-index: 5;
 }
 [description]:before {
-  background: rgba(0,0,0,.62);
+  background: var(--descriptionBgColor);
   border-radius: 10px;
-  color: white;
+  color: var(--descriptionTextColor);
   content: attr(description);
   min-width: 200px;
   /* text-align: justify; */

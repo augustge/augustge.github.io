@@ -1,11 +1,11 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125128411-1"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125128411-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'UA-125128411-1');
-</script>
+</script> -->
 
 
 
@@ -265,15 +265,35 @@ for some possibly distant surface $A_{out}$ that encapsulates both the object an
 
 
 <h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Stress and Newtonian fluids</h2>
-Static (at rest) fluid:
+
+A fluid at rest cannot have off-diagonal terms in the surface, or stress, force $\tau_{ij}$. Actually, this can be taken as the definition of a fluid: A substance that deformes under any form of shear stress. Shear stress being exactly the off-diagonal terms in $\tau_{ij}$. Moreover, if there are only diagonal terms in $\tau_{ij}$, the force will always be parallel to the surface. This is a force we know from before. It is the force due to a pressure $p$. If we assume the pressure not to depend on the orientation of the surface,  we can safely say that, for a static fluid,
 \[
-  \tau_{ij} = -p\delta_{ij}
+  \tau_{ij} = -p\delta_{ij}.
 \]
-If moving
+If the fluid is moving, we can still pull out this term, although it should be noted that pressure is not well defined unless the fluid can be treated as if in equilibrium. Hence, for a moving fluid
 \[
-  \tau_{ij} = -p\delta_{ij} + \sigma_{ij}
+  \tau_{ij} = -p\delta_{ij} + \sigma_{ij},
 \]
-$\sigma$ is deviatoric stress tensor.
+where $\sigma$ is called the <b>deviatoric stress tensor</b>. Note that by construction, $\sigma_{ij}=0$ if the fluid is at rest. Actually, "at rest" is a problematic statement in physics as different inertial reference frames should agree on the behaviour of physical systems, but they will not agree on whether some chunk is "at rest". What this force should describe, however, is how the fluid responds to deformations. That is, the force must depend on local variations in fluid velocity. It should therefore be zero if the velocity gradients $\partial v_i/\partial x_j$ are. Let us, for simplicity, assume they are linearly related
+\[
+  \sigma_{ij} = C_{ijkl}\frac{\partial v_k}{\partial x_l}
+\]
+where $C_{ijkl}$ are some coefficients independent of the velocity components of the fluid. Fluids that satisfy this linearity are called <b>Newtonian fluids</b>. Note that while it is safe to treat most fluids as Newtonian, there are many exceptions ranging from <i>Silly Putty</i> to <i>wettened corn starch</i> and <i>Ketchup</i>. Let us postpone ketchup-dynamics to some later text, and move on with Newtonian fluids.
+
+<p/>
+
+The anti-symmetric part
+\[
+    \frac{1}{2}\left( \frac{\partial v_i}{\partial x_j} - \frac{\partial v_j}{\partial x_i} \right)
+\]
+of the velocity gradients correspond to rotations, and not deformations. This can be seen from realizing that the force $\sigma_{ij}n_{j}$ of an anti-symmetric stress-tensor $\sigma_{ij}$ must be orthogonal to the normal vector $\mathbf{n}$ of the surface. Assuming rotational equilibrium, we can therefore discard the anti-symmetric part. If we further assume the material to be isotropic, we are left with only two degrees of freedom in the coefficients $C_{ijkl}$:
+\[
+   C_{ijkl}
+   = \lambda \delta_{ij}\delta{kl}
+   + \mu \left( \delta_{ik}\delta{jl}+\delta_{il}\delta{jk} \right)
+\]
+where we refer to $\mu$ as the <b>dynamic stress viscosity</b>.
+
 
 
 <h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">The Navier-Stokes Equation</h2>
@@ -283,7 +303,7 @@ Now that we are so close, it is irresistible not to derive the equation of motio
 <!-- Streamlines -->
 <!-- Simulation -->
 
-<div id="p5jsAnim"></div>
+<!-- <div id="p5jsAnim"></div>
 <script>
 var U = 5.0;
 var R = 50;
@@ -354,8 +374,7 @@ function mousePressed(){
   loop();
   play = !play
 }
-</script>
-
+</script> -->
 
 
 
@@ -367,15 +386,10 @@ function mousePressed(){
 
   <div id="disqus_thread"></div>
     <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-
     var disqus_config = function () {
-    this.page.url = "https://augustge.github.io/AUGUSTG/#!/FluidMechanics";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.url = "https://augustge.github.io/#!/FluidMechanics";  // Replace PAGE_URL with your page's canonical URL variable
     this.page.identifier = "Fluid Mechanics"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
-
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://augustg.disqus.com/embed.js';
