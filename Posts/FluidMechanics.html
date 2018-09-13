@@ -125,7 +125,7 @@ Now, invoking the Divergence theorem we can make the two integrals be over the s
 \]
 Since this should hold for any choice of volume $V$, evaluation to zero must be due to the vanishing of the integrand. Hence we recover the same expression as before:
 \[
-  \partial_t \rho + \nabla \cdot \rho \mathbf{v}  = 0.
+  \frac{\partial \rho}{\partial t} + \nabla \cdot \rho \mathbf{v}  = 0.
 \]
 This equation is sometimes referred to as the <b>Continuity equation</b>. Note, however, that the volume $V$ may enclose a sink, or a source, in which case the change in mass inside the volume does not correspond to the flux out of the volume. In that case, there will be an additional source-term contributing to the change in mass.
 
@@ -320,18 +320,72 @@ This seems to be one of those wierd thermodynamic situations. One the one hand, 
 \[
   p - \overline{p} = \left(\frac{2}{3}\mu+\lambda\right) \nabla \cdot \mathbf{v}.
 \]
-<a href="https://archive.org/stream/cbarchive_39179_onthetheoriesoftheinternalfric1849/onthetheoriesoftheinternalfric1849#page/n15">Stokes assumption</a>
+That the two pressures happen to be different are often interpreted as follows. If the fluid is locally expanding or contracting, there will be a delay in reaching thermal equilibrium which makes the thermodynamic pressure lag behind the mechanical pressure. A common, but much discussed, simplification is to assume the factor $2\mu/3+\lambda$, also referred to as the <i>coefficient of bulk viscosity</i>, to vanish. This, which amounts to fixing the $\lambda$ to the value $\lambda = -2\mu/3$, is referred to as <i>Stokes' assumption</i>.
+
+<p/>
+
+Assuming the validity of Stokes assumption we may express the equation of motion for a Newtonian fluid as follows
+\[
+  \rho\frac{\partial v_i}{\partial t}
+  + \rho v_j \frac{\partial v_i}{\partial x_j}
+  =
+  f_i
+  +\frac{\partial}{\partial x_j}
+  \left(
+    2\mu e_{ij} - p\delta_{ij} - \frac{2}{3}\mu \delta_{ij} \nabla \cdot \mathbf{v}
+  \right)
+\]
+which reduces to
+\[
+  \rho\frac{\partial v_i}{\partial t}
+  + \rho v_j \frac{\partial v_i}{\partial x_j}
+  =
+  f_i
+  -\nabla p
+  - \frac{2}{3} \frac{\partial}{\partial x_i}\mu \nabla \cdot \mathbf{v}
+  +2\frac{\partial e_{ij}}{\partial x_j}.
+\]
+This is a general form of the famous <b>Navier-Stokes equation</b>. Note that if all viscous effects are negligible, then the Navier-Stokes equation takes the form
+\[
+  \rho \frac{D\mathbf{v}}{Dt} = -\nabla p + \mathbf{f}
+\]
+which is referred to as the <b>Euler Equation</b>. It does not suffice to assume the fluid to be incompressible ($\nabla \cdot \mathbf{v}=0$) as one would be left with the viscous term $\mu \nabla^2 \mathbf{v}$ in the Navier-Stokes equation.
 
 
+<h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">Streamlines and Potential flows</h2>
 
-<h2 style="text-align:center; margin-top: 2em; margin-bottom: 1em;">The Navier-Stokes Equation</h2>
-Now that we are so close, it is irresistible not to derive the equation of motion for Newtonian fluids.
-<!-- Navier-Stokes Equation -->
-<!-- Euler Equation -->
-<!-- Streamlines -->
-<!-- Simulation -->
+For any fluid, we may visualize its flow by drawing lines that indicate the global trajectory of the fluid. For a flow whose velocity field $\mathbf{v}$ is changing in time, there are several ways to do this. We can, for instance, either draw the line resulting an imaginary particle drifting in the fluid always inheriting the fluids velocity. This would make a so-called <i>Pathline</i>. We could also freeze each point in time and consider a particle drifting in this steady flow. In other words, a curve that is tangent to the flow at every point. The nice thing with this concept, called a <i>Streamline</i>, is that a tube of such lines can never be crossed by the flow. If the flow is steady, then pathlines and streamlines are the same, their defining equation being
+\[
+  \frac{d\mathbf{x}}{d\lambda} \times \mathbf{v}(\mathbf{x}(\lambda)) = 0,
+\]
+where $\lambda$ parameterizes the points $\mathbf{x}(\lambda)$ making up the streamline. In fact, if we recall the continuity equation
+\[
+  \frac{\partial \rho}{\partial t} + \nabla \cdot \rho \mathbf{v} = 0,
+\]
+we see that for a steady flow ($\partial_t \rho = 0$) it simply claims the momentum density field $\rho \mathbf{v}$ to be divergence-less. Since the divergence of the curl of any vector field is zero $\nabla \cdot (\nabla \times \mathbf{A})$, this means we may construct a vector field $\mathbf{\Omega}$ satisfying
+\[
+  \rho \mathbf{v} = \nabla \times \mathbf{\Omega}.
+\]
+For a 2D flow in the $xy$-plane we may introduce a scalar function $\psi$ so that $\mathbf{\Omega}=-z \nabla\psi$ and since the curl of any gradient vanishes,
+\[
+  \rho \mathbf{v}
+    = \nabla \times (-z \nabla\psi)
+    = -\mathbf{k} \times \nabla \psi,
+\]
+or, if you prefer,
+\[
+  \rho \mathbf{v}
+  = \nabla \times \psi \mathbf{k}.
+\]
+Here, the function $\psi$ is referred to as the <b>Streamfunction</b>. Notice that if the density of the fluid can be regarded as constant, i.e. $\nabla \rho =0$. Then the above relations holds for $\mathbf{v}$ rather than $\rho \mathbf{v}$. For a steady flow, a constant density is, by virtue of the continuity equation, the same as demanding the fluid to be incompressible ($\nabla \cdot \mathbf{v}$).
 
-<!-- <div id="p5jsAnim"></div>
+<p/>
+
+In cases where the flow can be assumed to be irrotational, i.e. $\nabla \times \mathbf{v}=0$, we can do a similar analysis to the one above. Since the curl of any gradient is zero, we can construct a scalar function $\varphi$ such that $\nabla \times \mathbf{v}=0$ follows trivially from $\mathbf{v}=\nabla \varphi$. Moreover, if we assume the flow to be incompressible, i.e. $\nabla \times \mathbf{v}=0$, then the velocity field is, together with the appropriate boundary conditions, defined by the Laplace equation $\nabla^2 \varphi = 0$. A natural way to conclude this text is therefore to display a realtime simulation of such a flow as it moves around a circular cylinder:
+
+<p/>
+
+<div id="p5jsAnim"></div>
 <script>
 var U = 5.0;
 var R = 50;
@@ -402,8 +456,10 @@ function mousePressed(){
   loop();
   play = !play
 }
-</script> -->
+</script>
 
+<p/>
+<p/>
 
 
 
