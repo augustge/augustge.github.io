@@ -77,12 +77,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
       reference: "FluidMechanics",
       tag: $scope.tags["phys"],
       language: $scope.languages["english"]},
-    // {
-    //   name: 'QFT in Curved Spacetime',
-    //   description: "...",
-    //   reference: "QFT in Curved Spacetime",
-    //   tag: $scope.tags["phys"],
-    //   language: $scope.languages["english"]},
+    {
+      name: 'Quaternioic Babbling',
+      description: "A text exploring the history and algebra of the Quaternions.",
+      reference: "Quaternions",
+      tag: $scope.tags["math"],
+      language: $scope.languages["english"]},
     {
       name: 'Test post',
       description: "This is just a post to test functionality of the web page.",

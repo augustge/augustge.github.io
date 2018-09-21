@@ -1,0 +1,321 @@
+
+
+<h1>Quaternioic Babbling</h1>
+
+<blockquote><p>
+  The invention of the calculus of quaternions is a step towards the knowledge of
+quantities related to space which can only be compared, for its importance, with
+the invention of triple coordinates by Descartes. The ideas of this calculus, as
+distinguished from its operations and symbols, are fitted to be of the greatest use
+in all parts of science.
+<cite>James Clerk Maxwell</cite>
+</p></blockquote>
+
+<h2>Dividing Doubles</h2>
+
+When working with vectors we typically specify them in relation to some basis for the vector space. The two-dimensional vector $(v_x,v_y)$, for example, is a shorthand for
+\[
+  \mathbf{v} = v_x\mathbf{e}_x + v_y\mathbf{e}_y,
+\]
+where $\mathbf{e}_x$ and $\mathbf{e}_y$ are orthogonal directions of unit length. Two vectors can be added using that
+\[
+  (a_1,a_2)+(b_1,b_2) = (a_1+b_1,a_2+b_2)
+\]
+and scaled by a real number $c$ according to
+\[
+  c \cdot (a_1,a_2) = (c\cdot a_1,c\cdot a_2).
+\]
+Additionally, we may in any $n$-dimensional, real vector space define a scalar product $\cdot : \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ by
+\[
+  \mathbf{a}\cdot \mathbf{b} = \sum_{i=1}^n a_i b_i.
+\]
+From this, we can constuct the Euclidean norm $\|\cdot\|:\mathbb{R}^n \rightarrow \mathbb{R}^+$ by $\|\mathbf{v}\| = \sqrt{\mathbf{v}\cdot \mathbf{v}}$. A natural next question to ask is wheter it is possible to also define multiplication and division of vectors. Let us start with two-dimensional vectors and see if we manage this. First observe that since
+\[
+\begin{align}
+  (a_1,a_2)(b_1,b_2)
+  &= (a_1\mathbf{e}_1 + a_2\mathbf{e}_2)(b_1\mathbf{e}_1 + b_2\mathbf{e}_2) \\
+  &=   a_1b_1\mathbf{e}_1\mathbf{e}_1 + a_2b_1\mathbf{e}_1\mathbf{e}_2
+    + a_1b_2\mathbf{e}_1\mathbf{e}_2 + a_2b_2\mathbf{e}_2\mathbf{e}_2
+\end{align}
+\]
+we really only need to define the four products $\mathbf{e}_1\mathbf{e}_1$, $\mathbf{e}_2\mathbf{e}_1$, $\mathbf{e}_1\mathbf{e}_2$ and $\mathbf{e}_2\mathbf{e}_2$. Moreover, we should have a vector analogous to $1$ in our space. That is, we should have some vector $\mathbf{1}$ such that $\mathbf{1}\mathbf{v}=\mathbf{v}\mathbf{1}$ whatever $\mathbf{v}$ is. Let us therefore choose our basis such that $\mathbf{1}=\mathbf{e}_1$, and scale and rotate $\mathbf{e}_2$ accordingly. In that case, we must have
+\[
+\begin{align}
+  & \mathbf{e}_1\mathbf{e}_1 = \mathbf{e}_1 \\
+  & \mathbf{e}_1\mathbf{e}_2 = \mathbf{e}_2\mathbf{e}_1 = \mathbf{e}_2
+\end{align}
+\]
+meaning that we are only free to choose the product $\mathbf{e}_2\mathbf{e}_2$. Let us, for the time being, just set $\mathbf{e}_2\mathbf{e}_2 = c_1 \mathbf{e}_1 + c_2 \mathbf{e}_2$ so that
+\[
+  (a_1,a_2)(b_1,b_2) = (a_1 b_1+ a_2 b_2 c_1, a_1 b_2 + a_2 b_1 + a_2 b_2 c_2)
+\]
+Note that multiplication from the left by $(a_1,a_2)$ is the same as invoking the following matrix on $(b_1,b_2)$
+\[
+  M_\mathbf{a} = \left[\begin{matrix}
+  a_1 & a_2 c_1 \\
+  a_2 & a_1 + a_2 c_2 \\
+  \end{matrix}\right].
+\]
+Recall that the determinant of this matrix, which is
+\[
+  \det(M_\mathbf{a}) = a_1 (a_1+a_2 c_2) - a_2 a_2 c_1,
+\]
+describes the volume of a unit square after it has been transformed by $\mathbf{a}$. To be able to divide 2D vectors, we need this transformation to be invertible for all vectors different from $(0,0)$. One natural solution to this is to set $(c_1,c_2)=(0,-1)$ so that $\det{M_{\mathbf{a}}}=\|\mathbf{a}\|$. A nice consequence of this is that the norm of a product of two vectors is the product of their norms, i.e. $\|\mathbf{a}\mathbf{b}\|=\|\mathbf{a}\|\cdot \| \mathbf{b}\|$. Crucially, since $\|\mathbf{a}\|\geq 0$ with $\|\mathbf{a}\|=0$ if, and only if, $\mathbf{a}=0$, we have $\det(M_\mathbf{a})>0$ for all $\mathbf{a}\neq 0$.
+This means that the product of two vectors $(a_1,a_2)$ and $(b_1,b_2)$ can be written
+\[
+  (a_1,a_2)(b_1,b_2) = (a_1 b_1 - a_2 b_2, a_1 b_2 + a_2 b_1).
+\]
+or alternatively
+\[
+\begin{align}
+  & \mathbf{e}_1\mathbf{e}_1 = \mathbf{e}_1 \\
+  & \mathbf{e}_1\mathbf{e}_2 = \mathbf{e}_2\mathbf{e}_1 = \mathbf{e}_2 \\
+  & \mathbf{e}_2\mathbf{e}_2 = -\mathbf{e}_1.
+\end{align}
+\]
+In fact, when setting $\mathbf{e}_1=1$ and $\mathbf{e}_2=i$ these rules are exactly the same as those of the complex numbers $\mathbb{C}$, which should not come as a surprise. Let us also introduce the <i>conjugate</i> mapping $*:\mathbb{R}^2\rightarrow \mathbb{R}^2$ defined by
+\[
+  (a_1,a_2)^* = (a_1,-a_2),
+\]
+or, alternatively, $i\mapsto -i$. This has the nice property that for any vector $(a_1,a_2)$ we have
+\[
+  \mathbf{a}^* \mathbf{a}
+  = (a_1,a_2)^* (a_1,a_2)
+  = (a_1^2+b_1^2,0)
+  = (\|\mathbf{a}\|^2,0)
+  = \|\mathbf{a}\|^2.
+\]
+ The multiplicative inverse of a vector $z$ can thus be written
+\[
+  z^{-1} \equiv \frac{1}{z} = \frac{z^*}{z^*z} = \frac{z^*}{\|z\|^2}.
+\]
+In a very real sense, these vectors are numbers. They can do whatever numbers can, except one crucial property. The complex numbers do not have an ordering. When extending the real numbers $\mathbb{R}$ to the complex numbers $\mathbb{C}$ you obtain algebraic closure (all roots of polynomials with complex coefficients are complex numbers), but you loose the ordered structure.
+
+
+<h2>Dividing Triples</h2>
+
+Having seen how trying to divide two-dimensional vectors leads to the mathematically beautiful and practically important theory of the complex numbers, it is irresistible not to see what happens when trying to divide three-dimensional vectors. Perhaps, the complex numbers is just the beginning. This is a question the irish matematician William Rowan Hamilton obsessed about during the 1830s (see <a href="http://worrydream.com/refs/Altmann%20-%20Hamilton,%20Rodrigues,%20and%20the%20Quaternion%20Scandal.pdf">Hamilton, Rodrigues, and the Quaternion Scandal</a>). His frustration with the matter can be seen from a later letter from Hamilton to his son:
+<blockquote><p>
+  Every morning in the early part of October 1843, on my coming down to
+  breakfast, your brother William Edwin and yourself used to ask me:
+  "Well, Papa, can you multiply triples?" Whereto I was always obliged to reply,
+  with a sad shake of the head, "No, I can only add and subtract them."
+<cite>Sir William Rowan Hamilton</cite>
+</p></blockquote>
+In fact, in modern language, we already have something that resembes a multiplication of triples. Namely the <i>Cross product</i> $\times : \mathbb{R}^3 \times \mathbb{R}^3 \rightarrow \mathbb{R}^3$. The cross product can be defined by demanding anti-symmetry, that the product $\mathbf{a}\times \mathbf{b}$ is orthogonal to both $\mathbf{a}$ and $\mathbf{b}$, and that the magnitude is the area of the parallelogram spanned by $\mathbf{a}$ and $\mathbf{b}$. This, however, is not good. From the ortogonality it follows that there cannot be a multiplicative identity vector $\mathbf{1}$ such that $\mathbf{1}\times \mathbf{a}=\mathbf{a}$. Hence, dividing three-dimensional vectors is problematic. What William Rowan Hamilton realized Monday, the 16th October 1843, was that he had been looking at problem wrong. While he could not figure out how to divide triples he could divide divide quadruples! According to the legend, in a flash of insight while walking on the Broome Bridge he carved the defining equations into the stone:
+\[
+  \mathbf{i}^2=\mathbf{j}^2=\mathbf{k}^2=-1, \
+  \mathbf{i}\mathbf{j}=\mathbf{k}, \
+  \mathbf{j}\mathbf{i}=-\mathbf{k}.
+\]
+This refers to the multiplication rules for four-dimensional numbers in the form
+\[
+  \mathbf{a} = a_1 + a_2 \mathbf{i} + a_3 \mathbf{j} + a_4 \mathbf{k}.
+\]
+These numbers, consisting of one real part and three imaginary parts, are what is referred to as <i>Quaternions</i> or $\mathbb{H}$. To understand how these rules arise, let us try to find them ourselves.
+
+
+<h2>Ascending the Cayley-Dickson Ladder</h2>
+
+To constructing a multiplication for quadruples, let us try to recycle the success from the complex numbers $\mathbb{C}$. There we defined a product
+\[
+  (a_1,a_2)(b_1,b_2) = (a_1 b_1 - a_2 b_2, a_1 b_2 + a_2 b_1)
+\]
+and saw that this ensured the existence of inverse elements. A property that was related to the norm of the product being the product of the norms. Since a four-dimensional vector $(a_1,a_2,a_3,a_4)$ is nothing but an ordered pair of two-dimensional vectors, we can treat at four-dimensional vector $(a_1,a_2,a_3,a_4)$ as a two-dimensional vector with complex coefficients, i.e. $(z_1,z_2)=(a_1+a_2 i, a_3+a_4i)$. To write this out, let us invent one more imaginary unit, $j$, that acts just like $i$. That is $i^2 = j^2 = -1$. We then have
+\[
+ (a_1,a_2,a_3,a_4)
+ = (a_1+a_2i,a_3+a_4i)
+ = a_1 + a_2i + (a_3+a_4i)j
+ = a_1 + a_2 i + a_3 j + a_4 ij.
+\]
+Here, the only unknown entity is the $ij$ term. With this in mind, let us calculate the product of two quadruples paying careful attention not to assume commutativity (i.e. $ij=ji$)
+\[
+  \begin{align}
+  \mathbf{a}\mathbf{b}
+  &= (a_1+a_2i,a_3+a_4i)(b_1+b_2i,b_3+b_4i) \\
+  &= \left[a_1+a_2i+(a_3+a_4i)j\right]  \left[b_1+b_2i+(b_3+b_4i)j\right] \\
+  &= (a_1 b_1 - a_2 b_2)
+   + (a_1 b_2 + a_2 b_1)i
+   + a_3 b_3 j^2 + a_3 b_4 jij
+   + a_4 b_3 ij^2 + a_4 b_4 (ij)^2 \\
+  &+ a_1 b_3 j  + a_1 b_4 ij
+   + a_2 b_3 ij + a_2 b_4 i^2j
+   + a_3 b_1 j  + a_3 b_2 ji
+   + a_4 b_1 ij + a_4 b_2 iji
+  \end{align}
+\]
+Using that $i^2=j^2=-1$ we can write this as
+\[
+\begin{align}
+\mathbf{a}\mathbf{b}
+&= (a_1 b_1 - a_2 b_2)
+ + (a_1 b_2 + a_2 b_1)i
+ - a_3 b_3 + a_3 b_4 jij
+ - a_4 b_3 i + a_4 b_4 (ij)^2 \\
+&+ a_1 b_3 j  + a_1 b_4 ij
+ + a_2 b_3 ij - a_2 b_4 j
+ + a_3 b_1 j  + a_3 b_2 ji
+ + a_4 b_1 ij + a_4 b_2 iji \\
+ &= (a_1 b_1 - a_2 b_2 - a_3 b_3)
+  + (a_1 b_2 + a_2 b_1 - a_4 b_3)i
+  + (a_1 b_3 - a_2 b_4 + a_3 b_1)j \\
+ &+ a_4 b_4 (ij)^2
+  + a_4 b_1 ij + a_2 b_3 ij + a_1 b_4 ij
+  + a_3 b_2 ji
+  + a_4 b_2 iji + a_3 b_4 jij .
+ \end{align}
+\]
+On other words, we are only free to choose $ij$, $ji$ and $(ij)^2$. Now, the real part would look more symmetric if it also contained the last diagonal term, i.e. a $-a_4 b_4$ term. To acchieve this, we can set $(ij)^2=-1$. Hence $k=ij$ would act as a third, independent imaginary unit. Let us investigate this possibility a little further. First, it follows from the definition of $k=ij$ that $ik=-j$ and $kj=-i$. Therefore $jk=-ikk=i$ and, since we have set $k^2$, also $ki=-kkj=j$. Since $ki=j$ we must also have $ji=-k$. Using this, our product becomes
+\[
+\begin{align}
+\mathbf{a}\mathbf{b}
+ &= (a_1 b_1 - a_2 b_2 - a_3 b_3 - a_4 b_4) \\
+ &+ (a_1 b_2 + a_2 b_1 + a_3 b_4 - a_4 b_3)i \\
+ &+ (a_1 b_3 - a_2 b_4 + a_3 b_1 + a_4 b_2)j \\
+ &+ (a_1 b_4 + a_2 b_3 - a_3 b_2 + a_4 b_1)k.
+ \end{align}
+\]
+Now we need to ask ourselves the most important question of all: Does this make sense? One automatic, good thing is the existence of a unique indentity element, $1=(1,0,0,0)$, satisfying $1\mathbf{a}=\mathbf{a}1 = \mathbf{a}$ for any $\mathbf{a}$. Let us now define $z_1=a_1+a_2i$ and $z_2=a_3+a_4i$, and $w_1=b_1+b_2i$ and $w_2=b_3+b_4i$ to shorten the writing. The product then takes the form
+\[
+\begin{align}
+  \mathbf{a}\mathbf{b}
+  &= (z_1,z_2)(w_1,w_2)
+  = (z_1 w_1 - z_2 w_2^*, z_1 w_2 + z_2 w_1^*),
+\end{align}
+\]
+which looks very much like the product between real doubles. In fact, if we set the real parts of the $z$'s and the $w$'s to zero, then it is, and have to be, exactly the same product. Moreover, just as before, we may introduce a quaternionic conjugate
+\[
+(z_1,z_2)^* = (z_1^*,-z_2),
+\]
+or, if you like, $i\mapsto -i$, $j\mapsto-j$ and $k\mapsto -k$, such that
+\[
+\begin{align}
+(z_1,z_2)^* (z_1,z_2)
+&= (z_1^* z_1 + z_2 z_2^*, z_1^* z_2 - z_2 z_1^*) \\
+&= (\|z_1\|^2 + \|z_2\|^2,0) \\
+&= (a_1^2+a_2^2+a_3^2+a_4^2,0,0,0) \\
+&= \|(z_1,z_2)\|^2.
+\end{align}
+\]
+Therefore, every non-zero quaternionic number $\mathbf{a}$ has a unique multiplicative inverse element
+\[
+  \mathbf{a}^{-1} = \frac{1}{\mathbf{a}}
+  = \frac{\mathbf{a}^*}{\mathbf{a}^*\mathbf{a}}
+  = \frac{\mathbf{a}^*}{\|\mathbf{a}\|^2}.
+\]
+In fact, since
+\[
+\begin{align}
+  \big[(z_1,z_2)(w_1,w_2)\big]^*
+  &= \big[(z_1 w_1 - z_2 w_2^*, z_1 w_2 + z_2 w_1^*)\big]^* \\
+  &= (z_1^* w_1^* - z_2^* w_2, -z_1 w_2 - z_2 w_1^*) \\
+  &= (w_1^*,-w_2)(z_1^*,-z_2) = (w_1,w_2)^*(z_1,z_2)^*
+\end{align}
+\]
+we still have our "norm of product is product of norm" relation
+\[
+  \|\mathbf{a}\mathbf{b}\|^2
+  = (\mathbf{a}\mathbf{b})^*\mathbf{a}\mathbf{b}
+  = \mathbf{b}^*\mathbf{a}^*\mathbf{a}\mathbf{b}
+  = \mathbf{b}^*\|\mathbf{a}\|^2\mathbf{b}
+  = \|\mathbf{a}\|^2\mathbf{b}^*\mathbf{b}
+  = \|\mathbf{a}\|^2 \|\mathbf{b}\|^2.
+\]
+We have, however, lost something important in this process. We have lost commutativity. Products involving the three imaginary axes do not generally commute. Actually, all the imaginary units must anti-commute, i.e. $ij=-ji$, $ki=-ik$ etc. This is much like the cross-product for three-dimensional vectors. Indeed, if we treat three-dimensional vectors as exactly those quaternionic numbers whose real part is zero, we see that the product of two 3D vectors $\mathbf{a}$ and $\mathbf{b}$ is given by
+\[
+\begin{align}
+  (0,\mathbf{a})(0,\mathbf{b})
+  &= - \mathbf{a}\cdot \mathbf{b}
+  + (a_3 b_4 - a_4 b_3)i
+  + (a_4 b_2 - a_2 b_4)j
+  + (a_2 b_3 - a_3 b_2)k \\
+  &= (- \mathbf{a}\cdot \mathbf{b}, \mathbf{a}\times \mathbf{b}).
+\end{align}.
+\]
+For reference, the general expression is
+\[
+  (r_1,\mathbf{v}_1)(r_2,\mathbf{v}_2)
+  = (r_1 r_2 - \mathbf{v}_1 \cdot \mathbf{v}_2,
+  r_1\mathbf{v}_2 + r_2 \mathbf{v}_1 + \mathbf{v}_1 \times \mathbf{v}_2),
+\]
+or, if we introduce a quaternionic vector product $\circ$,
+\[
+  (r_1+\mathbf{v}_1)(r_2+\mathbf{v}_2)
+  = r_1 r_2 +
+  r_1\mathbf{v}_2 + r_2 \mathbf{v}_1 + \underbrace{\mathbf{v}_1 \times \mathbf{v}_2 - \mathbf{v}_1 \cdot \mathbf{v}_2}_{\mathbf{v}_1 \circ \mathbf{v}_2}.
+\]
+The moral of the story being as follows. The cross product of two 3D vectors is exactly the imaginary part of a quaternionic product in which the vectors are treated as purely imaginary quaternions. That is, given two 3D vectors $\mathbf{a}=a_1i+a_2j+a_3k$ and $\mathbf{b}=b_1i+b_2j+b_3k$ we have,
+\[
+\begin{align}
+  & \mathbf{a}\times \mathbf{b} = \frac{1}{2}\left[\mathbf{a}\mathbf{b}-(\mathbf{a}\mathbf{b})^*\right] \\
+  & \text{and} \\
+  & \mathbf{a}\cdot \mathbf{b} = \frac{1}{2}\left[\mathbf{a}^*\mathbf{b}+\mathbf{b}^*\mathbf{a}\right] \\
+\end{align}
+\]
+Actually, this is the deep reason behind the statement you may have heard before: The cross product only exists in 3 and 7 dimensions. The reason is that we may continue this process, known as the <i>Cayley-Dickson Construction</i>, by trying to further generalize the multidimensional multiplication by considering ordered pairs $(a_1,a_2)$ of quaternions $a_1$ and $b_2$. In that case, we end up with the so-called <i>Octonions</i>, which are eight-dimensional numbers. Sadly, in the transition the octonions loose associativity, i.e. you do not generally have $a(bc) = (ab)c$. However, it is still possible to consider the seven-dimensional imaginary subspace of the octonions which manifests as a cross-product. Repeating the process once more, you end up with the sixteen-dimensional <i>Sedonions</i>.
+In the process, alternativity, i.e. $(aa)b=a(ab)$ and $b(aa)=(ba)a$, is lost. The result is the presence of zero-divisors leading to loss of multiplicative inverses. Actually, according to <i>Frobenius Theorem</i> for real division algebras, any finite-dimensional division algebra over the real numbers is isotropic to one of the following: $\mathbb{R}$, $\mathbb{C}$, $\mathbb{H}$. So, in a sense, our playing around with multiplying vectors is finished. We have them all.
+<p/>
+
+
+<h2>Invoking Quaternions</h2>
+Needless to say, quaternions can be extremely useful. It is, for example, closely related to rotations in 3D space. To see this, consider a three-dimensional vector $r=(0,\mathbf{r})=(0,x,y,z)$ and a unit 3D vector $\mathbf{n}$ defining the axis of rotation. Conjugation, i.e. $qrq^{-1}$, by the quaternion
+\[
+  q = \cos \frac{\theta}{2} + \mathbf{n} \sin \frac{\theta}{2}
+\]
+then results in a rotation of $\mathbf{r}$ by an angle $\theta$. Let us pick $\mathbf{n}=i$ and show how this goes explicitly
+\[
+\begin{align}
+  qrq^{-1}
+  &=
+  \left(\cos \frac{\theta}{2} + i \sin \frac{\theta}{2}\right)
+  \mathbf{r}
+  \left(\cos \frac{\theta}{2} - i \sin \frac{\theta}{2}\right) \\
+  &=
+  \cos^2 \frac{\theta}{2} \mathbf{r}
+  + \frac{1}{2}(i\mathbf{r}-\mathbf{r} i) \sin \theta
+  - i\mathbf{r} i \sin^2 \frac{\theta}{2}.
+\end{align}
+\]
+Now, $i\mathbf{r}=-x+yk-zj$, $\mathbf{r}i=-x-yk+zj$ and $-i\mathbf{r}i=xi-yj-zk$ giving
+\[
+\begin{align}
+  qrq^{-1}
+  &=
+  \cos^2 \frac{\theta}{2} \mathbf{r}
+  + (yk-zj) \sin \theta
+  + (2xi-\mathbf{r}) \sin^2 \frac{\theta}{2} \\
+  &= xi
+   + (y cos \theta - z \sin \theta)j
+   + (z cos \theta + y \sin \theta)k.
+\end{align}
+\]
+In fact, since any purely imaginary quaternion $\mathbf{q}$ of unit length satisfies $\mathbf{q}^2=-1$, we have
+\[
+  e^{\mathbf{q}\theta} =  \cos \theta + \mathbf{q} \sin \theta
+\]
+just as for the complex numbers.
+
+<p/>
+
+<!-- Now, it is tempting draw a connection between the need for four dimensions in division algebras and the need for four dimensions in describing the relativistic spacetime. Let us play a little with that. Think of an event $E$ as a quaternion $E=cdt+d\mathbf{r}$. Then, first of all, its square is given by
+\[
+  E^2 = c^2dt^2 - \|d\mathbf{r}\|^2 +
+  2dtcd\mathbf{r}.
+\]
+While the first is the line-element -->
+
+
+<div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  this.page.url = "https://augustge.github.io/#!/Quaternions";  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = "Quaternions"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://augustg.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

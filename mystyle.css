@@ -553,6 +553,18 @@ h2 {
   font-size: 20px\9;
 }
 
+.texter h1 {
+  text-align:center
+  margin-top: 2em
+  margin-bottom: 1em;
+}
+
+.texter h2 {
+  text-align:center
+  margin-top: 2em
+  margin-bottom: 1em;
+}
+
 
 /* ====================================================*/
 

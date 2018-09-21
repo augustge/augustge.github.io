@@ -509,14 +509,25 @@ h1 {
 }
 
 
-
 /* ====================================================*/
 
 .texter {
     list-style: none;
     text-align: left;
-    word-wrap: break-word;
+    word-wrap: normal;
     font-family: "CMUSerifRoman", Georgia;
+}
+
+#postEntry h1{
+  text-align:center;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+#postEntry h2{
+  text-align:center;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
 
 
@@ -533,7 +544,7 @@ blockquote:before {
     color: var(--QuoteColor);
     /*content: open-quote;*/
     content: "\201C";
-    font-size: 8rem;
+    font-size: 6rem;
     line-height: .1em;
     margin-right: .25em;
     vertical-align: -.4em;
