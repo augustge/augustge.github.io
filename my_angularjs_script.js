@@ -90,6 +90,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
       tag: $scope.tags["prog"],
       language: $scope.languages["english"]}
     ];
+    
 
     $scope.docItems = [
       {
