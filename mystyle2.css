@@ -515,7 +515,7 @@ h1 {
     list-style: none;
     text-align: left;
     word-wrap: normal;
-    font-family: "CMUSerifRoman", Georgia;
+    font-family: "CMUSerifRoman", Georgia, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 #postEntry h1{
