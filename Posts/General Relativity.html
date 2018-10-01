@@ -1,0 +1,68 @@
+
+<link rel="stylesheet" type="text/css" href="../mystyle2.css">
+<!-- MATHJAX for latex display -->
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- For Computer Modern (Serif) Font -->
+<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cmu-serif" type="text/css"/>
+
+<p/><p/><p/><p/>
+
+<div class="post texter" role="article" id="postEntry">
+
+
+<!--================================================================================================================-->
+<!--    Remove all except the <<TEXT HERE>> section before publishing     -->
+<!--================================================================================================================-->
+
+<h1>General Relativity</h1>
+
+<h1>Special Relativity</h1>
+The concept of relativity is as old as physics itself. The <i>Classical</i>, or <i>Gallilean</i>, relativity states that physical laws should be independent of your coordinate change as long as all coordinate systems considered are linearly related. Such systems are referred to as <i>inertial reference systems</i>. Generally in physics, every event can be specified by a time $t$ and a location $(x_1,x_2,x_3)$ in three-dimensional space. The classical assumption is that time and space is independent and that two inertial observers $O$ and $O'$ comparing the coordinates for the difference of two events will find that
+\[
+  \delta t' = \delta t
+  \ \text{ and } \
+  \delta \mathbf{x}'^2 =  \delta \mathbf{x}^2
+\]
+where $(\delta t ,\delta \mathbf{x})$ is the observations of $O$ and  $(\delta t' ,\delta \mathbf{x}')$ is the observations of $O'$. If we let $M$ be a linear tranformation of three-dimensional space, then, since
+\[
+  \delta \mathbf{x}'^2 = (M \delta \mathbf{x})^T (M \delta \mathbf{x})
+  \delta \mathbf{x}^T (M^T M) \delta \mathbf{x}
+\]
+we must have $M^T M = \mathbb{I}$, where $\mathbb{I}$ is the indentity matrix, in order to respect gallilean relativity. That is, apart from translations, which are omitted here for simplicity, intertial reference frames are, in Gallilean relativity related by rotations.
+<p/>
+This perspective, however, is not in agreement with the observation that the speed of light is the same in every reference frame. For that, we would get
+\[
+  \mathbf{v}'
+  = \frac{\delta \mathbf{x}'}{\delta t'}
+  = \frac{\delta \mathbf{x}}{\delta t}
+\]
+
+
+
+
+
+
+
+
+
+<p/>
+<p/>
+<p/>
+<div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+    this.page.url = "https://augustge.github.io/#!/General Relativity";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "General Relativity"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://augustg.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!--================================================================================================================-->
+
+</div>

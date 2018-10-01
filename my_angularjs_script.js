@@ -90,7 +90,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
       tag: $scope.tags["prog"],
       language: $scope.languages["english"]}
     ];
-    
+
 
     $scope.docItems = [
       {
@@ -206,6 +206,11 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: 'A devoted rendering of how rays refracts and reflects through a drop of water.',
           reference: 'Rainbow/',
           tag: $scope.tags["phys"]
+        },{
+          name: "Evolution",
+          description: "This is an extensive, but basic experiment with reinforment learning. Digital 'Animals' spawn with random DNA and blank brains. With mutating the neural network for every new boid, they gradually evolve to handle the environment better. There are three views: The simulator itself, a visualization of the 'best' boid and a control panel where environment and mutation properties can be altered. Have fun!",
+          reference: "Evolution/"
+          tag: $scope.tags["other"]
         }
       ];
 });
