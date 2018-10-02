@@ -14,7 +14,7 @@
     [3] Lives for long
 
 * (2) Grass-eater
-    [1] Eats grass only 
+    [1] Eats grass only
 
 
 
@@ -137,7 +137,7 @@ var Cdirt1, Cdirt2, Cgrass1, Cgrass2;
 var bestBoid;
 
 function setup(){
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(window.innerWidth, window.innerHeight);
   frameRate(200);
   initateScenario();
 }
