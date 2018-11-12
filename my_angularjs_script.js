@@ -211,6 +211,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is an extensive, but basic experiment with reinforment learning. Digital 'Animals' spawn with random DNA and blank brains. With mutating the neural network for every new boid, they gradually evolve to handle the environment better. There are three views: The simulator itself, a visualization of the 'best' boid and a control panel where environment and mutation properties can be altered. Have fun!",
           reference: "Evolution/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Complex Mappings",
+          description: "This is a simple visualization of Complex mappings. That is, it parametrizes and animates the effect of complex mappings on a cartesian grid on C.",
+          reference: "Complex Mappings/",
+          tag: $scope.tags["math"]
         }
       ];
 });

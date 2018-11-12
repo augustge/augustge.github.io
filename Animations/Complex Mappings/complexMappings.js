@@ -18,7 +18,7 @@ var pxToGrid;
 var t = 0.
 
 var MESH;
-
+var selector;
 function setup(){
   createCanvas(windowWidth, windowHeight);
   // buffer = createGraphics(windowWidth, windowHeight);
@@ -26,6 +26,13 @@ function setup(){
 
   MESH = new Mesh(mx,Mx,my,My,Nx,Ny)
   MESH.init()
+
+  selector = createSelect();
+  selector.option("exp(z)")
+  selector.option("1/z")
+  selector.option("z^2")
+  selector.position(20,20)
+  selector.changed(selectionDone)
 
 
   // pendulum = new Pendulum(width/2,height/3,t10,t20,m)
@@ -42,7 +49,6 @@ function draw(){
     MESH.transform( 0.5*(1-cos(t)) )
     MESH.display(pxToGrid,5)
     t += 0.01
-
 }
 
 function Mesh(mx,Mx,my,My,Nx,Ny){
@@ -105,10 +111,16 @@ function Point(x,y){
   this.R = [x,y];
 
   this.func = function(R0){
-      // var C = new Complex(R0[0],R0[1]).exp()
-      var C = new Complex(1,0).div(R0[0],R0[1])
-      // var C = new Complex(1,0).div(R0[0],R0[1]).pow(2)
-      return [C.a,C.b]
+      if( selector.value()=="exp(z)" ){
+        var C = new Complex(R0[0],R0[1]).exp()
+        return [C.a,C.b]
+      }else if( selector.value()=="1/z" ){
+        var C = new Complex(1,0).div(R0[0],R0[1])
+        return [C.a,C.b]
+      }else{
+        var C = new Complex(R0[0]*R0[0]-R0[1]*R0[1],2*R0[0]*R0[1])
+        return [C.a,C.b]
+      }
   }
 
   this.transform = function(t){
@@ -227,4 +239,15 @@ function defineColors(){
   // c12= color("rgb(69, 59, 61)");
   // c13= color("rgb(255, 0, 0)");
   // c14= color("rgb(255, 149, 11)");
+}
+
+
+function selectionDone(){
+  if( selector.value()=="exp(z)" ){
+    MESH = new Mesh(-2*3.141592,2*3.141592,-3.141592,3.141592,2*50,50)
+    MESH.init()
+  }else if( selector.value()=="1/z" ){
+    MESH = new Mesh(-2,2,-2,2,2*50,2*50)
+    MESH.init()
+  }
 }
