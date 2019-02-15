@@ -17,6 +17,85 @@
 
 <h1>The Unruh Effect</h1>
 
+A path $t=A \sinh B \tau$, $x=A \cosh B\tau$ in $1+1$ dimensional Minkowski space has proper acceleration
+\[
+  \frac{d^2t}{d\tau^2} = B^2 A \sinh B \tau
+  \text{ and }
+  \frac{d^2x}{d\tau^2} = B^2 A \cosh B \tau.
+\]
+Specifically, the norm of the accelereation vector $A_\mu = (B^2 A \sinh B \tau,B^2 A \cosh B \tau)$ is given by
+\[
+  A_\mu A^\mu
+  = B^4 A^2 ( -\sinh^2 B \tau+\cosh^2 B\tau )
+  = B^4 A^2.
+\]
+That is, the path describes an object with constant proper acceleration $AB^2$. Motivated by this, study Minkowski spacetime in terms of coordinates $(\rho,\eta)$
+\[
+  t = \rho \sinh \eta \text{ and } x = \rho \cosh \eta.
+\]
+For constant $\rho$, the lines traced out by $\eta$ then correspond to world-lines of uniformly accelerated observers. In these coordinates, the line element takes the form
+\[
+  dS^2 = -\rho^2 d\eta^2 + d\rho^2.
+\]
+Note, however, that $\eta$ and $\rho$ do no longer span the entire Minkowski spacetime.
+Since $x^2-t^2=\rho^2$, we can only access points in the wedge $x^2 \geq t^2$. In fact, since $\cosh \eta \geq 0$ for all $\eta$, we see that accelerated observers with positive accelereation is confined to the right wedge $x^2 \geq t^2$ with $x\geq 0$. Crucially, if we treat this right wedge as a spacetime in its own right, the vector field $\partial_\eta$ will be timelike everywhere. Note, however, that this is not in the entire Minkowski space. Since, in $(t,x)$-coordinates, this vector field corresponds to
+\[
+  \partial_\eta
+  = \frac{\partial t}{\partial \eta}\partial_t + \frac{\partial x}{\partial \eta}\partial_x
+  = x\partial_t + t \partial_x,
+\]
+we see that $\partial_\eta$ is only timelike, and future-directed, in the right wedge $x^2 \geq t^2$ with $x\geq 0$.
+
+Let us now consider a Quantum field theory for a free scalar field for the intertial and accelerated observers. In both cases, their minimally coupled (no coupling to Ricci scalar) Lagrangian density is given by
+\[
+  \mathcal{L} = \frac{1}{2}\sqrt{-g}\nabla_\mu \phi \nabla^\mu \phi
+\]
+where $\nabla_\mu$ is the covariant derivative and $-g=|\det{g_{\mu\nu}}|$ with $g_{\mu\nu}$ being the metric. The equation of motion is then given by the massless Klein-Gordon equation
+\[
+  \nabla_\mu \nabla^\mu \phi = 0.
+\]
+Let us now assume $\{f_i\}_i$ to be complete set of complex solutions to this equation. Since these satisfy the above equation, the current
+\[
+  J^\mu_{(f_i,f_j)}(x) \equiv f^*_i(x)\nabla^\mu f_j(x) - f_i(x)\nabla^\mu f^*_j(x)
+\]
+is necessarily covariantly conserved. For a spacelike hypersurface $\Sigma$ whose future-directed normal vector is $n_\mu$, the quantity
+\[
+  (f_i,f_j)
+  \equiv i\int_\Sigma d^2x \sqrt{\gamma}n_\mu J^\mu_{(f_i,f_j)}(x)
+  = i\int_\Sigma d^2x \sqrt{\gamma}n_\mu\left[ f^*_i(x)\nabla^\mu f_j(x) - f_i(x)\nabla^\mu f^*_j(x) \right]
+\]
+where $\gamma$ is the induced metric on $\Sigma$, is therefore time-indepentent. Let us therefore use this bilinear operation as our inner product. Let us choose our complete set of solutions $\{f_i\}_i$ and $\{f^*_i\}_i$, where $*$ denotes complex conjugation, to be orthonormal with respect to this inner product, i.e.
+\[
+  (f_i,f_j)=-(f^*_i,f^*_j)=\delta_{ij} \text{ and } (f_i,f^*_j)=(f^*_i,f_j)=0.
+\]
+The canonical quantization procedure can then proceed by imposing equal-time commutation relations
+\[
+  [\phi(t,x),\pi(t,x')] = i\delta(x-x'), \text{ where } \pi \equiv \frac{\partial \mathcal{L}}{\partial (\partial_t \phi)},
+\]
+with all other commutators vanishing. The completeness of $\{f_i,f^*_i\}_i$ now allows us to write
+\[
+  \phi = \sum_{i} \left( a_i f_i + a_i^\dagger f^*_i \right)
+\]
+meaning that the expression for the fourier modes takes the form
+\[
+  a_i = (\phi,f_i) \text{ and } a_i^\dagger = -(\phi,f^*_i).
+\]
+
+*******
+Want to show
+\[
+  [(\phi,f_A),(f_B,\phi)]=(f_A,f_B)
+\]
+
+
+
+
+
+
+
+
+
+
 <h2>Problems with Quantum Field Theory in Curved Spacetime</h2>
 
 Let us start this discussion by mentioning some of the key problems arising when one tries to construct a Quantum field theory on a curved spacetime. First we let $\{f_i\}$ be a complete set of solutions to the equation of motion arising from some Lagrangian $\mathcal{L}$. For the sake of clarity, we will pick the Lagrangian for a free, real scalar field
@@ -29,7 +108,8 @@ This is, however, not tensorial. The remedy is to promote partial derivatives $\
 \]
 
 
-We will consider a non-interacting scalar field propagating on a flat spacetime. We let the field satisfy the Klein-Gordon equation and remind the reader that quantization involves promoting the fourier coefficients of the field to creation and annihilation operators. Recall also that in this setting, the vacuum state is exactly the state that is killed by all annihilation operators. Creation operators are those corresponding to the negative frequency modes $e^{ik_0 t}$, and annihilation operators correspond to negative frequency modes $e^{-ik_0 t}$ for $k_0>0$.
+
+We will consider a non-interacting scalar field propagating on a flat spacetime. We let the field satisfy the Klein-Gordon equation and remind the reader that quantization involves promoting the fourier coefficients of the field to creation and annihilation operators. Recall also that in this setting, the vacuum state is exactly the state that is killed by all annihilation operators. Creation operators are those corresponding to the negative frequency modes $e^{ik_0 t}$, and annihilation operators correspond to negative frequency modes $e^{-ik_0 t}$ for $ k_0 > 0 $.
 Let us consider a (D+1)-dimensional spacetime whose metric is
 \[
   dS^2 = N^2(x)dt^2 - G_{ab}dx^a dx^b.
