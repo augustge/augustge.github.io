@@ -40,8 +40,6 @@ function setup(){
   button.position(50,70);
   button.mousePressed(clearCanvas);
 
-
-
   background(255);
   translate(width/2,height/2)
   scale(1,-1)

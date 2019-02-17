@@ -221,7 +221,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         {
           name: "Wallpaper Groups",
           description: "This is a simple rendering of the first wallpaper groups. It allows you to draw them in a way such that the symmetries are enforced.",
-          reference: "wallpaperGroups",
+          reference: "wallpaperGroups/",
           tag: $scope.tags["math"]
         }
       ];
