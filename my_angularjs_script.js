@@ -220,7 +220,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         },
         {
           name: "Wallpaper Groups",
-          description: "This is a simple rendering of the first wallpaper groups. It allows you to draw them in a way such that the symmetries are enforced.",
+          description: "This is a simple code that allows for a visual exploration of the 17 fundamental symmetries of a two-dimensional surface -- the so-called wallpaper groups. After you pick one of the 17 wallpaper groups, a gray rhombus will display the fundamental translated area. On top of this, there are lines showing mirror symmetries, glide reflections and discrete rotations. Enjoy!",
           reference: "wallpaperGroups/",
           tag: $scope.tags["math"]
         }
