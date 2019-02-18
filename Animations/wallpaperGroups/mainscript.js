@@ -3,7 +3,6 @@
 var S = [[150,0],[0,150]]; // spanning lattice square
 var Hex;
 var bufferSize = [150,150];
-
 var SYM;
 
 
@@ -18,14 +17,26 @@ function setup(){
   var symmetry = generate_p2(S[0],S[1])
   SYM.symmetries = SYM.symmetries.concat(symmetry)
 
+  autoRefresh = createCheckbox('Autorefresh canvas', true);
+  autoRefresh.position(50,10)
+
   dropdownC = createSelect();
-  dropdownC.option("Black ",  color(47, 52, 59,   50) )
+  dropdownC.option("Black ",  color(0,0,0,   50) )
   dropdownC.option("White ",  color(255, 255,255, 50) )
-  dropdownC.option("Red "  ,  color(212, 50, 21,  50) )
-  dropdownC.option("Orange ", color(255, 149, 11, 50) )
-  dropdownC.option("Blue ",   color(86, 190, 215, 50) )
-  dropdownC.option("Green ",  color(70, 139,   0, 50) )
+  dropdownC.option("Tropic Blue ",   color(86, 190, 215, 50) )
+  dropdownC.option("Royal Purple ",   color(178,26,180, 50) )
+  dropdownC.option("Dark Blue   [set 1]",  color(41,49,62, 50) )
+  dropdownC.option("Blue        [set 1]",  color(47,85,103, 50) )
+  dropdownC.option("Yellow      [set 1]",  color(255,203,63, 50) )
+  dropdownC.option("Milky White [set 1]",  color(251,230,192, 50) )
+  dropdownC.option("Oker Red    [set 1]",  color(280,73,49, 50) )
+  dropdownC.option("Dirt Brown   [set 2]",  color(75,66,56, 50) )
+  dropdownC.option("Soil Brown   [set 2]",  color(177,122,45, 50) )
+  dropdownC.option("Muddle White [set 2]",  color(216,218,217, 50) )
+  dropdownC.option("Near Black   [set 2]",  color(27,28,21, 50) )
+  dropdownC.option("Spring Green [set 2]",  color(133,168,64, 50) )
   dropdownC.changed(dropdownColorChanged)
+  dropdownC.selected(color(47, 52, 59,   50))
   dropdownC.position(50,30)
 
   dropdown = createSelect();
@@ -517,6 +528,7 @@ function generate_p6m(S1,S2){
 
 function dropdownChanged(){
   SYM = new SymmetryBase(S);
+  SYM.color = dropdownC.value();
   var translations = [new Translation(S[0],S[1],2,2)];
 
   if(this.value()==0){
@@ -578,8 +590,9 @@ function dropdownChanged(){
   var translations = [new Translation(gridVecs[0],gridVecs[1],2,2)];
 
   SYM.symmetries = SYM.symmetries.concat(symmetry)
-  background(255)
-  SYM.showLattice()
+  if(autoRefresh.checked()){
+    clearCanvas();
+  }
   // var symmetry = generate_p1(S[0],S[1])
   // var symmetry = generate_p2(S[0],S[1])
   // var symmetry = generate_pm(S[0],S[1])
@@ -608,6 +621,16 @@ function mousePressed(){
 function mouseDragged(){
   SYM.addPoint(mouseX-width/2,height/2-mouseY)
   redraw();
+}
+
+function mouseWheel(event) {
+  // To prevent page scroll
+  return false;
+}
+
+function touchStarted() {
+  // prevent default
+  return false;
 }
 
 
