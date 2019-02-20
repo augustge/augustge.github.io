@@ -247,7 +247,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         },
         {
           name: "Sunflower",
-          description: "This is a simple visualization of how the seed pattern on a Sunflower arises from producing seeds separated by the golden angle. You can try other ratios to convince yourself that the golden angle is an optimal choice. Also, choosing other irrationals can shed light on approximating fractions, like 22/7 for pi.",
+          description: "This is a simple visualization of how the seed pattern on a Sunflower arises from producing seeds separated by the golden angle. You can try other ratios to convince yourself that the golden angle is an optimal choice. Also, choosing other irrationals can shed light on approximating fractions, like 22/7 for pi.}",
           reference: "Sunflower/",
           tag: $scope.tags["math"]
         },
