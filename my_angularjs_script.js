@@ -160,6 +160,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         tag: $scope.tags["phys"],
         language: $scope.languages["english"]},
       {
+        name: 'The square-lattice Ising model',
+        description: 'Report from a project in computational physics about the square lattice Ising model for studying ferromagnetic the phase transition.',
+        reference: 'The square-lattice Ising model.pdf',
+        tag: $scope.tags["phys"],
+        language: $scope.languages["english"]},
+      {
         name: 'Classification of complex semisimple Lie algebras using Dynkin diagrams',
         description: 'Hand-in in BSc project on the classification of complex semisimple Lie algebras using Dynkin diagrams and root systems.',
         reference: 'Classification of complex semisimple Lie algebras using Dynkin diagrams.pdf',
@@ -167,6 +173,8 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         language: $scope.languages["english"]}
 
       ];
+
+
 
 
       $scope.animItems = [

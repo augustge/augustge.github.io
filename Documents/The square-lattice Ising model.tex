@@ -1,0 +1,566 @@
+
+
+\documentclass[twoside,utf8]{article}
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+\usepackage{comment}
+\usepackage{amsmath, amssymb}
+\usepackage{eulervm}
+%\usepackage{mathpazo}
+%\usepackage[math]{anttor}
+%\usepackage{cmbright}
+%\usepackage{mathastext}
+\usepackage[ruled]{algorithm2e}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage[hyperfootnotes=false]{hyperref} % For hyperlinks in the PDF
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+\usepackage{abstract} % Allows abstract customization
+\usepackage{titlesec} % Allows customization of titles
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering\bfseries}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\scshape\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\newcommand{\EQU}[1] { \begin{equation*} \begin{split} #1 \end{split} \end{equation*} }
+\newcommand{\EQUn}[1] { \begin{equation} \begin{split} #1 \end{split} \end{equation} }
+\newcommand{\PAR}[2]{ \frac{\partial #1}{\partial #2}}
+\newcommand{\ket}[1] { |#1\rangle }
+\newcommand{\expe}[1]{ \langle #1 \rangle }
+\newcommand{\bra}[1] { \langle #1 | }
+\newcommand{\braket}[2] { \langle #1 | #2 \rangle }
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{
+The square-lattice Ising model \\ 
+\normalsize Fourth project in Computational physics autumn 2015
+}} % Article title
+\author{
+\large
+\textsc{Candidate number: \textbf{8}} \\
+\normalsize University of Oslo \\ % Your institution
+\vspace{-5mm}
+}
+\date{}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+
+\noindent
+The interaction between nabouring quantum spins of a matrial can be crucial in order to describe the magnetic properties of the matrial. This effect on a ferromagnetic matrial is studied by solving a simplified verison of the two-dimensional ising model with periodic boundary conditions numerically using the metropolis algorithm. As the size of the lattice increases it becomes clear that a phase transition, turning on and off the magnetization, is taking place as a discontinuity seems to rise as the size of the lattice increases. The critical temperature is approximated to equal $2.2703$, not far from the analytical result $2.2692$ of Lars Onsager.
+
+
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+This project is concerned with the Ising model, and especially the physics of phase transitions. As water boils to steam the substance undergoes a phase transition. It is clear that the properties of the substance has changed a lot during this process, but how does such a transition occur? It has turned out to be suprisingly difficult to describe how tiny changes in the local interaction of particles in a medium leads to major changes in the macroscopic properties. One example of phase transitions is that of the magnetization of a ferromagnet. In the early 1920s the German physicist Ernst Ising came up with a one-dimensional model of nabourly interacting spins to describe this phenomenon. In the world of numerical computations the model has developed to be a popular way of studying phase transitions. 
+
+
+\section{Theory}
+\subsection{The Ising model}
+The dipoles of an ideal paramagnet is said to have no inherent tendency to point parallel or antiparallel. In a real paramagnet, however, the dipoles always has a tendency to align either parallel or antiparallel to it's nabours. In fact, the interaction between nabouring dipoles can be crucial for the magnetic behavior of the matrial. In the Ising model the magnetic behavior of a matrial is modelled as an immovable lattice of quantum spins $\{S_i\}_{i=1}^{N}$. The tendency of two nabouring dipoles $Si$ and $Sj$ to align parallel or antiparallel is captured in the value of a matrix element $J_{ij}$.  If some external magnetic field, with some magnetic moment $\mu$, is interacting with the magnet, then the value of each dipole will be biased. This effect is stored in the coefficients $h_j$. Putting this together we can model the energy of a microstate $s$, given by the set $\{S_i\}_{i=1}^{N}$, as 
+\EQU{
+H(s) = -\sum_{i,j \text{ \footnotesize nabours} }J_{ij}S_i S_j - \mu \sum_j h_j S_j.
+}
+Often you are interested in the scenario where no external field present. We may then simplify the expression by setting $h_j=0$. Another common simplification is to assume that all nabouring pairs $i,j$ have equal tendencies to align, or antialign. Then we may replace the matrix $J_{ij}$ with a scalar $J$. A simplified model for the system then becomes
+\EQUn{
+H(s) = -J \sum_{i,j \text{ \footnotesize nabours} }S_i S_j \label{H(s)}.
+}
+
+\subsection{The Metropolis algorithm}
+Assume you are provided with some initial state $s$ at time $t_j$ of a system and you want to study the probability $P(s\mapsto s')$ that the system undergoes a transition from $s$ to some other state $s'$. To be precise we would need to introduce a probability density function $w_s(t_j)=w_s^j$ for every state $s$ and every possible time $t_j$. We could then introduce a time evolution of the system given by the Markov chain
+\EQU{
+w_{s'}^{j+1}=P(s\mapsto s')w_{s}^j.
+}
+If we are interested in convergence of the system, we may just as well introduce some stationary probability distribution 
+\EQU{
+\mathcal{P}(s)=\lim_{t\rightarrow \infty}w_{s}^j
+}
+to eliminate time from consideration. Now we may think of the probabilities as representing the distributions at some stable equilibrium state. This means that a transition from a state $s$ to a state $s'$ is only possible if the reverse transition $s'\mapsto s$ is equally possible. This we may formulate as $\mathcal{P}(s')=\mathcal{P}(s)$, or more informatively
+\EQU{
+\mathcal{P}(s)P(s\mapsto s') = \mathcal{P}(s')P(s'\mapsto s),
+}
+which is often referred to as the condition of detailed balance. The idea is now to factor the transition distribution $P(s\mapsto s')$ as a product $T_{s\mapsto s'}A_{s\mapsto s'}$ of a distribution $T_{s\mapsto s'}$ representing the probability of proposing a move to the state $s'$ from $s$ and a distribution $A_{s\mapsto s'}$ of accepting the proposed transition $s\mapsto s'$. We are then left with
+\EQU{
+\frac{A_{s\mapsto s'}}{A_{s'\mapsto s}}=\frac{ \mathcal{P}(s')T_{s'\mapsto s}}{ \mathcal{P}(s)T_{s\mapsto s'}}.
+}
+All that is needed is to find a probability distribution $A_{s\mapsto s'}$ that satisfies this criterion. A both common and natural choice is to set
+\EQU{
+A_{s\mapsto s'} = \min \left\{ 1, \frac{ \mathcal{P}(s')T_{s'\mapsto s}}{ \mathcal{P}(s)T_{s\mapsto s'}} \right\}.
+}
+In principle you need to have an expression for the distributions $\mathcal{P}(s)$ and $T_{s\mapsto s'}$. Often the proposal distributions $T_{s\mapsto s'}$ are assumed to be symmetric. The expression for the acceptance probability then simplifies to
+\EQU{
+A_{s\mapsto s'} = \min \left\{ 1, \frac{ \mathcal{P}(s')}{ \mathcal{P}(s)} \right\},
+}
+meaning that you need only have knowledge of the ratio $\mathcal{P}(s') / \mathcal{P}(s)$.
+
+
+\subsection{Closed form solution of the 2$\times$2 spin lattice}
+We noe consider the 2$\times$2 spin lattice using the simplified ising model summarized in equation \ref*{H(s)}. Since there are only two spins along each axis, four in total, we may index every microstate of the system by four boolean values $\{s_1,s_2,s_3,s_4\}$ with $s_i \in \{\pm 1\}$. Independency of spin states implies that there are in total $2^4=16$ different microstates. Now, the energy of the system is invariant under both rotation and interchange of spin sign. Hence there are only tree possible energies, having degeneracy $2,12,2$ respectively
+\EQU{
+E=-8J: & \left\{
+\left(\begin{matrix}
+\uparrow & \uparrow \\
+\uparrow & \uparrow \\
+\end{matrix}\right),
+\left(\begin{matrix}
+\downarrow & \downarrow \\
+\downarrow & \downarrow \\
+\end{matrix}\right)
+\right\} \\
+E = 0: &
+\left\{
+\rho\left(\begin{matrix}
+\downarrow & \uparrow \\
+\uparrow & \uparrow \\
+\end{matrix}\right),
+\rho\left(\begin{matrix}
+\downarrow & \downarrow \\
+\uparrow & \uparrow \\
+\end{matrix}\right),
+\rho\left(\begin{matrix}
+\downarrow & \downarrow \\
+\downarrow & \uparrow \\
+\end{matrix}\right)
+\right\} \\
+E=8J: & \left\{
+\left(\begin{matrix}
+\uparrow & \downarrow \\
+\downarrow & \uparrow \\
+\end{matrix}\right),
+\left(\begin{matrix}
+\downarrow & \uparrow \\
+\uparrow & \downarrow \\
+\end{matrix}\right)
+\right\}, \\
+}
+where $\rho$ denotes the orbit of the argument under the group generated by $90^\circ$-rotations. Similarly, the magnetization of the system, being the sum of the spins $s_i$, is invariant under rotations, but antisymmetric under interchange of spin sign. Hence the possible values for the magnetization are $0,\pm 2, \pm 4$. No list of the values is provided due to the fact that these values obey the simple formlua $\mathcal{M}=2\# \uparrow -4$, where $\#\uparrow$ is the number of positive spins.
+
+Putting all this together gives a partition function of the form
+\EQU{
+Z &= \sum_s e^{-\beta E_s} 
+= 2e^{8\beta J}  + 12  + 2e^{-8\beta J} 
+= 12+4\cosh 8\beta J.
+}
+The expected energy of the system can thus be found by
+\EQU{
+E = \sum_s \frac{1}{Z}E_s e^{-\beta E_s}
+= -\frac{1}{Z} \PAR{Z}{\beta} 
+= -\frac{32J}{Z} \sinh 8 \beta J
+= \frac{- 8J \sinh 8\beta J}{3+\cosh 8\beta J},
+}
+ 
+and the net magnetization length becomes
+\EQU{
+| \mathcal{M} |
+&=\sum_s \frac{1}{Z} |\mathcal{M}_s| e^{-\beta E_s}
+=\frac{8e^{8\beta J}+16}{4(3+\cosh 8\beta J)}
+=\frac{2e^{8\beta J}+4}{3+\cosh 8\beta J}.
+}
+There is no reason to stop here. For instance, the heat capacity $C_V$ is found by
+\EQU{
+C_V &= \frac{1}{k_B T^2} \PAR{^2}{\beta^2}\ln Z
+= \frac{1}{k_B T^2} \PAR{^2}{\beta^2}\ln \left(12+4\cosh 8\beta J \right) \\
+&= \frac{8J}{k_B T^2} \PAR{}{\beta} \frac{\sinh 8 \beta J}{3+\cosh 8\beta J} 
+=\frac{(8J)^2}{k_B T^2} \frac{\cosh  8 \beta J (3+\cosh 8\beta J) - \sinh 8 \beta J \sinh 8 \beta J }{(3+\cosh 8\beta J)^2}\\
+&=\frac{(8J)^2}{k_B T^2} \frac{3\cosh  8 \beta J +1 }{(3+\cosh 8\beta J)^2}
+}
+and the susceptibility can be found to equal
+\EQU{
+\chi &= \frac{1}{k_B T} \left( \langle \mathcal{M}^2 \rangle - \langle \mathcal{M} \rangle^2   \right)
+= \frac{1}{k_B T} \langle \mathcal{M}^2 \rangle 
+= \frac{1}{k_B T Z} \left( 
+2\cdot 16 e^{8\beta J}
++8 \cdot 2^2
+\right)\\
+&= \frac{32}{k_B T} \frac{e^{8\beta J}+1}{4(3+\cosh 8\beta J)}
+= \frac{8}{k_B T} \frac{e^{8\beta J}+1}{3+\cosh 8\beta J}.
+}
+We should also note the quantity
+\EQU{
+\tilde{\chi} &
+= \frac{1}{k_B T}\mbox{Var}[|\mathcal{M}|]
+=\chi-\frac{1}{k_BT}|\mathcal{M}|^2
+=\frac{4}{k_BT}\left[\frac{2e^{8\beta J}+2}{3+\cosh 8\beta J}-\frac{(e^{8\beta J}+2)^2}{(3+\cosh 8\beta J)^2}\right],
+}
+which represents some pseudo-susceptibility that is more numerically accieveable.
+
+
+\section{The algorithm} 
+In the canonical ensemble the probabilities are given by their proportionality to the boltzmann factor
+\EQU{
+\mathcal{P}(s) \propto e^{- \frac{E_s}{k_B T} }.
+}
+using uniform proposal distributions it follows that we may choose an acceptance distribution according to
+\EQU{
+A(s\mapsto s') = \begin{cases}
+1 & \mbox{ for } E_{s'} \leq E_s  \\
+e^{-\frac{\Delta E}{k_B T} } & \mbox{ else } 
+\end{cases} , \ \ \  \Delta E = E_{s'}-E_s.
+}
+Now, all we need is some expression for the energy $E_s$ of a microstate $s$. This is provided by the ising model i equation \ref*{H(s)}.
+In order to generalize the algorithm we now introduce dimensionless variables
+\EQU{
+E^* = \frac{E}{J} \mbox{ and } T^* = \frac{k_B T}{J}.
+}
+Let us start off with an algorithm that proposes in total $L^2$ flips so that the system can, in theory, have changed all it's spins.
+As one spin $S_{i,j}$ is flipped, the energy changes according to
+\EQU{
+\Delta E^* &= 2S_{i,j}\left(S_{i+1,j}+S_{i,j+1}+S_{i-1,j}+S_{i,j-1}\right)\in \{ 0, \pm 4, \pm 8 \},
+}
+by equation \ref*{H(s)}. We should, in order to make the values from our simulation reflect the properties of a material of infinite size, apply periodic boundary conditions. We can think of this as if we were gluing the ends of the lattice together so that it takes the shape of a toroidial grid $\mathbb{Z}_L \times \mathbb{Z}_L$. To prevent a too involved notation we will hereby think of the indices $i,j$ of some spin $S_{i,j}$ as the remainders of the numbers $i$ and $j$ when they are divided by $L$.
+
+We can think of the process discussed above as one step in the Monte Carlo simulation of the material. That is, one more Monte Carlo cycle means the computer will have to do $L^2$ more flip-proposals. From every such cycle, we will be interested in the internal energy $E$ and it's square, and the length of the magnetization $|\mathcal{M}|$ and it's square. From these quantities we can calculate the mean internal energy $E$, mean length of the magnetization $|\mathcal{M}|$, mean heat capacity $C_V$ and the mean of some pseudo-susceptibility $\chi$ of the system from the relations
+\EQU{
+\expe{E} &= \frac{1}{N}\sum_{i=1}^N E_i \\
+C_V &= \frac{1}{k_BT^2}\mbox{Var}[E]
+= \frac{1}{k_BT^2}\left[\frac{1}{N}\sum_{i=1}^N E_i^2-\left(\frac{1}{N}\sum_{i=1}^N E_i\right)^2\right]\\
+\expe{|\mathcal{M}|} &= \frac{1}{N}\sum_{i=1}^N |\mathcal{M}|_i \\
+\chi &= \frac{1}{k_BT}\mbox{Var}[|\mathcal{M}|]
+= \frac{1}{k_BT}\left[\frac{1}{N}\sum_{i=1}^N |\mathcal{M}|_i^2 - \left(\frac{1}{N}\sum_{i=1}^N |\mathcal{M}|_i\right)^2 \right].  \\
+}
+The term pseudo-susceptibility serve as a reminder that the value $\chi$ is proportional to the variance of $|\mathcal{M}|$, not $\mathcal{M}$ as the actual susceptibility. This, seemingly odd choice, is done since the exact susceptibility demands many more Monte Carlo cycles than the pseudo-susceptibility. The reason is that the expected magnetization $\expe{\mathcal{M}}$ should be zero when no external field is present, due to the symmetry of flipping all spins, while the algorithm has a very slow convergence towards this limit.
+
+
+\begin{algorithm}[H]
+ \LinesNumbered
+ \KwData{Initial microstate $\{S_{i,j}\}_{i,j=0}^{L}$, Temperature $T$, Energy $E$, Normed magnetization  $|\mathcal{M}|$} 
+ \KwResult{Microstate at equilibrium.}
+ \For{n=1,2,...,$N$}{
+ \For{k=1,2,...,$L^2$}{
+  Pick uniformly distibuted integers $i,j$ in the interval $[0,L-1]$ \\
+  Pick uniformly distributed random number $R\in[0,1]$ \\
+  $\Delta E =2S_{i,j}\left(S_{i+1,j}+S_{i,j+1}+S_{i-1,j}+S_{i,j-1}\right)$. \\
+  \If{$\Delta E < 0$ \textbf{or} $e^{- \Delta E/T}>R$}{
+   	$S_{i,j}=-S_{i,j}$ \\
+   	$E=E+\Delta E$ \\
+   	$|\mathcal{M}|=|\mathcal{M}|+2S_{ij}$ \\
+   } 
+ }
+ $E_{sum} = E_{sum}+E$ \\
+ $E^2_{sum} = E^2_{sum}+E^2$ \\
+ $|\mathcal{M}|_{sum} = |\mathcal{M}|_{sum}+|\mathcal{M}|$ \\
+ $|\mathcal{M}|^2_{sum} = |\mathcal{M}|^2_{sum}+|\mathcal{M}|^2$ \\
+ }
+ $\expe{E} = E_{sum}/N$ \\
+ $\expe{E^2} = E^2_{sum}/N$ \\
+ $\expe{|\mathcal{M}|} = |\mathcal{M}|_{sum}/N$ \\
+ $\expe{|\mathcal{M}|^2} = |\mathcal{M}|^2_{sum}/N$ \\
+ \caption{Metropolis algorithm implemented on the simplified two dimensional ising model}
+ \label{metropolisCode}
+\end{algorithm}
+
+
+\section{Results and Discussion}
+
+
+
+\subsection{Analytical solution}
+\noindent
+A first test the simulation should pass is to produce numbers that are in argeement with the analytical results for the 2$\times$2 lattice discussed above. The result of such a test is shown in figure \ref*{L2vsAnalytic}, where analytical and numerical results are plotted for two different number of Monte Carlo cycles. Note that in this figure we have used the real susceptibility, not the pseudo-susceptibility. This seems to work fine here, but as we start to study larger lattices, the term $\expe{\mathcal{M}}$ will quickly appear to have a too slow convergence for satisfactory results. From here on, there will thus only be talk of the mentioned pseudo-susceptibility.
+
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.48\textwidth]{L2C1000.png}
+\includegraphics[width=0.48\textwidth]{L2C1e+06.png}
+\end{center}
+\caption{
+Numerical values of energy, magnetization, heat capacity and susceptibility (blue dots) for a two-by-two ($L=2$) grid. All plots contain a red line showing the expected, analytical values. The graphs on the left uses only $N=10^{3}$ Monte Carlo cycles, while the graph to the right uses $N=10^{6}$ Monte Carlo cycles. The dimensionless starts off at $1.5$ and increases in steps of $0.005$ to the maximal temperature $3.0$.
+}
+\label{L2vsAnalytic}
+\end{figure}
+
+
+
+\noindent
+The performance of the simulation is promising, but $10^6$ is a lot of cycles! It may be interesting to study the convergence of the numbers produced by the simulation as function of the number of Monte Carlo cycles. 
+
+
+
+
+
+
+\subsection{Convergence}
+\noindent
+A large number of Monte Carlo cycles in the simulation will produce results with the higher precision. But how many cycles are necessary? More importantly, does the system always converge? One way to attempt to answer these questions would be to choose a couple of temperatures and plot the results for $\expe{E}$ and $\expe{|\mathcal{M}|}$ as functions of Monte Carlo cycles. This is done in the figures \ref*{EvsCycs} and \ref*{MvsCycs} below. 
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{EasFuncOfCycsT10.png}
+\includegraphics[width=0.45\textwidth]{EasFuncOfCycsT24.png}
+\end{center}
+\caption{
+Energy per spin in a $20\times 20$ lattice as function of the number of Monte Carlo cycles. The two on the left has a dimensionless temperature equal to $1$, and the two on the right has a dimensionless temperature equal to $2.4$. The two on the top starts off with all spins pointing up, while the two on the bottom start off with spins having a $50$ percent chance of pointing up. The black lines represent eight different runs, and the red line represent the mean of these values. The number of cycles ranges from $10$ to $10^4$, having data-points every $10$th cycle.
+}
+\label{EvsCycs}
+\end{figure}
+
+
+
+\noindent
+Notice how a fairly good convergence is accieved fast in all figures, but some error seems to hang on from the start. From observing the plots it seems like the two values $\expe{E}$ and $\expe{|\mathcal{M}|}$ of the system has a well defined limit regardless of the initial state. This is good news! The energy per spin can, according to the scenario discussed in section II.III, only take values between $-2$ and $2$. This is not violated. Similarly, meangetization length per spin can only take values between $-1$ and $1$, which is the case in figure \ref*{MvsCycs}. 
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{MasFuncOfCycsT10.png}
+\includegraphics[width=0.45\textwidth]{MasFuncOfCycsT24.png}
+\end{center}
+\caption{
+Magnetization length per spin in a $20\times 20$ lattice as function of the number of Monte Carlo cycles. The two on the left has a dimensionless temperature equal to $1$, and the two on the right has a dimensionless temperature equal to $2.4$. The two on the top starts off with all spins pointing up, while the two on the bottom start off with spins having a $50$ percent chance of pointing up. The black lines represent eight different runs, and the red line represent the mean of these values. The number of cycles ranges from $10$ to $10^4$, having data-points every $10$th cycle.
+}
+\label{MvsCycs}
+\end{figure}
+
+
+\noindent
+Now let us consider the total number of accepted spin-flip proposals. If we double the number of cycles, we would expect the number of accepted spin-flip proposals to double as well. Following this logic, we would expect the number accepted spin-flips to converge towards a linear function of Monte Carlo cycles. This means that the number of accepted flips per cycle should converge to some specific constant as cycles tends to infinity. From figure \ref*{AccCycs} we may conclude that the system, at least for these temperatures, behaves as expected. 
+
+
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{AcceptedasFuncOfCycsT10.png}
+\includegraphics[width=0.45\textwidth]{AcceptedasFuncOfCycsT24.png}
+\end{center}
+\caption{
+The total number of accepted spin-flip proposals per spin per the number of Monte Carlo cycles as function of Monte Carlo cycles going from $10$ to $10^4$ in steps of $10$. The two figures on the left displays the outcome for different initial states but the same dimensionless temperature $k_B T/J=1.0$. To the right the temperature $k_B T/J=2.4$ is displayed. One initial state is the minimal energy and maximal magnetization state denoted ''all spins up''. The other initial state chooses each spin randomly. Each plot has thin black lines showing the paths taken by different independent processes, and a thicker red line representing the average of all these processes.  
+}
+\label{AccCycs}
+\end{figure}
+
+
+
+
+
+
+\subsection{Expected behaviour}
+\noindent
+It may be wise to get some intuition about the system. For sufficiently low temperatures we would expect the system to drift towards the state with minimal energy. To convince ourselves we can observe that the boltzmann ratio $\exp\left(-\Delta E/T\right)$ vanishes for small $T$ leaving $\Delta E<0$ as the only criterion for accepting a spin-flip proposal. Hence, for sufficiently low $T$ the system should converge to a state where all spins point in the same direction. We may now imagine the system to experience a gradual increase in temperature. This slowly makes it more likely for random spin-flips to occur. At some temperature, these random spin-flips occurs frequently enough to create clusters of parallel spins. From here on, further increase in temperature will make the random flips dominate the clustering effect. For large energies each spin will flip seamingly independent of its nabours. Figure \ref*{Processing} displays some highlights of simulating the Ising model for a $200\times 200$ lattice for different temperatures.
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{IsingAnimation/IsingSaved-TC--.png}
+\includegraphics[width=0.45\textwidth]{IsingAnimation/IsingSaved-TC-.png}
+\includegraphics[width=0.45\textwidth]{IsingAnimation/IsingSaved-TC.png}
+\includegraphics[width=0.45\textwidth]{IsingAnimation/IsingSaved-TC+.png}
+\end{center}
+\caption{
+Highlights from a simulation of a 200$\times$200 lattice written in \texttt{Processing 3}. The figure displays the behaviour of the system for four different tempertures. In the top left figure you can see a snapshot of the system with a temperature $T=0.543$ as it strives towards equilibrium. The top right figure shows the result of a slight increase in temperature to the value $T=1.875$. Here the random spin-flips have started to puncture holes in the clusters. Increasing the temperature further leads to the indeterminate state pictured in the bottom left figure. The temperature of the system has now been increased to $T=2.269$, and the clustering seems to balance out the random spin flips. As temperature is increased to $T=3.654$ the random spin-flips starts to dominate the system. This is shown in the bottom right figure.
+}
+\label{Processing}
+\end{figure}
+
+
+\noindent
+In figure \ref*{AccCycs} we studied the number of accepted spin-flip proposals as a function of the number of cycles for two different temperatures. We are now able to fully appreciate the values the number of accepted flips per cycle per spin converges towards. From the discussion above it is not suprising accepted flips per cycle per spin seems to converge towards somewhere around $0.0007$ for $T=1.0$ and $0.27$ for $T=2.4$. We could not think our way to the numbers, but we would expect $T=1.0$ to end up with a much lower number than $T=2.4$ due to the difference in frequency of random spin-flips. Figure \ref*{AcceptedAsFuncOfTemp} shows how the acceptance slope develops as temperature increase. 
+
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{AcceptedAsFuncOfTemp.png}
+\end{center}
+\caption{
+Accepted spin-flip proposals as function of temperature from $0.5$ to $10$ in steps of $0.01$ with $10000$ Monte Carlo cycles.
+}
+\label{AcceptedAsFuncOfTemp}
+\end{figure}
+
+
+
+\noindent
+As the system increases its temperature, we would expect the mean energy to increase as well. To study this effect we may store the energy of the system after each cycle and plot the relative frequency. The result is shown in figure \ref*{P(E)}. Both the expectancy and the variance, obtainable from $\expe{E^2}-\expe{E}^2$, are also produced by the algorithm. These numbers, listed in table \ref*{P(E)tab}, should be in agreement with the probability distribution of figure \ref*{P(E)}. The numbers are in agreement and probability distribution behaves as expected.  
+
+
+\begin{table}[H]
+\caption{
+The expected value, $\expe{E/L^2}$, and variance, Var$[E/L^2]$, of the energy $E$ per spin of the system for three different temperatures $1.0$,$1.7$ and $2.4$. The simulation does $10^5$ Monte Carlo cycles storing the energy $E$ every cycle.
+}
+\label{P(E)tab}
+\begin{center}
+\begin{tabular}{l l l }
+\toprule
+$k_B T/J$ 	& $\expe{E/L^2}$ 	& Var$[E/L^2]$ 	\\ \hline 
+$1.00$ 		& $-1.9971$ 		& $0.0001$		\\
+$1.70$ 		& $-1.8985$ 		& $0.0025$		\\
+$2.40$ 		& $-1.2385$ 		& $0.0201$		\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{ProbEL20T24C100000.png}
+\end{center}
+\caption{
+The probabilities for energy per spin for three different, dimensionless temperatures $1.0$,$1.7$ and $2.4$. The simulation does $10^5$ Monte Carlo cycles, storing the energy $E$ every cycle, followed by a count of the numbers hitting the bins from $-2$ to $2$ with width $8/L^2$.
+}
+\label{P(E)}
+\end{figure}
+
+
+
+
+\subsection{Calculation of the critical temperature}
+In figure \ref*{EMCX} the values of interest is shown for different lattice-sizes. It clearly looks as if the heat capacity and pseudo-susceptibility tends to discontinuity as $L\rightarrow \infty$. In other words, a phase transition is taking place in the medium. Looking at the magnetization length the transition seems to switch the magnetization on and off.  
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{LALLC200000.png}
+\end{center}
+\caption{
+The energy, magnetization, heat capacity and pseudo-susceptibility as functions of temperature from $2.0$ to $2.4$ in steps of $0.01$. The eight different lattice-sizes corresponding to $L\in \{20,30,40,50,60,70,80,90\}$ are all run with $2\times 10^5$ Monte Carlo cycles and plotted per spin. 
+}
+\label{EMCX}
+\end{figure}
+
+As $L$ increases we would expect a discontinuity to localize at some critical temperature $T_C^\infty$. Through finite size scaling relations it is possible to relate the behaviour at finite lattices with the critical temperature $T_C^\infty$ in the limit as $L\rightarrow \infty$. The critical temperature scales according to
+\EQUn{
+|T_C(L)-T_C^\infty|=aL^{-\frac{1}{\nu}}
+}
+where $a$ is some constant, $\nu=1$ and $T_C(L)$ is temperature maximizing the response of the system. Now, $T_C(L)$ can be easily found from choosing the maximal heat capacity or the maximal pseudo-susceptibility from figure \ref*{EMCX}. This means that we can solve the system for the value $T_C^\infty$ by
+\EQU{
+T_C^\infty = \frac{L_1 T_C(L_1)-L_2 T_C(L_2)}{L_1-L_2},
+} 
+where $L_1$ and $L_2$ are two different lattice-sidelengths. Doing this for every pair of values of $L$ in figure \ref*{EMCX}, and then taking the mean, yields the temperature
+\EQU{
+T_C^\infty = 2.2703,
+}
+which is satisfactory close to the analytical result $T_C^\infty=2/\ln(1+\sqrt{2})\approx 2.2692$ of Lars Onsager. 
+
+
+\section{Conclusion}
+The simplified two-dimensional Ising model is sufficient to simulate the spontaneuous magnetization of a ferromagnetic material. It produces results for the critical temperature that are in harmony with the analytical results of L. Onsager and is easy to implement. 
+
+
+
+
+\section{Source Code}
+Files are run from the python program MASTER.py. C++-files are run from openMP, which is run from python. Emergency link to GitHub: \url{https://github.com/augustge/proj4/tree/FinalBranch}
+
+\subsection{C++}
+\begin{itemize}
+\item 
+The program that contains most of the functions and small operations: \\
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/projectFour/functions.h 
+}{functions.h},
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/projectFour/functions.cpp
+}{functions.cpp}
+ 
+\item 
+The program that contains different functions for different types of output-data and loops: \\
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/projectFour/tasks.h
+}{tasks.h},
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/projectFour/tasks.cpp
+}{tasks.cpp}
+
+
+\item 
+The main program: \\
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/projectFour/main.cpp
+}{main.cpp}
+
+\end{itemize}
+
+\subsection{Python}
+The program that runs everything: \\
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/MASTER.py
+}{MASTER.py}
+
+\subsection{Processing}
+The independent program for animating the system: \\
+\href{
+https://github.com/augustge/proj4/blob/FinalBranch/IsingAnimation/Ising_model/Ising_model.pde
+}{Ising\_model.pde}
+
+
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+ 
+ \bibitem{CompPhys}
+ Morthen Hjorth-Jensen (2015),
+ \newblock Computational Physics, Lecture Notes Fall 2015
+ \newblock Chapter 13.3
+ 
+ \bibitem{ThermPhys}
+ Daniel V. Schroeder (2000),
+ \newblock An introduction to Thermal Physics,
+ \newblock Chapter 8.2
+ 
+ \bibitem{ARTC:E.Ising}
+  Ising, Ernst.  
+  \newblock ''Beitrag zur theorie des ferromagnetismus.''
+  \newblock \textit{ Zeitschrift f{\"u}r Physik A Hadrons and Nuclei }
+  \newblock 31.1 (1925): 253-258.
+
+\bibitem{ARTC:IntroIsingModel}
+ Cipra, Barry A.  
+ \newblock ''An introduction to the Ising model.''
+ \newblock \textit{American Mathematical Monthly 94.10 (1987)}: 
+ \newblock 937-959.
+
+\bibitem{WIKI:IsingModel}
+ Wikipedia,
+ \newblock Ising model. [read 9. Nov 2015]
+ \newblock \newline
+   \small{\url{https://en.wikipedia.org/wiki/Ising_model#The_Metropolis_Algorithm}}.
+
+\bibitem{WIKI:MetropolisAlgorithm}
+ Wikipedia,
+ \newblock Metropolis-Hastings algorithm. [read 9. Nov 2015]
+ \newblock \newline
+   \small{\url{https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm}}.
+
+
+\end{thebibliography}
+
+
+
+
+\end{document}
