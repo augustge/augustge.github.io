@@ -246,10 +246,17 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           tag: $scope.tags["math"]
         },
         {
+          name: "Sunflower",
+          description: "This is a simple visualization of how the seed pattern on a Sunflower arises from producing seeds separated by the golden angle. You can try other ratios to convince yourself that the golden angle is an optimal choice. Also, choosing other irrationals can shed light on approximating fractions, like 22/7 for pi.",
+          reference: "Sunflower/",
+          tag: $scope.tags["math"]
+        },
+        {
           name: "Wallpaper Groups",
           description: "This is a simple code that allows for a visual exploration of the 17 fundamental symmetries of a two-dimensional surface -- the so-called wallpaper groups. After you pick one of the 17 wallpaper groups, a gray rhombus will display the fundamental translated area. On top of this, there are lines showing mirror symmetries, glide reflections and discrete rotations. Enjoy!",
           reference: "wallpaperGroups/",
           tag: $scope.tags["math"]
         }
       ];
+
 });
