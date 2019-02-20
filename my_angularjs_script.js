@@ -146,7 +146,26 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         description: 'Notes on the Schwinger-Dyson equations that serve as a quantum analogue of the equations of motion.',
         reference: 'The Schwinger-Dyson equations.pdf',
         tag: $scope.tags["phys"],
+        language: $scope.languages["english"]},
+      {
+        name: 'Flow in Porous Media',
+        description: 'Report from an experimental project on the physics on the pattern formation in imbibition and drainage of a porous medium.',
+        reference: 'FlowInPorousMedia_August.pdf',
+        tag: $scope.tags["phys"],
+        language: $scope.languages["english"]},
+      {
+        name: 'Lego Watt Balance',
+        description: 'Report from a failed attempt at constructing a Lego Watt balance.',
+        reference: 'Lego Watt Balance.pdf',
+        tag: $scope.tags["phys"],
+        language: $scope.languages["english"]},
+      {
+        name: 'Classification of complex semisimple Lie algebras using Dynkin diagrams',
+        description: 'Hand-in in BSc project on the classification of complex semisimple Lie algebras using Dynkin diagrams and root systems.',
+        reference: 'Classification of complex semisimple Lie algebras using Dynkin diagrams.pdf',
+        tag: $scope.tags["math"],
         language: $scope.languages["english"]}
+
       ];
 
 
