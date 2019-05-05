@@ -1,8 +1,12 @@
 
 // ============ Key Events ============
 function keyPressed(){
-  // print(keyCode)
-  if(keyCode==37){ // LEFT
+  if(keyCode==32){ // SPACE
+    print(bestBoid.DNA)
+    CONTROLPANEL.DNAbox.html(str(bestBoid.DNA));
+  }else if(keyCode==80){ // P
+    getGlobalDNA(CONTROLPANEL.DNAinput.value())
+  }else if(keyCode==37){ // LEFT
     I -= 5;
     I = (I+Nx)%Nx
   }else if(keyCode==39){ // RIGHT
@@ -14,12 +18,16 @@ function keyPressed(){
   }else if(keyCode==40){ // DOWN
     J += 5;
     J = (J+Ny)%Ny
-  }else if(keyCode==90){ // Z
-    windowX += 5; dx = width/windowX;
-    windowY += 5; dy = height/windowY;
-  }else if(keyCode==88){ // X
-    windowX -= 5; dx = width/windowX;
-    windowY -= 5; dy = height/windowY;
+  }else if(keyCode==189){ // -
+    windowX += 5;
+    windowY = windowX*height/width;
+    dx = width/windowX;
+    dy = height/windowY;
+  }else if(keyCode==187){ // +
+    windowX -= 5;
+    windowY = windowX*height/width;
+    dx = width/windowX;
+    dy = height/windowY;
   }else if(keyCode==49){ // 1
     CONTROLPANEL.PANELSELECT.value("Animation");
     CONTROLPANEL.hideAll();
@@ -30,7 +38,17 @@ function keyPressed(){
     CONTROLPANEL.PANELSELECT.value("Controlpanel");
     CONTROLPANEL.showAll();
   }
+  return false;
+}
 
+
+function getGlobalDNA(s){
+  var dna = []
+  s_split = s.split(",")
+  for(var i=0; i<s_split.length;i++){
+    dna.push(float(s_split[i]))
+  }
+  globalDNA = dna;
 }
 
 
@@ -46,7 +64,9 @@ function mousePressed(){
       elevateAt(i,j,7,0.8,0.1)
     }else if(CONTROLPANEL.SELECTS[0].value()=="MAKEBOID"){ // place boid
       if(!MATRIX.M[i][j][1] && MATRIX.M[i][j][0].traversable){
-        MATRIX.M[i][j][1] = mutate(bestBoid,i,j,mutation_m,mutation_p);
+        var mutateglobalDNA = mutateDNA(globalDNA)
+        MATRIX.M[i][j][1] = new Object(i,j,mutateglobalDNA);
+        // MATRIX.M[i][j][1] = mutate(bestBoid,i,j,mutation_m,mutation_p);
         boidCount++;
       }
     }
@@ -72,7 +92,6 @@ function digAt(i,j,s,e,d){
       var jy = (j+y+Ny)%Ny
       MATRIX.M[ix][jy][0].localID /= 1 + e*exp(-d*sq(x)-d*sq(y));
       MATRIX.M[ix][jy][0].reevaluateID();
-      // MATRIX.M[ix][jy][0].life=MATRIX.M[ix][jy][0].fullLife
     }
   }
 }
@@ -84,7 +103,6 @@ function elevateAt(i,j,s,e,d){
       var jy = (j+y+Ny)%Ny
       MATRIX.M[ix][jy][0].localID *= 1 + e*exp(-d*sq(x)-d*sq(y));
       MATRIX.M[ix][jy][0].reevaluateID();
-      // MATRIX.M[ix][jy][0].life=MATRIX.M[ix][jy][0].fullLife
     }
   }
 }

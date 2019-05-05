@@ -27,14 +27,9 @@ function Matrix(Nx,Ny){
   }
 
   this.addBoid = function(i,j){
-    this.M[i][j][1] = new Object(i,j,outputs_init,stacks_init,layers_init);
-    var ID = new Array(numID);
-    for(var k=0; k<numID; k++){ID[k]=random(0,1)}
-    ID[3] = 1.0 // maxHealth = maxHealth initially
-    this.M[i][j][1].initiate(ID);
-    this.M[i][j][1].initiateBrain(outputs_init,stacks_init,layers_init)
-    this.M[i][j][1].BRAIN.mutate(refillMutation_m,refillMutation_p);
-    bestBoid = this.M[i][j][1]
+    var mutateglobalDNA = mutateDNA(globalDNA)
+    this.M[i][j][1] = new Object(i,j,mutateglobalDNA);
+    bestBoid = this.M[i][j][1];
     boidCount++
   }
 

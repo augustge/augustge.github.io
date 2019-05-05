@@ -1,24 +1,10 @@
 
 function wrapper(x){
-  return regulate(x)//1.0/(1+exp(-1.0*x))
+  return atan(x) // ARCTAN
+  // return max(x,0); // RELU
+  // return 1.0/(1+exp(-x)); // SIGMOID
 }
 
-function regulate(x){ // relu wrapper
-  if(x>0){
-    return x;
-  }else{
-    return 0.0;
-  }
-}
-
-function activator(x,xT){
-  return round(x-xT)
-  // if(x>xT){
-  //   return x;
-  // }else{
-  //   return 0.0;
-  // }
-}
 
 function DNAdiff(boid1,boid2){
   var diff = 0
@@ -37,14 +23,26 @@ function boidMetric(boid){
 }
 
 
+function getPixelColor(x,y){
+  var i = (y * width + x) * 4;
+  return [ pixels[i],pixels[i+1],pixels[i+2] ];
+}
+
+
 // ============ COLORS ============
 function defineColors(){
-  Cdirt1  = color(64,50,25);   // rgb(64,50,25)
-  Cdirt2  = color(89,73,42);   // rgb(89,73,42)
-  Cgrass1 = color(39,89,2);    // rgb(39,89,2)
-  Cgrass2 = color(85,140,3);   // rgb(85,140,3)
-  Cwater  = color(22,107,140); // rgb(22,107,140) // rgb(31,58,100)
-  Cwater2 = color(15,100,115); // rgb(15,100,155)
+  // Cdirt1  = color("rgb(64,50,25)");
+  // Cdirt2  = color("rgb(89,73,42)");
+  // Cgrass1 = color("rgb(39,89,2)");
+  // Cgrass2 = color("rgb(85,140,3)");
+  // Cwater  = color("rgb(22,107,140)");
+  // Cwater2 = color("rgb(15,100,155)");
 
 
+  Cdirt2  = color("#A68572");
+  Cgrass2 = color("#65A603");
+  Cwater  = color("#67B8DE");
+  Cdirt1  = color("#D9B5A0");
+  Cgrass1 = color("rgb(39,89,2)");
+  Cwater2 = color("#F0F2F1");
 }

@@ -9,14 +9,17 @@
 
 
 // ============ BRAIN ============
-function Brain(inputs,outputs,stacks,layers){
-  this.inputs  = inputs;
-  this.stacks  = stacks;
-  this.outputs = outputs;
-  this.layers  = layers;
+class Brain{
+  constructor(inputs,outputs,stacks,layers){
+    this.inputs  = inputs;
+    this.stacks  = stacks;
+    this.outputs = outputs;
+    this.layers  = layers;
+  }
 
-  this.initiate = function(){
+  initiate(){
     this.out = new Array(this.outputs);
+    for(var i=0; i<this.outputs; i++){this.out[i]=0;}
     this.neurons = new Array(this.stacks);
     for (var i=0; i<this.stacks; i++){
       this.neurons[i] = new Array(this.layers);
@@ -32,7 +35,7 @@ function Brain(inputs,outputs,stacks,layers){
     }
   }
 
-  this.think = function(input){
+  think(input){
     this.sensed = input
     // first layer
     for (var i=0; i<this.stacks; i++) { // each neuron
@@ -41,7 +44,6 @@ function Brain(inputs,outputs,stacks,layers){
         this.neurons[i][0].inputFrom(k,input[k]);
       }
       this.neurons[i][0].wrapValue(); // apply sigmoid
-      // this.neurons[i][0].value = activator(this.neurons[i][0].value,0.0)
     }
     // for each deeper layer
     for (var n=1; n<this.layers; n++) { // each layer (except last)
@@ -51,8 +53,6 @@ function Brain(inputs,outputs,stacks,layers){
           this.neurons[i][n].inputFrom(k,this.neurons[k][n-1].call());
         }
         this.neurons[i][n].wrapValue();
-        // this.neurons[i][n].value = activator(this.neurons[i][n].value,0.0)
-        // this.neurons[i][n].value = regulate(this.neurons[i][n].value)
       }
     }
     // for last layer
@@ -62,14 +62,13 @@ function Brain(inputs,outputs,stacks,layers){
         this.finalNeurons[i].inputFrom(k,this.neurons[k][this.layers-1].call());
       }
       // apply wrapper
-      // this.finalNeurons[i].wrapValue();
       this.out[i] = atan(this.finalNeurons[i].call()); // atan wrapper in end
       this.out[i] = this.finalNeurons[i].call();
     }
     return this.out;
   }
 
-  this.imitateBrain = function(brain){
+  imitateBrain(brain){
     // every layer has 'stacks' neurons
     for (var i=0; i<min(brain.stacks,this.stacks); i++){
       // first takes 'input' inputs
@@ -91,7 +90,7 @@ function Brain(inputs,outputs,stacks,layers){
     }
   }
 
-  this.mutate = function(m,p){
+  mutate(m,p){
     for (var i=0; i<this.stacks; i++) {
       // first takes 'input' inputs
       if(random(100)<100./this.inputs){
@@ -109,25 +108,64 @@ function Brain(inputs,outputs,stacks,layers){
     }
   }
 
-  this.display = function(sx,sy){
-    if(this.sensed && showNeuronValue){
-      for (var i=0; i<this.sensed.length; i++){
-        fill(255)
-        text(round(100*this.sensed[i])/100.,0,sy*i)
+  display(sx,sy){
+
+    for (var i=0; i<this.sensed.length; i++){
+      if(this.sensed && showNeuronValue){
+        fill(255);text(round(100*this.sensed[i])/100.,0,sy*i)
+      }else{
+        // fill(255); noStroke();text("I",0,sy*i)
+        noStroke();fill(255);ellipse(0,sy*i,15,15)
       }
     }
     for (var i=0; i<this.stacks; i++) {
       // first takes 'input' inputs
       this.neurons[i][0].display(0,i,sx,sy);
+      // fill(255); noStroke(); text("H",sx,sy*i)
       // rest takes 'stacks' inputs
       for (var j=1; j<this.layers; j++) {
         this.neurons[i][j].display(j,i,sx,sy);
+        // fill(255); noStroke(); text("H",sx*(1+j),sy*i)
       }
     }
-    for (var i=0; i<outputs; i++) {
-        this.finalNeurons[i].display(layers,i,sx,sy);
+    for (var i=0; i<this.outputs; i++) {
+      this.finalNeurons[i].display(this.layers,i,sx,sy);
+      // fill(255); noStroke(); text("F",sx*(this.layers+1),sy*i)
     }
   }
+
+  constructFromDNA(DNA){
+    this.out = new Array(this.outputs);
+    for(var i=0; i<this.outputs; i++){this.out[i]=0;}
+    this.neurons = new Array(this.stacks);
+    for (var i=0; i<this.stacks; i++){
+      this.neurons[i] = new Array(this.layers);
+      this.neurons[i][0] = new Neuron(this.inputs);
+      for(var ii=0; ii<this.inputs; ii++){
+        var index = 2+i*this.inputs+ii;
+        this.neurons[i][0].addWeight(ii,DNA[index]);
+      }
+      for (var j=1; j<this.layers; j++){
+        this.neurons[i][j] = new Neuron(this.stacks);
+        for(var ii=0; ii<this.stacks; ii++){
+          // var index = 2+this.inputs*this.stacks+j*this.stacks+ii
+          var index = 2+(this.inputs+(j-1)*this.stacks+i)*this.stacks+ii
+          this.neurons[i][j].addWeight(ii,DNA[index]);
+        }
+      }
+    }
+    this.finalNeurons = new Array(this.outputs);
+    for (var i=0; i<this.outputs; i++){
+        this.finalNeurons[i] = new Neuron(this.stacks);
+        for(var ii=0; ii<this.stacks; ii++){
+          var index = 2+(this.inputs+(this.layers-1)*this.stacks)*this.stacks
+          index += i*this.stacks+ii;
+          this.finalNeurons[i].addWeight(ii,DNA[index])
+        }
+    }
+
+  }
+
 }
 
 
@@ -135,33 +173,35 @@ function Brain(inputs,outputs,stacks,layers){
 
 
 // ======== NEURON
-function Neuron(inputs){
-  this.value  = 0.0;
-  this.inputs = inputs;
-  this.W = new Array(inputs+1);
-  for (var i=0; i<inputs+1; i++){ this.W[i] = 0.0;} //random(-1, 1); }
+class Neuron{
+  constructor(inputs){
+    this.value  = 0.0;
+    this.inputs = inputs;
+    this.W = new Array(inputs+1);
+    for (var i=0; i<inputs+1; i++){ this.W[i] = 0.0;} //random(-1, 1); }
+  }
   // in-weights
-  this.addWeight  = function(k,weight){
+  addWeight(k,weight){
     this.W[k] = weight;
   }
 
-  this.initialize = function(){
+  initialize(){
     this.value = this.W[this.inputs];
   }
 
-  this.call       = function(){
+  call(){
     return this.value;
   }
 
-  this.wrapValue = function(){
+  wrapValue(){
     this.value = wrapper(this.value)
   }
 
-  this.inputFrom = function(k,signal){
+  inputFrom(k,signal){
     this.value += this.W[k]*signal
   }
 
-  this.mutate = function(m,p){
+  mutate(m,p){
     for (var i=0; i<this.inputs+1; i++) {
       if(random(100)<p){
         if(random(100)<killAxonProb){
@@ -173,31 +213,24 @@ function Neuron(inputs){
     }
   }
 
-  this.similarTo = function(neuron){
+  similarTo(neuron){
     for (var i=0; i<min(neuron.inputs,this.inputs); i++) {
         this.W[i] = neuron.W[i];
     }
   }
 
-  this.display = function(n,m,sx,sy){
+  display(n,m,sx,sy){
+    noStroke();fill(255);ellipse(sx*(n+1),sy*m,15,15)
     for (var i=0; i<this.inputs; i++){
       if(atan(this.W[i])<0){
-        strokeWeight(5*atan(-this.W[i]));
+        strokeWeight(-6*atan(this.W[i]));
         stroke(255,0,0,180);
       }else{
-        strokeWeight(5*atan(this.W[i]));
+        strokeWeight(6*atan(this.W[i]));
         stroke(0,255,0,180);
       }
       noFill();
       bezier(sx*n,sy*i, sx*n,sy*(i+0.5*(m-i) ), sx*(n+1),sy*(m-0.5*(m-i)), sx*(n+1),sy*m);
-      //line(sx*n,sy*i, sx*(n+1),sy*m);
-      if(atan(this.W[i])<0){
-        fill(255,0,0,180);
-      }else{
-        fill(0,255,0,180);
-      }
-      noStroke();
-      ellipse(sx*n,sy*i,10*this.W[this.inputs],10*this.W[this.inputs])
     }
     if(showNeuronValue){
       fill(255)
@@ -212,10 +245,6 @@ function Neuron(inputs){
 function initialBrain(inputs,outputs,stacks,layers){
   var initBrain = new Brain(inputs,outputs,stacks,layers);
   initBrain.initiate()
-  // initBrain.neurons[0][0].W[0]   = 1.0
-  // if(layers>1){
-  //   initBrain.neurons[0][1].W[0] = 1.0
-  // }
   for(var i=1; i<layers; i++){
     for(var j=0; j<stacks; j++){
       initBrain.neurons[j][i].W[j] = 1.0
