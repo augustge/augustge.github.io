@@ -203,7 +203,7 @@ function draw(){
     text("EVOLUTION",width/2,height/4)
     textSize(14);fill(255);
     text("Welcome! In the 'Animation' screen, you can monitor the behaviour \n of the species that have evolved as they navigate the terrain. Each of \n these creatures have a unique brain. The brain of best creature \n (according to some arbitrary metric) is displayed in the \n 'Brain dynamics' screen. In the 'Controlpanel' screen \n you can adjust parameters for the terrain, creature mutation \n and creature health. If you press 'space' a DNA strand will appear \n in the control panel. Any valid DNA strand \n can be copied into the input box. Choosing the 'makeboid' option \n in the controlpanel then allows you (when in the animation screen) \n to place this creature in the terrain.   ",width/2,height/4+50)
-    textSize(16); textAlign(LEFT);
+    textSize(12); textAlign(LEFT);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
     background(Cdirt2)
     strokeWeight(1);
