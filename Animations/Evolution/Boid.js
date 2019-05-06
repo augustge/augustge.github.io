@@ -59,7 +59,7 @@ class Object{
     this.rayPoints    = int(10*DNA[9]);
 
     this.pxResponses = [];
-    var I = 10+3*(this.rays+1)*this.rayPoints
+    var I = 10+3*(this.rays+1)*this.rayPoints;
     for(var i=10; i<I; i+=3){
       this.pxResponses.push([DNA[i],DNA[i+1],DNA[i+2]]);
     }
@@ -352,7 +352,6 @@ function mutateDNA(oldDNA){
   var oldsensepointsNum = 3*(int(10*oldDNA[8])+1)*int(10*oldDNA[9]); //3*(rays+1)*rayPoints
   var sensepointsNum    = 3*(int(10*   DNA[8])+1)*int(10*   DNA[9]); //3*(rays+1)*rayPoints
   var deltaNum = sensepointsNum-oldsensepointsNum
-
   for(var i=0; i<min(oldsensepointsNum,sensepointsNum); i++){
     var newDNAkey = oldDNA[k+i]
     if(random(100)<DNAinfo.mutationProbPxResp){
@@ -366,18 +365,19 @@ function mutateDNA(oldDNA){
       DNA.push(1);
     }
   }
-  var brainDNA = oldDNA.slice(k+oldsensepointsNum,oldDNA.length)
 
-  DNA.push(brainDNA[0]); // stacks
-  DNA.push(brainDNA[1]); // layers
+  // BRAIN PART:
+  var brainDNA = oldDNA.slice(k+oldsensepointsNum,oldDNA.length)
+  var stackDNA = brainDNA[0];
+  var layerDNA = brainDNA[1];
   if(random(100)<changeStacksProb){
-    DNA[10]+=random(-changeStacksSev,changeStacksSev)
-    DNA[10] = max(min(DNA[10],1),0);
+    stackDNA+=random(-changeStacksSev,changeStacksSev)
   }
+  DNA.push( max(min(stackDNA,1),0) );
   if(random(100)<changeLayersProb){
-    DNA[11]+=random(-changeLayersSev,changeLayersSev)
-    DNA[11] = max(min(DNA[11],1),0);
+    layerDNA+=random(-changeLayersSev,changeLayersSev)
   }
+  DNA.push( max(min(layerDNA,1),0) );
   var oldmemoryBlocks = int(5*oldDNA[4]-1);
   var oldinputs  = 4+(int(10*   oldDNA[8])+1)*int(10*   oldDNA[9]);
   var oldoutputs = 5;
@@ -392,10 +392,10 @@ function mutateDNA(oldDNA){
     inputs  += memoryBlocks;
     outputs += memoryBlocks;
   }
-  var oldstacks       = int(15*oldDNA[10]);
-  var oldlayers       = int(10*oldDNA[11]);
-  var stacks          = int(15*DNA[10]);
-  var layers          = int(10*DNA[11]);
+  var oldstacks       = int(15*brainDNA[0]);
+  var oldlayers       = int(10*brainDNA[1]);
+  var stacks          = int(15*stackDNA);
+  var layers          = int(10*layerDNA);
 
   var L = inputs*stacks+(layers-1)*stacks*stacks+outputs*stacks;//(inputs+(layers-1)*stacks+outputs)*stacks;
 
@@ -431,13 +431,14 @@ function mutateDNA(oldDNA){
     }
   }
 
-
   for(var i=0; i<newbrainDNA.length; i++){
     var brainpoint = newbrainDNA[i]
     if(random(100)<mutation_p){
-      brainpoint += random(-mutation_m,mutation_m);
-    }else if(random(100)<killAxonProb){
-      brainpoint = 0;
+      if(random(100)<killAxonProb){
+        brainpoint = 0;
+      }else{
+        brainpoint += random(-mutation_m,mutation_m);
+      }
     }
     DNA.push(brainpoint)
   }
