@@ -76,7 +76,7 @@ var windowX   = Nx/4;
 var windowY   = Ny/4;
 var I         = 0;
 var J         = 0;
-var Screen    = "MAIN";
+var Screen    = "Controlpanel";
 
 // ------- SPAWNING
 var objSpawnProb  = 0.01
@@ -190,7 +190,20 @@ function initateScenario(){
 
 
 function draw(){
-  if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
+  if(CONTROLPANEL.PANELSELECT.value()=="Information"){
+    background(0);
+    noStroke();
+    textSize(60);
+    textAlign(CENTER);
+    textSize(60);fill(Cwater);
+    text("EVOLUTION",width/2,height/4)
+    textSize(14);fill(255);
+    text("Welcome! In the 'Animation' screen, you can monitor the behaviour \n of the species that have evolved as they navigate the terrain. Each of \n these creatures have a unique brain. The brain of best creature \n (according to some arbitrary metric) is displayed in the \n 'Brain dynamics' screen. In the 'Controlpanel' screen \n you can adjust parameters for the terrain, creature mutation \n and creature health. If you press 'space' a DNA strand will appear \n in the control panel. Any valid DNA strand \n can be copied into the input box. Choosing the 'makeboid' option \n in the controlpanel then allows you (when in the animation screen) \n to place this creature in the terrain.   ",width/2,height/4+50)
+    boidCount = MATRIX.do();
+    MATRIX.refill();
+    CONTROLPANEL.updateValues();
+    CONTROLPANEL.statisticsAccounting()
+  }else if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
     background(Cdirt2)
     strokeWeight(1);
     noStroke();

@@ -7,6 +7,7 @@ class ControlPanel{
     this.STATISTICS = [];
 
     this.PANELSELECT = createSelect();
+    this.PANELSELECT.option("Information");
     this.PANELSELECT.option("Animation");
     this.PANELSELECT.option("Brain dynamics");
     this.PANELSELECT.option("Controlpanel");

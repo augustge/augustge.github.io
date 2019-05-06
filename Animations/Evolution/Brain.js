@@ -230,7 +230,8 @@ class Neuron{
       }
       noFill();
       // bezier(sx*n,sy*i, sx*n,sy*(i+0.5*(m-i) ), sx*(n+1),sy*(m-0.5*(m-i)), sx*(n+1),sy*m);
-      bezier(sx*n,sy*i, sx*(n+0.5),sy*i, sx*(n+0.5),sy*m, sx*(n+1),sy*m);
+      // bezier(sx*n,sy*i, sx*(n+0.5),sy*i, sx*(n+0.5),sy*m, sx*(n+1),sy*m);
+      line(sx*n,sy*i, sx*(n+1),sy*m);
     }
     if(showNeuronValue){
       fill(255)
