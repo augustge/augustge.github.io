@@ -48,7 +48,7 @@ function getGlobalDNA(s){
   for(var i=0; i<s_split.length;i++){
     dna.push(float(s_split[i]))
   }
-  globalDNA = dna;
+  return dna;
 }
 
 
@@ -64,10 +64,13 @@ function mousePressed(){
       elevateAt(i,j,7,0.8,0.1)
     }else if(CONTROLPANEL.SELECTS[0].value()=="MAKEBOID"){ // place boid
       if(!MATRIX.M[i][j][1] && MATRIX.M[i][j][0].traversable){
-        var mutateglobalDNA = mutateDNA(globalDNA)
-        MATRIX.M[i][j][1] = new Object(i,j,mutateglobalDNA);
-        // MATRIX.M[i][j][1] = mutate(bestBoid,i,j,mutation_m,mutation_p);
-        boidCount++;
+        inputDNA = getGlobalDNA(CONTROLPANEL.DNAinput.value())
+        if(inputDNA.length>12){
+          var mutateglobalDNA = mutateDNA(inputDNA)
+          MATRIX.M[i][j][1] = new Object(i,j,mutateglobalDNA);
+          // MATRIX.M[i][j][1] = mutate(bestBoid,i,j,mutation_m,mutation_p);
+          boidCount++;
+        }
       }
     }
   }
