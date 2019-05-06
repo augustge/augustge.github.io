@@ -145,7 +145,7 @@ class Object{
     if(response[1]>0.0){this.reproduce();}
     this.move(response[2]);
     this.turn(response[3]);
-    // if(response[4]>0.0){this.attack();}
+    if(response[4]>0.0){this.attack();}
   }
 
   live(){
