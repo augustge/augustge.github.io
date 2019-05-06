@@ -39,7 +39,8 @@ function defineColors(){
   // Cwater2 = color("rgb(15,100,155)");
 
 
-  Cdirt2  = color("#A68572");
+  Cdirt2  = color("rgb(89,73,42)")//"#A68572");
+  Cgrass1 = color("rgba(101,166,3,0)");
   Cgrass2 = color("#65A603");
   Cwater  = color("#67B8DE");
   Cdirt1  = color("#D9B5A0");

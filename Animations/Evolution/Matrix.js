@@ -110,14 +110,14 @@ function Matrix(Nx,Ny){
       }
     }
     count = 0; // refill GRASS
-    while(count<refillGrassNum && refillGrass){
-      var i = int(random(this.Nx-1));
-      var j = int(random(this.Ny-1));
-      if(this.M[i][j][0].traversable){
-        this.M[i][j][0].life = this.M[i][j][0].fullLife;
-        count++;
-      }
-    }
+    // while(count<refillGrassNum && refillGrass){
+    //   var i = int(random(this.Nx-1));
+    //   var j = int(random(this.Ny-1));
+    //   if(this.M[i][j][0].traversable){
+    //     this.M[i][j][0].life = this.M[i][j][0].fullLife;
+    //     count++;
+    //   }
+    // }
   }
 
 

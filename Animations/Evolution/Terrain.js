@@ -7,34 +7,36 @@ class Stationary{
     this.y = y;
     this.localID = 1.0/(1+exp(-terrainContrast*(noise(x/terrainScale,y/terrainScale)-0.5)));
     this.rndID = random(1);
+    this.groundColor = lerpColor(Cdirt2,Cdirt1,sqrt(this.localID));
     if(this.localID>grassThreshold){
       this.type     = "GRASS";
       this.traversable = true;
       this.growth   = 1+grassGrowth*this.localID;
-      this.fullLife = grassFullLife*this.localID;
+      this.fullLife = grassFullLife*(1-this.localID);
       this.life     = random(0,0.5)*this.fullLife;
-      this.color = lerpColor(Cdirt1,Cgrass2,this.life/this.fullLife);
+      this.color = lerpColor(this.groundColor,Cgrass2,this.life/this.fullLife);
     }else{
       this.type = "WATER";
       this.traversable = false;
       this.life = -grassFullLife;
-      this.color = Cwater;
+      this.color = color(Cwater.levels[0],Cwater.levels[1],Cwater.levels[2],100);
     }
   }
 
   reevaluateID(){
+    this.groundColor = lerpColor(Cdirt2,Cdirt1,sqrt(this.localID));
     if(this.localID>grassThreshold){
       this.type = "GRASS";
       this.traversable = true;
       this.growth = 1+grassGrowth*this.localID;
       this.fullLife = grassFullLife*this.localID;
       this.life = random(0,0.5)*this.fullLife;
-      this.color = lerpColor(Cdirt1,Cgrass2,this.life/this.fullLife);
+      this.color = lerpColor(this.groundColor,Cgrass2,this.life/this.fullLife);
     }else{
       this.type = "WATER";
       this.traversable = false;
       this.life = -1;
-      this.color = Cwater;
+      this.color = color(Cwater.levels[0],Cwater.levels[1],Cwater.levels[2],100);
     }
   }
 
@@ -67,7 +69,15 @@ class Stationary{
 
   display(i,j){
     noStroke();
-    fill(this.color);
-    rect(dx*i,dy*j,dx,dy);
+    if(this.type=="WATER"){
+      fill(this.groundColor);
+      rect(dx*i,dy*j,dx,dy);
+      fill(this.color);
+      rect(dx*i,dy*j,dx,dy);
+    }else if(this.type=="GRASS"){
+      fill(this.color);
+      rect(dx*i,dy*j,dx,dy);
+    }
+
   }
 }

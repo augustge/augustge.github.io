@@ -7,24 +7,23 @@ function keyPressed(){
   }else if(keyCode==80){ // P
     getGlobalDNA(CONTROLPANEL.DNAinput.value())
   }else if(keyCode==37){ // LEFT
-    I -= 5;
-    I = (I+Nx)%Nx
+    I -= 6;   I = (I+Nx)%Nx
   }else if(keyCode==39){ // RIGHT
-    I += 5;
-    I = (I+Nx)%Nx
+    I += 6;   I = (I+Nx)%Nx
   }else if(keyCode==38){ // UP
-    J -= 5;
-    J = (J+Ny)%Ny
+    J -= 6;   J = (J+Ny)%Ny
   }else if(keyCode==40){ // DOWN
-    J += 5;
-    J = (J+Ny)%Ny
-  }else if(keyCode==189){ // -
-    windowX += 5;
+    J += 6;   J = (J+Ny)%Ny
+  }else if(keyCode==189 && windowX<=Nx-6){ // -
+    windowX += 6;
+    I -= 3; J -= int(3*height/width);
+    windowX = min(windowX,Nx);
     windowY = windowX*height/width;
     dx = width/windowX;
     dy = height/windowY;
-  }else if(keyCode==187){ // +
-    windowX -= 5;
+  }else if(keyCode==187 && windowX>3*6){ // +
+    windowX -= 6;
+    I += 3; J+= int(3*height/width);
     windowY = windowX*height/width;
     dx = width/windowX;
     dy = height/windowY;

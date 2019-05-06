@@ -343,7 +343,8 @@ function mutateDNA(oldDNA){
   for(var k=0; k<10; k++){
     var newDNAkey = oldDNA[k]
     if(random(100)<DNAinfo.mutationProb){
-      newDNAkey += random(-DNAinfo.mutationSeverity,DNAinfo.mutationSeverity);
+      // newDNAkey += random(-DNAinfo.mutationSeverity,DNAinfo.mutationSeverity);
+      newDNAkey += randomGaussian(0, DNAinfo.mutationSeverity);
       newDNAkey = max(min(newDNAkey,1),0);
     }
     DNA.push(newDNAkey);
@@ -355,7 +356,8 @@ function mutateDNA(oldDNA){
   for(var i=0; i<min(oldsensepointsNum,sensepointsNum); i++){
     var newDNAkey = oldDNA[k+i]
     if(random(100)<DNAinfo.mutationProbPxResp){
-      newDNAkey += random(-DNAinfo.mutationSeverityPxResp,DNAinfo.mutationSeverityPxResp);
+      // newDNAkey += random(-DNAinfo.mutationSeverityPxResp,DNAinfo.mutationSeverityPxResp);
+      newDNAkey += randomGaussian(0, DNAinfo.mutationSeverityPxResp);
       newDNAkey = max(min(newDNAkey,1),0);
     }
     DNA.push(newDNAkey);
@@ -371,11 +373,13 @@ function mutateDNA(oldDNA){
   var stackDNA = brainDNA[0];
   var layerDNA = brainDNA[1];
   if(random(100)<changeStacksProb){
-    stackDNA+=random(-changeStacksSev,changeStacksSev)
+    // stackDNA +=random(-changeStacksSev,changeStacksSev)
+    stackDNA += randomGaussian(0,changeStacksSev);
   }
   DNA.push( max(min(stackDNA,1),0) );
   if(random(100)<changeLayersProb){
-    layerDNA+=random(-changeLayersSev,changeLayersSev)
+    // layerDNA += random(-changeLayersSev,changeLayersSev)
+    layerDNA += randomGaussian(0,changeLayersSev);
   }
   DNA.push( max(min(layerDNA,1),0) );
   var oldmemoryBlocks = int(5*oldDNA[4]-1);
@@ -437,7 +441,8 @@ function mutateDNA(oldDNA){
       if(random(100)<killAxonProb){
         brainpoint = 0;
       }else{
-        brainpoint += random(-mutation_m,mutation_m);
+        // brainpoint += random(-mutation_m,mutation_m);
+        brainpoint += randomGaussian(0,mutation_m);
       }
     }
     DNA.push(brainpoint)
