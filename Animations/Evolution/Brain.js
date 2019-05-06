@@ -220,7 +220,6 @@ class Neuron{
   }
 
   display(n,m,sx,sy){
-    noStroke();fill(255);ellipse(sx*(n+1),sy*m,15,15)
     for (var i=0; i<this.inputs; i++){
       if(atan(this.W[i])<0){
         strokeWeight(-6*atan(this.W[i]));
@@ -230,12 +229,14 @@ class Neuron{
         stroke(0,255,0,180);
       }
       noFill();
-      bezier(sx*n,sy*i, sx*n,sy*(i+0.5*(m-i) ), sx*(n+1),sy*(m-0.5*(m-i)), sx*(n+1),sy*m);
+      // bezier(sx*n,sy*i, sx*n,sy*(i+0.5*(m-i) ), sx*(n+1),sy*(m-0.5*(m-i)), sx*(n+1),sy*m);
+      bezier(sx*n,sy*i, sx*(n+0.5),sy*i, sx*(n+0.5),sy*m, sx*(n+1),sy*m);
     }
     if(showNeuronValue){
       fill(255)
       text(round(100*this.value)/100.,sx*(n+1),sy*m)
     }
+    noStroke();fill(255);ellipse(sx*(n+1),sy*m,15,15)
   }
 }
 

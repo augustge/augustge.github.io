@@ -426,7 +426,7 @@ function mutateDNA(oldDNA){
   }
   if(layers>oldlayers){
     for(var i=0; i<stacks; i++){
-        var index    = (inputs+(layers-1)*stacks+i)*stacks+i
+        var index    = (inputs+(layers-2)*stacks+i)*stacks+i
         newbrainDNA[index] = 0.5;
     }
   }
