@@ -191,6 +191,10 @@ function initateScenario(){
 
 function draw(){
   if(CONTROLPANEL.PANELSELECT.value()=="Information"){
+    boidCount = MATRIX.do();
+    MATRIX.refill();
+    CONTROLPANEL.updateValues();
+    CONTROLPANEL.statisticsAccounting();
     background(0);
     noStroke();
     textSize(60);
@@ -199,10 +203,6 @@ function draw(){
     text("EVOLUTION",width/2,height/4)
     textSize(14);fill(255);
     text("Welcome! In the 'Animation' screen, you can monitor the behaviour \n of the species that have evolved as they navigate the terrain. Each of \n these creatures have a unique brain. The brain of best creature \n (according to some arbitrary metric) is displayed in the \n 'Brain dynamics' screen. In the 'Controlpanel' screen \n you can adjust parameters for the terrain, creature mutation \n and creature health. If you press 'space' a DNA strand will appear \n in the control panel. Any valid DNA strand \n can be copied into the input box. Choosing the 'makeboid' option \n in the controlpanel then allows you (when in the animation screen) \n to place this creature in the terrain.   ",width/2,height/4+50)
-    boidCount = MATRIX.do();
-    MATRIX.refill();
-    CONTROLPANEL.updateValues();
-    CONTROLPANEL.statisticsAccounting()
   }else if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
     background(Cdirt2)
     strokeWeight(1);
@@ -258,3 +258,7 @@ function draw(){
 
   // refillProbability
 }
+
+
+// GOOD DNA:
+// 0.9145546261681798,0.020360855367930614,0.02480404618405932,0.9511804034053324,0,0.040938379452995194,0.12497755616313726,0.23111426651593933,0,0.16480059747790007,1,0.9536931539253147,1,0.28157998506229653,0.19899298944827024,-0.4783417480284491,0.6024136277854235,-0.08371740811939846,0.6076495448738523,0.9279053222159347,-0.1477405434550555,-0.03400815374732763,-0.09668985406511124,-0.14288901360116124,0.2359263281559183,-0.1642279884431649,-0.10982037147252122,-0.5437387418959092,-0.8371380750418582,-0.712300460639887,-0.20505444883120041,0,0.45841960958404937,-0.06468967079759902,-0.0295657392460809,0.2123654153034038,-0.2197816450165529,-0.021756237745751375,-0.018660290532103788,0.05802734914795066,0.05587159362002678,-0.5263030612821606,-0.0008652258622784403,0.3314910105699509,0.13687412079776468,-1.281811442744075,-0.16499490241037934,-0.03791331005265301,-0.3110149242781332,0.27440746629656826,-0.13790701133281064,0.20085890577132715,0.037099163450279526,0.20764713926753844,0
