@@ -63,7 +63,7 @@ class Brain{
       }
       // apply wrapper
       this.out[i] = atan(this.finalNeurons[i].call()); // atan wrapper in end
-      this.out[i] = this.finalNeurons[i].call();
+      // this.out[i] = this.finalNeurons[i].call();
     }
     return this.out;
   }
