@@ -342,8 +342,8 @@ function mutateDNA(oldDNA){
   // basic DNA
   for(var k=0; k<10; k++){
     var newDNAkey = oldDNA[k]
-    if(random(100)<DNAinfo.mutationProb[k]){
-      newDNAkey += random(-DNAinfo.mutationSeverity[k],DNAinfo.mutationSeverity[k]);
+    if(random(100)<DNAinfo.mutationProb){
+      newDNAkey += random(-DNAinfo.mutationSeverity,DNAinfo.mutationSeverity);
       newDNAkey = max(min(newDNAkey,1),0);
     }
     DNA.push(newDNAkey);
@@ -412,6 +412,7 @@ function mutateDNA(oldDNA){
       for(var ii=0; ii<oldstacks; ii++){ // stacks
         var oldindex = 2+(oldinputs+(j-1)*oldstacks+i)*oldstacks+ii
         var index    = (inputs+(j-1)*stacks+i)*stacks+ii
+        // j: layer coord,  i: stack coord, ii: connection coord
         if(index<L){ newbrainDNA[index] = brainDNA[oldindex]; }
       }
     }

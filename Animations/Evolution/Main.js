@@ -60,8 +60,9 @@ globalDNA = [
   0.03,    // 6: senseLength
   0.23,    // 7: FOV
   0.00,    // 8: rays
-  0.00,    // 9: rayPoints
+  0.1,    // 9: rayPoints
   0.2,0.2,
+  0,0,1,
   0,0,0,0, 0,0,0,0, 0,0,0,0,   1,0,0, 0,1,0, 0,0,1,   0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0
 ]
 
@@ -111,10 +112,10 @@ var removeSensoryStackProb= 0.5;
 var carnivorousProb       = 0.1;
 var carnivorousGain       = 8.5;
 var DNAinfo = {
-  "mutationProb"          : [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-  "mutationSeverity"      : [0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05],
-  "mutationProbPxResp"    :  0.1,
-  "mutationSeverityPxResp":  0.1
+  "mutationProb"          : 1.0,
+  "mutationSeverity"      : 0.05,
+  "mutationProbPxResp"    : 0.1,
+  "mutationSeverityPxResp": 0.1
 }
 
 // ------- STATS
