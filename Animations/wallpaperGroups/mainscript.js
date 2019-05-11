@@ -625,19 +625,21 @@ function mouseDragged(){
   return false;
 }
 
-function mouseWheel(event) {
-  // To prevent page scroll
-  return false;
-}
-
-function touchStarted() {
+function mouseWheel(event){
   // prevent default
   return false;
 }
 
-function mouseWheel(event) {
+function touchStarted(){
+  // prevent default
   return false;
 }
+
+function preventBehavior(e) {
+    e.preventDefault();
+};
+document.addEventListener("touchmove", preventBehavior, {passive: false});
+
 
 function keyPressed(){
   print(keyCode)
