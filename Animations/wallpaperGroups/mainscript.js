@@ -9,7 +9,9 @@ var SYM;
 function setup(){
   defineColors();
   var cnv = createCanvas(window.innerWidth-10, window.innerHeight-10);
-  cnv.style('position', 'sticky');
+  cnv.style('position', 'fixed');
+  cnv.style('top', '0');
+  cnv.style('width', '100%');
   // blendMode(MULTIPLY);
   Hex = [[0,150],[150*sin(PI/3),150*cos(PI/3)]];
 
