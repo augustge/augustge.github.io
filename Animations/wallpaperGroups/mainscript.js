@@ -635,6 +635,9 @@ function touchStarted() {
   return false;
 }
 
+function mouseWheel(event) {
+  return false;
+}
 
 function keyPressed(){
   print(keyCode)
