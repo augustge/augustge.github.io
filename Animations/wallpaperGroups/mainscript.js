@@ -8,8 +8,8 @@ var SYM;
 
 function setup(){
   defineColors();
-  createCanvas(window.innerWidth-10, window.innerHeight-10);
-
+  var cnv = createCanvas(window.innerWidth-10, window.innerHeight-10);
+  cnv.style('display', 'fixed');
   // blendMode(MULTIPLY);
   Hex = [[0,150],[150*sin(PI/3),150*cos(PI/3)]];
 
