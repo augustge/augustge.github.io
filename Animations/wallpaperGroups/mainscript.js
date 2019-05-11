@@ -616,11 +616,13 @@ function clearCanvas(){
 function mousePressed(){
   SYM.addPoint(mouseX-width/2,height/2-mouseY)
   redraw();
+  return false;
 }
 
 function mouseDragged(){
   SYM.addPoint(mouseX-width/2,height/2-mouseY)
   redraw();
+  return false;
 }
 
 function mouseWheel(event) {
