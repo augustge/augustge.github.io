@@ -250,6 +250,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simple code that allows for a visual exploration of the 17 fundamental symmetries of a two-dimensional surface -- the so-called wallpaper groups. After you pick one of the 17 wallpaper groups, a gray rhombus will display the fundamental translated area. On top of this, there are lines showing mirror symmetries, glide reflections and discrete rotations. Enjoy!",
           reference: "wallpaperGroups/",
           tag: $scope.tags["math"]
+        },
+        {
+          name: "Diffusion-Limited Aggregation",
+          description: "This is a simple code for visualization of the diffusion-limited aggregation algorithm for computing particle aggregation in systems such as the Hele-Shaw cell.",
+          reference: "DLA/",
+          tag: $scope.tags["phys"]
         }
       ];
 

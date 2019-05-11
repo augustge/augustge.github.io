@@ -1,6 +1,6 @@
 
-var Nx = 100;
-var Ny = 100;
+var Nx = 200;
+var Ny = 200;
 var L,W;
 var s;
 
