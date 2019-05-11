@@ -8,10 +8,8 @@ var SYM;
 
 function setup(){
   defineColors();
-  var cnv = createCanvas(window.innerWidth-10, window.innerHeight-10);
-  cnv.style('position', 'fixed');
-  cnv.style('top', '0');
-  cnv.style('width', '100%');
+  createCanvas(window.innerWidth-10, window.innerHeight-10);
+  disableScroll();
   // blendMode(MULTIPLY);
   Hex = [[0,150],[150*sin(PI/3),150*cos(PI/3)]];
 
@@ -629,6 +627,13 @@ function mouseDragged(){
 function mouseWheel(event){return false;}// prevent default
 function touchStarted(){return false;}// prevent default
 
+function preventDefault(e){
+    e.preventDefault();
+}
+
+function disableScroll(){
+    document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
 
 
 function keyPressed(){
