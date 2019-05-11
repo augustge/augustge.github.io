@@ -625,15 +625,8 @@ function mouseDragged(){
   return false;
 }
 
-function mouseWheel(event){
-  // prevent default
-  return false;
-}
-
-function touchStarted(){
-  // prevent default
-  return false;
-}
+function mouseWheel(event){return false;}// prevent default
+function touchStarted(){return false;}// prevent default
 
 function preventBehavior(e) {
     e.preventDefault();
