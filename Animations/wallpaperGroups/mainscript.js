@@ -616,7 +616,6 @@ function clearCanvas(){
 function mousePressed(){
   SYM.addPoint(mouseX-width/2,height/2-mouseY)
   redraw();
-  return false;
 }
 
 function mouseDragged(){
@@ -628,10 +627,6 @@ function mouseDragged(){
 function mouseWheel(event){return false;}// prevent default
 function touchStarted(){return false;}// prevent default
 
-function preventBehavior(e) {
-    e.preventDefault();
-};
-document.addEventListener("touchmove", preventBehavior, {passive: false});
 
 
 function keyPressed(){
