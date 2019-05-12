@@ -3,7 +3,7 @@
 
 class ControlPanel{
   constructor(){
-    this.statMaxLength = 2 * 2*width/3;
+    this.statMaxLength = 4 * 2*width/3;
     this.STATISTICS = [];
 
     this.PANELSELECT = createSelect();
