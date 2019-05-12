@@ -68,7 +68,8 @@ function mousePressed(){
           var mutateglobalDNA = mutateDNA(inputDNA)
           MATRIX.M[i][j][1] = new Object(i,j,mutateglobalDNA);
           // MATRIX.M[i][j][1] = mutate(bestBoid,i,j,mutation_m,mutation_p);
-          boidCount++;
+          // boidCount++;
+          countBoid(MATRIX.M[i][j][1])
         }
       }
     }
