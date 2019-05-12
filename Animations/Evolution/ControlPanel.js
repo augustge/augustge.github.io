@@ -156,7 +156,7 @@ class ControlPanel{
   }
 
   statisticsAccounting(){
-    this.STATISTICS.push(boidCount);
+    this.STATISTICS.push(getStatsCopy(STATS));
     if(this.STATISTICS.length>this.statMaxLength){
       this.STATISTICS.shift(); // remove first element
     }
@@ -166,6 +166,7 @@ class ControlPanel{
     strokeWeight(1);
     noStroke();
     fill(0);
+    textAlign(LEFT);
     for(var i=0; i<this.SLIDERS.length; i++){
       text(this.SLIDERTEXTS[i],x0,y0+Dy*i+6);
       text(this.SLIDERS[i].value(),x0-180,y0+Dy*i+6);

@@ -62,8 +62,8 @@ globalDNA = [0.9616288754798882, 0, 0.015665259720376218, 0.9124127183036169, 0,
 
 
 // ------- GENERAL
-var Nx        = 13*20;
-var Ny        = 10*20;
+var Nx        = 13*30;
+var Ny        = 10*30;
 var windowX   = Nx/4;
 var windowY   = Ny/4;
 var I         = 0;
@@ -96,7 +96,7 @@ var healthLossPerMaxHealth= 0.01;
 var healthLossPerSense    = 0.0;
 var healthGrainPerEat     = 50; // assuming fully grown grass
 var maxHealth             = 500;
-var boidRefillBarrier     = 1;
+var boidRefillBarrier     = 50;
 var attackHarm            = 400;
 var carnivorousGain       = 8.5;
 var DNAinfo = {
@@ -107,7 +107,18 @@ var DNAinfo = {
 }
 
 // ------- STATS
-var boidCount             = 0;
+var STATS = {
+  boidCount: 0,
+  memoryCount: 0,
+  carnivorousCount: 0,
+  senseraySum: 0,
+  layersSum: 0,
+  stacksSum: 0
+}
+/*
+  (a+b+c)/3
+*/
+
 
 // ------- BRAIN
 var killAxonProb          = 2.5;
@@ -156,7 +167,7 @@ function initateScenario(){
 
 function draw(){
   if(CONTROLPANEL.PANELSELECT.value()=="Information"){
-    boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.updateValues();
     CONTROLPANEL.statisticsAccounting();
@@ -176,15 +187,15 @@ function draw(){
     // MATRIX.display(I,J,windowX,windowY);
     MATRIX.displayBackground(I,J,windowX,windowY);
     MATRIX.displayToplayer(I,J,windowX,windowY);
-    boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.statisticsAccounting()
     fill(255);
     text(bestBoid.age, 10, 30);
-    text(boidCount, 10, 40);
+    text(STATS.boidCount, 10, 40);
     text(boidRefillBarrier,10,60);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Brain dynamics"){
-    boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     background(0);
     translate(0.1*width, 0.1*height);
@@ -194,20 +205,20 @@ function draw(){
     CONTROLPANEL.statisticsAccounting()
     fill(255);
     text(bestBoid.age, -50, 30);
-    text(boidCount, -50, 40);
+    text(STATS.boidCount, -50, 40);
     text(boidRefillBarrier,-50,50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
     background(255);
-    boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.updateValues();
     CONTROLPANEL.statisticsAccounting()
     CONTROLPANEL.display(80+140,20,20,15);
     fill(255,0,0)
-    text(boidCount, width-50, height-50);
+    text(STATS.boidCount, width-50, height-50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Statistics"){
     background(255);
-    boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.statisticsAccounting()
     drawGraph(CONTROLPANEL.STATISTICS)

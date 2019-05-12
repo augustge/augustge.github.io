@@ -196,8 +196,9 @@ class Object{
   }
 
   die(){
+    uncountBoid(MATRIX.M[int(this.x)][int(this.y)][1])
     MATRIX.M[int(this.x)][int(this.y)][1] = null;
-    boidCount--;
+    // STATS.boidCount--;
     // MATRIX.M[int(this.x)][int(this.y)][0].life = MATRIX.M[int(this.x)][int(this.y)][0].fullLife
     delete this;
   }
@@ -213,7 +214,8 @@ class Object{
       MATRIX.M[i][j][1].health = this.health/2.;
       MATRIX.M[i][j][1].hasNotMoved = false;
       this.health = this.health/2.;
-      boidCount++;
+      // STATS.boidCount++;
+      countBoid(MATRIX.M[i][j][1])
       this.children++;
     }
   }

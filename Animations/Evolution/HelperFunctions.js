@@ -22,6 +22,34 @@ function boidMetric(boid){
   return 20*boid.health + 10*boid.children + 5*boid.eats + boid.moves + boid.age/float(healthLossPerTime+healthLossPerMove+healthLossPerBirth)
 }
 
+function countBoid(boid){
+  STATS.boidCount++;
+  if(boid.hasMemory){   STATS.memoryCount++;}
+  if(boid.carnivorous){ STATS.carnivorousCount++;}
+  STATS.senseraySum += (boid.rays+1)*boid.rayPoints;
+  STATS.layersSum   += boid.layers;
+  STATS.stacksSum   += boid.stacks;
+}
+
+function uncountBoid(boid){
+  STATS.boidCount--;
+  if(boid.hasMemory){   STATS.memoryCount--;}
+  if(boid.carnivorous){ STATS.carnivorousCount--;}
+  STATS.senseraySum -= (boid.rays+1)*boid.rayPoints;
+  STATS.layersSum   -= boid.layers;
+  STATS.stacksSum   -= boid.stacks;
+}
+
+function getStatsCopy(stats){
+  var stat = {}
+  for (var property in stats) {
+    stat[property] = stats[property];
+    // if (object.hasOwnProperty(property)) {
+    //     // do stuff
+    // }
+  }
+  return stat
+}
 
 function getPixelColor(x,y){
   var i = (y * width + x) * 4;

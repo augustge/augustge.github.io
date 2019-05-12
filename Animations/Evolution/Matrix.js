@@ -30,14 +30,17 @@ function Matrix(Nx,Ny){
     var mutateglobalDNA = mutateDNA(globalDNA)
     this.M[i][j][1] = new Object(i,j,mutateglobalDNA);
     bestBoid = this.M[i][j][1];
-    boidCount++
+    // STATS.boidCount++;
+    countBoid(this.M[i][j][1])
   }
 
   this.addMutationOf = function(i,j,bestBoid){
     if(!this.M[i][j][1]){
-      bestBoid = mutate(bestBoid,i,j,refillMutation_m,refillMutation_p);
+      bestBoid = mutate(bestBoid,i,j,mutation_m,mutation_p);
       this.M[i][j][1] = bestBoid;
-      boidCount++;
+      // boidCount++;
+      // STATS.boidCount++;
+      countBoid(this.M[i][j][1])
     }
   }
 
@@ -100,7 +103,7 @@ function Matrix(Nx,Ny){
 
   this.refill = function(){
     // refill BOIDS
-    while(boidCount<boidRefillBarrier){
+    while(STATS.boidCount<boidRefillBarrier){
     // if(boidCount<boidRefillBarrier){
       var i = int(random(this.Nx-1));
       var j = int(random(this.Ny-1));
