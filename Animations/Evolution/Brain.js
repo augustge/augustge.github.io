@@ -56,10 +56,13 @@ class Brain{
       }
     }
     // for last layer
+    var lastlayer = this.layers-1;
+    if(this.layers<=0){lastlayer=0;}
     for (var i=0; i<this.outputs; i++){ // each neuron
       this.finalNeurons[i].initialize();
       for (var k=0; k<this.stacks; k++){ // each input
-        this.finalNeurons[i].inputFrom(k,this.neurons[k][this.layers-1].call());
+        //
+        this.finalNeurons[i].inputFrom(k,this.neurons[k][lastlayer].call());
       }
       // apply wrapper
       this.out[i] = atan(this.finalNeurons[i].call()); // atan wrapper in end

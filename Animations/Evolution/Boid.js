@@ -131,8 +131,11 @@ class Object{
     if(this.hasMemory){
       // Old memory output is new memory input
       var outputs = this.BRAIN.outputs
-      sensed[count]   = this.BRAIN.out[outputs-1]
-      sensed[count+1] = this.BRAIN.out[outputs-2]
+      var inputs = this.BRAIN.inputs
+      for(var k=0; k<this.memoryBlocks; k++){
+        sensed[inputs-1-k]   = this.BRAIN.out[outputs-1-k]
+      }
+
     }
     this.sensed = sensed;
     return sensed;
@@ -187,7 +190,7 @@ class Object{
     var boid = MATRIX.M[i][j][1]
     if(!!boid && boid!=this){ // neq null
       if(boid.health>attackHarm){
-        boid.health -= attackHarm
+        boid.health -= attackHarm;
       }else{
         boid.die()
         this.health = min(this.health+boid.health,this.maxHealth)//healthGainBoidEat
@@ -235,7 +238,8 @@ class Object{
       this.moves++;
       this.speed = this.speed/1.05; // damping
     }else if(!MATRIX.M[i][j][0].traversable){
-      this.health /= 1.1; // water harm
+      this.health -= waterDamage; // water harm
+      this.speed = 0;
     }else{
       this.speed = 0;
     }
@@ -354,7 +358,7 @@ function mutateDNA(oldDNA){
 
   var oldsensepointsNum = 3*(int(10*oldDNA[8])+1)*int(10*oldDNA[9]); //3*(rays+1)*rayPoints
   var sensepointsNum    = 3*(int(10*   DNA[8])+1)*int(10*   DNA[9]); //3*(rays+1)*rayPoints
-  var deltaNum = sensepointsNum-oldsensepointsNum
+  var deltaNum = sensepointsNum-oldsensepointsNum;
   for(var i=0; i<min(oldsensepointsNum,sensepointsNum); i++){
     var newDNAkey = oldDNA[k+i]
     if(random(100)<DNAinfo.mutationProbPxResp){
@@ -377,13 +381,15 @@ function mutateDNA(oldDNA){
   if(random(100)<changeStacksProb){
     // stackDNA +=random(-changeStacksSev,changeStacksSev)
     stackDNA += randomGaussian(0,changeStacksSev);
+    stackDNA = max(min(stackDNA,1),0);
   }
-  DNA.push( max(min(stackDNA,1),0) );
+  DNA.push( stackDNA );
   if(random(100)<changeLayersProb){
     // layerDNA += random(-changeLayersSev,changeLayersSev)
     layerDNA += randomGaussian(0,changeLayersSev);
+    layerDNA = max(min(layerDNA,1),0)
   }
-  DNA.push( max(min(layerDNA,1),0) );
+  DNA.push( layerDNA );
   var oldmemoryBlocks = int(5*oldDNA[4]-1);
   var oldinputs  = 4+(int(10*   oldDNA[8])+1)*int(10*   oldDNA[9]);
   var oldoutputs = 5;
@@ -430,6 +436,7 @@ function mutateDNA(oldDNA){
         if(index<L){ newbrainDNA[index] = brainDNA[oldindex]; }
       }
   }
+  // Add identity matrix if layers increase
   if(layers>oldlayers){
     for(var i=0; i<stacks; i++){
         var index    = (inputs+(layers-2)*stacks+i)*stacks+i

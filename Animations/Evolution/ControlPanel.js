@@ -67,6 +67,8 @@ class ControlPanel{
     this.SLIDERS.push(     createSlider(0, 0.5, DNAinfo.mutationSeverityPxResp , 0.01) );
     this.SLIDERTEXTS.push( "Attack harm")
     this.SLIDERS.push(     createSlider(0, 1000, attackHarm ,1) );
+    this.SLIDERTEXTS.push( "Water damage")
+    this.SLIDERS.push(     createSlider(0, 100, waterDamage ,0.1) );
     this.SLIDERTEXTS.push( "Carnivorous gain")
     this.SLIDERS.push(     createSlider(0, 30, carnivorousGain ,0.1) );
 
@@ -123,7 +125,8 @@ class ControlPanel{
     DNAinfo.mutationProbPxResp      = this.SLIDERS[21].value()
     DNAinfo.mutationSeverityPxResp  = this.SLIDERS[22].value()
     attackHarm                      = this.SLIDERS[23].value()
-    carnivorousGain                 = this.SLIDERS[24].value()
+    waterDamage                     = this.SLIDERS[24].value()
+    carnivorousGain                 = this.SLIDERS[25].value()
 
     showNeuronValue       = this.CHECKBOX[0].checked();
     drawHealth            = this.CHECKBOX[1].checked();
