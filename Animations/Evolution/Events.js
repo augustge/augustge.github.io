@@ -61,11 +61,11 @@ function mousePressed(){
   if(CONTROLPANEL.PANELSELECT.value() == "Animation"){
     var i = (int(mouseX/float(dx)+I)+Nx)%Nx
     var j = (int(mouseY/float(dy)+J)+Ny)%Ny
-    if(CONTROLPANEL.SELECTS[0].value()=="DIG"){ // dig terrain
+    if(CONTROLPANEL.SELECTS[1].value()=="DIG"){ // dig terrain
       digAt(i,j,7,0.8,0.1)
-    }else if(CONTROLPANEL.SELECTS[0].value()=="ELEVATE"){ // elevate terrain
+    }else if(CONTROLPANEL.SELECTS[1].value()=="ELEVATE"){ // elevate terrain
       elevateAt(i,j,7,0.8,0.1)
-    }else if(CONTROLPANEL.SELECTS[0].value()=="MAKEBOID"){ // place boid
+    }else if(CONTROLPANEL.SELECTS[1].value()=="MAKEBOID"){ // place boid
       if(!MATRIX.M[i][j][1] && MATRIX.M[i][j][0].traversable){
         inputDNA = getGlobalDNA(CONTROLPANEL.DNAinput.value())
         if(inputDNA.length>12){
