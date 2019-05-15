@@ -27,6 +27,9 @@ function keyPressed(){
     windowY = windowX*height/width;
     dx = width/windowX;
     dy = height/windowY;
+  }else if(keyCode==48){ // 0
+    CONTROLPANEL.PANELSELECT.value("Information");
+    CONTROLPANEL.showAll();
   }else if(keyCode==49){ // 1
     CONTROLPANEL.PANELSELECT.value("Animation");
     CONTROLPANEL.hideAll();
@@ -36,18 +39,19 @@ function keyPressed(){
   }else if(keyCode==51){ // 3
     CONTROLPANEL.PANELSELECT.value("Controlpanel");
     CONTROLPANEL.showAll();
+  }else if(keyCode==52){ // 4
+    CONTROLPANEL.PANELSELECT.value("Statistics");
+    CONTROLPANEL.showAll();
   }
   return false;
 }
 
 
-function getGlobalDNA(s){
-  var dna = []
-  s_split = s.split(",")
-  for(var i=0; i<s_split.length;i++){
-    dna.push(float(s_split[i]))
-  }
-  return dna;
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+  windowY   = windowX*windowHeight/windowWidth;
+  dx = width/windowX;
+  dy = height/windowY;
 }
 
 

@@ -18,6 +18,9 @@
 (*) Add jumping/flying
 (*) Populate Introduction screen and make HTML
 (*) Prettify CSS
+(*) Add n x inputs + STACKS + outputs for memory blocks
+(*) Include togglers in DIVs (and consider changing sliders to inputs)
+(*) Separate DNA mutators to make them adjustable in controlpanel
 
 */
 
@@ -108,9 +111,6 @@ var STATS = {
   layersSum: 0,
   stacksSum: 0
 }
-/*
-  (a+b+c)/3
-*/
 
 
 // ------- BRAIN
@@ -138,21 +138,20 @@ var bestBoid;
 
 
 function setup(){
-  createCanvas(windowWidth, windowHeight);
-  windowY   = windowX*windowHeight/windowWidth;
-  frameRate(100);
+  createCanvas(window.innerWidth, window.innerHeight);
+  // frameRate(100);
   initateScenario();
 }
 
 
 function initateScenario(){
+  windowY   = windowX*windowHeight/windowWidth;
   dx = width/windowX;
   dy = height/windowY;
   defineColors();
   MATRIX = new Matrix(Nx,Ny);
   MATRIX.initialize(num,falloff,0.01);
   CONTROLPANEL = new ControlPanel();
-  CONTROLPANEL.assignPositions(80,20,20,15);
   CONTROLPANEL.hideAll();
   noStroke();
 }
@@ -164,15 +163,7 @@ function draw(){
     MATRIX.refill();
     CONTROLPANEL.updateValues();
     CONTROLPANEL.statisticsAccounting();
-    background(0);
-    noStroke();
-    textSize(60);
-    textAlign(CENTER);
-    textSize(60);fill(Cwater);
-    text("EVOLUTION",width/2,height/4)
-    textSize(14);fill(255);
-    text("Welcome! In the 'Animation' screen, you can monitor the behaviour \n of the species that have evolved as they navigate the terrain. Each of \n these creatures have a unique brain. The brain of best creature \n (according to some arbitrary metric) is displayed in the \n 'Brain dynamics' screen. In the 'Controlpanel' screen \n you can adjust parameters for the terrain, creature mutation \n and creature health. If you press 'space' a DNA strand will appear \n in the control panel. Any valid DNA strand \n can be copied into the input box. Choosing the 'makeboid' option \n in the controlpanel then allows you (when in the animation screen) \n to place this creature in the terrain.   ",width/2,height/4+50)
-    textSize(12); textAlign(LEFT);
+    CONTROLPANEL.introduction.show();
   }else if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
     background(Cdirt2)
     strokeWeight(1);
@@ -201,16 +192,16 @@ function draw(){
     text(STATS.boidCount, -50, 40);
     text(boidRefillBarrier,-50,50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
-    background(255);
+    background(0);
     STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.updateValues();
-    CONTROLPANEL.statisticsAccounting()
-    CONTROLPANEL.display(80+140,20,20,15);
+    CONTROLPANEL.statisticsAccounting();
     fill(255,0,0)
     text(STATS.boidCount, width-50, height-50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Statistics"){
     background(255);
+    strokeWeight(1);
     STATS.boidCount = MATRIX.do();
     MATRIX.refill();
     CONTROLPANEL.statisticsAccounting()
@@ -218,10 +209,15 @@ function draw(){
   }
 
   if(CONTROLPANEL.PANELSELECT.value()!=Screen){
-    if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
-      CONTROLPANEL.showAll();
+    if(CONTROLPANEL.PANELSELECT.value()=="Introduction"){
+      CONTROLPANEL.introduction.show()
+      CONTROLPANEL.container.hide()
+    }else if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
+      CONTROLPANEL.container.show()
+      CONTROLPANEL.introduction.hide()
     }else{
-      CONTROLPANEL.hideAll();
+      CONTROLPANEL.container.hide()
+      CONTROLPANEL.introduction.hide()
     }
     Screen = CONTROLPANEL.PANELSELECT.value()
   }

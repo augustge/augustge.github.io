@@ -1,0 +1,148 @@
+
+
+body {
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  font-family: 'helvetica neue',helvetica;
+}
+
+div {
+  display: inline-block;
+}
+
+#maincontainer {
+  margin: 5% 5% 5% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#container {
+  width: 100%;
+  display: block;
+}
+
+#entrycontainer {
+  width: 100%;
+  /* display: inline-block; */
+  display: inline-block;
+}
+
+#slidertext {
+  width: 50%;
+}
+
+#selectcontainer {
+  display: inline-block;
+}
+
+
+h1 {
+  color: #67B8DE;
+  font-size: 50px;
+  font-family: Baskerville, helvetica;
+  text-align: center;
+  padding-top: 50%;
+  padding-bottom: 50%;
+}
+
+#introduction {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  height: 100%;
+  padding-top: 50px;
+  padding-left: 20%;
+  padding-right: 20%;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-family: Baskerville, helvetica;
+}
+
+
+
+
+
+input[type=range]:after {
+  width: 50px;
+  left: 40%;
+  height: 10px;
+  display: block;
+  position: absolute;
+  text-align: right;
+  z-index: 2;
+  color: white;
+  font-size: 10px;
+  content: attr(value);
+}
+
+input[type="range"] {
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    margin-right: 10px;
+    height: 10px;
+    width: 40%;
+    cursor: pointer;
+    border-radius: 0; /* iOS */
+}
+
+::-webkit-slider-runnable-track {
+    background: rgb(89,73,42);
+}
+
+::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px; /* 1 */
+    height: 10px;
+    background: #67B8DE;
+    box-shadow: -100vw 0 0 100vw #D9B5A0;
+}
+
+
+
+
+
+#DNAbox {
+  background-color: rgb(89,73,42);
+  color: white;
+  border: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 5px 5px 5px 5px;
+  width: 50%;
+  display: block;
+  word-wrap: break-word;
+  font-size: 6px;
+}
+
+input[type=text] :before {
+  top: 5px;
+  position: absolute;
+  color: white;
+  content: attr(description);
+}
+
+input[type=text] {
+  background-color: rgb(89,73,42);
+  color: white;
+  border: solid 2px #67B8DE;
+  margin-top: 10%;
+  padding: 5px 5px 5px 5px;
+  width: 50%;
+  font-size: 6px;
+  display: block;
+}
+
+
+
+input[type=checkbox] {
+  margin-left: 50px;
+  display: inline-block;
+}
+
+#select {
+  margin: 0 10px 0 50px;
+  display: inline-block;
+}

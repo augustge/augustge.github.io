@@ -44,16 +44,18 @@ function getStatsCopy(stats){
   var stat = {}
   for (var property in stats) {
     stat[property] = stats[property];
-    // if (object.hasOwnProperty(property)) {
-    //     // do stuff
-    // }
   }
   return stat
 }
 
-function getPixelColor(x,y){
-  var i = (y * width + x) * 4;
-  return [ pixels[i],pixels[i+1],pixels[i+2] ];
+
+function getGlobalDNA(s){
+  var dna = []
+  s_split = s.split(",")
+  for(var i=0; i<s_split.length;i++){
+    dna.push(float(s_split[i]))
+  }
+  return dna;
 }
 
 
