@@ -12,36 +12,36 @@ div {
 }
 
 
-#selectcontainer {
+.selectcontainer {
   margin: 2% 2% 2% 2%;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
-#selectcontainerChild {
+.selectcontainerChild {
   display: inline-block;
 }
 
-#maincontainer {
+.maincontainer {
   margin: 5% 5% 5% 5%;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
-#container {
+.container {
   width: 100%;
   display: block;
 }
 
-#entrycontainer {
+.entrycontainer {
   width: 100%;
   /* display: inline-block; */
   display: inline-block;
 }
 
-#slidertext {
+.slidertext {
   width: 50%;
 }
 
@@ -113,7 +113,7 @@ input[type="range"] {
 
 
 
-#DNAbox {
+.DNAbox {
   background-color: rgb(89,73,42);
   color: white;
   border: 5px;

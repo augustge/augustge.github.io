@@ -1,6 +1,7 @@
 
 // ============ Key Events ============
 function keyPressed(){
+  print(keyCode)
   if(keyCode==32){ // SPACE
     print(bestBoid.DNA)
     CONTROLPANEL.DNAbox.html(str(bestBoid.DNA));
@@ -14,6 +15,8 @@ function keyPressed(){
     J -= 6;   J = (J+Ny)%Ny
   }else if(keyCode==40){ // DOWN
     J += 6;   J = (J+Ny)%Ny
+  }else if(keyCode==13){ // ENTER
+    CONTROLPANEL.DNAinput.value = "";
   }else if(keyCode==189 && windowX<=Nx-6){ // -
     windowX += 6;
     I -= 3; J -= int(3*height/width);
@@ -29,7 +32,7 @@ function keyPressed(){
     dy = height/windowY;
   }else if(keyCode==48){ // 0
     CONTROLPANEL.PANELSELECT.value("Information");
-    CONTROLPANEL.showAll();
+    CONTROLPANEL.hideAll();
   }else if(keyCode==49){ // 1
     CONTROLPANEL.PANELSELECT.value("Animation");
     CONTROLPANEL.hideAll();

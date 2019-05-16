@@ -59,6 +59,28 @@ function getGlobalDNA(s){
 }
 
 
+function CopyToClipboard(containerid) {
+  var elm = document.getElementById(containerid);
+  // for Internet Explorer
+  if(document.body.createTextRange) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(elm);
+    range.select();
+    document.execCommand("Copy");
+  }
+  else if(window.getSelection) {
+    // other browsers
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(elm);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    print(selection,range)
+    document.execCommand("Copy");
+  }
+}
+
+
 // ============ COLORS ============
 function defineColors(){
   // Cdirt1  = color("rgb(64,50,25)");

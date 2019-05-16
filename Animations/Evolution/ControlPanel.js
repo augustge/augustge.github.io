@@ -9,11 +9,11 @@ class ControlPanel{
 
     this.selectcontainer = createDiv('');
     this.selectcontainer.position(10,10);
-    this.selectcontainer.id("selectcontainer");
+    this.selectcontainer.class("selectcontainer");
 
     this.container = createDiv('');
     this.container.position(10,40);
-    this.container.id("maincontainer");
+    this.container.class("maincontainer");
 
     this.statMaxLength = 4 * 2*width/3;
     this.STATISTICS = [];
@@ -107,42 +107,44 @@ class ControlPanel{
     // // selectcontainer.parent(this.container);
     for(var i=0; i<this.SELECTS.length; i++){
       var container_i = createDiv("");
-      container_i.id("selectcontainerChild");
+      container_i.class("selectcontainerChild");
       container_i.parent(this.selectcontainer);
-      this.SELECTS[i].id("select")
+      this.SELECTS[i].class("select")
       this.SELECTS[i].parent(container_i);
       this.SELECTTEXTS[i].parent(container_i);
     }
 
     var checkboxcontainer = createDiv("");
-    checkboxcontainer.id("container")
+    checkboxcontainer.class("container")
     checkboxcontainer.parent(this.container)
     for(var i=0; i<this.CHECKBOX.length; i++){
       this.CHECKBOX[i].parent(checkboxcontainer);
     }
 
     var slidercontainer = createDiv("");
-    slidercontainer.id("container")
+    slidercontainer.class("container")
     slidercontainer.parent(this.container)
     for(var i=0; i<this.SLIDERS.length; i++){
       var container_i = createDiv("");
-      container_i.id("entrycontainer");
+      container_i.class("entrycontainer");
       container_i.parent(slidercontainer)
       this.SLIDERS[i].parent(container_i);
       this.SLIDERS[i].attribute("value",this.SLIDERS[i].value())
-      this.SLIDERTEXTS[i].id("slidertext")
+      this.SLIDERTEXTS[i].class("slidertext")
       this.SLIDERTEXTS[i].parent(container_i)
     }
 
     var dnaboxcontainer = createDiv("")
-    dnaboxcontainer.id("container")
+    dnaboxcontainer.class("container")
     dnaboxcontainer.parent(this.container)
 
     this.DNAinput = createInput();
     this.DNAinput.parent(dnaboxcontainer)
 
     this.DNAbox = createDiv(str(globalDNA));
-    this.DNAbox.id("DNAbox")
+    this.DNAbox.class("DNAbox")
+    this.DNAbox.id("dnaBox")
+    this.DNAbox.attribute("onclick","CopyToClipboard('dnaBox')")
     this.DNAbox.parent(dnaboxcontainer)
   }
 
