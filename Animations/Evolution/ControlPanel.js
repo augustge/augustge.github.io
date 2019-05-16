@@ -3,14 +3,13 @@
 
 class ControlPanel{
   constructor(){
-    this.introduction = createDiv("<h1>EVOLUTION</h1>Welcome! In the 'Animation' screen, you can monitor the behaviour of the species that have evolved as they navigate the terrain. Each of these creatures have a unique brain. The brain of best creature (according to some arbitrary metric) is displayed in the 'Brain dynamics' screen. In the 'Controlpanel' screen you can adjust parameters for the terrain, creature mutation and creature health. If you press 'space' a DNA strand will appear in the control panel. Any valid DNA strand can be copied into the input box. Choosing the 'makeboid' option in the controlpanel then allows you (when in the animation screen) to place this creature in the terrain.");
+    this.introduction = select("#introduction")
     this.introduction.position(0,0);
-    this.introduction.id("introduction")
     this.introduction.hide()
 
     this.selectcontainer = createDiv('');
     this.selectcontainer.position(10,10);
-    this.selectcontainer.id("maincontainer");
+    this.selectcontainer.id("selectcontainer");
 
     this.container = createDiv('');
     this.container.position(10,40);
@@ -108,7 +107,7 @@ class ControlPanel{
     // // selectcontainer.parent(this.container);
     for(var i=0; i<this.SELECTS.length; i++){
       var container_i = createDiv("");
-      container_i.id("selectcontainer");
+      container_i.id("selectcontainerChild");
       container_i.parent(this.selectcontainer);
       this.SELECTS[i].id("select")
       this.SELECTS[i].parent(container_i);
@@ -140,7 +139,6 @@ class ControlPanel{
     dnaboxcontainer.parent(this.container)
 
     this.DNAinput = createInput();
-    this.DNAinput.attribute("description","Wriphjbds")
     this.DNAinput.parent(dnaboxcontainer)
 
     this.DNAbox = createDiv(str(globalDNA));

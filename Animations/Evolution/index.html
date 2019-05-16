@@ -13,20 +13,38 @@
         <!-- <script src="libs/addons/p5.dom.js"></script> -->
         <!-- <script src="libs/addons/p5.sound.js"></script> -->
 
-
+        <script src="Main.js"></script>
+        <script src="Events.js"></script>
+        <script src="ControlPanel.js"></script>
+        <script src="Terrain.js"></script>
+        <script src="Matrix.js"></script>
+        <script src="Brain.js"></script>
+        <script src="HelperFunctions.js"></script>
+        <script src="Boid.js"></script>
+        <script src="StatsCollector.js"></script>
 
     </head>
 
     <body>
-      <script src="Main.js"></script>
-      <script src="Events.js"></script>
-      <script src="ControlPanel.js"></script>
-      <script src="Terrain.js"></script>
-      <script src="Matrix.js"></script>
-      <script src="Brain.js"></script>
-      <script src="HelperFunctions.js"></script>
-      <script src="Boid.js"></script>
-      <script src="StatsCollector.js"></script>
+
+      <div id="introduction">
+        <h1>EVOLUTION</h1>
+        Welcome!
+        In the <i>Animation</i> screen, you can monitor the behaviour of the species that have evolved as they navigate the terrain. Each of these creatures have a unique brain. The brain of the best creature (according to some arbitrary metric) is displayed in the <i>Brain dynamics</i> screen. In the <i>Controlpanel</i> screen you can adjust parameters for the terrain, creature mutation and creature health. If you press <i>space</i> a DNA strand will appear in the control panel. Any valid DNA strand can be copied into the input box above the DNA printout box. Choosing the <i>makeboid</i> option in the top select then allows you (when in the animation screen) to place this creature in the terrain.
+        <p>
+        Here is a list of key controls
+        <ul>
+          <li><div class="colorblock">+/-       </div>
+            Zoom in and out in the animation screen </li>
+          <li><div class="colorblock">0/1/2/3/4 </div>
+            Jump between different panes </li>
+          <li><div class="colorblock">Arrows    </div>
+            Translate terrain in animation mode </li>
+          <li><div class="colorblock">Space     </div>
+            Print DNA of best boid </li>
+        </ul>
+      </div>
+
 
     </body>
 

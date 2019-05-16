@@ -195,6 +195,7 @@ class Object{
         boid.die()
         this.health = min(this.health+boid.health,this.maxHealth)//healthGainBoidEat
       }
+      this.displayAttackOn(boid);
     }
   }
 
@@ -257,8 +258,15 @@ class Object{
     this.BRAIN.imitateBrain(brain)
   }
 
-  display(i,j){
+  displayAttackOn(boid){
+    noStroke()
+    fill(255,0,0,100)
+    var i = (boid.x-I+Nx)%Nx;
+    var j = (boid.y-J+Ny)%Ny;
+    ellipse(dx*i,dy*j,2*dx,2*dy)
+  }
 
+  display(i,j){
     strokeWeight(0.5)
     if(bestBoid==this){ stroke(255,0,0); }else{ stroke(0); }
     fill(this.color);

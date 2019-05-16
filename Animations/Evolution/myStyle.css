@@ -11,6 +11,18 @@ div {
   display: inline-block;
 }
 
+
+#selectcontainer {
+  margin: 2% 2% 2% 2%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+#selectcontainerChild {
+  display: inline-block;
+}
+
 #maincontainer {
   margin: 5% 5% 5% 5%;
   display: flex;
@@ -33,10 +45,6 @@ div {
   width: 50%;
 }
 
-#selectcontainer {
-  display: inline-block;
-}
-
 
 h1 {
   color: #67B8DE;
@@ -44,7 +52,7 @@ h1 {
   font-family: Baskerville, helvetica;
   text-align: center;
   padding-top: 50%;
-  padding-bottom: 50%;
+  padding-bottom: 25%;
 }
 
 #introduction {
@@ -52,10 +60,11 @@ h1 {
   color: white;
   height: 100%;
   padding-top: 50px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: justify;
   word-wrap: break-word;
-  font-size: 14px;
+  font-size: 16px;
   font-family: Baskerville, helvetica;
 }
 
@@ -117,12 +126,6 @@ input[type="range"] {
   font-size: 6px;
 }
 
-input[type=text] :before {
-  top: 5px;
-  position: absolute;
-  color: white;
-  content: attr(description);
-}
 
 input[type=text] {
   background-color: rgb(89,73,42);
@@ -145,4 +148,18 @@ input[type=checkbox] {
 #select {
   margin: 0 10px 0 50px;
   display: inline-block;
+}
+
+
+ul {
+  list-style: none;
+    padding-left: 10px;
+}
+
+.colorblock {
+  font-family: 'helvetica neue', helvetica;
+  text-align: right;
+  color: #65A603;
+  margin-right: 10px;
+  width: 80px;
 }
