@@ -16,7 +16,7 @@ function keyPressed(){
   }else if(keyCode==40){ // DOWN
     J += 6;   J = (J+Ny)%Ny
   }else if(keyCode==13){ // ENTER
-    CONTROLPANEL.DNAinput.value = "";
+    CONTROLPANEL.DNAinput.value("");
   }else if(keyCode==189 && windowX<=Nx-6){ // -
     windowX += 6;
     I -= 3; J -= int(3*height/width);
