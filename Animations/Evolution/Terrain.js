@@ -3,6 +3,7 @@
 // ============ STATIONARY   ============
 class Stationary{
   constructor(x,y){
+    this.history = 0; // currently not used!
     this.x = x;
     this.y = y;
     this.localID = 1.0/(1+exp(-terrainContrast*(noise(x/terrainScale,y/terrainScale)-0.5)));
@@ -41,6 +42,7 @@ class Stationary{
   }
 
   do(){
+    this.history /= 1.1;
     if(this.type=="GRASS"){
       this.grow(); // grow, reproduce, ...
     }else if(this.type=="WATER"){
@@ -78,6 +80,9 @@ class Stationary{
       fill(this.color);
       rect(dx*i,dy*j,dx,dy);
     }
+    // Can be used for scent implementation?
+    // fill(0,255*this.history)
+    // rect(dx*i,dy*j,dx,dy);
 
   }
 }

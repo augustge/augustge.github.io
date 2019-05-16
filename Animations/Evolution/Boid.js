@@ -85,10 +85,11 @@ class Object{
     this.BRAIN.constructFromDNA(brainDNA)
   }
 
-  do(){
+  do(display=false){
     if(this.hasNotMoved){
+      MATRIX.M[int(this.x)][int(this.y)][0].history = 1;
       var sensed = this.sense();
-      this.handleResponse(this.BRAIN.think(sensed))
+      this.handleResponse(this.BRAIN.think(sensed),display)
       this.live();
       this.hasNotMoved = false;
     }
@@ -143,12 +144,12 @@ class Object{
 
 
 
-  handleResponse(response){
+  handleResponse(response,display=false){
     if(response[0]>0.0 && !this.carnivorous){this.eat();}
     if(response[1]>0.0){this.reproduce();}
     this.move(response[2]);
     this.turn(response[3]);
-    if(response[4]>0.0){this.attack();}
+    if(response[4]>0.0){this.attack(display);}
   }
 
   live(){
@@ -183,7 +184,7 @@ class Object{
     }
   }
 
-  attack(){
+  attack(display=false){
     this.health -= healthLossPerAttack; // even when nothing in front
     var i = int((this.x + this.dir[0]+Nx)%Nx);
     var j = int((this.y + this.dir[1]+Ny)%Ny);
@@ -195,7 +196,7 @@ class Object{
         boid.die()
         this.health = min(this.health+boid.health,this.maxHealth)//healthGainBoidEat
       }
-      this.displayAttackOn(boid);
+      if(display){this.displayAttackOn(boid);}
     }
   }
 
@@ -263,7 +264,7 @@ class Object{
     fill(255,0,0,100)
     var i = (boid.x-I+Nx)%Nx;
     var j = (boid.y-J+Ny)%Ny;
-    ellipse(dx*i,dy*j,2*dx,2*dy)
+    ellipse(dx*i,dy*j,dx,dy)
   }
 
   display(i,j){

@@ -44,13 +44,13 @@ function Matrix(Nx,Ny){
     }
   }
 
-  this.do = function(){
+  this.do = function(display=false){
     var boidScore = 0;
     for(var i=0; i<this.Nx; i++){
       for(var j=0; j<this.Ny; j++){
         this.M[i][j][0].do();
         if(this.M[i][j][1]!=null){
-          this.M[i][j][1].do();
+          this.M[i][j][1].do(display);
         }
       }
     }

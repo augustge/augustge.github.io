@@ -160,7 +160,7 @@ function draw(){
     // MATRIX.display(I,J,windowX,windowY);
     MATRIX.displayBackground(I,J,windowX,windowY);
     MATRIX.displayToplayer(I,J,windowX,windowY);
-    STATS.boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do(display=true);
     MATRIX.refill();
     CONTROLPANEL.statisticsAccounting()
     fill(255);
