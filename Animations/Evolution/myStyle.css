@@ -114,12 +114,13 @@ input[type="range"] {
 
 
 .DNAbox {
-  background-color: rgb(89,73,42);
-  color: white;
+  background-color: rgb(39,89,2);
+  color: black;
   border: 5px;
   border-radius: 5px;
   margin-top: 5px;
   padding: 5px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
   width: 50%;
   display: block;
   word-wrap: break-word;
