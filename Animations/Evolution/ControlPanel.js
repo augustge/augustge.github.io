@@ -102,6 +102,11 @@ class ControlPanel{
     this.SLIDERTEXTS.push( createDiv("Carnivorous mutation [severity]"));
     this.SLIDERS.push(     createSlider(0, 0.5, DNAinfo.mutationSeverity[1] ,0.001) );
 
+    this.SLIDERTEXTS.push( createDiv("Reproductive age mutation [prob]"));
+    this.SLIDERS.push(     createSlider(0, 10, DNAinfo.mutationProb[3] ,0.01) );
+    this.SLIDERTEXTS.push( createDiv("Reproductive age mutation [severity]"));
+    this.SLIDERS.push(     createSlider(0, 0.5, DNAinfo.mutationSeverity[3] ,0.001) );
+
     this.SLIDERTEXTS.push( createDiv("Senselength mutation [prob]"));
     this.SLIDERS.push(     createSlider(0, 10, DNAinfo.mutationProb[6] ,0.01) );
     this.SLIDERTEXTS.push( createDiv("Senselength mutation [severity]"));
@@ -205,6 +210,8 @@ class ControlPanel{
     DNAinfo.mutationSeverity[0]     = this.SLIDERS[i].value(); i++;
     DNAinfo.mutationProb[1]         = this.SLIDERS[i].value(); i++;
     DNAinfo.mutationSeverity[1]     = this.SLIDERS[i].value(); i++;
+    DNAinfo.mutationProb[3]         = this.SLIDERS[i].value(); i++;
+    DNAinfo.mutationSeverity[3]     = this.SLIDERS[i].value(); i++;
     DNAinfo.mutationProb[6]         = this.SLIDERS[i].value(); i++;
     DNAinfo.mutationSeverity[6]     = this.SLIDERS[i].value(); i++;
     DNAinfo.mutationProb[7]         = this.SLIDERS[i].value(); i++;

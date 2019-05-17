@@ -3,8 +3,8 @@
 *** Preset DNA content
 DNA[0]   : color 1 -- hasMemory (memoryBlocks if #>1)
 DNA[1]   : color 2 -- carnivorous
-DNA[2]   : color 3
-DNA[3]   :
+DNA[2]   :
+DNA[3]   : reproductive Age
 DNA[4]   :
 DNA[5]   :
 DNA[6]   : senseLength
@@ -34,9 +34,6 @@ class Object{
     this.eats     = 0;
     this.children = 0;
     this.moves    = 0;
-    // Mutateable
-    this.reproductiveAge = 200;
-    this.ageLossAge = 5*this.reproductiveAge;
 
     this.dir = [0,1];
     this.age = 0;
@@ -44,13 +41,17 @@ class Object{
     this.maxHealth    = maxHealth//*DNA[3];
     this.health       = maxHealth//*random(0.1,0.4);
 
-    var B             = 55+int(200*DNA[0]) //colorwheel(120, 0.3, 6.28*DNA[0])
-    var R             = 55+int(200*DNA[1]) //colorwheel(120, 5.3, 6.28*DNA[1])
-    var G             = 55+int(200*DNA[2]) //colorwheel(120, 2.9, 6.28*DNA[2])
+    var B             = 55+int(200*DNA[0])
+    var R             = 55+int(200*DNA[1])
+    // var G             = 55+int(200*DNA[2])
+    var G             = 0
     this.color        = color(R,G,B)
 
-    this.memoryBlocks  = int(5*DNA[0]-1);
-    this.hasMemory    = this.memoryBlocks>0;
+    this.reproductiveAge = int(500*DNA[3]);
+    this.ageLossAge      = this.reproductiveAge;
+
+    this.memoryBlocks   = int(5*DNA[0]-1);
+    this.hasMemory      = this.memoryBlocks>0;
 
     this.carnivorous  = DNA[1]>0.5;
 
@@ -87,6 +88,7 @@ class Object{
   }
 
   do(display=false){
+    this.color.levels[1]=this.getLifeSpecifics() // setting greenness
     if(this.hasNotMoved){
       MATRIX.M[int(this.x)][int(this.y)][0].history = 1; // not used
       var sensed = this.sense();
@@ -94,6 +96,10 @@ class Object{
       this.live();
       this.hasNotMoved = false;
     }
+  }
+
+  getLifeSpecifics(){ // for green color
+    return 55+200*(0.6/(1+exp(0.2*(this.age-this.reproductiveAge)))+0.4/(1+exp(0.2*(this.health-this.maxHealth))))
   }
 
   sense(){
@@ -158,7 +164,7 @@ class Object{
     healthLoss += this.rayPoints*this.rays*healthLossPerSense
     healthLoss += this.BRAIN.stacks*this.BRAIN.layers*0.0001
     if(this.age>this.ageLossAge){
-      healthLoss += this.age*healthLossPerAge
+      healthLoss += (this.age-this.ageLossAge)*healthLossPerAge
     }
     healthLoss += this.maxHealth/maxHealth*healthLossPerMaxHealth
     if(this.hasMemory){
