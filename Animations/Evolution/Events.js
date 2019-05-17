@@ -51,7 +51,7 @@ function keyPressed(){
 
 
 function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight);
+  resizeCanvas(window.innerWidth-10, window.innerHeight-10);
   windowY   = windowX*windowHeight/windowWidth;
   dx = width/windowX;
   dy = height/windowY;

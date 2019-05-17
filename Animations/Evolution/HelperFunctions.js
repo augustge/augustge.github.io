@@ -14,10 +14,6 @@ function DNAdiff(boid1,boid2){
   return sqrt(diff)
 }
 
-function colorwheel(a,theta,x){
-  return a*(1+cos(theta+x))
-}
-
 function boidMetric(boid){
   return 20*boid.health + 10*boid.children + 5*boid.eats + boid.moves + boid.age/float(healthLossPerTime+healthLossPerMove+healthLossPerBirth)
 }
@@ -78,6 +74,11 @@ function CopyToClipboard(containerid) {
     print(selection,range)
     document.execCommand("Copy");
   }
+}
+
+
+function colorwheel(a,theta,x){
+  return a*(1+cos(theta+x))
 }
 
 

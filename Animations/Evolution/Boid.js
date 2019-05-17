@@ -1,12 +1,12 @@
 /*
 
 *** Preset DNA content
-DNA[0]   : color 1
-DNA[1]   : color 2
+DNA[0]   : color 1 -- hasMemory (memoryBlocks if #>1)
+DNA[1]   : color 2 -- carnivorous
 DNA[2]   : color 3
-DNA[3]   : maxHealth
-DNA[4]   : hasMemory (memoryBlocks if #>1)
-DNA[5]   : carnivorous
+DNA[3]   :
+DNA[4]   :
+DNA[5]   :
 DNA[6]   : senseLength
 DNA[7]   : FOV
 DNA[8]   : rays
@@ -41,18 +41,19 @@ class Object{
     this.dir = [0,1];
     this.age = 0;
 
-    var R             = colorwheel(120, 0.3, 6.28*DNA[0])
-    var G             = colorwheel(120, 5.3, 6.28*DNA[1])
-    var B             = colorwheel(120, 2.9, 6.28*DNA[2])
-    this.color        = color(R,G,B)
-
     this.maxHealth    = maxHealth//*DNA[3];
     this.health       = maxHealth//*random(0.1,0.4);
 
-    this.memoryBlocks  = int(5*DNA[4]-1);
+    var B             = 55+int(200*DNA[0]) //colorwheel(120, 0.3, 6.28*DNA[0])
+    var R             = 55+int(200*DNA[1]) //colorwheel(120, 5.3, 6.28*DNA[1])
+    var G             = 55+int(200*DNA[2]) //colorwheel(120, 2.9, 6.28*DNA[2])
+    this.color        = color(R,G,B)
+
+    this.memoryBlocks  = int(5*DNA[0]-1);
     this.hasMemory    = this.memoryBlocks>0;
 
-    this.carnivorous  = DNA[5]>0.5;
+    this.carnivorous  = DNA[1]>0.5;
+
     this.senseLength  = 20*DNA[6];
     this.FOV          = 3.1415*DNA[7];
     this.rays         = int(10*DNA[8]);
@@ -87,7 +88,7 @@ class Object{
 
   do(display=false){
     if(this.hasNotMoved){
-      MATRIX.M[int(this.x)][int(this.y)][0].history = 1;
+      MATRIX.M[int(this.x)][int(this.y)][0].history = 1; // not used
       var sensed = this.sense();
       this.handleResponse(this.BRAIN.think(sensed),display)
       this.live();
@@ -136,7 +137,6 @@ class Object{
       for(var k=0; k<this.memoryBlocks; k++){
         sensed[inputs-1-k]   = this.BRAIN.out[outputs-1-k]
       }
-
     }
     this.sensed = sensed;
     return sensed;
@@ -179,7 +179,7 @@ class Object{
     var healthgain = healthGrainPerEat*freshness;
     if(MATRIX.M[int(this.x)][int(this.y)][0].life>grassEdibilityThreshold){
       this.health = min(this.health+healthgain,this.maxHealth)
-      MATRIX.M[int(this.x)][int(this.y)][0].life /= 2.;
+      MATRIX.M[int(this.x)][int(this.y)][0].life /= 2.; // SHOULD BE FIXED!!
       this.eats++;
     }
   }
@@ -201,6 +201,7 @@ class Object{
   }
 
   die(){
+    // IMPROVE!!!
     uncountBoid(MATRIX.M[int(this.x)][int(this.y)][1])
     MATRIX.M[int(this.x)][int(this.y)][1] = null;
     // STATS.boidCount--;
@@ -357,9 +358,9 @@ function mutateDNA(oldDNA){
   // basic DNA
   for(var k=0; k<10; k++){
     var newDNAkey = oldDNA[k]
-    if(random(100)<DNAinfo.mutationProb){
+    if(random(100)<DNAinfo.mutationProb[k]){
       // newDNAkey += random(-DNAinfo.mutationSeverity,DNAinfo.mutationSeverity);
-      newDNAkey += randomGaussian(0, DNAinfo.mutationSeverity);
+      newDNAkey += randomGaussian(0, DNAinfo.mutationSeverity[k]);
       newDNAkey = max(min(newDNAkey,1),0);
     }
     DNA.push(newDNAkey);
@@ -399,14 +400,14 @@ function mutateDNA(oldDNA){
     layerDNA = max(min(layerDNA,1),0)
   }
   DNA.push( layerDNA );
-  var oldmemoryBlocks = int(5*oldDNA[4]-1);
+  var oldmemoryBlocks = int(5*oldDNA[0]-1);
   var oldinputs  = 4+(int(10*   oldDNA[8])+1)*int(10*   oldDNA[9]);
   var oldoutputs = 5;
   if(oldmemoryBlocks>0){
     oldinputs  += oldmemoryBlocks;
     oldoutputs += oldmemoryBlocks;
   }
-  var memoryBlocks = int(5*DNA[4]-1);
+  var memoryBlocks = int(5*DNA[0]-1);
   var inputs  = 4+(int(10*   DNA[8])+1)*int(10*   DNA[9]);
   var outputs = 5;
   if(memoryBlocks>0){

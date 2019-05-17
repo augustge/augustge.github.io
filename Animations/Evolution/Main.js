@@ -5,7 +5,6 @@
 
 // SMALL FIXES
 (*) Add smell (neighbor block fingerprint)
-(*) Add attack visuals
 (*) Add "sexually reproduce with neighbor" response
 (*) Add thirst & drink properties
 (*) Improve stats pane -- adujstable + noRedraw/storage needed
@@ -18,6 +17,7 @@
 (*) Prettify CSS
 (*) Add n x inputs + STACKS + outputs for memory blocks
 (*) Separate DNA mutators to make them adjustable in controlpanel
+(*) Add grid of living boids
 
 */
 
@@ -27,12 +27,12 @@
 
 
 // globalDNA = [
-//   0: color 1
-//   1: color 2
+//   0: color 1 -- hasMemory (memoryBlocks if #>1)
+//   1: color 2 -- carnivorous (if >0.5)
 //   2: color 3
-//   3: maxHealth
-//   4: hasMemory (memoryBlocks if #>1)
-//   5: carnivorous
+//   3:
+//   4:
+//   5:
 //   6: senseLength
 //   7: FOV
 //   8: rays
@@ -43,7 +43,7 @@
 //     0,0,0,0,0,  0,0,0,0,0,  0,0,0,0,0,    1,0,0, 0,1,0, 0,0,1,   0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0
 // ]
 
-globalDNA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+globalDNA = [0.1, 0.4, 0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 // ------- GENERAL
 var Nx        = 13*30;
@@ -59,7 +59,7 @@ var Screen    = "Information";
 // ------- ENVIRONMENT
 var num                       = 55  // grass fertility noise
 var falloff                   = 0.5 // grass fertility noise
-var terrainScale              = 15
+var terrainScale              = 10
 var terrainContrast           = 20.
 var grassGrowth              = 0.01
 var spreadGrowth             = 0.001
@@ -85,11 +85,12 @@ var boidRefillBarrier     = 50;
 var attackHarm            = 400;
 var carnivorousGain       = 8.5;
 var DNAinfo = {
-  "mutationProb"          : 1.0,
-  "mutationSeverity"      : 0.05,
+  "mutationProb"          : [ 1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0],
+  "mutationSeverity"      : [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05],
   "mutationProbPxResp"    : 0.,
   "mutationSeverityPxResp": 0.01
 }
+
 
 // ------- STATS
 var STATS = {
@@ -117,9 +118,6 @@ var drawHealth            = false;
 var drawSensedBlocks      = true;
 
 
-// ------- EVENTS
-var onclick = "DIG";
-
 // ------- DUMMYs
 var MATRIX,CONTROLPANEL,dx,dy;
 var Cdirt1, Cdirt2, Cgrass1, Cgrass2, Cwater;
@@ -127,7 +125,7 @@ var bestBoid;
 
 
 function setup(){
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(window.innerWidth-10, window.innerHeight-10);
   // frameRate(100);
   initateScenario();
 }
@@ -148,7 +146,7 @@ function initateScenario(){
 
 function draw(){
   if(CONTROLPANEL.PANELSELECT.value()=="Information"){
-    STATS.boidCount = MATRIX.do();
+    STATS.boidCount = MATRIX.do(display=true);
     MATRIX.refill();
     CONTROLPANEL.updateValues();
     CONTROLPANEL.statisticsAccounting();
@@ -198,7 +196,7 @@ function draw(){
   }
 
   if(CONTROLPANEL.PANELSELECT.value()!=Screen){
-    if(CONTROLPANEL.PANELSELECT.value()=="Introduction"){
+    if(CONTROLPANEL.PANELSELECT.value()=="Information"){
       CONTROLPANEL.introduction.show()
       CONTROLPANEL.container.hide()
     }else if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
