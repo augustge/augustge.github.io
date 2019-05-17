@@ -147,9 +147,7 @@ function initateScenario(){
 function draw(){
   if(CONTROLPANEL.PANELSELECT.value()=="Information"){
     STATS.boidCount = MATRIX.do(display=true);
-    MATRIX.refill();
     CONTROLPANEL.updateValues();
-    CONTROLPANEL.statisticsAccounting();
     CONTROLPANEL.introduction.show();
   }else if(CONTROLPANEL.PANELSELECT.value()=="Animation"){
     background(Cdirt2)
@@ -159,21 +157,17 @@ function draw(){
     MATRIX.displayBackground(I,J,windowX,windowY);
     MATRIX.displayToplayer(I,J,windowX,windowY);
     STATS.boidCount = MATRIX.do(display=true);
-    MATRIX.refill();
-    CONTROLPANEL.statisticsAccounting()
     fill(255);
     text(bestBoid.age, 10, 30);
     text(STATS.boidCount, 10, 40);
     text(boidRefillBarrier,10,60);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Brain dynamics"){
     STATS.boidCount = MATRIX.do();
-    MATRIX.refill();
     background(0);
     translate(0.1*width, 0.1*height);
     var sx = min(0.8*width/(bestBoid.BRAIN.layers+2),width/7);
     var sy = 0.8*height/max(bestBoid.BRAIN.stacks,bestBoid.BRAIN.inputs,bestBoid.BRAIN.outputs)
     bestBoid.BRAIN.display(sx,sy);
-    CONTROLPANEL.statisticsAccounting()
     fill(255);
     text(bestBoid.age, -50, 30);
     text(STATS.boidCount, -50, 40);
@@ -181,19 +175,26 @@ function draw(){
   }else if(CONTROLPANEL.PANELSELECT.value()=="Controlpanel"){
     background(0);
     STATS.boidCount = MATRIX.do();
-    MATRIX.refill();
     CONTROLPANEL.updateValues();
-    CONTROLPANEL.statisticsAccounting();
     fill(255,0,0)
     text(STATS.boidCount, width-50, height-50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Statistics"){
     background(255);
     strokeWeight(1);
     STATS.boidCount = MATRIX.do();
-    MATRIX.refill();
-    CONTROLPANEL.statisticsAccounting()
     drawGraph(CONTROLPANEL.STATISTICS)
+  }else if(CONTROLPANEL.PANELSELECT.value()=="Geodynamics"){
+    blendMode(DIFFERENCE)
+    background(3,50)
+    blendMode(NORMAL)
+    strokeWeight(1);
+    noStroke();
+    MATRIX.displayToplayer(I,J,windowX,windowY);
+    STATS.boidCount = MATRIX.do(display=true);
   }
+
+  MATRIX.refill();
+  CONTROLPANEL.statisticsAccounting()
 
   if(CONTROLPANEL.PANELSELECT.value()!=Screen){
     if(CONTROLPANEL.PANELSELECT.value()=="Information"){

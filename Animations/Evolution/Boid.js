@@ -275,9 +275,21 @@ class Object{
   }
 
   display(i,j){
+    if(CONTROLPANEL.CHECKBOX[2].checked()){// 'Display carnivorousity only'
+      var showcolor = color(this.color.levels[0],0,0)
+    }else if(CONTROLPANEL.CHECKBOX[3].checked()){// 'Display memory only'
+      var showcolor = color(0,0,this.color.levels[2])
+    }else if(CONTROLPANEL.CHECKBOX[4].checked()){// 'Display health only'
+      var showcolor = color(0,this.color.levels[1],0)
+    }else{
+      var showcolor = this.color;
+    }
+
+
+
     strokeWeight(0.5)
     if(bestBoid==this){ stroke(255,0,0); }else{ stroke(0); }
-    fill(this.color);
+    fill(showcolor);
     var i = (this.x-I+Nx)%Nx;
     var j = (this.y-J+Ny)%Ny;
     var r = this.maxHealth/maxHealth
@@ -289,16 +301,6 @@ class Object{
     ellipse(dx*i,dy*j,0.6*r*dx,0.6*r*dy); // main body
     if(this.hasMemory){
       ellipse(dx*i,dy*j,0.4*r*dx,0.4*r*dy);
-    }
-
-    if(drawHealth){
-      noStroke();
-      if(bestBoid==this){
-        fill(255,0,0,100);
-      }else{
-        fill(0,255,0,50);
-      }
-      ellipse(dx*i,dy*j,10*dx*this.health/float(this.maxHealth),10*dy*this.health/float(this.maxHealth));
     }
 
     if(drawSensedBlocks){

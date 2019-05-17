@@ -45,6 +45,9 @@ function keyPressed(){
   }else if(keyCode==52){ // 4
     CONTROLPANEL.PANELSELECT.value("Statistics");
     CONTROLPANEL.showAll();
+  }else if(keyCode==53){ // 5
+    CONTROLPANEL.PANELSELECT.value("Geodynamics");
+    CONTROLPANEL.showAll();
   }
   return false;
 }

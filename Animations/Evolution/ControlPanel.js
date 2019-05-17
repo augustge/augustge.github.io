@@ -30,6 +30,7 @@ class ControlPanel{
     this.PANELSELECT.option("Brain dynamics");
     this.PANELSELECT.option("Controlpanel");
     this.PANELSELECT.option("Statistics");
+    this.PANELSELECT.option("Geodynamics");
     // this.PANELSELECT.position(width-200,10);
     this.SELECTS.push(this.PANELSELECT)
     this.SELECTTEXTS.push(createDiv("Choose panel"))
@@ -130,8 +131,10 @@ class ControlPanel{
 
 
     this.CHECKBOX.push( createCheckbox('Show neuron value', false) );
-    this.CHECKBOX.push( createCheckbox('Draw boid-health', false) );
     this.CHECKBOX.push( createCheckbox('Draw sense-points', false) );
+    this.CHECKBOX.push( createCheckbox('Display carnivorousity only', false) );
+    this.CHECKBOX.push( createCheckbox('Display memory only', false) );
+    this.CHECKBOX.push( createCheckbox('Display health only', false) );
 
     //
     // var selectcontainer = createDiv("");
@@ -223,8 +226,7 @@ class ControlPanel{
 
 
     showNeuronValue       = this.CHECKBOX[0].checked();
-    drawHealth            = this.CHECKBOX[1].checked();
-    drawSensedBlocks      = this.CHECKBOX[2].checked();
+    drawSensedBlocks      = this.CHECKBOX[1].checked();
 
     for(var i=0; i<this.SLIDERS.length; i++){
       this.SLIDERS[i].attribute("value",this.SLIDERS[i].value())
