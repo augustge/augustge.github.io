@@ -15,33 +15,68 @@
 <!--    Remove all except the <<TEXT HERE>> section before publishing     -->
 <!--================================================================================================================-->
 
-<h1>General Relativity</h1>
+<h1>Why is spacetime curved?</h1>
+The concept of relativity is as old as physics itself. In a sense, it is the core of the universality of physics. If I observe a physical phenomenon, how does my observations relate to yours? In this text we shall focus on discussing the philosophical aspects of General relativity, while assuming a knowledge of multivariable calculus. Let us start at the beginning.
 
-<h1>Special Relativity</h1>
-The concept of relativity is as old as physics itself. The <i>Classical</i>, or <i>Gallilean</i>, relativity states that physical laws should be independent of your coordinate change as long as all coordinate systems considered are linearly related. Such systems are referred to as <i>inertial reference systems</i>. Generally in physics, every event can be specified by a time $t$ and a location $(x_1,x_2,x_3)$ in three-dimensional space. The classical assumption is that time and space is independent and that two inertial observers $O$ and $O'$ comparing the coordinates for the difference of two events will find that
+<h2>Galilean Relativity</h2>
+The <i>Classical</i>, or <i>Galilean</i>, relativity states that physical laws should be independent of your reference frame as long as all reference frames considered are linearly related. Such systems are referred to as <i>inertial reference systems</i>. Generally in physics, every event can be specified by a time $t$ and a location $\mathbf{x}=(x_1,x_2,x_3)$ in three-dimensional space, or a set thereof. For future convenience, let us denote a spacetime event $X$ by $(t,\mathbf{x})=(t,x_1,x_2,x_3)$, or $X=x_\mu \mathbf{e}_\mu$, where a sum over $\mu$ from $0$ to $3$ is to be understood. In fact, every time two equal greek letters appear as subscripts in the same term, a summation from $0$ to $3$ shall be understood.
+Similarly, for latin letters a summation from $1$ to $3$ shall be understood. Let us identify $x_i \mathbf{e}_i$ with the spatial location of the event $X$, and $x_0 \mathbf{e}_0$ with the temporal location. We shall hereby refer to the space of all events $X$ as <i>Spacetime</i>.
+<p/><p/>
+
+If two inertial observers $O$ and $O'$ are observing the same event $X$, we must have $x_\mu \mathbf{e}_\mu = x'_\mu \mathbf{e}_\mu'$. If $G$ denotes the matrix that relates them, i.e. $\mathbf{e}_\mu' = G_{\mu\nu}\mathbf{e}_\nu$, we must have $x_\mu' = G_{\mu\nu}^{-1}x_\nu$in order for the two events to refer to the same point in spacetime.
+Moreover, since we can write $x_\mu'$ as a function of $x_\mu$, we can use linearity of inertial transformations to identify
 \[
-  \delta t' = \delta t
-  \ \text{ and } \
-  \delta \mathbf{x}'^2 =  \delta \mathbf{x}^2
+  x_\mu' = \frac{\partial x_\mu'}{\partial x_\nu}x_\nu = G_{\mu\nu}^{-1}x_\nu
+  \implies
+  G_{\mu\nu}^{-1} \equiv \frac{\partial x_\mu'}{\partial x_\nu}
+  \text{ and }
+  G_{\mu\nu} \equiv \frac{\partial x_\mu}{\partial x_\nu'}
 \]
-where $(\delta t ,\delta \mathbf{x})$ is the observations of $O$ and  $(\delta t' ,\delta \mathbf{x}')$ is the observations of $O'$. If we let $M$ be a linear tranformation of three-dimensional space, then, since
+where the last identification follows from the chain rule.
+<p/><p/>
+
+The classical assumption of relativity is that time is independent of space. That is, for two reference frames $O$ and $O'$, we have
 \[
-  \delta \mathbf{x}'^2 = (M \delta \mathbf{x})^T (M \delta \mathbf{x})
-  \delta \mathbf{x}^T (M^T M) \delta \mathbf{x}
+  t'
+  =
+  \frac{\partial t'}{\partial x_\nu}x^\nu
+  \overset{!}{=}
+  \frac{\partial t'}{\partial t} t
+  \text{ and }
+  x_i'
+  = \frac{\partial x_i'}{\partial x_\nu}x^\nu
+  = \frac{\partial x_i'}{\partial x_j}x_j
+  + \frac{\partial x_i'}{\partial t}t.
 \]
-we must have $M^T M = \mathbb{I}$, where $\mathbb{I}$ is the indentity matrix, in order to respect gallilean relativity. That is, apart from translations, which are omitted here for simplicity, intertial reference frames are, in Gallilean relativity related by rotations.
-<p/>
-This perspective, however, is not in agreement with the observation that the speed of light is the same in every reference frame. For that, we would get
+Here, the factor $\frac{\partial t'}{\partial t}$ reminds us that the observers $O'$ and $O$ may choose a different speed of time. Observer $O$ can, for example, choose to refer to time in minutes, and $O'$ measures time in seconds. For the sake of beauty, let us hereby imagine a world where different observers always use the same units of measurement. Our constraint on the time coordinate then simplifies to $t'=t$. By the same argument, the transformation $\mathbf{x} \mapsto \mathbf{x}' = R\mathbf{x}$ cannot change the lengths ($R^TR=\mathbb{I}$) or orientations ($\det R > 0$). That is, it must be a three dimensional rotation.
+
+Lastly, the factor $\partial x_i'/\partial t$ refers to the velocity component $v_i'$ the observer $O$ has according to observer $O'$. This can be seen by letting the event $X$ be the presence of observer $O$, so that $\mathbf{x}=0$ and $\mathbf{x}'=\mathbf{v}'t$.
+<p/><p/>
+
+Let us now imagine that $O$ observes some object moving with constant velocity $\mathbf{u}$. That is, $\mathbf{x}=\mathbf{y}_0+\mathbf{u}t$. Then, if $O'$ does not have a rotated coordinate frame with respect to $O$, he will see a trajectory
 \[
-  \mathbf{v}'
-  = \frac{\delta \mathbf{x}'}{\delta t'}
-  = \frac{\delta \mathbf{x}}{\delta t}
+  \mathbf{x}' = \mathbf{x} + \mathbf{v}t = \mathbf{y}_0+(\mathbf{u}+\mathbf{v})t,
 \]
+where $\mathbf{v}$ is the velocity of $O$ as seen from $O'$. This is the physics we are used to. If you are on a train moving at $10m/s$ and throw a ball forwards with speed $10m/s$, someone standing on the ground will see the ball moving at $20m/s$. That is, relative velocities add.
 
 
 
 
 
+<h2>Special Relativity</h2>
+Special relativity was discovered through the realization that the speed of electromagnetic waves -- light -- is the same for all inertial observers. To remedy this, one is forced to relax the assumption that time is independent of space to give way to the constancy of the speed of light as a constraint between observers. Before embarking on this, however, it is worthwhile entertaining another, even more natural approach. The intention is to convince the reader that special relativity is not only natural, but philosophically preferred. Therefore, special relativity could -- and maybe even should -- have been developed by Isaac Newton or the ancient greeks.
+<p/><p/>
+
+Up to this point, we have implicitly assumed that there is no maximal speed. That is, objects can move arbitrarily fast with respect to one another. How can we know there isn't some speed limit? That is, how to we know there is no maximal speed an object can be seen to have? Even more problematic: How to we justify the choice of a speed limit? The natural answer when we have no clue about something is to avoid the choice all together. There is less choice in assuming there is no speed limit, so that seems to be a more safe assumption. On the other hand, if there is no speed limit, then wouldn't we expect some particles or planets from a distant part of the Universe to have an extremely large velocity and thus have bombarded the earth and other things along its way? And wouldn't some of the projectiles originating from such a collision have even larger velocities? How can it be that the Universe seems so stable? Moreover, if there is no speed limit, then how do we justify that everything we see around us seems to have roughly the same speeds? That is, why do we happen to exist in a reference frame with exactly this speed?
+Although there are answers to most of these questions, it seems any of the choices will bring with it a range of questions. Since we have implicitly entertained the idea of not having a speed limit in the previous section, we shall now entertain the idea that there is a speed limit.
+<p/><p/>
+
+Let us assume there is a maximal speed $c$ an observer can possibly observe. A problem arises if a person $P$ sees an object $O$ moving with maximal speed $c$, and the person $P'$ standing next to $P$ starts moving slowly with velocity $v$ (as seen from $P$) in the direction opposite to the object. Then, according to Galilean relativity, he must necessarily see the object moving with a slightly larger velocity $c+v$. Since $c$ is the speed limit, however, he must see the object moving with a speed $c$ or less -- not more! Imagine $P'$ saw the object move with a speed less than $c$.
+
+
+<!--
+Then the distance $P'O$ from $P'$ to $O$ would increase slower than the distance $PO$ between $P$ and $O$. But according to $P'$, the distance $P'O$ is exactly $P'P+PO$.
+-->
 
 
 
