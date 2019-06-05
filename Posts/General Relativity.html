@@ -15,21 +15,41 @@
 <!--    Remove all except the <<TEXT HERE>> section before publishing     -->
 <!--================================================================================================================-->
 
-<h1>General Relativity</h1>
+<h1>Why is Spacetime curved?</h1>
 
-<h1>Special Relativity</h1>
-The concept of relativity is as old as physics itself. The <i>Classical</i>, or <i>Gallilean</i>, relativity states that physical laws should be independent of your coordinate change as long as all coordinate systems considered are linearly related. Such systems are referred to as <i>inertial reference systems</i>. Generally in physics, every event can be specified by a time $t$ and a location $(x_1,x_2,x_3)$ in three-dimensional space. The classical assumption is that time and space is independent and that two inertial observers $O$ and $O'$ comparing the coordinates for the difference of two events will find that
+<!-- ========================================= -->
+<h2>Gallilean Relativity</h2>
+The concept of relativity is as old as physics itself. The <i>Classical</i>, or <i>Gallilean</i>, relativity states that physical laws should be independent of your coordinate frame as long as all coordinate systems considered are linearly related. Such systems are referred to as <i>inertial reference systems</i>. Generally in physics, every event can be specified by a time $t$ and a location $\mathbf{x}=(x_1,x_2,x_3)$ in three-dimensional space. The classical assumption is that time and space is independent and that two inertial observers $O$ and $O'$ comparing the coordinates for the difference of two events will find that
 \[
   \delta t' = \delta t
   \ \text{ and } \
   \delta \mathbf{x}'^2 =  \delta \mathbf{x}^2
 \]
-where $(\delta t ,\delta \mathbf{x})$ is the observations of $O$ and  $(\delta t' ,\delta \mathbf{x}')$ is the observations of $O'$. If we let $M$ be a linear tranformation of three-dimensional space, then, since
+where $(\delta t ,\delta \mathbf{x})$ is the observation of $O$ and  $(\delta t' ,\delta \mathbf{x}')$ is the observation of $O'$. If we let $R$ be a linear tranformation of three-dimensional space, then, since
 \[
-  \delta \mathbf{x}'^2 = (M \delta \mathbf{x})^T (M \delta \mathbf{x})
-  \delta \mathbf{x}^T (M^T M) \delta \mathbf{x}
+  \delta \mathbf{x}'^2 = (R \delta \mathbf{x})^T (R \delta \mathbf{x})
+  =
+  \delta \mathbf{x}^T (R^T R) \delta \mathbf{x}
+  \overset{!}{=}
+  \delta \mathbf{x}^2
 \]
-we must have $M^T M = \mathbb{I}$, where $\mathbb{I}$ is the indentity matrix, in order to respect gallilean relativity. That is, apart from translations, which are omitted here for simplicity, intertial reference frames are, in Gallilean relativity related by rotations.
+we must have $R^T R = \mathbb{I}$, where $\mathbb{I}$ is the indentity matrix, in order to respect gallilean relativity. That is, apart from translations, which are omitted here for simplicity, intertial reference frames are related by spatial rotations in Gallilean relativity. The time between two events is, however, assumed to be independent of the reference frame.
+
+Let us, for future convenience, write an event as $x_\mu \mathbf{e}_{(\mu)} = (t,x,y,z)$ where a sum over $\mu$ from 0 to 3 is to be understood. We can then express a linear transformation of our coordinates as
+\[
+  x_\mu \mathbf{e}_{\mu} \mapsto x'_\mu \mathbf{e}'_{\mu} =
+  x_\mu
+  \left(\frac{\partial x'_\mu}{\partial x_\nu} 
+  \mathbf{e}_{\nu}\right)
+  =
+  \left(
+    \frac{\partial x'_\mu}{\partial x_\nu} x_\nu
+  \right)\mathbf{e}_{\mu}
+\]
+
+
+<!-- ========================================= -->
+<h2>Special Relativity</h2>
 <p/>
 This perspective, however, is not in agreement with the observation that the speed of light is the same in every reference frame. For that, we would get
 \[
@@ -37,8 +57,6 @@ This perspective, however, is not in agreement with the observation that the spe
   = \frac{\delta \mathbf{x}'}{\delta t'}
   = \frac{\delta \mathbf{x}}{\delta t}
 \]
-
-
 
 
 
