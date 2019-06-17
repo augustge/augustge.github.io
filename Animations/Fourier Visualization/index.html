@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+        <link rel="stylesheet" type="text/css" href="myStyle.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    </head>
+
+    <body style='background-color:#2F343B;'>
+      <script src="fourierViz.js"></script>
+      <div id="sketch-holder"></div>
+
+      <h1 style="color: white; text-align: center;">Discrete Fourier Transform</h1>
+      <div style="color: white; text-align: center;">
+        If we use complex numbers for the plane, then points of the form $Z_0 + Re^{i\theta}$, where only theta is allowed to vary, will lie on the circle with radius $R$ centered at $Z_0$. Looking at the expression for a discrete Fourier Transform
+        \[
+          X_k = \sum_{n=0}^{N-1}x_n e^{\frac{2\pi i k n}{N}}
+        \]
+        we can then interpret the transform as a decomposition of a path $\{x_n\}$ in two dimensions into the same path explained by epicycles -- circles orbiting other circles. In the above simulation, you can draw an arbitrary path and see how the circles obtained from the discretized fourier transform approximates the curve. When you choose as many circles as points along the curve, then all points coincide.
+        <p>
+        Use <i style="color: yellow">SPACE</i> to remove the path, and <i style="color: yellow">ENTER</i> to remove the path drawn by the epicycles.
+      </div>
+
+    </body>
+
+
+
+</html>
