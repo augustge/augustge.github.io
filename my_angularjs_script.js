@@ -256,6 +256,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simple code for visualization of the diffusion-limited aggregation algorithm for computing particle aggregation in systems such as the Hele-Shaw cell.",
           reference: "DLA/",
           tag: $scope.tags["phys"]
+        },
+        {
+          name: "Fourier Visualization",
+          description: "This is a simple code for visualization of the discrete fourier transform using epicycles. You can draw an arbitrary graph and play with the number of circles (with amounts to a fourier filtering) and the parametrization speed.",
+          reference: "Fourier Visualization/",
+          tag: $scope.tags["math"]
         }
       ];
 
