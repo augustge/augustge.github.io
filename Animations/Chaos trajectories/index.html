@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+        <!-- <link rel="stylesheet" type="text/css" href="myStyle.css"> -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    </head>
+
+    <body>
+      <script src="ChaosVis.js"></script>
+
+      <div id="sketch-holder"></div>
+
+      <h1 style="text-align: center;">Lorentz Attractor</h1>
+      <div style="text-align: center;">
+        <!-- Modelling of heat convection. Parameter $\sigma$ is proportional to the
+        Prandtl number -- the momentum diffusivity per thermal diffusivity. $\rho$
+        corresponds to the Rayleigh number -- the rapidity of thermal transport via
+        diffusion per the rapidity of thermal transport via convection. The last
+        parameter, $\beta$ is related to the physical dimensions of the slab considered. -->
+        Here you can play with the system of equations known as the <i>Lorentz Attractor</i>:
+        \[
+        \frac{d}{dt}\left[\begin{matrix} x \\ y \\ z \end{matrix}\right]
+        =\left[\begin{matrix} \sigma(y-x) \\ x(\rho-z)-y \\ xy-\beta z \end{matrix}\right]
+        \]
+        More description will (possibly) come later. If not, you are invited to consult
+        the wikipedia page for a background.
+      </div>
+
+    </body>
+
+
+</html>

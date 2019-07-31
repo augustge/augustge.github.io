@@ -268,7 +268,15 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simple code for generating autostereograms -- a way of hiding 3D objects in 2D patterns. There is also a text explaining how it works... sadly, the dynamic autostereogram is too slow in its present state, and I don't feel like spending time making it work.",
           reference: "Autosterogram/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Chaos trajectories",
+          description: "This is a simulation for visualizing the dynamics of the Lorentz system and its bifurcation.",
+          reference: "Chaos trajectories/",
+          tag: $scope.tags["physics"]
         }
       ];
+
+
 
 });
