@@ -262,6 +262,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simple code for visualization of the discrete fourier transform using epicycles. You can draw an arbitrary graph and play with the number of circles (with amounts to a fourier filtering) and the parametrization speed.",
           reference: "Fourier Visualization/",
           tag: $scope.tags["math"]
+        },
+        {
+          name: "Autostereograms",
+          description: "This is a simple code for generating autostereograms -- a way of hiding 3D objects in 2D patterns. There is also a text explaining how it works... sadly, the dynamic autostereogram is too slow in its present state, and I don't feel like spending time making it work.",
+          reference: "Autosterogram/",
+          tag: $scope.tags["other"]
         }
       ];
 

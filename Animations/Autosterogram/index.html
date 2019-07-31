@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+        <!-- <link rel="stylesheet" type="text/css" href="myStyle.css"> -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    </head>
+
+    <body>
+      <script src="autostereogram.js"></script>
+
+      <div id="sketch-holder"></div>
+
+      <h1 style="text-align: center;">Autostereograms</h1>
+      <div style="text-align: justify;">
+        When we look at things with our eyes, the eye obtains information about an external object
+        from light whose trajectory is (mostly) a straight line from the object to the eye. Therefore,
+        the eye can only perceive a flat, two-dimensional projection of the three dimensional geometry
+        of the external object. However, if two eyes are directed toward the same external object,
+        they will generally receive different projections. Knowing the spatial separation of the eyes
+        our mind can then reconstruct the true shape of, and distance to, the external object.
+        Although immensely useful, this procedure is not fool proof. One example of this is in the
+        "spot the difference"-images, in which you are presented two almost identical images, and
+        you are asked to find the differences. Instead of aligning both eyes at one image at a time,
+        if you focus your eyes somewhere in the air above the images on the table, there is a point
+        in which a copy of the image would project similarly to both eyes as to the two images on
+        the table do. There is, therefore, no way (locally) for the eyes to distinguish a single
+        central image that is close, from two indentical images further away. In the case of the
+        "spot the difference"-images, this is actually a neat way to solve the puzzle. If you
+        focus your eyes on the place where the images would merge -- left eye looks at the right
+        image, and right eye looks at the left image -- then, in failing to make sense of the
+        differences in the images when they merge, the brain will display the differences as
+        flickering between the two options.
+        <p>
+        The same effect can be used to make hidden 3D objects out of flat patterns. Let $S(x,y)$
+        be the color of a planar pattern at the point $(x,y)$. Now, if $S$ is horizontally repeating,
+        i.e. $S(x,y)=S(x+W,y)$ for all $x,y$, then we will still perceive a flat pattern when
+        focusing on the image that merges the two copies of the pattern.
+        Let $(\pm d/2,0,0)$ be the co-ordinates of your eyes and consider an almost flat, imagined
+        surface $z=Z(x,y)$. The rays $\mathbf{r}_\pm(t)$ from the eyes to a point $(x,y,Z(x,y))$ on
+        the surface can be expressed by
+        \[
+          \mathbf{r}_\pm (t)
+          = \left[\pm \frac{d}{2} + t\left(x\mp \frac{d}{2}\right)\right]\mathbf{e}_x
+          +ty\mathbf{e}_y + tZ(x,y)\mathbf{e}_z.
+        \]
+        Extending these rays until they reach a plane at $z=L$, we find that $t=L/Z(X,Y)$, so that
+        the two resulting points in the flat $z=L$ plane corresponds to
+        \[
+          \mathbf{R}_\pm (t)
+          = \left[\frac{L}{Z}x \pm \frac{d}{2}\left(1-\frac{L}{Z}\right)\right]\mathbf{e}_x
+          +\frac{L}{Z}y\mathbf{e}_y + L\mathbf{e}_z.
+        \]
+        This will perhaps be more informative if we introduce $Z(x,y)=L_0+\delta z(x,y)$ and perturb to
+        first order around $\delta z=0$. Let us also omit the $z$-co-ordinate, knowing all points are in
+        the same plane. The result is then
+        \[
+        \begin{align*}
+          \mathbf{R}_\pm^{xy} (t)
+          &= \frac{L}{L_0+\delta z}x\mathbf{e}_x + \frac{L}{L_0+\delta z}y\mathbf{e}_y
+          \pm \frac{d}{2}\mathbf{e}_x \mp \frac{d}{2}\frac{L}{L_0+\delta z}\mathbf{e}_x \\
+          &\simeq \frac{L}{L_0}\left[x
+          \pm \frac{d}{2}\frac{L_0-L}{L}
+          -\left(x\mp \frac{d}{2}\right)\frac{\delta z}{L_0}\right]\mathbf{e}_x
+          +\frac{L}{L_0}\left[y
+          -\frac{\delta z}{L_0}y\right]\mathbf{e}_y.
+        \end{align*}
+        \]
+        The first thing we should note is that if our eyes is to believe the imagined image,
+        then both eyes should receive the same color. That is, the pattern on the plane at
+        $z=L$ should be horizontally repeating over a distance of
+        \[
+          \Delta x = d\frac{L_0(L_0-L)+L\delta z}{L_0^2}.
+        \]
+        The $(x,y)$-dependence of $\delta z$ makes it hard to extend this pattern indefinitely,
+        but at the end of the day, we only need neighbouring pairs of images to satisfy this relation.
+        It is then an easy task to create a patterned slice of width $\Delta x$, to the right of it,
+        we can copy the same pattern only distorting the pattern by the additional factor of
+        $dL\delta z(x,y)/L_0^2$. The next slice would then be a copy of this one, again performing an
+        additional distortion of $dL\delta z(x,y)/L_0^2$. The result of such a procedure can be enjoyed
+        in the image on top of this post.
+
+
+
+
+
+
+        <!-- There is 3D information detection from the lateral shifts (brain stereopsys skill);
+        This 3D information can not be detected at retina stage;
+        Detection happens somewhere that receives information from both eyes (binocular stage). -->
+
+      </div>
+
+    </body>
+
+
+</html>
