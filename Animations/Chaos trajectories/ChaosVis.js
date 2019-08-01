@@ -45,11 +45,11 @@ function setup(){
   sel.option('YZ dynamic');
   sel.option('Bifurcation X');
 
-  var rhoSlider = createSlider(-40, 40, rho, 0.0001)
+  var rhoSlider = createSlider(0, 80, rho, 0.0001)
   rhoSlider.position(20,40)
-  var sigmaSlider = createSlider(-20, 20, sigma, 0.0001)
+  var sigmaSlider = createSlider(0, 40, sigma, 0.0001)
   sigmaSlider.position(20,60)
-  var betaSlider = createSlider(-20, 20, beta, 0.0001)
+  var betaSlider = createSlider(0, 40, beta, 0.0001)
   betaSlider.position(20,80)
   SLIDERS.push( rhoSlider )
   SLIDERS.push( sigmaSlider )
