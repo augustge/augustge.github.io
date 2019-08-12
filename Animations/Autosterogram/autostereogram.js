@@ -50,11 +50,11 @@ function Z(x,y){
     z -= 3*(1+cos((2*PI/80)*sqrt(sq(x-W/2)+sq(y-H/2))))*exp(-0.0001*(sq(x-W/2)+sq(y-H/2)));
     // z -= 3*(1+cos((2*PI/80)*sqrt(sq(x-W/2-100)+sq(y-H/2))))*exp(-0.0001*(sq(x-W/2-100)+sq(y-H/2)));
   }else if(sel.value()=='Dynamic shapes'){
-    z -= int(3*(1+cos((2*PI/50)*sqrt(sq(x-W/2)+sq(y-H/2))-t))*exp(-0.0001*(sq(x-W/2)+sq(y-H/2))));
+    z -= 3*(1+cos((2*PI/50)*sqrt(sq(x-W/2)+sq(y-H/2))-t))*exp(-0.0001*(sq(x-W/2)+sq(y-H/2)));
   }else{
     var i = min(asg.W-1,max(0,x))
     var j = min(asg.h-1,max(0,y))
-    z -= asg.matrix[i][j]
+    z += asg.matrix[i][j]
 
   }
   return z
@@ -108,21 +108,27 @@ function Autostereogram(W,H){
     }
   }
 
-  this.iterateSlice = function(I,X0,Y0){
+  this.iterateSliceNoDeform = function(I,X0,Y0){
     for(var i=0; i<this.w; i++){
       for(var j=0; j<this.h; j++){
         fill(this.M[i][j])
         rect(X0+s*(i+I*this.w),Y0+s*j,s,s)
-        this.Zs[i][j] += Z(i+I*this.w,j)
       }
     }
+  }
+
+  this.iterateSlice = function(I,X0,Y0){
     for(var i=0; i<this.w; i++){
       for(var j=0; j<this.h; j++){
+        this.Zs[i][j] += Z(i+I*this.w,j)
         fill(this.M[i][j])
         rect(X0+s*(i+I*this.w+this.Zs[i][j]),Y0+s*j,s,s)
-        // rect(X0+s*(i+I*this.w+round(this.Zs[i][j])),Y0+s*j,s,s)
       }
     }
+    // // IF YOU WANT TO DRAW SEPARATRIX
+    // stroke(255)
+    // line(X0+s*I*this.w,Y0,X0+s*I*this.w,Y0+s*this.h)
+    // noStroke()
   }
 
   this.show = function(X0,Y0){
@@ -133,6 +139,9 @@ function Autostereogram(W,H){
       }
     }
     for(var I=0; I<this.numI; I++){
+      this.iterateSliceNoDeform(I,X0,Y0);
+    }
+    for(var I=0; I<this.numI; I++){
       this.iterateSlice(I,X0,Y0);
     }
   }
@@ -140,10 +149,14 @@ function Autostereogram(W,H){
   this.showMatrix = function(){
     for(var i=0; i<this.W; i++){
       for(var j=0; j<this.h; j++){
-        if(this.matrix[i][j]!=0){
-          fill(-255*(this.matrix[i][j]/5))
-          rect(s*i,s*j,s,s)
+        if(this.matrix[i][j]>0){
+          fill(0,255*(this.matrix[i][j]/5),0)
+        }else if(this.matrix[i][j]<0){
+          fill(255*(-this.matrix[i][j]/5),0,0)
+        }else{
+          fill(255,100)
         }
+        rect(s*i,s*j,s,s)
       }
     }
   }
@@ -163,9 +176,10 @@ function keyPressed(){
     showDrawing = !showDrawing;
   }else if(keyCode==38){ // UP
     cursorDepth += 1;
-    cursorDepth = min(max(cursorDepth,-5),0)
+    cursorDepth = min(max(cursorDepth,-5),5)
   }else if(keyCode==40){
     cursorDepth -= 1;
-    cursorDepth = min(max(cursorDepth,-5),0)
+    cursorDepth = min(max(cursorDepth,-5),5)
   }
+  return false
 }
