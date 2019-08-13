@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="GOL.js"></script>
+    </head>
+
+    <body style='background-color:#2F343B; color:white; text-align: center;'>
+
+      <div id="sketch-holder"></div>
+      Dear visitor, welcome to this wonderful <i>Game of Life</i> simulation.
+      The game of life is a simplistic simulation of cellular life in a rasterized
+      world. Each grid-point $G_{i,j}$ is either alive or dead. It has eight neighbours,
+      namely $G_{i-1,j-1}$,$G_{i-1,j}$,$G_{i-1,j+1}$,$G_{i,j-1}$,$G_{i,j+1}$,$G_{i+1,j-1}$,
+      $G_{i+1,j}$ and $G_{i+1,j+1}$. The cell at $G_{i,j}$ survives <i>only</i>
+      if the sum of its alive neighbours is either two or three. Otherwise it will
+      die. A dead cell $G_{i,j}$ will become alive if exactly three of its neighbours
+      are alive -- this is (sort of) reproduction.
+    </body>
+
+</html>

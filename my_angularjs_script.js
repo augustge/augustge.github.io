@@ -274,6 +274,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simulation for visualizing the dynamics of the Lorentz system and its bifurcation.",
           reference: "Chaos trajectories/",
           tag: $scope.tags["phys"]
+        },
+        {
+          name: "Game of Life",
+          description: "This is a simulation of the 'game of life'. More imformation in the page :) ",
+          reference: "GOL/",
+          tag: $scope.tags["other"]
         }
       ];
 
