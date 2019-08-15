@@ -3,7 +3,11 @@
 var GOL;
 var play = true;
 var currentPattern = [[1]];
-var sel;
+var sel,slider;
+
+var iT = 0;
+var jT = 0;
+var zoom = 2
 
 
 
@@ -23,22 +27,31 @@ function setup(){
   sel.option('beacon');
   sel.option('LWSS');
   sel.option('R-pentomino');
+  sel.option('Glider gun');
   sel.changed(patternUpdate);
+
+  slider = createSlider(1, 5, 2);
+  slider.position(20, 40);
+
+  sel.parent("control-holder")
+  slider.parent("control-holder")
+
 
   noStroke()
 }
 
 function draw(){
+  zoom = slider.value()
   background(0);
-  GOL.show(0,0);
+  GOL.show(0,0,zoom);
   play? GOL.iterate() : null;
-  play? GOL.finalize() : GOL.showRules(0,0);
+  play? GOL.finalize() : GOL.showRules(0,0,zoom);
 
-  var mx = int(mouseX/GOL.sx)
-  var my = int(mouseY/GOL.sy)
+  var mx = int(mouseX/GOL.sx/zoom)
+  var my = int(mouseY/GOL.sy/zoom)
   var i0 = min(max(mx,0),GOL.w-1)
   var j0 = min(max(my,0),GOL.h-1)
-  GOL.showPencil(0,0,i0,j0,currentPattern)
+  GOL.showPencil(0,0,i0,j0,currentPattern,zoom)
 }
 
 
@@ -108,21 +121,24 @@ class GameOfLife{
   initiatePattern(i0,j0,pattern){
     for(var i=0; i<pattern.length; i++){
       for(var j=0; j<pattern[i].length; j++){
-        this.matrix[I(i0+i)][J(j0+j)] = pattern[i][j];
+        if(pattern[i][j]==1){
+          var active = this.matrix[I(i0+i)][J(j0+j)]==1
+          active? this.matrix[I(i0+i)][J(j0+j)]=0 : this.matrix[I(i0+i)][J(j0+j)]=1;
+        }
       }
     }
   }
 
-  show(X0,Y0){
+  show(X0,Y0,zoom){
     for(var i=0; i<this.w; i++){
       for(var j=0; j<this.h; j++){
         this.matrix[i][j]==0 ? fill(100) : fill(255);
-        rect(X0+i*this.sx,Y0+j*this.sy,this.sx,this.sy)
+        rect(X0+I(i+iT)*this.sx*zoom,Y0+J(j+jT)*this.sy*zoom,this.sx*zoom,this.sy*zoom)
       }
     }
   }
 
-  showRules(X0,Y0){
+  showRules(X0,Y0,zoom){
     for(var i=1; i<this.w-1; i++){
       for(var j=1; j<this.h-1; j++){
         var ngb = this.neighbours(i,j)
@@ -143,18 +159,19 @@ class GameOfLife{
         }else{
           noFill()
         }
-        rect(X0+i*this.sx,Y0+j*this.sy,this.sx,this.sy)
+        // rect(X0+i*this.sx,Y0+j*this.sy,this.sx,this.sy)
+        rect(X0+I(i+iT)*this.sx*zoom,Y0+J(j+jT)*this.sy*zoom,this.sx*zoom,this.sy*zoom)
       }
     }
   }
 
-  showPencil(X0,Y0,i0,j0,pattern){
+  showPencil(X0,Y0,i0,j0,pattern,zoom){
     noFill()
     for(var i=0; i<pattern.length; i++){
       for(var j=0; j<pattern[i].length; j++){
         if(pattern[i][j]==1){
           stroke(255)
-          rect(X0+I(i0+i)*this.sx,Y0+J(j0+j)*this.sy,this.sx,this.sy)
+          rect(X0+I(i0+i)*this.sx*zoom,Y0+J(j0+j)*this.sy*zoom,this.sx*zoom,this.sy*zoom)
         }
       }
     }
@@ -190,6 +207,16 @@ function patternUpdate(){
       currentPattern =[[0,1,1],
                        [1,1,0],
                        [0,1,0]];
+    }else if(sel.value()=="Glider gun"){
+      currentPattern =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                       [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                       [1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
     }
 }
 
@@ -204,10 +231,10 @@ function J(j){ return (j+GOL.h)%GOL.h }
 
 
 function mousePressed(){
-  var mx = int(mouseX/GOL.sx)
-  var my = int(mouseY/GOL.sy)
-  var i = min(max(mx,0),GOL.w-1)
-  var j = min(max(my,0),GOL.h-1)
+  var mx = int(mouseX/GOL.sx/zoom)
+  var my = int(mouseY/GOL.sy/zoom)
+  var i = min(max(mx-iT,0),GOL.w-1)
+  var j = min(max(my-jT,0),GOL.h-1)
   GOL.initiatePattern(i,j,currentPattern)
 }
 
@@ -218,6 +245,15 @@ function keyPressed(){
   }
   // L U R D
   // 37 38 39 40
+  if(keyCode == 37){ // LEFT
+    iT += 1;
+  }else if(keyCode == 39){ // RIGHT
+    iT -= 1;
+  }else if(keyCode == 38){ // UP
+    jT += 1;
+  }else if(keyCode == 40){ // DOWN
+    jT -= 1;
+  }
   return false;
 }
 
