@@ -1,7 +1,7 @@
 
 var S         = 300.0;
 var maxN      = 100;
-var maxNdraw  = 10;
+var maxNdraw  = 50;
 var addNUM    = 50;
 var scatterD  = true;
 var center;
@@ -16,7 +16,6 @@ function setup(){
   center = [width/2,height/2];
 
   strokeWeight(2); stroke(255);
-  // buffer.background(255);
   buffer.pixelDensity(1);
 }
 
@@ -27,6 +26,8 @@ function draw(){
   var mx = (mouseX-center[0])/S+c0[0];
   var my = (mouseY-center[1])/S+c0[1];
   var n = drawIterations(0,0,mx,my,maxNdraw)
+  fill(endpointColor(n))
+  ellipse(mouseX,mouseY,10,10);
   if( scatterD ){
     drawAllPixels();
     // drawRandomIterations(50);
@@ -96,16 +97,19 @@ function drawRandomIterations(num){
   }
 }
 
-function drawEndpoint(x,y,n){
+function endpointColor(n){
   if(n==0){
-    var c = color(0,0,0);
+    return color(0,0,0);
   }else{
     var R = 255*(1+cos(0.1*n))/2;
     var G = 255*(1+cos(0.1*n+PI/2))/2;
     var B = 255*(1+cos(0.1*n+PI/3))/2;
-    var c = color(R,G,B);
+    return color(R,G,B);
   }
-  buffer.set(x,y, c);
+}
+
+function drawEndpoint(x,y,n){
+  buffer.set(x,y, endpointColor(n));
 }
 
 

@@ -15,10 +15,26 @@
 
       <div id="control-holder"></div>
       <div id="sketch-holder"></div>
-
+      This is a very simple, and not optimized, rendering of the mandelbrot set. Consider a
+      sequence of complex numbers defined by
       \[
-        z_{n+1} = z_n^2+c, \text{ where } z_0 = 0
+        z_{n+1} = z_n^2+c \text{ where } z_0 = 0
       \]
+      for some constant $c$. Depending on the constant $c$, the sequence will either diverge
+      or not. In the picture above, the cursor position $z=mouseX+i mouseY$ corresponds to the
+      complex number $c$. A white line (starting from $z_0=0$) is drawn between each point $z_n$
+      to the next $z_{n+1}$ during the iteration. If the sequence starts to diverge ($|z_n|\geq 2$)
+      the sequence is terminated and the number $n$ is stored. The number $n$ then determines the
+      color of that point according to some arbitrary cycle of colors. If it never starts, it is
+      colored black. The image resulting from doing this at every point is displayed.
+      <p>
+      You can move around in the complex plane by mouse-dragging. Sorry... I did not bother to optimize the
+      code very much, so at every re-rendering of the image you may have to wait a little while. How long
+      you need to wait depends on your machine and how much you've zoomed your browser. You can also
+      use the UP and DOWN arrows to zoom in and out respectively. Know, however, that this code does terminates
+      at a certain maximal $n=n_{max}$. Therefore, there will be a "bottom" in the simulation.
+      Upon reaching the bottom, please remember not to judge the mandelbrot set by the mistakes in this
+      code. The mandelbrot set does not have a bottom.
 
     </body>
 

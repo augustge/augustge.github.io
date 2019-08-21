@@ -280,6 +280,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simulation of the 'game of life'. More imformation in the page :) ",
           reference: "GOL/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Mandelbrot set",
+          description: "This is a simple rendering of the mandelbrot set together a visualization of certain trajectories. More info inside.",
+          reference: "Mandelbrot/",
+          tag: $scope.tags["math"]
         }
       ];
 
