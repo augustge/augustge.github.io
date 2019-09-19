@@ -2,11 +2,11 @@
 var pxToLen = 10;
 var mouseWind = false;
 
-var fdMin = 0.2;
-var fdMax = 0.8;
-
-var th0     = 3.1415/12
-var th0_std = th0/10
+var fdMean    = 0.6;
+var fdStd     = 0.1;
+var dThMean   = 3.1415/12
+var dThStd    = dThMean/2
+var gamma     = 0.382
 
 var time = 0;
 var TREE;
@@ -14,18 +14,27 @@ var TREE;
 function setup(){
   var C = createCanvas(windowWidth, windowHeight);
   C.parent("sketch-holder");
-  // noLoop();
-  TREE = new Tree([width/2,height],[0,-1],6,10);
 
-  // var sf = createSlider(0, 4.0, 1.0, 0.01)
+  sfM  = addSlider(createSlider(0, 1.0,   fdMean,   0.0001), "Mean mass splitting (f)")
+  sfS  = addSlider(createSlider(0, 1.0,   fdStd,    0.0001), "Std mass splitting (f)")
+  sthM = addSlider(createSlider(0, PI/2,  dThMean,  0.0001), "Mean branching angle (delta theta)")
+  sthS = addSlider(createSlider(0, PI/2,  dThStd,   0.0001), "Std branching angle (delta theta)")
+  sgam = addSlider(createSlider(0, 1,     gamma,    0.0001), "Branch length scaling (gamma)")
+  sL   = addSlider(createSlider(0, 20,    6,        0.0001), "Root Length")
+  sd   = addSlider(createSlider(0, 40,    10,       0.0001), "Root Thickness")
+  sC   = addSlider(createSlider(0, 0.1,   0.01,     0.0001), "Leaf Cutoff")
+  sW   = addSlider(createSlider(0, 2,     1,        0.0001), "Wind strength")
+
+
+  TREE = new Tree([width/2,height],[0,-1],sL.value(),sd.value());
 }
 
 function draw(){
   background(167, 213, 242)
   time += 0.01;
   if( frameCount%2==0 ){
-    var fX = 0.02*(1+cos(time));
-    var fY = 0.01*sin(time);
+    var fX = 0.02*sW.value()*(1+cos(time));
+    var fY = 0.01*sW.value()*sin(time);
     if(mouseWind){
       fX += 0.0004*(mouseX-width/2);
       fY += 0.0004*(mouseY-height/2);
@@ -35,7 +44,16 @@ function draw(){
 
   TREE.display();
 
-
+  // Update slider values
+  sfM.attribute( "value", sfM.value())
+  sfS.attribute( "value", sfS.value())
+  sthM.attribute("value",sthM.value())
+  sthS.attribute("value",sthS.value())
+  sgam.attribute("value",sgam.value())
+  sL.attribute(  "value",  sL.value())
+  sd.attribute(  "value",  sd.value())
+  sC.attribute(  "value",  sC.value())
+  sW.attribute(  "value",  sW.value())
 }
 
 
@@ -68,16 +86,16 @@ class Tree{
 
 class Branch{
   constructor(R,D,L,d){ // R root, D direction, L length, d diameter
-    this.fd    = random(fdMin,fdMax)//randomGaussian(0.8, 0.0001) // flux splitting fraction
-    this.dth   = randomGaussian(th0, th0_std)
-    this.gamma = 0.382
+    this.fd    = randomGaussian(sfM.value(), fdStd).clamp(0,1)//random(fdMin,fdMax)//randomGaussian(0.8, 0.0001) // flux splitting fraction
+    this.dth   = randomGaussian(sthM.value(), sthS.value())
+    this.gamma = sgam.value()
     this.R = R
     this.D = D
     this.Rp = R;
     this.Dp = D;
     this.L = L
     this.d = d
-    if(d>0.01){
+    if(d>sC.value()){
       this.leaf=false
       this.setBranchoffs()
     }else{
@@ -90,14 +108,21 @@ class Branch{
     }
   }
 
+  // This is where the magic happens!
   setBranchoffs(){
     var Rn = [this.R[0]+pxToLen*this.L*this.D[0],this.R[1]+pxToLen*this.L*this.D[1]];
 
-
-    var d1 = (this.fd)*this.d;
-    var d2 = (1-this.fd)*this.d;
-    var L1 = pow(this.fd,this.gamma)*this.L
-    var L2 = pow(1-this.fd,this.gamma)*this.L
+    if(random()<0.5){ // this is to remove order in child branches
+      var d1 = (this.fd)*this.d;
+      var d2 = (1-this.fd)*this.d;
+      var L1 = pow(this.fd,this.gamma)*this.L
+      var L2 = pow(1-this.fd,this.gamma)*this.L
+    }else{
+      var d2 = (this.fd)*this.d;
+      var d1 = (1-this.fd)*this.d;
+      var L2 = pow(this.fd,this.gamma)*this.L
+      var L1 = pow(1-this.fd,this.gamma)*this.L
+    }
 
     var th0 = atan( (sq(L1*d1)-sq(L2*d2))/(sq(L1*d1)+sq(L2*d2)) * tan(this.dth) )
 
@@ -165,18 +190,32 @@ function rotateVec(R,t){
 
 
 
-function mousePressed(){ mouseWind = !mouseWind; }
-
-
 function keyPressed(){
-  if(keyCode==32){
-    TREE.resample(TREE.root.R,TREE.root.D,TREE.root.L,TREE.root.d)
+  if(keyCode==32){ // SPACE
+    TREE.resample(TREE.root.R,TREE.root.D,sL.value(),sd.value())
+  }
+  if(keyCode==13){ // ENTER
+    mouseWind = !mouseWind;
   }
   return false
 }
 
 
+Number.prototype.clamp = function(min, max) {
+  return Math.min(Math.max(this, min), max);
+}
 
+function addSlider(S,text){
+  var container = createDiv("");
+  container.class("entrycontainer");
+  container.parent( window.document.getElementById('control-holder') )
+  S.parent(container);
+  S.attribute("value",S.value())
+  var textDiv = createDiv(text)
+  textDiv.class("slidertext")
+  textDiv.parent(container)
+  return S;
+}
 
 
 

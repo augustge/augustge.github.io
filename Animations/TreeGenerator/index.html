@@ -3,6 +3,7 @@
 <html>
     <head>
         <title> Animation </title>
+        <link rel="stylesheet" type="text/css" href="myStyle.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
         <!-- MATHJAX for latex display -->
@@ -13,8 +14,9 @@
 
     <body style='background-color:#2F343B; color:white; text-align: center;'>
 
-      <div id="control-holder"></div>
       <div id="sketch-holder"></div>
+      <div id="control-holder"></div>
+      <div id="text-holder">
       <h1>Random Tree Generator</h1>
       This is a simple random tree generator made in attempt to study the degrees
       of freedom in the appearance of a tree. I wanted to see what kind of
@@ -73,7 +75,7 @@
       The result of these three constraints is what can be observed in the animation above. Pressing
       <i>SPACE</i> generates a new tree from a statistical distribution of parameters $(f,\delta \theta, \gamma)$.
 
-
+      </div>
     </body>
 
 </html>
