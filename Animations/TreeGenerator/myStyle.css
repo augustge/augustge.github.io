@@ -43,6 +43,7 @@ div {
   width: 100%;
   /* display: inline-block; */
   display: inline-block;
+  text-align: left;
 }
 
 .slidertext {
