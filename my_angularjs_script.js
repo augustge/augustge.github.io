@@ -290,7 +290,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         {
           name: "Tree Generator",
           description: "Just a small code for generating (semi-)realistic two-dimensional trees.",
-          reference: "treeGenerator/",
+          reference: "TreeGenerator/",
           tag: $scope.tags["other"]
         }
       ];
