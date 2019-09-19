@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="treeGenerator.js"></script>
+    </head>
+
+    <body style='background-color:#2F343B; color:white; text-align: center;'>
+
+      <div id="control-holder"></div>
+      <div id="sketch-holder"></div>
+      <h1>Random Tree Generator</h1>
+      This is a simple random tree generator made in attempt to study the degrees
+      of freedom in the appearance of a tree. I wanted to see what kind of
+      branch length, mass splitting and separation angles would generate
+      realistic trees.
+      In the above, I have assumed the cylindrical branches. If a branch with
+      length $L$ and diameter $D$ and direction $\mathbf{d}$ is to split
+      into two new branches (subscripted by 1 and 2) I have assumed the following:
+
+      <h3>Bisection matching at branching point</h3>
+      Since matrials is carried along the surface of the tree, it seems reasonable
+      to match the length of the boundaries to conserve any flux passing though.
+      That amounts to saying that
+      \[
+        D = D_1 + D_2.
+      \]
+      Therefore, the thickness at a branching point is determined by a random
+      variable $f\in[0,1]$ that results in $D_1 = fD$ and $D_2 = (1-f)D$.
+
+      <h3>Branching should respect center of mass</h3>
+      If a tree branches too much off to one side, it would tip over. And trees
+      that tip over are bad trees. To prevent bad trees, the new branches should
+      try not to shift the center of mass in the horizontal direction. Since we
+      are considering 2D trees, we can think of the directions $\mathbf{d}$,
+      $\mathbf{d}_1$ and $\mathbf{d}_2$ as points on the complex unit circle.
+      To keep things simple, let us place the real axis along $\mathbf{d}$ and
+      write $\mathbf{d}_1 = e^{i(\theta_0+\delta \theta)}$ and
+      $\mathbf{d}_2 = e^{i(\theta_0-\delta \theta)}$. Then, assuming constant
+      density, we reach the constraint
+      \[
+        \Im \left[ M_1 L_1 e^{i\theta_0+i\delta\theta} + M_2 L_2 e^{i\theta_0-i\delta\theta} \right] \simeq 0.
+        \implies
+        tan(\theta_0)
+        =
+        \frac{M_2 L_2 - M_1 L_1}{M_2L_2 + M_1 L_1}tan(\delta \theta)
+      \]
+      Assuming constant density then yields
+      \[
+        tan(\theta_0)
+        =
+        \frac{L_2^2 D_2^2 - L_1^2 D_1^2}{L_2^2 D_2^2 + L_1^2 D_1^2}tan(\delta \theta)
+      \]
+
+      <h3>A thin branch have shorter length</h3>
+      As a branch grows, there is a certain likelihood that the branch will break. As new
+      branches form, these will also reduce the sunlight on the branch. Therefore, it is
+      reasonable to expect the older parts of the tree to have less branchings. In absence of
+      a better model, it seems reasonable to impose some scaling law $L \sim D^\gamma$. Let us,
+      for simplicity, assume this to be a clean proportionality. Then we need $\gamma > 0$
+      because $L$ has to vanish with $D$, and $\gamma \lesssim 1$ since $L$ should be smaller
+      than the $L$ of the previous branch. That is
+      \[
+        L_n = \left(\frac{D_n}{D}\right)^\gamma L.
+      \]
+
+      The result of these three constraints is what can be observed in the animation above. Pressing
+      <i>SPACE</i> generates a new tree from a statistical distribution of parameters $(f,\delta \theta, \gamma)$.
+
+
+    </body>
+
+</html>

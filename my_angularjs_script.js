@@ -286,6 +286,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a simple rendering of the mandelbrot set together a visualization of certain trajectories. More info inside.",
           reference: "Mandelbrot/",
           tag: $scope.tags["math"]
+        },
+        {
+          name: "Tree Generator",
+          description: "Just a small code for generating (semi-)realistic two-dimensional trees.",
+          reference: "treeGenerator/",
+          tag: $scope.tags["other"]
         }
       ];
 
