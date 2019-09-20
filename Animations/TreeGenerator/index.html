@@ -22,24 +22,28 @@
       of freedom in the appearance of a tree. I wanted to see what kind of
       branch length, mass splitting and separation angles would generate
       realistic trees.
-      In the above, I have assumed the cylindrical branches. If a branch with
-      length $L$ and diameter $D$ and direction $\mathbf{d}$ is to split
+      In the above, I have assumed perfectly cylindrical branches. If a branch with
+      length $L$, diameter $D$ and direction $\mathbf{d}$ is to split
       into two new branches (subscripted by 1 and 2) I have assumed the following:
 
       <h3>Bisection matching at branching point</h3>
       Since matrials is carried along the surface of the tree, it seems reasonable
-      to match the length of the boundaries to conserve any flux passing though.
+      to match the length of the boundaries to conserve any flux passing through.
       That amounts to saying that
       \[
         D = D_1 + D_2.
       \]
       Therefore, the thickness at a branching point is determined by a random
-      variable $f\in[0,1]$ that results in $D_1 = fD$ and $D_2 = (1-f)D$.
+      variable $f\in[0,1]$ that results in $D_1 = fD$ and $D_2 = (1-f)D$. Note, however,
+      that is important to impose independence of index swapping. If a certain tree has a
+      mean mass splitting factor of $\langle f \rangle \simeq 0.9$, then that factor
+      counts equally on both the left and right branch. A nice way to impose this is to
+      randomly pick a permutation of the two indices.
 
-      <h3>Branching should respect center of mass</h3>
+       <h3>Branching should respect center of mass</h3>
       If a tree branches too much off to one side, it would tip over. And trees
       that tip over are bad trees. To prevent bad trees, the new branches should
-      try not to shift the center of mass in the horizontal direction. Since we
+      try to respect the direction of their parent branch. Since we
       are considering 2D trees, we can think of the directions $\mathbf{d}$,
       $\mathbf{d}_1$ and $\mathbf{d}_2$ as points on the complex unit circle.
       To keep things simple, let us place the real axis along $\mathbf{d}$ and
@@ -66,14 +70,14 @@
       reasonable to expect the older parts of the tree to have less branchings. In absence of
       a better model, it seems reasonable to impose some scaling law $L \sim D^\gamma$. Let us,
       for simplicity, assume this to be a clean proportionality. Then we need $\gamma > 0$
-      because $L$ has to vanish with $D$, and $\gamma \lesssim 1$ since $L$ should be smaller
+      because $L$ has to vanish with $D$, and (at least the mean) $\gamma \lesssim 1$ since $L$ should be smaller
       than the $L$ of the previous branch. That is
       \[
         L_n = \left(\frac{D_n}{D}\right)^\gamma L.
       \]
-
       The result of these three constraints is what can be observed in the animation above. Pressing
       <i>SPACE</i> generates a new tree from a statistical distribution of parameters $(f,\delta \theta, \gamma)$.
+      Change values in the slider and press <i>SPACE</i> to sample from a custom distribution. Have fun!
 
       </div>
     </body>
