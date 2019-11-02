@@ -212,10 +212,11 @@ class Blocks{
     var L = s
     buff2.line(x0-L,y0,x0+L,y0)
     buff2.line(x0,y0-L,x0,y0+L)
-    var X0 = x0+map(this.X0[0]*sqrt(this.M[0]),this.B[0]*sqrt(this.M[0]),this.B[1]*sqrt(this.M[0]),-s,s)
-    var Y0 = y0+map(this.X0[1]*sqrt(this.M[1]),this.B[0]*sqrt(this.M[1]),this.B[1]*sqrt(this.M[1]),-s,s)
-    var X1 = x0+map(this.X[0]*sqrt(this.M[0]),this.B[0]*sqrt(this.M[0]),this.B[1]*sqrt(this.M[0]),-s,s)
-    var Y1 = y0+map(this.X[1]*sqrt(this.M[1]),this.B[0]*sqrt(this.M[1]),this.B[1]*sqrt(this.M[1]),-s,s)
+    var rM = this.M[0]/this.M[1]
+    var X0 = x0+map(this.X0[0],this.B[0],this.B[1],-s*sqrt(rM),s*sqrt(rM))
+    var Y0 = y0+map(this.X0[1],this.B[0],this.B[1],-s,s)
+    var X1 = x0+map( this.X[0],this.B[0],this.B[1],-s*sqrt(rM),s*sqrt(rM))
+    var Y1 = y0+map( this.X[1],this.B[0],this.B[1],-s,s)
     buff2.stroke(C5)
     buff2.strokeWeight(1)
     buff2.line(X0,Y0,X1,Y1)
