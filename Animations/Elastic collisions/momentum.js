@@ -1,8 +1,8 @@
 
-var t  = 1;
-var dt = 0.01;
-var timestepsPerDraw = 20;
-var sliderPercent = 0.2;
+var t                 = 1;
+var dt                = 0.01;
+var timestepsPerDraw  = 20;
+var sliderPercent     = 0.2;
 
 var ground;
 var backgroundColor, groundColor, boxColor, color1, color2;
