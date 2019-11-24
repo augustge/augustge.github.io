@@ -292,6 +292,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "Just a small code for generating (semi-)realistic two-dimensional trees.",
           reference: "TreeGenerator/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Vortex Dynamics",
+          description: "This is a small script for visualizing two-dimensional, classical vortex dynamics in incompressible fluids.",
+          reference: "Vortex Dynamics/",
+          tag: $scope.tags["other"]
         }
       ];
 

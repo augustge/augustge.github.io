@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Animation </title>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
+
+        <!-- MATHJAX for latex display -->
+  			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+        <script src="vortexDynamics.js"></script>
+
+    </head>
+    <body style='background-color:#2F343B; font-family:baskerville;'>
+
+      <div id="sketch-holder"></div>
+      <div id="control-holder"></div>
+      <div id="text-holder" style="color:white;margin-left: 10%; margin-right: 10%;">
+        <h1 style="text-align: center; font-family: helvetica neue;">2D Vortex Dynamics </h1>
+
+
+        <h2 style="text-align: center; font-family: helvetica neue;">The Simulation </h2>
+        Above is a simulation of the classical dynamics of two-dimensional vortices in an irrotational
+        and incompressible flow. Click with the mouse to create a vortex, use SPACE to freeze the simulation,
+        and LEFT/RIGHT arrows to toggle between vorticiy $\{0,\pm 1, \pm 2, \pm 3, \pm 4\}$. Here, the
+        0-vorticity choice results in an eraser of preexisting vortices. Use the UP/DOWN arrows to adjust the
+        timestep (be aware of unphysicalities for large timesteps), and T to toggle the drawing of the
+        background field. Have fun!
+
+
+        <h2 style="text-align: center; font-family: helvetica neue;">The Theory</h2>
+        We start with the Euler equation and the continuity equation
+        \begin{align*}
+          & \partial_t \rho + \nabla \cdot \rho \mathbf{v} = 0 \\
+          & \rho \left(\partial_t + \mathbf{v} \cdot \nabla\right) \mathbf{v}
+          = -\nabla p + \mathbf{f}
+        \end{align*}
+        where $\mathbf{f}$ is an external force. Assuming the density to be constant and non-zero
+        ($\partial_t \rho = 0$ and $\nabla \rho = 0$), we conclude that the flow is incompressible
+        ($\nabla \cdot \mathbf{v} = 0$). Now, if the do the curl of the Euler equation we find that
+        \begin{equation}
+          \rho \partial_t \left(\nabla \times \mathbf{v}\right)
+          + \rho \nabla \times \left(\mathbf{v} \cdot \nabla \mathbf{v}\right)
+          = -\nabla \times \nabla p + \nabla \times \mathbf{f}.
+        \end{equation}
+        Rewriting, and substituting $\xi\equiv \nabla \times \mathbf{v}$, we find
+        \begin{equation}
+          \rho \left(\partial_t + \mathbf{v}\cdot \nabla\right)\pmb{\xi}
+          + \underbrace{\rho \nabla (\nabla \cdot \mathbf{v}) \times \mathbf{v}}_{=0}
+          = \nabla \times \mathbf{f}.
+        \end{equation}
+        Assuming the external force to be conservative, i.e. $\mathbf{f}\equiv -\nabla V$,
+        we are thus left with the vorticity $\xi$ being a conserved quantity in the bulk
+        (vanishing material derivative). That is $\mathcal{D}_t \xi = 0$. Bear in mind,
+        however, that a spatially variying density would change this result.
+        <p>
+        We will now focus on the incompressibility condition $\nabla \cdot \mathbf{v} = 0$ in two dimensions. That is
+        \begin{equation}
+          \partial_x v_x + \partial_y v_y = 0.
+        \end{equation}
+        Introducing $\mathbf{v}^\perp \equiv (-v_y,v_x)$ allows us to write the incompressibility condition as an irrotationality condition $\nabla \times \mathbf{v}^\perp=0$. This means that there is a scalar field $\psi$ such that $\mathbf{v}^\perp \equiv \nabla \psi$. In particular, the vorticity -- which in 2D is a scalar -- is now given by $\xi=\nabla \cdot \mathbf{v}^\perp$. The vorticity in terms of the new veolcity potential $\psi$ is therefore given by
+        \begin{equation}
+          \nabla^2 \psi = \xi.
+        \end{equation}
+        This can be solved analytically by using the Green's function for the 2d laplacian, i.e.
+        \begin{equation}
+          \text{if }
+          \nabla^2 A(\mathbf{x}) = B(\mathbf{X})
+          \text{ then }
+          A(\mathbf{x}) = \frac{1}{2\pi} \int B(\mathbf{y})\ln |\mathbf{x}-\mathbf{y}| d^2y.
+        \end{equation}
+        In our case, we have
+        \begin{equation}
+          \psi(\mathbf{r}) = \frac{1}{2\pi}\int \xi(\mathbf{r}')\ln |\mathbf{r}-\mathbf{r}'| dA.
+        \end{equation}
+        For a set of $N$ vortices $\{\Gamma_k\}_{k=1}^N$ at locations $\{\mathbf{r}_k(t)\}_{k=1}^N$, the vorticity is given as
+        \begin{equation}
+          \xi = \sum_{k=1}^N \Gamma_k \delta\left(\mathbf{r}-\mathbf{r}_k(t)\right).
+        \end{equation}
+        The velocity potential $\psi$ will then be given by
+        \begin{equation}
+          \psi = \frac{1}{2\pi}\sum_{k=1}^N \Gamma_k \ln |\mathbf{r}-\mathbf{r}_k(t)|.
+        \end{equation}
+        This means that the velocity field $\mathbf{v}$ is given by
+        \begin{align}
+          & v_x
+          = \partial_y \psi
+          = \frac{1}{2\pi}\sum_{k=1}^N \Gamma_k\frac{y-y_k(t)}{|\mathbf{r}-\mathbf{r}_k(t)|^2} \\
+          & v_y
+          = -\partial_x \psi
+          = -\frac{1}{2\pi}\sum_{k=1}^N \Gamma_k\frac{x-x_k(t)}{|\mathbf{r}-\mathbf{r}_k(t)|^2} \\
+        \end{align}
+        To make sense of the divergences, we impose in addition that $\mathbf{v}(\mathbf{r}_k)=0$ for all $k$.
+        Since vorticity moves with the flow ($\mathcal{D}_t \xi = 0$), the velocity field evaluated at a vortex is
+        equal to the vortex speed.
+
+      </div>
+
+    </body>
+
+</html>
