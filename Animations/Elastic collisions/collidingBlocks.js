@@ -15,10 +15,10 @@ function setup(){
 
   dt  = addSlider(createSlider(0, 1.0,   0.5, 0.0001), "TIMESTEP")
   m1  = addSlider(createSlider(1, 10000.0,   100.0 ), "MASS 1")
-  m2  = addSlider(createSlider(1, 10000.0,   1000.0), "MASS 2")
+  m2  = addSlider(createSlider(1, 10000.0,   10000.0), "MASS 2")
   x1  = addSlider(createSlider(0, 1.0,   0.5, 0.01 ), "POSITION 1")
   x2  = addSlider(createSlider(0, 1.0,   1.0, 0.01 ), "POSITION 2")
-  v1  = addSlider(createSlider(-10.0, 10.0,   5.0, 0.01), "VELOCITY 1")
+  v1  = addSlider(createSlider(-10.0, 10.0,   0.0, 0.01), "VELOCITY 1")
   v2  = addSlider(createSlider(-10.0, 10.0,  -5.0, 0.01), "VELOCITY 2")
   SLIDERS = [dt,m1,m2,x1,x2,v1,v2];
   B = new Blocks(0,width)

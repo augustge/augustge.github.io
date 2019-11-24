@@ -21,9 +21,9 @@
       <div id="control-holder" style="width:50%; display: block;"></div>
       <div id="text-holder">
       <h1>Colliding Blocks</h1>
-      This is a simulation of elastically colliding blocks inspired by <a href="https://youtu.be/HEfHFsfGXjs">this</a> 3Blue1Brown video
+      This is a simulation of elastically colliding blocks inspired by a <a href="https://youtu.be/HEfHFsfGXjs">3Blue1Brown video on YouTube</a>
       about the connection between the number of collisions and $\pi$.
-      During collisions, both energy
+      During collisions between blocks, both energy
       \[
         E = \frac{1}{2}m_1 v_1^2 + \frac{1}{2}m_2 v_2^2
       \]
@@ -31,8 +31,27 @@
       \[
         P = m_1 v_1 + m_2 v_2
       \]
-      is conserved. This means that if we rescale the axes, then the points $\left(\sqrt{m_1}v_1,\sqrt{m_2}v_2\right)$ will lie on
-      a circle of radius $\sqrt{2E}$.
+      is conserved. However, the blocks can also collide with the wall, which corresponds to $v \mapsto -v$. This
+      changes overall the momentum, but not the energy.  In particular, if we rescale the axes, then the energy
+      condition requires the points $\left(\sqrt{m_1}v_1,\sqrt{m_2}v_2\right)$ will lie on a circle of
+      radius $\sqrt{2E}$. Likewise, the momentum condition requires points to lie on a straight line with
+      slope $\sqrt{m_1}/\sqrt{m_2}$. In other words, the angle subtended by a collision point in phase space is
+      \[
+        \theta = \arctan \sqrt{\frac{m_1}{m_2}}.
+      \]
+      This corresponds to angle $\gamma=2\theta$ as seen from the center of the energy-conservation circle. Therefore,
+      If there is only one wall, the maximal number of collisions $N$ before the two blocks part their ways is the
+      largest integer such that $N\gamma < 2\pi$. That is
+      \[
+        N
+        = \Bigg\lfloor \frac{\pi}{\arctan \sqrt{m_1/m_2}} \Bigg\rfloor
+        \simeq
+        \Big\lfloor \pi \sqrt{\frac{m_2}{m_1}} \Big\rfloor,
+      \]
+      where, in the last approxiamtion, the arc tangent has been expanded around $m_1/m_2 = 0$ to linear order.
+      This means that if $m_2 = 10^{2n}m_1$, then the number of collisions will be the floor of $\pi 10^n$. For example,
+      $m_2=100m_1$ means we expect $N=31$ collisions, and for $m_2=10^8m_1$ we expect $N=31415$ collisions. These are
+      the first $4=8/2$ digits of $\pi\simeq 3.14159265358979...$
     </body>
 
 
