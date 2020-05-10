@@ -285,8 +285,6 @@ class Object{
       var showcolor = this.color;
     }
 
-
-
     strokeWeight(0.5)
     if(bestBoid==this){ stroke(255,0,0); }else{ stroke(0); }
     fill(showcolor);

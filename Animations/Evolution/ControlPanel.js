@@ -40,6 +40,7 @@ class ControlPanel{
     this.mouseselect.option("DIG");
     this.mouseselect.option("ELEVATE");
     this.mouseselect.option("MAKEBOID");
+    this.mouseselect.option("DNACOPY");
     this.SELECTS.push(this.mouseselect);
     this.SELECTTEXTS.push(createDiv("Choose mouse action"))
 
@@ -172,14 +173,15 @@ class ControlPanel{
     var dnaboxcontainer = createDiv("")
     dnaboxcontainer.class("container")
     dnaboxcontainer.parent(this.container)
-
     this.DNAinput = createInput();
-    this.DNAinput.parent(dnaboxcontainer)
+    this.DNAinput.id("dnaInputBox");
+    this.DNAinput.attribute("onclick","DNAinputboxOnclick('dnaInputBox')")
+    this.DNAinput.parent(dnaboxcontainer);
 
     this.DNAbox = createDiv(str(globalDNA));
-    this.DNAbox.class("DNAbox")
-    this.DNAbox.id("dnaBox")
-    this.DNAbox.attribute("onclick","CopyToClipboard('dnaBox')")
+    this.DNAbox.class("DNAbox");
+    this.DNAbox.id("dnaBox");
+    this.DNAbox.attribute("onclick","DNAboxOnclick('dnaBox')")
     this.DNAbox.parent(dnaboxcontainer)
   }
 
@@ -248,4 +250,18 @@ class ControlPanel{
     }
   }
 
+}
+
+
+function DNAboxOnclick(id){
+  CONTROLPANEL.DNAbox.html(str(bestBoid.DNA));
+  CopyToClipboard(id)
+}
+
+
+function DNAinputboxOnclick(id){
+  var src = select('#dnaBox');
+  var elm = select('#dnaInputBox');
+  elm.value(src.html());
+  CopyToClipboard(id)
 }
