@@ -5,6 +5,7 @@ function keyPressed(){
   if(keyCode==32){ // SPACE
     print(bestBoid.DNA)
     CONTROLPANEL.DNAbox.html(str(bestBoid.DNA));
+    CONTROLPANEL.DNAinput.value("");
   }else if(keyCode==80){ // P
     getGlobalDNA(CONTROLPANEL.DNAinput.value())
   }else if(keyCode==37){ // LEFT
