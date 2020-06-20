@@ -54,6 +54,26 @@ function getGlobalDNA(s){
   return dna;
 }
 
+function getDNAfromClosestBoid(i,j){
+  var minDist = 10000;
+  var closest = null;
+  var searchbox = 5;
+  for(var I=-searchbox;I<searchbox;I++){
+    for(var J=-searchbox;J<searchbox;J++){
+      var ii = int((I+i+Nx)%Nx);
+      var jj = int((J+j+Ny)%Ny);
+      var dist = sq(I)+sq(J)
+      if(MATRIX.M[ii][jj][1] && dist<minDist){
+        closest = MATRIX.M[ii][jj][1];
+        minDist = dist;
+      }
+    }
+  }
+  if(minDist<9000){
+    bestBoid = closest;
+    CONTROLPANEL.DNAbox.html(str(closest.DNA));
+  }
+}
 
 function CopyToClipboard(containerid) {
   var elm = document.getElementById(containerid);
@@ -75,6 +95,7 @@ function CopyToClipboard(containerid) {
     document.execCommand("Copy");
   }
 }
+
 
 
 function colorwheel(a,theta,x){

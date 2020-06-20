@@ -176,6 +176,17 @@ function draw(){
     background(0);
     STATS.boidCount = MATRIX.do();
     CONTROLPANEL.updateValues();
+    push()
+    resetMatrix();
+    var x = ((bestBoid.x-I+Nx)%Nx)*dx;
+    var y = ((bestBoid.y-J+Ny)%Ny)*dy;
+    translate(mouseX,mouseY+40)
+    fill(100,100,100);
+    ellipse(0,0,200,200);
+    rotate(PI/2-atan2(bestBoid.dir[1],bestBoid.dir[0]))
+    translate(-x,-y)
+    bestBoid.display();
+    pop()
     fill(255,0,0)
     text(STATS.boidCount, width-50, height-50);
   }else if(CONTROLPANEL.PANELSELECT.value()=="Statistics"){
