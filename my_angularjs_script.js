@@ -301,7 +301,7 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         },
         {
           name: "Geography Game",
-          description: "This is a geography game",
+          description: "This is a geography game...",
           reference: "Geogame/",
           tag: $scope.tags["other"]
         }
