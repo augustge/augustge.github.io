@@ -1,0 +1,70 @@
+
+
+body {
+  background-color: black;
+  color: white;
+}
+
+
+h2{
+  color: white;
+  font-family: "Helvetica Neue";
+  font-weight: 100;
+  padding: 0;margin: 0;
+}
+h4{font-family: "Helvetica Neue";font-weight: 100;padding: 0;margin: 0;}
+#ERROR::before{content: "ERRORS:";}
+#ERROR{color: red;}
+#CORRECT::before{content: "CORRECT:";}
+#CORRECT{color: green;}
+#SHOWME::before{content: "SHOWN:";}
+#SHOWME{color: brown;}
+
+#INFOCONTAINER{
+  text-align: center;
+  position: fixed!important;
+  width:100%;
+  display: block;
+  top: 0;
+  pointer-events: none;
+}
+
+#showIt{
+  font-family: "Helvetica Neue";font-weight: 100;
+  position: fixed;
+  padding: 5px;
+  display: block;
+  top: 0;
+  color: black;
+  background-color: #CCC;
+}
+#showIt:hover{
+  color: black;
+  background-color: red;
+}
+
+.endContainer{
+  width: 62%!important;
+  padding: 100px;
+  text-align: center!important;
+  background: rgba(0,0,0,0.62);
+}
+
+.endContainer #COUNTRY{
+  font-size: 3em;
+}
+
+
+path{
+  fill: #444;
+  stroke: #555;
+  stroke-width: 0.5px;
+  border-width: 5px;
+}
+
+path:hover{fill: yellow;}
+
+.pressed{
+  fill: #111!important;
+  stroke: black!important;
+}
