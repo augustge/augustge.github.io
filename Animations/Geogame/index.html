@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <HTML>
 	 <HEAD>
 			<TITLE>AUGUST</TITLE>
@@ -8,10 +8,10 @@
 
 	 </HEAD>
    <BODY>
-		 <div id="showIt" onclick="showMe()" style="cursor: pointer;">SHOW ME</div>
-     <div class="INFOCONTAINER">
+		 <div id="showIt" onclick="showMe()" style="cursor:pointer;">SHOW ME</div>
+     <div id="INFOCONTAINER">
 			 <h4 id="TIMER"></h4>
-       <h2 id="COUNTRY"></h3>
+       <h2 id="COUNTRY"></h2>
        <h4 id="CORRECT"></h4>
        <h4 id="ERROR"></h4>
 			 <h4 id="SHOWME"></h4>
@@ -19,8 +19,7 @@
      </div>
 
 
-		 <object id="svgcontainer" data="world.svg" type="image/svg+xml">FAFAFA</object>
-
+		 <object id="svgcontainer" data="world3.svg" type="image/svg+xml">FAFAFA</object>
 
 
      <script type="text/javascript">
@@ -29,7 +28,6 @@
 		 var errorElm = document.getElementById("ERROR");
 		 var correctElm = document.getElementById("CORRECT");
 		 var showmeElm = document.getElementById("SHOWME");
-
 
 		 var countries,worldmapElm,randomCountry,showmeCircle;
 		 var countryNames = [];
@@ -52,24 +50,28 @@
 
 			var a = document.getElementById("svgcontainer");
 			a.addEventListener("load",function(){
-				var svgDoc = a.contentDocument;
-				worldmapElm = svgDoc.getElementById("worldmap");
-				countries = worldmapElm.children;
-				for(var i=0; i<countries.length; i++){
-					var id = countries[i].getAttribute("data-id")
-					if(id){
-						countries[i].addEventListener("click", funcName=function(){countryPress(this)}, false);
-	          countryNames.push(id);
-					}
-        }
-				randomCountry = pickrandomCountry();
+			var svgDoc = a.contentDocument;
+			worldmapElm = svgDoc.getElementById("worldmap");
+			countries = worldmapElm.getElementsByTagName("path");
+			for(var i=0; i<countries.length; i++){
+				var id = countries[i].getAttribute("id");
+				var bbox = countries[i].getBBox();
+				if(id && bbox.width>1 && bbox.height>1){ // only if not too small
+					countries[i].addEventListener("click", funcName=function(){countryPress(this)}, false);
+	        countryNames.push(id);
+					// countries[i].classList.add("pressed");
+ 				 	// randomCountry = pickrandomCountry();
+				}
+      }
+			randomCountry = pickrandomCountry();
 			},false);
 
        function countryPress(element){
-         if(randomCountry==element.getAttribute("data-id")){
-           element.classList.add("pressed");
+				 console.log(randomCountry+":"+element.getAttribute("id"))
+         if(randomCountry==element.getAttribute("id")){
            correctCount++;
            correctElm.innerHTML = correctCount;
+					 element.classList.add("pressed");
            randomCountry = pickrandomCountry();
 					 if(showMeOn){
 						 worldmapElm.removeChild(showmeCircle);
@@ -78,7 +80,7 @@
          }else{
            errorCount++;
            errorElm.innerHTML = errorCount;
-					 var countryinfo = countryINFO[element.getAttribute("data-id")];
+					 var countryinfo = countryINFO[element.getAttribute("id")];
 					 infoElm.innerHTML = countryinfo.name + " ("+ countryinfo.continent + ") " + countryinfo.capital;
          }
        }
@@ -97,17 +99,35 @@
 				 showmeCount++;
 				 showmeElm.innerHTML = showmeCount;
 				 showMeOn = true;
+				 // element.classList.add("pressed");
+				 // randomCountry = pickrandomCountry();
+				 // console.log(countryNames.length+": "+countryINFO[randomCountry].name)
 			 }
-
        function pickrandomCountry(){
-         var randomIndex = Math.floor(Math.random()*countryNames.length);
-         var random = countryNames[randomIndex];
-         titleElm.innerHTML = random+": "+countryINFO[random].name + " ("+countryINFO[random].continent+") ";
-				 countryNames.splice(randomIndex,1)
-         return random
+				 if(countryNames.length>0){
+					 var randomIndex = Math.floor(Math.random()*countryNames.length);
+	         var random = countryNames[randomIndex];
+	         titleElm.innerHTML = random+": "+countryINFO[random].name + " ("+countryINFO[random].continent+") ";
+					 countryNames.splice(randomIndex,1)
+	         return random
+				 }else{
+					 var timeNow = new Date();
+  				 var seconds = Math.floor((timeNow-timeThen)/1000);
+  				 var minutes = Math.floor(seconds/60);
+  				 seconds = seconds%60;
+  				 var hours   = Math.floor(minutes/60);
+  				 minutes = minutes%60;
+
+					 clearInterval(t);
+  				 var container = document.getElementById("INFOCONTAINER");
+  				 container.classList.add("endContainer");
+  				 titleElm.innerHTML 	= "CONGRATULATIONS!";
+  				 showmeElm.innerHTML = "";
+  				 // infoElm.innerHTML 		= "This document proves your competence in geography, be proud of yourself! \n You completed the whole world in "+hours+", "+minutes+" and "+seconds+". You needed found "+correctCount+" yourself, you preessed "+errorCount+" wrong countries, and you needed help with "+showmeCount+" countries.";
+					 infoElm.innerHTML 		= `This document proves your competence in geography, be proud of yourself! \n You completed the whole world in ${hours} hours, ${minutes} minutes and ${seconds} seconds. You did ${errorCount} mistakes (out of ${correctCount}), and you needed help with ${showmeCount} countries.`;
+				 }
        }
      </script>
-
 
    </BODY>
 </HTML>
