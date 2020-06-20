@@ -1,0 +1,113 @@
+
+<HTML>
+	 <HEAD>
+			<TITLE>AUGUST</TITLE>
+			<meta charset="utf-8">
+			<link rel="stylesheet" type="text/css" href="style.css">
+			<script src="mainscript.js"></script>
+
+	 </HEAD>
+   <BODY>
+		 <div id="showIt" onclick="showMe()" style="cursor: pointer;">SHOW ME</div>
+     <div class="INFOCONTAINER">
+			 <h4 id="TIMER"></h4>
+       <h2 id="COUNTRY"></h3>
+       <h4 id="CORRECT"></h4>
+       <h4 id="ERROR"></h4>
+			 <h4 id="SHOWME"></h4>
+			 <h4 id="infoFloat"></h4>
+     </div>
+
+
+		 <object id="svgcontainer" data="world.svg" type="image/svg+xml">FAFAFA</object>
+
+
+
+     <script type="text/javascript">
+		 var infoElm = document.getElementById("infoFloat");
+		 var titleElm = document.getElementById("COUNTRY");
+		 var errorElm = document.getElementById("ERROR");
+		 var correctElm = document.getElementById("CORRECT");
+		 var showmeElm = document.getElementById("SHOWME");
+
+
+		 var countries,worldmapElm,randomCountry,showmeCircle;
+		 var countryNames = [];
+		 var errorCount = 0;
+		 var correctCount = 0;
+		 var showmeCount = 0;
+		 var timeThen = new Date();
+		 var showMeOn = false;
+
+		 var t = setInterval(myTimer, 200);
+		 function myTimer() {
+		   var timeNow = new Date();
+			 var seconds = Math.floor((timeNow-timeThen)/1000);
+			 var minutes = Math.floor(seconds/60);
+			 seconds = seconds%60;
+			 var hours   = Math.floor(minutes/60);
+			 minutes = minutes%60;
+		   document.getElementById("TIMER").innerHTML = hours+":"+minutes+":"+seconds;
+		 }
+
+			var a = document.getElementById("svgcontainer");
+			a.addEventListener("load",function(){
+				var svgDoc = a.contentDocument;
+				worldmapElm = svgDoc.getElementById("worldmap");
+				countries = worldmapElm.children;
+				for(var i=0; i<countries.length; i++){
+					var id = countries[i].getAttribute("data-id")
+					if(id){
+						countries[i].addEventListener("click", funcName=function(){countryPress(this)}, false);
+	          countryNames.push(id);
+					}
+        }
+				randomCountry = pickrandomCountry();
+			},false);
+
+       function countryPress(element){
+         if(randomCountry==element.getAttribute("data-id")){
+           element.classList.add("pressed");
+           correctCount++;
+           correctElm.innerHTML = correctCount;
+           randomCountry = pickrandomCountry();
+					 if(showMeOn){
+						 worldmapElm.removeChild(showmeCircle);
+						 showMeOn = false;
+					 }
+         }else{
+           errorCount++;
+           errorElm.innerHTML = errorCount;
+					 var countryinfo = countryINFO[element.getAttribute("data-id")];
+					 infoElm.innerHTML = countryinfo.name + " ("+ countryinfo.continent + ") " + countryinfo.capital;
+         }
+       }
+
+			 function showMe(){
+				 var element = worldmapElm.getElementById(randomCountry);
+				 var bbox = element.getBBox();
+				 var centreX = bbox.x + bbox.width/2;
+				 var centreY = bbox.y + bbox.height/2;
+				 showmeCircle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+				 showmeCircle.setAttributeNS(null, 'cx', centreX);
+				 showmeCircle.setAttributeNS(null, 'cy', centreY);
+				 showmeCircle.setAttributeNS(null, 'r', 10);
+				 showmeCircle.setAttributeNS(null, 'style', 'fill: rgba(0,255,0,0.5); stroke: none; pointer-events: none;' );
+				 worldmapElm.appendChild(showmeCircle);
+				 showmeCount++;
+				 showmeElm.innerHTML = showmeCount;
+				 showMeOn = true;
+			 }
+
+       function pickrandomCountry(){
+         var randomIndex = Math.floor(Math.random()*countryNames.length);
+         var random = countryNames[randomIndex];
+         titleElm.innerHTML = random+": "+countryINFO[random].name + " ("+countryINFO[random].continent+") ";
+				 countryNames.splice(randomIndex,1)
+         return random
+       }
+     </script>
+
+
+   </BODY>
+</HTML>

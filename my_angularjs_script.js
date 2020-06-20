@@ -298,6 +298,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a small script for visualizing two-dimensional, classical vortex dynamics in incompressible fluids.",
           reference: "Vortex Dynamics/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Geography Game",
+          description: "This is a geography game",
+          reference: "Geogame/",
+          tag: $scope.tags["other"]
         }
       ];
 

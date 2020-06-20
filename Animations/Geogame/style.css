@@ -1,0 +1,69 @@
+
+
+body {
+  background-color: black;
+  color: white;
+}
+
+svg {
+  /* background-color: red; */
+}
+
+h2{
+  color: white;
+  font-family: "Helvetica Neue";
+  font-weight: 100;
+  padding: 0;margin: 0;
+}
+h4{font-family: "Helvetica Neue";font-weight: 100;padding: 0;margin: 0;}
+#ERROR::before{content: "ERRORS:";}
+#ERROR{color: red;}
+#CORRECT::before{content: "CORRECT:";}
+#CORRECT{color: green;}
+#SHOWME::before{content: "SHOWN:";}
+#SHOWME{color: brown;}
+
+path {
+  fill: #111;
+  stroke: #555;
+  stroke-width: 1px;
+  border: 0.5px solid white;
+}
+
+path:hover {
+  fill: #FF0;
+  stroke: #FF0;
+}
+
+.pressed{
+  fill: red;
+  stroke: red;
+}
+
+.INFOCONTAINER{
+  text-align: center;
+  position: fixed!important;
+  width:100%;
+  display: block;
+  top: 0;
+  pointer-events: none;
+}
+
+#showIt{
+  font-family: "Helvetica Neue";font-weight: 100;
+  position: fixed;
+  padding: 5px;
+  display: block;
+  top: 0;
+  color: black;
+  background-color: #CCC;
+}
+#showIt:hover{
+  color: black;
+  background-color: red;
+}
+/* <div class="INFOCONTAINER">
+  <h2 id="COUNTRY"></h2>
+  <h2 id="CORRECT"></h2>
+  <h2 id="ERROR"></h2>
+</div> */
