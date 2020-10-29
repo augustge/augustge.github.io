@@ -212,7 +212,7 @@ class Wave{
       for(var j=1; j<this.Ny-1; j++){
         this.Unew[i][j]  = 2.0*this.U[i][j]-this.Up[i][j]; // time part
         if(this.C[i][j]>0){
-          var Kij = this.K*sqrt(this.C[i][j]);
+          var Kij = this.K*this.C[i][j];
         }else{
           var Kij = 0;
         }
