@@ -1,0 +1,152 @@
+
+
+body {
+  background-color: black;
+  color: white;
+  text-align: justify;
+  font-size: 14px;
+}
+
+div {
+  display: inline-block;
+}
+
+#text-holder {
+  margin-left: 16%;
+  margin-right: 16%;
+}
+
+.selectcontainer {
+  margin: 2% 2% 2% 2%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.selectcontainerChild {
+  display: inline-block;
+}
+
+.maincontainer {
+  margin: 5% 5% 5% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  display: block;
+}
+
+.entrycontainer {
+  position: relative;
+  width: 100%;
+  /* display: inline-block; */
+  display: inline-block;
+  text-align: left;
+}
+
+.slidertext {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+h1 {
+  font-size: 50px;
+  font-family: helvetica;
+  text-align: center;
+}
+
+#introduction {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  height: 100%;
+  padding-top: 50px;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: justify;
+  word-wrap: break-word;
+  font-size: 16px;
+  font-family: Baskerville, helvetica;
+}
+
+
+#control-holder{
+  position: absolute;
+  display: inline-block;
+}
+
+
+input[type=range]:after {
+  width: 50px;
+  left: 40%;
+  height: 10px;
+  display: block;
+  position: absolute;
+  text-align: right;
+  z-index: 2;
+  color: black;
+  font-size: 10px;
+  content: attr(value);
+}
+
+input[type="range"] {
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    margin-right: 10px;
+    height: 10px;
+    width: 40%;
+    cursor: pointer;
+    border-radius: 0; /* iOS */
+}
+
+
+
+input[type=text] {
+  color: black;
+  display: inline-block;
+}
+
+input[type=text]:after {
+  width: 50px;
+  left: 40%;
+  height: 10px;
+  display: block;
+  position: absolute;
+  text-align: right;
+  z-index: 5;
+  color: red;
+  font-size: 10px;
+  content: attr(desctxt);
+}
+
+
+
+
+input[type=checkbox] {
+  margin-left: 50px;
+  display: inline-block;
+}
+
+#select {
+  margin: 0 10px 0 50px;
+  display: inline-block;
+}
+
+
+ul {
+  list-style: none;
+    padding-left: 10px;
+}
+
+.colorblock {
+  font-family: 'helvetica neue', helvetica;
+  text-align: right;
+  color: #65A603;
+  margin-right: 10px;
+  width: 80px;
+}

@@ -304,6 +304,12 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "This is a geography game...",
           reference: "Geogame/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Dynamical system tracer",
+          description: "A simple tool for playing with 3d dynamical systems",
+          reference: "dynamicalSystems/",
+          tag: $scope.tags["other"]
         }
       ];
 
