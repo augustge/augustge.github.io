@@ -7,16 +7,22 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.sound.js"></script>
-<!--
-        <script src="libs/p5.js"></script>
-        <script src="libs/addons/p5.dom.js"></script>
-        <script src="libs/addons/p5.sound.js"></script> -->
-
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  			<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="feigenbaum.js"></script>
     </head>
 
     <body>
-      <script src="feigenbaum.js"></script>
+      <div id="control-holder"></div>
+      <div id="sketch-holder"></div>
+      <div id="text-holder">
+        <h1>Feigenbaum</h1>
+        This is a visualization of the emergent chaos in the <i>Logistic map</i> $x_{n+1}=Ax_n(1-x_n)$.
+        The top figure shows the orbits of different initial points $x_0$ for a chosen $A$.
+        You can choose $x_0$ by clicking on the screen, and $A$ by adjusting the slider.The bottom plot exhibits the orbits (y-axis) of a large number
+        of randomly chosen initial points for all possible slopes $A$ (x-axis). The vertical, orange line corresponds to the slope studied in the above plot.
+        You may press <i>ENTER</i> to restart the iterations, and <i>SPACE</i> to turn on/off the repeated iteration process.
+      </div>
 
     </body>
 

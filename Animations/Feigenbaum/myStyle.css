@@ -1,3 +1,29 @@
+@font-face {
+	font-family: 'garamondW';
+	src: url('../../assets/EB_Garamond/EBGaramond-VariableFont_wght.ttf');
+  font-style: normal;
+}
+@font-face {
+	font-family: 'garamond';
+	src: url('../../assets/EB_Garamond/static/EBGaramond-Regular.ttf');
+  font-weight: normal; font-style: normal;
+}
+@font-face {
+	font-family: 'garamond';
+	src: url('../../assets/EB_Garamond/static/EBGaramond-Italic.ttf');
+  font-weight: normal; font-style: italic;
+}
+@font-face {
+	font-family: 'garamond bold';
+	src: url('../../assets/EB_Garamond/static/EBGaramond-Bold.ttf');
+  font-weight: bold; font-style: normal;
+}
+@font-face {
+	font-family: 'garamond bold';
+	src: url('../../assets/EB_Garamond/static/EBGaramond-BoldItalic.ttf');
+  font-weight: bold; font-style: italic;
+}
+
 :root {
     --c7_1: #E3CDA4;
     --c7_2: #C77966;
@@ -11,6 +37,31 @@
     --C4: var(--c7_4);
     --C5: var(--c7_5);
 }
+
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#control-holder {
+  width: 100%;
+  position: absolute;
+}
+
+#text-holder {
+  margin-left: 10%;
+  margin-right: 10%;
+  font-family: 'garamond';
+  text-align: justify;
+  padding-bottom: 10%;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
 
 input[type=range].terminatorSlider {
   -webkit-appearance: none;

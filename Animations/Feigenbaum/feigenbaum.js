@@ -2,13 +2,21 @@
 
 
 var figure;
-var x0 = 0.1;
+var maxA = 4;
+var x0   = 0.1;
+var numX = 200;
+var numA = 500;
+var iterate = true;
 
 var SLIDERTEXTS = [];
 var SLIDERS     = [];
+var C,buffer,bufferpoints;
 
 function setup(){
-  createCanvas(windowWidth,windowHeight);
+  C = createCanvas(windowWidth, windowHeight);
+  C.parent("sketch-holder");
+  buffer = createGraphics(windowWidth, windowHeight/2);
+  bufferpoints = new Bufferpoints(numX,numA)
 
   c1 = color("#2F343B");
   c2 = color("#A6793D");
@@ -25,10 +33,12 @@ function setup(){
   c13= color("#FF0000");
   c14= color("#FF950B");
 
-  figure = new Figure(100,width-100,100,height-100,1.0);
+  figure = new Figure(0,width,height/2,height,1.0);
   figure.fillWithRandomLines(10);
   figure.update();
   makeSliders();
+
+  buffer.background(255);
 }
 
 
@@ -37,14 +47,26 @@ function draw(){
   background(c8);
   adjustToSlidervalues();
 
-  translate(0,height);
-  scale(1,-1);
+  // buffer.ellipse(mouseX,mouseY,10,10)
+  if(iterate){
+    bufferpoints.iterate();
+    bufferpoints.refreshDisplay();
+  }
+  strokeWeight(3);
+  stroke(c3);
+  var A0 = map(figure.A,0,maxA,0,buffer.width)
+  line(A0,height/2,A0,height);
+
+  //translate(0,height);
+  //scale(1,-1);
 
   figure.show();
 
   resetMatrix();
 
-  showControlpanel();
+  C.blendMode(MULTIPLY)
+  image(buffer, 0,height/2);
+  C.blendMode(BLEND)
 }
 
 
@@ -74,15 +96,10 @@ Figure.prototype.iterateLine = function(N){
 }
 
 Figure.prototype.update = function(){
-  this.Xm = 2/PI*atan(20*this.A)-1 - 0.1 ;
-  this.XM = 1 + 0.1;
-  if( this.A >0 ){
-    this.Ym = 0 - 0.1;
-    this.YM = this.A/4.+0.1;
-  }else{
-    this.Ym = this.A/4. - 0.1;
-    this.YM = -this.A/4/8. + 0.1;
-  }
+  this.Xm = 0;//2/PI*atan(20*this.A)-1;
+  this.XM = 1;
+  this.Ym = 0;
+  this.YM = -this.A/4.-0.1;
   this.updateLine();
   this.updateAllLines();
 }
@@ -162,9 +179,11 @@ Figure.prototype.drawPlot = function(N){
   for(var i=0; i<N; i++){
     var X = map(i,0,N,this.Xm,this.XM);
     var Y = f(X,this.A);
-    var x = this.getX(X);
-    var y = this.getY(Y);
-    vertex(x,y);
+    if(Y>0){
+      var x = this.getX(X);
+      var y = this.getY(Y);
+      vertex(x,y);
+    }
   }
   endShape();
 
@@ -175,9 +194,7 @@ Figure.prototype.drawPlot = function(N){
     var X = map(i,0,N,this.Xm,this.XM); // map to x-val
     var x = this.getX(X); // map to pixels
     var y = this.getY(X); // map to pixels
-    if(y<this.yM && y>this.ym){
-      vertex(x,y);
-    }
+    vertex(x,y);
   }
   endShape();
 }
@@ -221,14 +238,63 @@ function f(x,A){
   return A*x*(1.0-x);
 }
 
+// ============================================================
+class Bufferpoints{
+  constructor(nx,na){
+    this.nx = nx
+    this.na = na
+    this.makePoints()
+  }
+
+  makePoints(){
+    this.Ai = []
+    this.P = []
+    for(var i=0; i<this.na; i++){
+      this.Ai.push(maxA*i/this.na);
+      var PP = [];
+      for(var j=0; j<this.nx; j++){ PP.push(random()); }
+      this.P.push(PP)
+    }
+  }
+
+  iterate(){
+    for(var i=0; i<this.na; i++){
+      for(var j=0; j<this.nx; j++){
+        this.P[i][j] = this.Ai[i]*this.P[i][j]*(1-this.P[i][j]);
+      }
+    }
+  }
+
+  refreshDisplay(){
+    buffer.strokeWeight(2);
+    buffer.stroke(c1,10);
+    buffer.background(255);
+    for(var i=0; i<this.na; i++){
+      for(var j=0; j<this.nx; j++){
+        var xj = this.P[i][j]
+        var ai = this.Ai[i]
+        var xJ = map(xj,0,1,buffer.height,0)
+        var aI = map(ai,0,maxA,0,buffer.width)
+        buffer.point(aI,xJ)
+      }
+    }
+  }
+
+}
 
 
 
 // ============================================================
 
 function makeSliders(){
-  SLIDERTEXTS.push("Slope");
-  SLIDERS.push( createSlider(-2.0, 4.0, 1.0, 0.01).class("terminatorSlider") );
+  SLIDERTEXTS.push("Slope:");
+  var mother = createDiv("Slope")
+  mother.parent("control-holder")
+  var slider = createSlider(0, maxA, 1.0, 0.01)
+  slider.attribute("value",slider.value());
+  slider.attribute("style","width:50%;");
+  slider.parent(mother)
+  SLIDERS.push( slider );
 }
 
 function adjustToSlidervalues(){
@@ -237,26 +303,6 @@ function adjustToSlidervalues(){
   // figure.iterateLine(figure.iterations);
 }
 
-function showControlpanel(){
-  noStroke();
-  fill(0);
-
-  // General
-  var top             = 40;
-  var textSep         = 20;
-  var xpos            = 120;
-  var sliderSep       = 50;
-  var classSeparation = 170;
-
-  textSize(16);
-  for(var i=0; i<SLIDERS.length; i++){
-    textAlign(RIGHT);
-    text(SLIDERTEXTS[i],    xpos-textSep, top+i*sliderSep+10);
-    SLIDERS[i].position(    xpos, top+i*sliderSep);
-    textAlign(LEFT);
-    text(SLIDERS[i].value(),xpos+0.2*width, top+i*sliderSep+10);
-  }
-}
 
 // ============================================================
 
@@ -277,6 +323,12 @@ function mouseDragged(){
 }
 
 function keyPressed(){
+  if(keyCode==13){ // enter
+    bufferpoints.makePoints();
+  }
+  if(keyCode==32){ // space
+    iterate = !iterate;
+  }
   if(keyCode==37){ //left
     figure.x0 -= 0.05;
   }

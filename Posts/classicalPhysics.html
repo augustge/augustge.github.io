@@ -1,0 +1,66 @@
+
+<link rel="stylesheet" type="text/css" href="../mystyle2.css">
+<!-- MATHJAX for latex display -->
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- For Computer Modern (Serif) Font -->
+<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cmu-serif" type="text/css"/>
+
+<p/><p/><p/><p/>
+
+<div class="post texter" role="article" id="postEntry">
+
+
+<!--================================================================================================================-->
+<!--    Remove all except the <<TEXT HERE>> section before publishing     -->
+<!--================================================================================================================-->
+
+<h1>Perspectives on classical physics</h1>
+
+
+
+<h2>Newtons Laws</h2>
+
+
+<h2>Lagrangian Mechanics</h2>
+
+
+<h2>Hamiltonian Mechanics</h2>
+Let $M$ be a $2n$-dimensional manifold and denote the with coordinates $\mathbf{p},\mathbf{q}\in\mathbb{R}$. The 2-form $\omega^2 \equiv d\mathbf{p}\wedge d\mathbf{q}$ is then a natural structure of the manifold. Now assume $\mathbf{p}$ and $\mathbf{q}$ are chosen such that $\omega^2$ is non-degenerate, i.e $\omega^2: T_\mathbf{x}M \times T_\mathbf{x}M \rightarrow C^\infty(M,\mathbb{R})$ is bijective. That is $\omega^2(\mathbf{v},\mathbf{u})=0 \ \forall \mathbf{v} \implies \mathbf{u}=0$. Or, if you prefer, $\omega^2$, which can be considered a function from vector fields to functions on $M$, is an isomorphism.
+
+The non-degeneracy of $\omega^2$ mean that one always associate a 1-form $dF \in T^*_\mathbf{x}M$ with a vector field $\mathbf{F}\in T_\mathbf{x}M$ by
+$dF \equiv \omega^2(\mathbf{F},\cdot)$. Let us denote this map by $S:T^*_\mathbf{x}M\rightarrow T_\mathbf{x}M$. It is nice to notice that $S^{-1} \partial_\mathbf{p} = (d\mathbf{p}\wedge d\mathbf{q})(\partial_\mathbf{p})=-d\mathbf{q}$ and $S^{-1} \partial_\mathbf{q} = d\mathbf{p}$. This means that for any function $H:M\rightarrow \mathbb{R}$, we have $dH = (\partial_\mathbf{p} H)d\mathbf{p} + (\partial_\mathbf{q} H)d\mathbf{q}$ and therefore
+\[
+  S dH = (\partial_\mathbf{p} H)\partial_\mathbf{q} - (\partial_\mathbf{q} H)\partial_\mathbf{p}
+\]
+Curiously, any flow $\dot{\mathbf{x}}\equiv SdH(\mathbf{x})$ along $SdH$ is then equivalent to the equations
+\[
+  \frac{d\mathbf{q}}{dt} = \frac{\partial H}{\partial \mathbf{p}}
+  \text{ and }
+  \frac{d\mathbf{p}}{dt} = -\frac{\partial H}{\partial \mathbf{q}}
+\]
+
+
+
+
+
+
+
+
+<div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+    this.page.url = "https://augustge.github.io/#!/<<PostName>>";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "<<PostName>>"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://augustg.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!--================================================================================================================-->
+
+</div>
