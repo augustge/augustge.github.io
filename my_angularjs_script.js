@@ -310,6 +310,18 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
           description: "A simple tool for playing with 3d dynamical systems",
           reference: "dynamicalSystems/",
           tag: $scope.tags["other"]
+        },
+        {
+          name: "Our Solar System",
+          description: "A realtime view of our solar system.",
+          reference: "ourSolarSystem/",
+          tag: $scope.tags["phys"]
+        },
+        {
+          name: "3D waves",
+          description: "A simle interactive animation of (shallow) water waves propagating on variable depth",
+          reference: "3D Waves/",
+          tag: $scope.tags["phys"]
         }
       ];
 
