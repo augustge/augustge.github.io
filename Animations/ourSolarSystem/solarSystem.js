@@ -23,11 +23,11 @@ var PI    = 3.141592563589793238
 var kg,km,second,yr,G,gPRcm3;
 var OBJECTS;
 // TIME
-var play           = false
-var dt             = 1/24/2 // 30 min
-var itertationjump = 30
+var play           = true
+var iterationjump  = 60
+var dt = (1/60)/24/60/60/iterationjump
 var t              = 0
-var date0          = "2019-Nov-24"
+var date0          = "2019/11/24"
 var dateoptions    = {year: 'numeric', month: 'long', day: 'numeric'};
 // COLORS
 let backgroundC,backgroundCC,trajectoryC,textC,planetC,labelC;
@@ -43,10 +43,10 @@ function setup(){
   trajectoryC = color(255,50)
   textC       = color(255,150)
   planetC     = color(255,50)
-  labelC      = color(255,0,0,150)
+  labelC      = color("#EFC94C")
 
   buffer.background(backgroundC)
-
+  frameRate(60)
   // Derived units
   kg      = 1/1988500e24 * Msun
   km      = 6.68459e-9   * AU
@@ -64,16 +64,23 @@ function setup(){
   defineObjects();
   for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].prepare(OBJECTS)}
 
-  evolveToToday()
-  addSlider(createSlider(-10, 10, 24*10*dt, 0.0001), "TIMESTEP [minutes]", function () {this.attribute("value",this.value()); dt=this.value()/24/60; })
+  evolveTo(new Date())
+  drawOrbits(days = 365/2)
+  addSlider(createSlider(-120, 120, 24*10*iterationjump*dt, 0.0001), "TIMESTEP [minutes]", function () {this.attribute("value",this.value()); dt=this.value()/24/60/iterationjump; })
   addSlider(createSlider(1, 1000, s, 1), "Radius Scaling", function () {this.attribute("value",this.value()); s=this.value(); })
-  addSlider(createSlider(0, log(1e5), zoom, 0.2), "Zoom", function () {this.attribute("value",this.value()); var zr = exp(this.value())/zoom; buffer.image(buffer, 0.5*buffer.width*(1-zr),0.5*buffer.height*(1-zr), buffer.width*zr, buffer.height*zr); zoom=exp(this.value()); buffer.background(backgroundCC) })
+  addSlider(createSlider(0, log(1e5), log(zoom), 0.1), "Zoom", function () {this.attribute("value",this.value()); var zr = exp(this.value())/zoom; buffer.image(buffer, 0.5*buffer.width*(1-zr),0.5*buffer.height*(1-zr), buffer.width*zr, buffer.height*zr); zoom=exp(this.value()); buffer.background(backgroundCC) })
+  addButton(createButton('Play/pause'), function (){play = !play; } )
+  addButton(createButton('To present'), function (){ evolveTo(new Date()); } )
+  addButton(createButton('Next object'), function (){ centerplanet += 1; centerplanet = (centerplanet+OBJECTS.length)%OBJECTS.length; buffer.background(backgroundC) } )
+  addButton(createButton('Previous object'), function (){ centerplanet -= 1; centerplanet = (centerplanet+OBJECTS.length)%OBJECTS.length; buffer.background(backgroundC) } )
+  addButton(createButton('Realtime'), function (){ dt = (1/60)/24/60/60/iterationjump } )
+  addButton(createButton('Draw orbits'), function (){ drawOrbits(days=100) } )
 }
 
 function draw(){
   background(255)
   if(play){
-    for(var j=0; j<itertationjump; j++){
+    for(var j=0; j<iterationjump; j++){
       for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].move(dt)} // first find new positions
       for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].update()} // then update them
       t += dt
@@ -95,19 +102,20 @@ function draw(){
   fill(textC)
   text(time.toLocaleString("en-US",{weekday: 'long',hour:"2-digit",minute:"2-digit",hour12:false})+" on "+time.toLocaleString("en-US",dateoptions),width-10,height-30)
   // text(time.toISOString(),width-10,height-30)
-
+  textSize(14)
   textAlign(LEFT,BOTTOM)
   obj = OBJECTS[centerplanet]
-  text(obj.name+"\n mass: " + toexp(obj.m/kg,3).replace("e+","*10^") + " kg\n radius: " + toexp(obj.radius/km,3).replace("e+","*10^")+" km",10,height-30)
+  text(obj.name+"\n mass: " + toexp(obj.m/kg,3).replace("e+"," [10^") + " kg]\n radius: " + toexp(obj.radius/km,3).replace("e+"," [10^")+" km]",10,height-30)
   textAlign(LEFT,TOP)
-  textSize(14)
 }
 
-function evolveToToday(){
+function evolveTo(then){
+  dt0 = dt
+  var diff = then-time
+  sign = (diff<0) ? -1 : 1
+  dt = sign*30/24/60 // 30 min
   num = 0
-  today = new Date()
-  console.log(today-time)
-  while(today-time>0 & num<1e6){
+  while(sign*(then-time)>0 & num<1e6){
     for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].move(dt)} // first find new positions
     for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].update()} // then update them
     t += dt
@@ -115,8 +123,55 @@ function evolveToToday(){
     time.setMinutes(time0.getMinutes() + 1440*t)
     num += 1
   }
-  dt = (1/itertationjump)/24/60
-  play = true
+  dt = dt0
+}
+
+function drawOrbits(days = 365){
+  dt0 = dt
+  then = new Date(time)
+  then.setMinutes(then.getMinutes() + 1440*days)
+  var diff = then-time
+  sign = (diff<0) ? -1 : 1
+  dt = sign*30/24/60 // 30 min
+  num = 0
+  while(sign*(then-time)>0 & num<1e6){
+    for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].move(dt)} // first find new positions
+    for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].update()} // then update them
+    t += dt
+    time  = new Date(date0)
+    time.setMinutes(time0.getMinutes() + 1440*t)
+    num += 1
+    if(num%100==0){
+      buffer.push()
+      buffer.translate(width/2,height/2)
+      image(buffer, 0, 0);
+      for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].addToBuffer(zoom,s)} // then update them
+      buffer.pop()
+    }
+  }
+  then = new Date(time)
+  then.setMinutes(then.getMinutes() - 2*1440*days)
+  var diff = then-time
+  sign = (diff<0) ? -1 : 1
+  dt = sign*30/24/60 // 30 min
+  num = 0
+  while(sign*(then-time)>0 & num<1e6){
+    for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].move(dt)} // first find new positions
+    for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].update()} // then update them
+    t += dt
+    time  = new Date(date0)
+    time.setMinutes(time0.getMinutes() + 1440*t)
+    num += 1
+    if(num%100==0){
+      buffer.push()
+      buffer.translate(width/2,height/2)
+      image(buffer, 0, 0);
+      for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].addToBuffer(zoom,s)} // then update them
+      buffer.pop()
+    }
+  }
+  dt = dt0
+  evolveTo(new Date())
 }
 
 
@@ -127,7 +182,6 @@ class PlanetaryObject{
     this.name   = name
     this.radius = (radius==null) ? Math.pow(rho*3*m/(4*PI),1/3.) : radius
     this.hierarchy = hierarchy
-    console.log(this.name,this.radius)
     this.m      = m;      // kg
     this.R      = R;      // au
     this.V      = V;      // au/day
@@ -170,10 +224,21 @@ class PlanetaryObject{
     this.V = this.Vn
   }
 
+  addToBuffer(zoom,s,hierarchy=null){
+    if(hierarchy==null){ hierarchy = (zoom>=width) ? 3 : 2 }
+    var X = (this.Rn[0]+cPos[0]-OBJECTS[centerplanet].Rn[0])*zoom
+    var Y = (this.Rn[1]+cPos[1]-OBJECTS[centerplanet].Rn[1])*zoom
+    if(this.hierarchy<=hierarchy){
+      buffer.stroke(this.color)
+      buffer.point(X,Y)
+    }
+  }
+
   show(zoom,s,hierarchy=null){
     if(hierarchy==null){ hierarchy = (zoom>=width) ? 3 : 2 }
     var X = (this.Rn[0]+cPos[0]-OBJECTS[centerplanet].Rn[0])*zoom
     var Y = (this.Rn[1]+cPos[1]-OBJECTS[centerplanet].Rn[1])*zoom
+    if(this.name=="Sun"){s=1} // dont scale sun
     if(this.hierarchy<=hierarchy){
       buffer.stroke(this.color)
       buffer.point(X,Y)
@@ -182,7 +247,7 @@ class PlanetaryObject{
       ellipse(X+width/2,Y+height/2,s*zoom*this.radius,s*zoom*this.radius)
     }
     if(this.hierarchy<hierarchy){
-      fill(this.color)
+      fill(labelC)
       textAlign(CENTER)
       text(this.name,X+width/2,Y+height/2)
     }
@@ -217,12 +282,13 @@ function keyPressed(){
 }
 
 function mouseDragged(){
-  var dx = mouseX-pmouseX
-  var dy = mouseY-pmouseY
-  cPos[0] += dx/zoom
-  cPos[1] += dy/zoom
-  buffer.image(buffer, dx, dy);
-  return false
+  if(mouseY<height){
+    var dx = mouseX-pmouseX
+    var dy = mouseY-pmouseY
+    cPos[0] += dx/zoom
+    cPos[1] += dy/zoom
+    buffer.image(buffer, dx, dy);
+  }
 }
 
 function addSlider(S,text,updatefunc){
@@ -231,6 +297,11 @@ function addSlider(S,text,updatefunc){
   S.attribute("text",text)
   S.input(updatefunc);
   return S;
+}
+
+function addButton(B,onpress){
+  B.parent(window.document.getElementById('control-holder'))
+  B.mousePressed(onpress)
 }
 
 
@@ -252,8 +323,8 @@ function defineObjects(){
       hierarchy=1,radius=6051.8*km))
   OBJECTS.push(new PlanetaryObject("Earth",5.97219e24*kg,5.51/gPRcm3,
       [4.733899044729349E-01 ,8.721655186632229E-01, -2.915378785978234E-05],
-       [-1.535782803583044E-02, 8.248519548534240E-03, 8.701911397566279E-08],
-       hierarchy=1,radius=6371*km))
+      [-1.535782803583044E-02, 8.248519548534240E-03, 8.701911397566279E-08],
+      hierarchy=1,radius=6371*km))
   OBJECTS.push(new PlanetaryObject("Mars",6.4171e23*kg,3.933/gPRcm3,
       [-1.566507615289128E+00,-4.433615397451655E-01,  2.891647917431645E-02],
       [4.391855643405547E-03,-1.225048536738343E-02,-3.644055920216107E-04],
