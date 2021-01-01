@@ -65,12 +65,12 @@ function setup(){
   defineObjects();
   for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].prepare(OBJECTS)}
 
-  evolveTo(new Date())
+  evolveTo(new Date(),precise=true)
   addSlider(createSlider(-120, 120, 24*10*iterationjump*dt, 0.0001), "TIMESTEP [minutes]", function () {this.attribute("value",this.value()); dt=this.value()/24/60/iterationjump; })
   addSlider(createSlider(1, 1000, s, 1), "Radius Scaling", function () {this.attribute("value",this.value()); s=this.value(); })
   addSlider(createSlider(0, log(1e5), log(zoom), 0.1), "Zoom", function () {this.attribute("value",this.value()); var zr = exp(this.value())/zoom; buffer.image(buffer, 0.5*buffer.width*(1-zr),0.5*buffer.height*(1-zr), buffer.width*zr, buffer.height*zr); zoom=exp(this.value()); buffer.background(backgroundCC) })
   addButton(createButton('Play/pause'), function (){play = !play; } )
-  addButton(createButton('To present'), function (){ evolveTo(new Date()); } )
+  addButton(createButton('To present'), function (){ evolveTo(new Date(),precise=true); } )
   addButton(createButton('Next object'), function (){ centerplanet += 1; centerplanet = (centerplanet+OBJECTS.length)%OBJECTS.length; buffer.background(backgroundC) } )
   addButton(createButton('Previous object'), function (){ centerplanet -= 1; centerplanet = (centerplanet+OBJECTS.length)%OBJECTS.length; buffer.background(backgroundC) } )
   addButton(createButton('Realtime'), function (){ dt = (1/60)/24/60/60/iterationjump } )
@@ -109,7 +109,8 @@ function draw(){
   textAlign(LEFT,TOP)
 }
 
-function evolveTo(then,dtFast = 30/24/60, dtMinute=1/24/60){
+function evolveTo(then,precise=false, dtFast = 30/24/60, dtMinute=1/24/60){
+  console.log(precise)
   dt0 = dt
   var diff = then-time
   sign = (diff<0) ? -1 : 1
@@ -122,7 +123,7 @@ function evolveTo(then,dtFast = 30/24/60, dtMinute=1/24/60){
     time  = new Date(date0)
     time.setMinutes(time0.getMinutes() + 1440*t)
     num += 1
-    if(sign*(then-time)<=1800000){dt = dtMinute}
+    if(sign*(then-time)<=1800000 & precise){dt = sign*dtMinute}
   }
   dt = dt0
 }
