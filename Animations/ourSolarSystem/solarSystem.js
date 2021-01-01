@@ -25,12 +25,13 @@ var OBJECTS;
 // TIME
 var play           = true
 var iterationjump  = 60
-var dt = (1/60)/24/60/60/iterationjump
+var dt = 30/24/60/iterationjump
 var t              = 0
 var date0          = "2019/11/24"
 var dateoptions    = {year: 'numeric', month: 'long', day: 'numeric'};
 // COLORS
 let backgroundC,backgroundCC,trajectoryC,textC,planetC,labelC;
+
 
 function setup(){
   var C = createCanvas(windowWidth, windowHeight);
@@ -65,7 +66,6 @@ function setup(){
   for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].prepare(OBJECTS)}
 
   evolveTo(new Date())
-  drawOrbits(days = 365/2)
   addSlider(createSlider(-120, 120, 24*10*iterationjump*dt, 0.0001), "TIMESTEP [minutes]", function () {this.attribute("value",this.value()); dt=this.value()/24/60/iterationjump; })
   addSlider(createSlider(1, 1000, s, 1), "Radius Scaling", function () {this.attribute("value",this.value()); s=this.value(); })
   addSlider(createSlider(0, log(1e5), log(zoom), 0.1), "Zoom", function () {this.attribute("value",this.value()); var zr = exp(this.value())/zoom; buffer.image(buffer, 0.5*buffer.width*(1-zr),0.5*buffer.height*(1-zr), buffer.width*zr, buffer.height*zr); zoom=exp(this.value()); buffer.background(backgroundCC) })
@@ -100,7 +100,7 @@ function draw(){
   textSize(30)
   textAlign(RIGHT)
   fill(textC)
-  text(time.toLocaleString("en-US",{weekday: 'long',hour:"2-digit",minute:"2-digit",hour12:false})+" on "+time.toLocaleString("en-US",dateoptions),width-10,height-30)
+  text(time.toLocaleString("en-US",{hour:"2-digit",minute:"2-digit",hour12:false})+" on "+time.toLocaleString("en-US",dateoptions),width-10,height-30)
   // text(time.toISOString(),width-10,height-30)
   textSize(14)
   textAlign(LEFT,BOTTOM)
@@ -109,11 +109,11 @@ function draw(){
   textAlign(LEFT,TOP)
 }
 
-function evolveTo(then){
+function evolveTo(then,dtFast = 30/24/60, dtMinute=1/24/60){
   dt0 = dt
   var diff = then-time
   sign = (diff<0) ? -1 : 1
-  dt = sign*30/24/60 // 30 min
+  dt = sign*dtFast // 30 min
   num = 0
   while(sign*(then-time)>0 & num<1e6){
     for(var i=0; i<OBJECTS.length;i++){OBJECTS[i].move(dt)} // first find new positions
@@ -122,6 +122,7 @@ function evolveTo(then){
     time  = new Date(date0)
     time.setMinutes(time0.getMinutes() + 1440*t)
     num += 1
+    if(sign*(then-time)<=1800000){dt = dtMinute}
   }
   dt = dt0
 }
