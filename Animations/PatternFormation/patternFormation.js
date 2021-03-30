@@ -1,21 +1,35 @@
 // https://watermark.silverchair.com/artl.2010.16.2.16202.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAArQwggKwBgkqhkiG9w0BBwagggKhMIICnQIBADCCApYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM0BkLrvIgRzuMnzquAgEQgIICZ6tlAXasNcLTcemNXgD6-0z2b0UiBX78J5MQffG6xmUyVmi9PRafdSWcErITfyXKO8_Hz5ncNPx8XinsATwB48_MXWxqh4pPN4LsnIGKjJ2lGHzvTJao1jpDakcWYtaBU1XXYIQFgW0ZX0VbIJCOJb8W5Peh6WTYFZMMyv2g71dII-VG06XromXJ3EFVPl4YkteVJlzeUVWivTR2pFKZFCre1G-QCXZYJNKDDt6qsdbfJRXuLo6g4FRHp-3JhYFBPJcLPYEb3lFLRv5FMVXYyIPOgLptfYLcOHFAC-ZUVQ1bcvn0rUnbZsChroNgaya03u6n_InlrKALCYrZjOnwd0ZKz7hEZqKUZoEJq-91D5XqifpJvrtmm6EWVUXJ2-mZ4yW9X8Gk6LodKS0ioC-vJunlqnfI7qx6w_yvscGYHdz-nLY46WC4TWU0yDH6GP9JzkoN7s91kjDIo4eIYLRbeNu8FjpObjqHu5XkFgzY31qn06f66Gz43dB0cuVPCSmGBz61y0m9wrAC8TMyQadC3_WgsyCtFhkYWuKan-vErAVWB2VwWfWRV_cxMY3ZBOs4ZficXhlPxqsp7lgZhqDlG58RZPxBIWqISRZHDfiGvx5H_lkZgmJXmz7AfrDLt3Y43FAbSX4zAtR1hFBc3OSEKFpTlq9rNn8jyJqNoB1IOyndhrYClZk3rLgrTZAH4wxd3UnTXF7xXy3okBl-IJaKMcdsx6bYi3opsIbxQSftVD1cNqNPSQ7aA3y9B8sinNWC9yNqwhxzgt_QKlDkyHupnA730wPbX_YDwpZQjnSNsR3In3urUJdCAg
-var showWalkers = false;
+
+/*
+FUTURE PLANS
+  -  CHOOSE RESOLUTION
+  -  AUTO-DRAW MODE (statistics instead of walker by walker)
+  -  ADD COLORS + COLOR-SCHEMES
+  -X SHOW WALKER ERROR
+
+*/
+var showWalkers = true;
 var pi = 3.141592653589;
 var mouseMode = "create";
 var play = true
 var mouseSize = 20;
-var angleS = [-pi/8,0,pi/8];
-var angleM = [-pi/21,0,pi/21];
-var angleL = [-pi/55,0,pi/55];
+var angleS = [0,-pi/8,pi/8];
+var angleM = [0,-pi/21,pi/21];
+var angleL = [0,-pi/55,pi/55];
 var senseS = [8,8,8];
 var senseM = [21,21,21];
 var senseL = [55,55,55];
-var colors = [{name:"SMEAR",  C:[null,null,null]}, // not really a color!
-              {name:"dark",   C:[52,54,66,20]},
-              {name:"milk",   C:[242,235,199, 20]},
-              {name:"teal",   C:[52,136,153,  20]},
-              {name:"red",    C:[150,45,62,   20]},
-              {name:"white",  C:[255,255,255, 20]}];
+var colors = [{name:"SMEAR",      C:[null,null,null]}, // not really a color!
+              {name:"dark",       C:[52,54,66,    255]},
+              {name:"milk",       C:[242,235,199, 255]},
+              {name:"teal",       C:[52,136,153,  255]},
+              {name:"red",        C:[150,45,62,   255]},
+              {name:"white",      C:[255,255,255, 255]},
+              {name:"soil",       C:[119, 96, 69, 255]},
+              {name:"algae",      C:[168,197, 69, 255]},
+              {name:"dirt",       C:[223,211,182, 255]},
+              {name:"oceanblue",  C:[0, 146, 178, 255]}];
+
 var attractions = [
   {name:"red attractor",  f:function(r,g,b,a){return sq(r)-sq(255);}},
   {name:"green attractor",f:function(r,g,b,a){return sq(g)-sq(255);}},
@@ -39,19 +53,20 @@ var BOIDS = []
 function setup(){
   var canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent("sketch-holder");
-  buffer = createGraphics(2*windowWidth, 2*windowHeight);
+  buffer = createGraphics(windowWidth,windowHeight);
   // buffer = createGraphics(windowWidth,windowHeight);
   buffer.pixelDensity(1);
   buffer.background(255);
   SENSOR      = new Sensor(ANGLE,SENSE,COST);
   NAVIGATOR   = new Navigator(1,0.3,0.3);
-  MANIPULATOR = new Interactor([52,54,66,    20]);
+  MANIPULATOR = new Interactor(colors[1].C);
   makeControls();
 }
 
 
 function draw(){
   // several iterations each draw
+  background(255);
   image(buffer, 0, 0,width,height);
   if(play){
   for(var k =0;k<10;k++){
@@ -120,7 +135,7 @@ class Sensor{
     return [buffer.pixels[i],buffer.pixels[i+1],buffer.pixels[i+2],buffer.pixels[i+3]];
   }
   sense(x,y,th){ // main function: Optimize cost over sensory scalars
-    var costm  = 0
+    var costm  = 100000;
     var thm = 0
     for(var k=0; k<this.angles.length; k++){
       var p = this.sensepoint(x,y,th,this.distances[k],this.angles[k]); // meshpoint
@@ -195,6 +210,7 @@ class Interactor{
 }
 
 function makeControls(){
+  // Should probably transition to sliders/inputs instead
   addButton(createButton("Show walkers"),function(){showWalkers=!showWalkers;})
   addButton(createButton("Kill all walkers"),function(){BOIDS=[];})
   addButton(createButton("play/pause"),function(){play=!play;})
@@ -272,6 +288,7 @@ function mouseDragged(){
       buffer.fill(MANIPULATOR.c[0],MANIPULATOR.c[1],MANIPULATOR.c[2],MANIPULATOR.c[3]);
       buffer.ellipse(xx,yy,mouseSize*buffer.width/width,mouseSize*buffer.height/height);
     }
+    // add ensemle-draw
   }
 }
 
