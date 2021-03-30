@@ -319,9 +319,15 @@ var mainCtrl = app.controller("mainCtrl", function ($scope) {
         },
         {
           name: "3D waves",
-          description: "A simle interactive animation of (shallow) water waves propagating on variable depth",
+          description: "A simple interactive animation of (shallow) water waves propagating on variable depth",
           reference: "3D Waves/",
           tag: $scope.tags["phys"]
+        },
+        {
+          name: "Automated art",
+          description: "A naive, but beautiful approach to automated art based on the way ants track paths.",
+          reference: "PatternFormation/",
+          tag: $scope.tags["other"]
         }
       ];
 
