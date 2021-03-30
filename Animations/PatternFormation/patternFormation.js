@@ -2,7 +2,8 @@
 var showWalkers = false;
 var pi = 3.141592653589;
 var mouseMode = "create";
-
+var play = true
+var mouseSize = 20;
 var angleS = [-pi/8,0,pi/8];
 var angleM = [-pi/21,0,pi/21];
 var angleL = [-pi/55,0,pi/55];
@@ -29,9 +30,9 @@ var SMOOTHER = [[1/9.,1/9.,1/9.],
                 [1/9.,1/9.,1/9.],
                 [1/9.,1/9.,1/9.]]
 var SENSOR,NAVIGATOR,MANIPULATOR;
-var ANGLE = angleL;
-var SENSE = senseL;
-var COST  = darkAttractor;
+var ANGLE = angleS;
+var SENSE = senseS;
+var COST  = attractions[6].f;
 var BOIDS = []
 
 // var S,N,I1,I2,I3,I4;
@@ -46,25 +47,32 @@ function setup(){
   NAVIGATOR   = new Navigator(1,0.3,0.3);
   MANIPULATOR = new Interactor([52,54,66,    20]);
   makeControls();
-  fill(255,0,0); stroke(255);
 }
 
 
 function draw(){
   // several iterations each draw
+  image(buffer, 0, 0,width,height);
+  if(play){
   for(var k =0;k<10;k++){
-    image(buffer, 0, 0,width,height);
     buffer.loadPixels()
     for(var n=0; n<BOIDS.length; n++){BOIDS[n].sense();}
     for(var n=0; n<BOIDS.length; n++){BOIDS[n].act();}
     buffer.updatePixels();
   }
+  }
   // draw walkers
   if(showWalkers){
+    fill(255,0,0); stroke(255);
     for(var n=0; n<BOIDS.length; n++){
       var X = BOIDS[n].x * width/buffer.width;
       var Y = BOIDS[n].y * height/buffer.height; ellipse(X,Y,5,5);
   }}
+  if (mouseMode=="draw" || mouseMode=="erase") {
+    stroke(0);
+    noFill();
+    ellipse(mouseX,mouseY,mouseSize,mouseSize)
+  }
 
 
 }
@@ -186,22 +194,12 @@ class Interactor{
   }
 }
 
-//==============================================================================
-function rAttractor(r,g,b,a){return sq(r)-sq(255);}
-function gAttractor(r,g,b,a){return sq(g)-sq(255);}
-function bAttractor(r,g,b,a){return sq(b)-sq(255);}
-function rRepellor(r,g,b,a){return sq(r-255);}
-function gRepellor(r,g,b,a){return sq(g-255);}
-function bRepellor(r,g,b,a){return sq(b-255);}
-function darkAttractor(r,g,b,a){return sq(r)+sq(g)+sq(b)-3*sq(255);}
-function lightAttractor(r,g,b,a){return sq(r-255)+sq(g-255)+sq(b-255);}
-//==============================================================================
-
 function makeControls(){
   addButton(createButton("Show walkers"),function(){showWalkers=!showWalkers;})
   addButton(createButton("Kill all walkers"),function(){BOIDS=[];})
+  addButton(createButton("play/pause"),function(){play=!play;})
   addButton(createButton("Download image"),function(){saveCanvas('autoArt', 'jpg');})
-  addSelect([["Create walker","create"],["Draw","draw"]],function(e){mouseMode=e.target.selectedOptions[0].value;})
+  addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"]],function(e){mouseMode=e.target.selectedOptions[0].value;})
   // sense width
   addSelect([["Narrow sensorwidth","S"],["Normal sensorwidth","M"],["Wide sensorwidth","L"]],function(e){
     var v=e.target.selectedOptions[0].value;
@@ -236,6 +234,7 @@ function addSelect(options,update){
     s.option(options[k][0],options[k][1]) // name, [value]
   }
   s.changed(update);
+  s.selected("none");
 }
 
 function addButton(b,f){
@@ -247,17 +246,33 @@ function addButton(b,f){
 //==============================================================================
 
 function mousePressed(){
-  if(mouseMode=="create"){
+  if((mouseX<width) && (mouseY<height)){
     var xx = mouseX * buffer.width/width;
     var yy = mouseY * buffer.height/height;
-    var b = new Boid(SENSOR,NAVIGATOR,MANIPULATOR);
-    b.x = xx; b.y = yy;
-    BOIDS.push(b);
+    if(mouseMode=="create"){
+      var b = new Boid(SENSOR,NAVIGATOR,MANIPULATOR);
+      b.x = xx; b.y = yy;
+      BOIDS.push(b);
+    }else if (mouseMode=="erase") {
+      for(var n=BOIDS.length-1; n>=0;n--){
+        if(sq(BOIDS[n].x-xx)+sq(BOIDS[n].y-yy)<sq(mouseSize*buffer.width/width)){
+          BOIDS.splice(n, 1);
+        }
+      }
+    }
   }
 }
 
 function mouseDragged(){
-
+  if((mouseX<width) && (mouseY<height)){
+    var xx = mouseX * buffer.width/width;
+    var yy = mouseY * buffer.height/height;
+    if (mouseMode=="draw") {
+      buffer.noStroke();
+      buffer.fill(MANIPULATOR.c[0],MANIPULATOR.c[1],MANIPULATOR.c[2],MANIPULATOR.c[3]);
+      buffer.ellipse(xx,yy,mouseSize*buffer.width/width,mouseSize*buffer.height/height);
+    }
+  }
 }
 
 function keyPressed(){
