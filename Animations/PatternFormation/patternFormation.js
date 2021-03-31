@@ -202,6 +202,7 @@ function makeControls(){
     newBuffer = createGraphics(resolution[0],resolution[1]);
     newBuffer.pixelDensity(1);
     newBuffer.image(buffer,0,0,newBuffer.width,newBuffer.height);
+    for(var n=BOIDS.length-1; n>=0;n--){BOIDS[n].x *= newBuffer.width/buffer.width; BOIDS[n].y *= newBuffer.height/buffer.height}
     buffer = newBuffer;
   })
   // sensor widths
