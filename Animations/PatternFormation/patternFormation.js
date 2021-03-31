@@ -42,13 +42,24 @@ function draw(){
   }
   }
   // draw walkers
-  if(showWalkers){fill(255,0,0); stroke(255);for(var n=0; n<BOIDS.length; n++){BOIDS[n].display(5)}}
+  if(showWalkers){
+    fill(255,0,0); stroke(255);
+    for(var n=0; n<BOIDS.length; n++){
+      BOIDS[n].display(5)
+    }
+  }
   if (mouseMode=="draw" || mouseMode=="erase") {
-    stroke(BOIDMODEL.c[0],BOIDMODEL.c[1],BOIDMODEL.c[2]);
+    stroke(BOIDMODEL.c);
     noFill();
     ellipse(mouseX,mouseY,mouseSize,mouseSize)
   }else if (mouseMode=="create") {
     BOIDMODEL.displaySpecial(mouseX,mouseY,10)
+  }else if (mouseMode=="picker") {
+    strokeWeight(5);
+    noFill();
+    stroke(BOIDMODEL.c)
+    ellipse(mouseX,mouseY,mouseSize,mouseSize)
+    strokeWeight(1);
   }
 
 
@@ -68,11 +79,12 @@ class Boid{
     this.navigator = navigator;
     this.cost = cost; // RGBA cost function
     this.c = c; // color
+    this.cCost = c;
     this.force = 0.5;
     // this.interactor = interactor;
   }
   sense(){
-    this.th += this.sensor.sense(this.x,this.y,this.th,this.cost,this.c);
+    this.th += this.sensor.sense(this.x,this.y,this.th,this.cCost);
   }
   act(){
     var res = this.navigator.move(this.x,this.y,this.th);
@@ -124,9 +136,21 @@ class Boid{
   }
 
   display(size){
+    var X = this.x*width/buffer.width;
+    var Y = this.y*height/buffer.height;
+    var r = sqrt(sq(X-mouseX)+sq(Y-mouseY));
+    var ms = size/(0.1+0.005*r)
     stroke(255-this.c.levels[0],255-this.c.levels[1],255-this.c.levels[2]);
     fill(this.c);
-    ellipse(this.x*width/buffer.width,this.y*height/buffer.height,size,size);
+    ellipse(X,Y,size,size);
+    noFill(); stroke(this.c);
+    ellipse(X,Y,ms,ms);
+    for(var k=0;k<this.sensor.angles.length;k++){
+      var a = this.sensor.angles[k]
+      var l = this.sensor.distances[k]*width/buffer.width
+      line(X,Y,X+ms*cos(a+this.th),Y+ms*sin(a+this.th));
+    }
+
   }
 
   displaySpecial(x,y,scale){
@@ -149,30 +173,32 @@ class Boid{
 // Mechanism for reading pixel data and optimizing cost to generate and angle as a response
 class Sensor{
   constructor(angles,distances){
+    this.philic     = 1; // prefactor to distance cost
     this.angles     = angles // array of radians
     this.distances  = distances // array of radii
   }
   sensepoint(x,y,th,r,dth){ // retrieve sense-point
     var Xi = int(x+r*cos(th+dth));
     var Yi = int(y+r*sin(th+dth));
-    return [Xi,Yi]
+    return [1+(Xi-1+buffer.width-2)%(buffer.width-2),1+(Yi-1+buffer.height-2)%(buffer.height-2)]
   }
   getcolor(x,y){ // obtain pixel data
     let i = 4*(y*buffer.width+x);
     return [buffer.pixels[i],buffer.pixels[i+1],buffer.pixels[i+2],buffer.pixels[i+3]];
   }
-  sense(x,y,th,cost,cS){ // main function: Optimize cost over sensory scalars
-    var costm  = Infinity;
-    var thm = 0
+  sense(x,y,th,cS){ // main function: Optimize cost over sensory scalars
+    var costm  = Infinity; var thm = 0;
     for(var k=0; k<this.angles.length; k++){
       var p = this.sensepoint(x,y,th,this.distances[k],this.angles[k]); // meshpoint
       var c = this.getcolor(p[0],p[1]); // color at meshpoint
-      var costk = cost(c,cS.levels); // cost/repulsion of detected of color
+      var costk = this.philic*distanceTo(c,cS.levels); // cost/repulsion of detected of color
       if(costk<costm){ costm = costk; thm = this.angles[k]; } // if lowest cost
     }
     return thm
   }
 }
+
+
 
 //------------------------------------------------------------------------------
 class Navigator{
@@ -187,16 +213,28 @@ class Navigator{
     var dy = (1+random( -this.fluctuationL,this.fluctuationL))*sin(th)//this.steplength*sin(th);
     // MOVE + boundary condition
     var xN  = 1+( x+dx-1 + buffer.width -2)%(buffer.width -2);   // exclude 1px bd
-    var yN  = 1+( y+dy-1 + buffer.height-2)%(buffer.height-2); // exclude 1px bd
+    var yN  = 1+( y+dy-1 + buffer.height-2)%(buffer.height-2);   // exclude 1px bd
+
     var thN = th + random(-this.fluctuationTH,this.fluctuationTH)
     return [xN,yN,thN]
   }
 }
 
+function pixelFromCanvasCoord(x,y){
+  var X = x*buffer.width/width;
+  var Y = y*buffer.height/height;
+  var i = 4*(int(Y)*buffer.width+int(X));
+  return [buffer.pixels[i],buffer.pixels[i+1],buffer.pixels[i+2],buffer.pixels[i+3]];
+}
+
+
+
+//------------------------------------------------------------------------------
+
 function makeControls(){
   // Should probably transition to sliders/inputs instead
   addButton(createButton("play/pause"),function(){play=!play;})
-  addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"]],"Create walker",function(e){mouseMode=e.target.selectedOptions[0].value;})
+  addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"],["Color picker","picker"]],"Create walker",function(e){mouseMode=e.target.selectedOptions[0].value;})
   addSelect(resolutions.map(({ name }) => [name,name]),"window size",function(e){
     var resolution = resolutions.filter( ({name}) => name==e.target.selectedOptions[0].value)[0].R;
     newBuffer = createGraphics(resolution[0],resolution[1]);
@@ -206,7 +244,7 @@ function makeControls(){
     buffer = newBuffer;
   })
   // sensor widths
-  addSelect(senseWs.map(({ name }) => [name,name]),senseWs[1].name,function(e){
+  addSelect(senseWs.map(({ name }) => [name,name]),senseWs[4].name,function(e){
     var angles = senseWs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].A;
     BOIDMODEL.sensor = new Sensor(angles,BOIDMODEL.sensor.distances);})
   // sensor lengths
@@ -214,15 +252,23 @@ function makeControls(){
     var distances = senseLs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].L;
     BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,distances);})
   // attractions
-  addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
-    BOIDMODEL.cost = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;})
+  addSelect([["Philic",1],["Phobic",-1]],"Philic",function(e){BOIDMODEL.sensor.philic=e.target.selectedOptions[0].value;})
+  addSelect([["Self","s"],["Black","d"],["White","w"],["Chosen","c"]],"s",function(e){
+    var v=e.target.selectedOptions[0].value;
+    if(v=="s"){BOIDMODEL.cCost = BOIDMODEL.c;}
+    else if(v=="d"){BOIDMODEL.cCost = color(0);}
+    else if(v="w"){BOIDMODEL.cCost = color(255);}
+    else if(v="c"){BOIDMODEL.cCost = color(colorInput.value());}
+  })
+  // addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
+  //   BOIDMODEL.cost = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;})
   // color
   colorInput = createInput(); colorInput.parent(window.document.getElementById('control-holder'))
   colorInput.changed(function(){BOIDMODEL.c = color(colorInput.value()); colorInput.style('background-color',colorInput.value());})
   addSelect(colors.map(({ name }) => [name,name]),colors[1].name,function(e){
     var v = e.target.selectedOptions[0].value;
     var c = colors.filter(({name}) => name==v)[0].C;
-    colorInput.value( rgbToHex(c.levels) ); colorInput.style('background-color',colorInput.value());
+    setColorRGBA(c.levels);// colorInput.value( rgbToHex(c.levels) ); colorInput.style('background-color',colorInput.value());
     BOIDMODEL.c = c; BOIDMODEL.smoother = v=="SMEAR"; })
   addButton(createButton("Show/hide walkers"),function(){showWalkers=!showWalkers;})
   addButton(createButton("Kill all walkers"),function(){BOIDS=[];})
@@ -250,7 +296,17 @@ function duplicateBoidModel(model){
   var b = new Boid(model.sensor,model.navigator,model.cost,model.c);
   b.smoother = model.smoother;
   b.force = model.force;
+  b.cCost = model.cCost;
   return b
+}
+
+function setColorHEX(hex){
+  colorInput.value( hex );
+  colorInput.style('background-color',colorInput.value());
+}
+function setColorRGBA(rgba){
+  colorInput.value( rgbToHex(rgba) );
+  colorInput.style('background-color',colorInput.value());
 }
 
 function rgbToHex(rgb){
@@ -258,6 +314,10 @@ function rgbToHex(rgb){
   g = rgb[1].toString(16); if(g.length==1){g="0"+g;}
   b = rgb[2].toString(16); if(b.length==1){b="0"+b;}
   return "#" + r + g + b;
+}
+
+function distanceTo(A,B){
+  return sq(A[0]-B[0])+sq(A[1]-B[1])+sq(A[1]-B[1])
 }
 
 
@@ -277,6 +337,10 @@ function mousePressed(){
           BOIDS.splice(n, 1);
         }
       }
+    }else if (mouseMode=="picker") {
+      var rgba = pixelFromCanvasCoord(mouseX,mouseY);
+      setColorRGBA(rgba);
+      BOIDMODEL.c = color(rgbToHex(rgba));
     }
   }
 }
@@ -287,7 +351,7 @@ function mouseDragged(){
     var yy = mouseY * buffer.height/height;
     if (mouseMode=="draw") {
       buffer.noStroke();
-      buffer.fill(MANIPULATOR.c[0],MANIPULATOR.c[1],MANIPULATOR.c[2],MANIPULATOR.c[3]);
+      buffer.fill(BOIDMODEL.c);
       buffer.ellipse(xx,yy,mouseSize*buffer.width/width,mouseSize*buffer.height/height);
     }
     // add ensemle-draw
@@ -306,11 +370,13 @@ function defineGlobals(){
                 {name:"1024 x 1024",    R:[1024,1024]},
                 {name:" 512 x  512",    R:[ 512, 512]}]
 
-  senseWs =[{name:"XL sensorspan", A:[0,-pi/ 5,pi/ 5]},
-            {name:" L sensorspan", A:[0,-pi/ 8,pi/ 8]},
-            {name:" M sensorspan", A:[0,-pi/13,pi/13]},
-            {name:" S sensorspan", A:[0,-pi/21,pi/21]},
-            {name:"XS sensorspan", A:[0,-pi/34,pi/34]}];
+  senseWs =[{name:"XXL sensorspan", A:[0,-pi/ 4,pi/ 4]},
+            {name:" XL sensorspan", A:[0,-pi/ 5,pi/ 5]},
+            {name:"  L sensorspan", A:[0,-pi/ 8,pi/ 8]},
+            {name:"  M sensorspan", A:[0,-pi/13,pi/13]},
+            {name:"  S sensorspan", A:[0,-pi/21,pi/21]},
+            {name:" XS sensorspan", A:[0,-pi/34,pi/34]},
+            {name:"XXS sensorspan", A:[0,-pi/55,pi/55]}];
 
   senseLs =[  {name:"XXS sensorlength", L:[ 2, 2, 2]},
               {name:" XS sensorlength", L:[ 3, 3, 3]},
