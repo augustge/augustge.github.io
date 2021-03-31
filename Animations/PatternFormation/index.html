@@ -24,16 +24,20 @@
         article the other day, and found it fascinating.
         In it, a simple numerical method based on chem-trails and chemoattraction of simple organisms is shown to reproduce complex patterns.
         Without going into much detail, I decided to play with the idea here. After playing a bit with it, it turned out to give very pretty results, so I decided to
-        make it into a automatic-art thing. 
+        make it into a automatic-art thing.
         <p>
         My approach was the following: I crate an object, called a <i>walker</i> (create with mouseclick), whose main properties is a position, a direction, and a color $\mathbf{c}_0$ (or rule).
-        Each step, a walker walks toward its direction at a preset, but somewhat fluctuating, length. After moving, it interacts with a background color mesh, either
-        by smearing nearby pixels (the SMEAR option above) or by pulling the pixel underneath it towards its color $\mathbf{c}_0$
         The walker has a list of locations in front of it from which it may sample the pixel color. Each walker carries a cost-function $f=f(\mathbf{c},\mathbf{c}_0)$ whose
         value depends on the sensed color $\mathbf{c}$ and its own color $\mathbf{c}_0$. Armed with the cost function, the walker is asked to change its direction
         towards the sensed location with minimal cost. One natural choice of cost-function is $f_{a+}=|\mathbf{c}-\mathbf{c}_0|^2$, which measures the color-space
-        distance to its own color $\mathbf{c}_0$. This cost function is the one labelled <i>autophilic</i>. The opposite is a walker that walks towards the color that is
-        maximally different from its own color, i.e. $f = f_{a+}$ (<i>autophobic</i>).
+        distance to its own color $\mathbf{c}_0$. This cost function is the one labelled <i>philic</i>. The opposite is a walker that walks towards the color that is
+        maximally different from its own color, i.e. $f = f_{a+}$ (<i>phobic</i>). There is also an option to change the definition of $\mathbf{c}_0$ (away from its own color <i>self</i>) to
+        to darkness (black), brightness (white) or to any other preset color (input). The locations in front is defined by an angular span (sensewidth) and a length (senselength).
+        <p>
+        Once the direction is updated based on the sensed pixel-response, the walker steps toward its direction at a predefined, but somewhat fluctuating, length. After moving, it interacts with a background color mesh, either
+        by smearing nearby pixels (the SMEAR option above) or by pulling the pixel underneath it towards its color $\mathbf{c}_0$.
+        <p>
+        I probably forgot to mention a lot, but I have confidence you will figure things out. Have fun!
       </div>
 
     </body>
