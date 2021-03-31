@@ -19,6 +19,21 @@ var angleL = [0,-pi/55,pi/55];
 var senseS = [8,8,8];
 var senseM = [21,21,21];
 var senseL = [55,55,55];
+
+var senseWs =[{name:"XL sensorspan", A:[0,-pi/ 5,pi/ 5]},
+              {name:" L sensorspan", A:[0,-pi/ 8,pi/ 8]},
+              {name:" M sensorspan", A:[0,-pi/13,pi/13]},
+              {name:" S sensorspan", A:[0,-pi/21,pi/21]},
+              {name:"XS sensorspan", A:[0,-pi/34,pi/34]}];
+
+var senseLs =[  {name:"XXS sensorlength", L:[ 2, 2, 2]},
+                {name:" XS sensorlength", L:[ 3, 3, 3]},
+                {name:"  S sensorlength", L:[ 5, 5, 5]},
+                {name:"  M sensorlength", L:[ 8, 8, 8]},
+                {name:"  L sensorlength", L:[13,13,13]},
+                {name:" XL sensorlength", L:[21,21,21]},
+                {name:"XXL sensorlength", L:[34,34,34]}];
+
 var colors = [{name:"SMEAR",      C:[null,null,null]}, // not really a color!
               {name:"dark",       C:[52,54,66,    255]},
               {name:"milk",       C:[242,235,199, 255]},
@@ -38,11 +53,13 @@ var attractions = [
   {name:"green repellor", f:function(r,g,b,a){return sq(g-255)-sq(255);}},
   {name:"blue repellor",  f:function(r,g,b,a){return sq(b-255)-sq(255);}},
   {name:"dark attractor", f:function(r,g,b,a){return sq(r)+sq(g)+sq(b)-3*sq(255);}},
-  {name:"light attractor",f:function(r,g,b,a){return sq(r-255)+sq(g-255)+sq(b-255)-3*sq(355);}}]
+  {name:"light attractor",f:function(r,g,b,a){return sq(r-255)+sq(g-255)+sq(b-255)-3*sq(355);}},
+  {name:"autophilic",     f:function(r,g,b,a){return sq(r-this.c[0])+sq(g-this.c[1])+sq(b-this.c[2]);}}]
 
 var SMOOTHER = [[1/9.,1/9.,1/9.],
                 [1/9.,1/9.,1/9.],
                 [1/9.,1/9.,1/9.]]
+var BOIDMODEL;
 var SENSOR,NAVIGATOR,MANIPULATOR;
 var ANGLE = angleS;
 var SENSE = senseS;
@@ -57,9 +74,10 @@ function setup(){
   // buffer = createGraphics(windowWidth,windowHeight);
   buffer.pixelDensity(1);
   buffer.background(255);
-  SENSOR      = new Sensor(ANGLE,SENSE,COST);
-  NAVIGATOR   = new Navigator(1,0.3,0.3);
-  MANIPULATOR = new Interactor(colors[1].C);
+  BOIDMODEL   = new Boid(new Sensor(angleS,senseS),new Navigator(1,0.3,0.3),attractions[6].f,colors[1].C)
+  // SENSOR      = new Sensor(ANGLE,SENSE,COST);
+  // NAVIGATOR   = new Navigator(1,0.3,0.3);
+  // MANIPULATOR = new Interactor(colors[1].C);
   makeControls();
 }
 
@@ -96,34 +114,78 @@ function draw(){
 //------------------------------------------------------------------------------
 // Main creature: Mainly a container of the propagated information
 class Boid{
-  constructor(sensor,navigator,interactor){
+  constructor(sensor,navigator,cost,c){
     this.x  = 1+random( buffer.width-2);
     this.y  = 1+random(buffer.height-2);
     this.th = random(2*PI)
     this.dth = 0;
+    this.smoother = false;
     this.sensor = sensor;
     this.navigator = navigator;
-    this.interactor = interactor;
+    this.cost = cost; // RGBA cost function
+    this.c = c; // color
+    this.force = 0.5;
+    // this.interactor = interactor;
   }
   sense(){
-    this.th += this.sensor.sense(this.x,this.y,this.th);
+    this.th += this.sensor.sense(this.x,this.y,this.th,this.cost);
   }
   act(){
     var res = this.navigator.move(this.x,this.y,this.th);
     this.x  = res[0];
     this.y  = res[1];
-    // this.th = res[2];
-    this.interactor.interact(int(this.x),int(this.y));
+    this.interact(int(this.x),int(this.y));
+  }
+
+  combineValues(a,aN){return (a+this.force*aN)/(1+this.force)} // completely discriminative
+  pixelIndex(x,y){ return 4*(int(y)*buffer.width+int(x)) }
+
+  smoothing(x,y){
+    var mPX = [0.0,0.0,0.0,0.0]
+    for(var xi=-1; xi<=1; xi++){
+      for(var yi=-1; yi<=1; yi++){
+        let i = this.pixelIndex(x+xi,y+yi);
+        var mi = SMOOTHER[xi+1][yi+1];
+        mPX[0] += mi*buffer.pixels[i];
+        mPX[1] += mi*buffer.pixels[i+1];
+        mPX[2] += mi*buffer.pixels[i+2];
+        mPX[3] += mi*buffer.pixels[i+3];
+      }
+    }
+    for(var xi=-1; xi<=1; xi++){
+      for(var yi=-1; yi<=1; yi++){
+        let i = this.pixelIndex(x+xi,y+yi);
+        buffer.pixels[i]   = mPX[0];
+        buffer.pixels[i+1] = mPX[1];
+        buffer.pixels[i+2] = mPX[2];
+        buffer.pixels[i+3] = mPX[3];
+      }
+    }
+  }
+
+  setPixelColor(x,y){
+    let i = this.pixelIndex(x,y);
+    buffer.pixels[i]   = this.combineValues(buffer.pixels[i],  this.c[0]);
+    buffer.pixels[i+1] = this.combineValues(buffer.pixels[i+1],this.c[1]);
+    buffer.pixels[i+2] = this.combineValues(buffer.pixels[i+2],this.c[2]);
+    buffer.pixels[i+3] = this.combineValues(buffer.pixels[i+3],this.c[3]);
+  }
+
+  interact(x,y){
+    if(this.smoother){
+      this.smoothing(x,y)
+    }else{
+      this.setPixelColor(x,y)
+    }
   }
 }
 
 //------------------------------------------------------------------------------
 // Mechanism for reading pixel data and optimizing cost to generate and angle as a response
 class Sensor{
-  constructor(angles,distances,cost){
+  constructor(angles,distances){
     this.angles     = angles // array of radians
     this.distances  = distances // array of radii
-    this.cost       = cost // RGBA cost function
   }
   sensepoint(x,y,th,r,dth){ // retrieve sense-point
     var Xi = int(x+r*cos(th+dth));
@@ -134,13 +196,13 @@ class Sensor{
     let i = 4*(y*buffer.width+x);
     return [buffer.pixels[i],buffer.pixels[i+1],buffer.pixels[i+2],buffer.pixels[i+3]];
   }
-  sense(x,y,th){ // main function: Optimize cost over sensory scalars
-    var costm  = 100000;
+  sense(x,y,th,cost){ // main function: Optimize cost over sensory scalars
+    var costm  = Infinity;
     var thm = 0
     for(var k=0; k<this.angles.length; k++){
       var p = this.sensepoint(x,y,th,this.distances[k],this.angles[k]); // meshpoint
       var c = this.getcolor(p[0],p[1]); // color at meshpoint
-      var costk = this.cost(c[0],c[1],c[2],c[3]); // cost of color
+      var costk = cost(c[0],c[1],c[2],c[3]); // cost/repulsion of detected of color
       if(costk<costm){ costm = costk; thm = this.angles[k]; } // if lowest cost
     }
     return thm
@@ -166,91 +228,40 @@ class Navigator{
   }
 }
 
-//------------------------------------------------------------------------------
-// Manipulates local pixels
-// Version ideas: Simple pixel draw, 3x3 smoother, eraser
-class Interactor{
-  constructor(c){this.c = c; this.smoother=false} // smooth with draw
-  // assuming pixel density 1
-  combineValues(a,aN){return aN} // completely discriminative
-  pixelIndex(x,y){return 4*(int(y)*buffer.width+int(x))}
-  smoothing(x,y){
-    var mPX = [0.0,0.0,0.0,0.0]
-    for(var xi=-1; xi<=1; xi++){
-      for(var yi=-1; yi<=1; yi++){
-        let i = this.pixelIndex(x+xi,y+yi);
-        var mi = SMOOTHER[xi+1][yi+1];
-        mPX[0] += mi*buffer.pixels[i];
-        mPX[1] += mi*buffer.pixels[i+1];
-        mPX[2] += mi*buffer.pixels[i+2];
-        mPX[3] += mi*buffer.pixels[i+3];
-      }
-    }
-    for(var xi=-1; xi<=1; xi++){
-      for(var yi=-1; yi<=1; yi++){
-        let i = this.pixelIndex(x+xi,y+yi);
-        buffer.pixels[i]   = mPX[0];
-        buffer.pixels[i+1] = mPX[1];
-        buffer.pixels[i+2] = mPX[2];
-        buffer.pixels[i+3] = mPX[3];
-      }
-    }
-  }
-  interact(x,y){
-    if(this.smoother){
-      this.smoothing(x,y)
-    }else{
-      let i = this.pixelIndex(x,y);
-      buffer.pixels[i]   = this.combineValues(buffer.pixels[i],  this.c[0]);
-      buffer.pixels[i+1] = this.combineValues(buffer.pixels[i+1],this.c[1]);
-      buffer.pixels[i+2] = this.combineValues(buffer.pixels[i+2],this.c[2]);
-      buffer.pixels[i+3] = this.combineValues(buffer.pixels[i+3],this.c[3]);
-    }
-  }
-}
-
 function makeControls(){
   // Should probably transition to sliders/inputs instead
   addButton(createButton("Show walkers"),function(){showWalkers=!showWalkers;})
   addButton(createButton("Kill all walkers"),function(){BOIDS=[];})
   addButton(createButton("play/pause"),function(){play=!play;})
   addButton(createButton("Download image"),function(){saveCanvas('autoArt', 'jpg');})
-  addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"]],function(e){mouseMode=e.target.selectedOptions[0].value;})
-  // sense width
-  addSelect([["Narrow sensorwidth","S"],["Normal sensorwidth","M"],["Wide sensorwidth","L"]],function(e){
-    var v=e.target.selectedOptions[0].value;
-    if(v=="S"){ANGLE=angleS;}else if(v=="M"){ANGLE=angleM;}else if(v=="L"){ANGLE=angleL;}
-    SENSOR = new Sensor(ANGLE,SENSE,COST);})
-  // sense length
-  addSelect([["Short Sensorlength","S"],["Medium Sensorlength","M"],["Long Sensorlength","L"]],function(e){
-    var v=e.target.selectedOptions[0].value;
-    if(v=="S"){SENSE=senseS;}else if(v=="M"){SENSE=senseM;}else if(v=="L"){SENSE=senseL;}})
+  addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"]],"Create walker",function(e){mouseMode=e.target.selectedOptions[0].value;})
+  // sensor widths
+  addSelect(senseWs.map(({ name }) => [name,name]),senseWs[1].name,function(e){
+    var angles = senseWs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].A;
+    BOIDMODEL.sensor = new Sensor(angles,BOIDMODEL.sensor.distances);})
+  // sensor lengths
+  addSelect(senseLs.map(({ name }) => [name,name]),senseLs[1].name,function(e){
+    var distances = senseLs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].L;
+    BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,distances);})
   // attractions
-  addSelect(attractions.map(({ name }) => [name,name]),function(e){
-    COST = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;
-    SENSOR = new Sensor(ANGLE,SENSE,COST);})
+  addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
+    BOIDMODEL.cost = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;})
   // color
-  addSelect(colors.map(({ name }) => [name,name]),function(e){
+  addSelect(colors.map(({ name }) => [name,name]),"dark",function(e){
     var v = e.target.selectedOptions[0].value;
-    console.log(v)
     var c = colors.filter(({name}) => name==v)[0].C;
-    if(v=="SMEAR"){
-      MANIPULATOR=new Interactor(c);
-      MANIPULATOR.smoother = true;
-    }else{
-
-      MANIPULATOR=new Interactor(c);}
-    })
+    if(v=="SMEAR"){BOIDMODEL.c = c; BOIDMODEL.smoother = true; }else{ BOIDMODEL.c = c; } })
 }
 
-function addSelect(options,update){
+function addSelect(options,selected,update){
   var s = createSelect()
   s.parent(window.document.getElementById('control-holder'));
   for(var k=0; k<options.length;k++){
     s.option(options[k][0],options[k][1]) // name, [value]
   }
   s.changed(update);
-  s.selected("none");
+  s.selected(selected)
+  s.elt.dispatchEvent(new Event("change"));
 }
 
 function addButton(b,f){
@@ -266,7 +277,7 @@ function mousePressed(){
     var xx = mouseX * buffer.width/width;
     var yy = mouseY * buffer.height/height;
     if(mouseMode=="create"){
-      var b = new Boid(SENSOR,NAVIGATOR,MANIPULATOR);
+      var b = new Boid(BOIDMODEL.sensor,BOIDMODEL.navigator,BOIDMODEL.cost,BOIDMODEL.c);
       b.x = xx; b.y = yy;
       BOIDS.push(b);
     }else if (mouseMode=="erase") {
