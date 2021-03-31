@@ -219,6 +219,7 @@ function makeControls(){
   addButton(createButton("Show/hide walkers"),function(){showWalkers=!showWalkers;})
   addButton(createButton("Kill all walkers"),function(){BOIDS=[];})
   addButton(createButton("Clear canvas with selected color"),function(){buffer.background(BOIDMODEL.c);})
+  addButton(createButton("Download image"),function(){saveCanvas(buffer,"autoArt","jpg");})
 }
 
 function addSelect(options,selected,update){
