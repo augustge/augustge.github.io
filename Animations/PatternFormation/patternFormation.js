@@ -197,6 +197,13 @@ function makeControls(){
   // Should probably transition to sliders/inputs instead
   addButton(createButton("play/pause"),function(){play=!play;})
   addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"]],"Create walker",function(e){mouseMode=e.target.selectedOptions[0].value;})
+  addSelect(resolutions.map(({ name }) => [name,name]),"window size",function(e){
+    var resolution = resolutions.filter( ({name}) => name==e.target.selectedOptions[0].value)[0].R;
+    newBuffer = createGraphics(resolution[0],resolution[1]);
+    newBuffer.pixelDensity(1);
+    newBuffer.image(buffer,0,0,newBuffer.width,newBuffer.height);
+    buffer = newBuffer;
+  })
   // sensor widths
   addSelect(senseWs.map(({ name }) => [name,name]),senseWs[1].name,function(e){
     var angles = senseWs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].A;
@@ -329,8 +336,6 @@ function defineGlobals(){
             {name:"orange       [3] ",  C:color('#F3B562')},
             {name:"dull pink    [3] ",  C:color('#F06060')}
           ];
-
-    '#3C3F36', '#9FB03E'
 
   attractions = [
               {name:"autophilic",       f:function(rgba,self){return  sq(rgba[0]-self[0])+sq(rgba[1]-self[1])+sq(rgba[2]-self[2]);}},
