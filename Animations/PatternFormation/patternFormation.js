@@ -1,4 +1,3 @@
-// https://watermark.silverchair.com/artl.2010.16.2.16202.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAArQwggKwBgkqhkiG9w0BBwagggKhMIICnQIBADCCApYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM0BkLrvIgRzuMnzquAgEQgIICZ6tlAXasNcLTcemNXgD6-0z2b0UiBX78J5MQffG6xmUyVmi9PRafdSWcErITfyXKO8_Hz5ncNPx8XinsATwB48_MXWxqh4pPN4LsnIGKjJ2lGHzvTJao1jpDakcWYtaBU1XXYIQFgW0ZX0VbIJCOJb8W5Peh6WTYFZMMyv2g71dII-VG06XromXJ3EFVPl4YkteVJlzeUVWivTR2pFKZFCre1G-QCXZYJNKDDt6qsdbfJRXuLo6g4FRHp-3JhYFBPJcLPYEb3lFLRv5FMVXYyIPOgLptfYLcOHFAC-ZUVQ1bcvn0rUnbZsChroNgaya03u6n_InlrKALCYrZjOnwd0ZKz7hEZqKUZoEJq-91D5XqifpJvrtmm6EWVUXJ2-mZ4yW9X8Gk6LodKS0ioC-vJunlqnfI7qx6w_yvscGYHdz-nLY46WC4TWU0yDH6GP9JzkoN7s91kjDIo4eIYLRbeNu8FjpObjqHu5XkFgzY31qn06f66Gz43dB0cuVPCSmGBz61y0m9wrAC8TMyQadC3_WgsyCtFhkYWuKan-vErAVWB2VwWfWRV_cxMY3ZBOs4ZficXhlPxqsp7lgZhqDlG58RZPxBIWqISRZHDfiGvx5H_lkZgmJXmz7AfrDLt3Y43FAbSX4zAtR1hFBc3OSEKFpTlq9rNn8jyJqNoB1IOyndhrYClZk3rLgrTZAH4wxd3UnTXF7xXy3okBl-IJaKMcdsx6bYi3opsIbxQSftVD1cNqNPSQ7aA3y9B8sinNWC9yNqwhxzgt_QKlDkyHupnA730wPbX_YDwpZQjnSNsR3In3urUJdCAg
 
 var showWalkers = true;
 var pi = 3.141592653589;
@@ -244,7 +243,7 @@ function makeControls(){
     buffer = newBuffer;
   })
   // sensor widths
-  addSelect(senseWs.map(({ name }) => [name,name]),senseWs[4].name,function(e){
+  addSelect(senseWs.map(({ name }) => [name,name]),senseWs[2].name,function(e){
     var angles = senseWs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].A;
     BOIDMODEL.sensor = new Sensor(angles,BOIDMODEL.sensor.distances);})
   // sensor lengths
@@ -255,10 +254,10 @@ function makeControls(){
   addSelect([["Philic",1],["Phobic",-1]],"Philic",function(e){BOIDMODEL.sensor.philic=e.target.selectedOptions[0].value;})
   addSelect([["Self","s"],["Black","d"],["White","w"],["Chosen","c"]],"s",function(e){
     var v=e.target.selectedOptions[0].value;
-    if(v=="s"){BOIDMODEL.cCost = BOIDMODEL.c;}
+    if(v=="s"){     BOIDMODEL.cCost = BOIDMODEL.c;}
     else if(v=="d"){BOIDMODEL.cCost = color(0);}
-    else if(v="w"){BOIDMODEL.cCost = color(255);}
-    else if(v="c"){BOIDMODEL.cCost = color(colorInput.value());}
+    else if(v="w"){ BOIDMODEL.cCost = color(255);}
+    else if(v="c"){ BOIDMODEL.cCost = color(colorInput.value());}
   })
   // addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
   //   BOIDMODEL.cost = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;})
@@ -370,8 +369,7 @@ function defineGlobals(){
                 {name:"1024 x 1024",    R:[1024,1024]},
                 {name:" 512 x  512",    R:[ 512, 512]}]
 
-  senseWs =[{name:"XXL sensorspan", A:[0,-pi/ 4,pi/ 4]},
-            {name:" XL sensorspan", A:[0,-pi/ 5,pi/ 5]},
+  senseWs =[{name:" XL sensorspan", A:[0,-pi/ 5,pi/ 5]},
             {name:"  L sensorspan", A:[0,-pi/ 8,pi/ 8]},
             {name:"  M sensorspan", A:[0,-pi/13,pi/13]},
             {name:"  S sensorspan", A:[0,-pi/21,pi/21]},
