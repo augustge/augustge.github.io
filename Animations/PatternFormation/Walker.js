@@ -80,7 +80,7 @@ class Boid{
     ellipse(X,Y,ms,ms);
     for(var k=0;k<this.sensor.angles.length;k++){
       var a = this.sensor.angles[k]
-      var l = this.sensor.distances[k]*width/buffer.width
+      var l = this.sensor.distance*width/buffer.width
       line(X,Y,X+ms*cos(a+this.th),Y+ms*sin(a+this.th));
     }
 
@@ -92,7 +92,7 @@ class Boid{
     var lmax = -1
     for(var k=0;k<this.sensor.angles.length;k++){
       var a = this.sensor.angles[k]
-      var l = this.sensor.distances[k]*width/buffer.width
+      var l = this.sensor.distance*width/buffer.width
       line(x,y,x+l*cos(a),y+l*sin(a));
       if(l>lmax){lmax=l}
     }
@@ -105,10 +105,10 @@ class Boid{
 //------------------------------------------------------------------------------
 // Mechanism for reading pixel data and optimizing cost to generate and angle as a response
 class Sensor{
-  constructor(angles,distances){
+  constructor(angles,distance){
     this.philic     = 1; // prefactor to distance cost
     this.angles     = angles // array of radians
-    this.distances  = distances // array of radii
+    this.distance  = distance // array of radii
   }
   sensepoint(x,y,th,r,dth){ // retrieve sense-point
     var Xi = int(x+r*cos(th+dth));
@@ -122,7 +122,7 @@ class Sensor{
   sense(x,y,th,cS){ // main function: Optimize cost over sensory scalars
     var costm  = Infinity; var thm = 0;
     for(var k=0; k<this.angles.length; k++){
-      var p = this.sensepoint(x,y,th,this.distances[k],this.angles[k]); // meshpoint
+      var p = this.sensepoint(x,y,th,this.distance,this.angles[k]); // meshpoint
       var c = this.getcolor(p[0],p[1]); // color at meshpoint
       var costk = this.philic*distanceTo(c,cS.levels); // cost/repulsion of detected of color
       if(costk<costm){ costm = costk; thm = this.angles[k]; } // if lowest cost
@@ -142,8 +142,8 @@ class Navigator{
   }
   move(x,y,th){ // position and dir of walker, delta theta (dth) of response
     // generate direction vector
-    var dx = (1+random( -this.fluctuationL,this.fluctuationL))*cos(th)//this.steplength*cos(th);
-    var dy = (1+random( -this.fluctuationL,this.fluctuationL))*sin(th)//this.steplength*sin(th);
+    var dx = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*cos(th)//this.steplength*cos(th);
+    var dy = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*sin(th)//this.steplength*sin(th);
     // MOVE + boundary condition
     var xN  = 1+( x+dx-1 + buffer.width -2)%(buffer.width -2);   // exclude 1px bd
     var yN  = 1+( y+dy-1 + buffer.height-2)%(buffer.height-2);   // exclude 1px bd

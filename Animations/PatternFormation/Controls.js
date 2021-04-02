@@ -7,14 +7,18 @@ function makeControls(){
   // sensor widths
   addSelect(senseWs.map(({ name }) => [name,name]),senseWs[1].name,function(e){
     var angles = senseWs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].A;
-    BOIDMODEL.sensor = new Sensor(angles,BOIDMODEL.sensor.distances);})
+    BOIDMODEL.sensor = new Sensor(angles,BOIDMODEL.sensor.distance);})
   // sensor lengths
   addSelect(senseLs.map(({ name }) => [name,name]),senseLs[0].name,function(e){
     var distances = senseLs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].L;
     BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,distances);})
+  // step lengths
+  addSelect(steplengths.map(({ name }) => [name,name]),steplengths[0].name,function(e){
+    var l = steplengths.filter(({name}) => name==e.target.selectedOptions[0].value)[0].V
+    BOIDMODEL.navigator = new Navigator(l,phi[0],phi[1]);})
   // attractions
   addSelect([["Philic",1],["Phobic",-1]],"Philic",function(e){
-    BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,BOIDMODEL.sensor.distances);
+    BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,BOIDMODEL.sensor.distance);
     BOIDMODEL.sensor.philic=e.target.selectedOptions[0].value;})
   addSelect([["Self","s"],["Black","d"],["White","w"],["Chosen","c"]],"s",setAttractor)
   // addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
