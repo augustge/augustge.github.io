@@ -12,7 +12,7 @@ class Boid{
     this.cost = cost; // RGBA cost function
     this.c = c; // color
     this.cCost = c;
-    this.force = 0.5;
+    this.force = 0.618;
     this.self = true;
     // this.interactor = interactor;
   }

@@ -33,14 +33,6 @@ function draw(){
   // several iterations each draw
   background(255);
   image(buffer, 0, 0,width,height);
-  if(play){
-  for(var k =0;k<10;k++){
-    buffer.loadPixels()
-    for(var n=0; n<BOIDS.length; n++){BOIDS[n].sense();}
-    for(var n=0; n<BOIDS.length; n++){BOIDS[n].act();}
-    buffer.updatePixels();
-  }
-  }
   // draw walkers
   if(showWalkers){
     fill(255,0,0); stroke(255);
@@ -60,6 +52,14 @@ function draw(){
     stroke(BOIDMODEL.c)
     ellipse(mouseX,mouseY,mouseSize,mouseSize)
     strokeWeight(1);
+  }
+  if(play){
+  for(var k =0;k<10;k++){
+    buffer.loadPixels()
+    for(var n=0; n<BOIDS.length; n++){BOIDS[n].sense();}
+    for(var n=0; n<BOIDS.length; n++){BOIDS[n].act();}
+    buffer.updatePixels();
+  }
   }
 }
 

@@ -13,7 +13,9 @@ function makeControls(){
     var distances = senseLs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].L;
     BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,distances);})
   // attractions
-  addSelect([["Philic",1],["Phobic",-1]],"Philic",function(e){BOIDMODEL.sensor.philic=e.target.selectedOptions[0].value;})
+  addSelect([["Philic",1],["Phobic",-1]],"Philic",function(e){
+    BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,BOIDMODEL.sensor.distances);
+    BOIDMODEL.sensor.philic=e.target.selectedOptions[0].value;})
   addSelect([["Self","s"],["Black","d"],["White","w"],["Chosen","c"]],"s",setAttractor)
   // addSelect(attractions.map(({ name }) => [name,name]),"dark attractor",function(e){
   //   BOIDMODEL.cost = attractions.filter(({name}) => name==e.target.selectedOptions[0].value)[0].f;})
