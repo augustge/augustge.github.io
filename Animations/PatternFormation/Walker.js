@@ -10,11 +10,10 @@ class Boid{
     this.sensor = sensor;
     this.navigator = navigator;
     this.c = c; // color
-    this.c = color(c.levels[0]+random(-5,5),c.levels[1]+random(-5,5),c.levels[2]+random(-5,5));
+    // this.c = color(c.levels[0]+random(-5,5),c.levels[1]+random(-5,5),c.levels[2]+random(-5,5)); // color fuzz
     this.cCost = c;
     this.force = 0.381964;
-    this.self = true;
-    // this.interactor = interactor;
+    this.self  = true;
   }
   sense(){
     this.th += this.sensor.sense(this.x,this.y,this.th,this.cCost);
