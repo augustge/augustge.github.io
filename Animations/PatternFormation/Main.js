@@ -109,7 +109,16 @@ function defineGlobals(){
             {name:"vintage teal [3] ",  C:color('#8CBEB2')},
             {name:"pergament    [3] ",  C:color('#F2EBBF')},
             {name:"orange       [3] ",  C:color('#F3B562')},
-            {name:"dull pink    [3] ",  C:color('#F06060')}
+            {name:"dull pink    [3] ",  C:color('#F06060')},
+            {name:"X1 ", C:color('#9768D1')},
+            {name:"X2 ", C:color('#553285')},
+            {name:"X3 ", C:color('#685C79')},
+            {name:"X4 ", C:color('#455C7B')},
+            {name:"X5 ", C:color('#AC6C82')},
+            {name:"X6 ", C:color('#BF8A49')},
+            {name:"X7 ", C:color('#0074D9')},
+            {name:"X8 ", C:color('#FFE87A')},
+            {name:"X9 ", C:color('#E62738')}
           ];
 
   attractions = [

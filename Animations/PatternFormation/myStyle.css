@@ -1,5 +1,18 @@
 
 
+body{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+#control-holder{
+  margin: 0;
+  text-align: center;
+}
 
 input{
   margin: 8px 0;
@@ -7,9 +20,20 @@ input{
   border-color: #000000;
   background-color: #000000;
   color: #FFFFFF;
-  mix-blend-mode: difference;
+  border: 2px solid red;
+  margin: 0; padding: 0;
 }
 
 a{
   color: #FFFFFF;
+}
+
+
+button{
+  background-color: attr(value);
+  border: 1px solid black;
+}
+
+select{
+  border: 1px solid black;
 }
