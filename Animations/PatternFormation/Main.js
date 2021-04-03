@@ -1,10 +1,11 @@
 
-var showWalkers = true;
-var pi          = 3.141592653589;
-var mouseMode   = "create";
-var attractmode = "s";
-var play        = true
-var mouseSize   = 20;
+var showWalkers  = true;
+var seizeVisuals = false;
+var pi           = 3.141592653589;
+var mouseMode    = "create";
+var attractmode  = "s";
+var play         = true;
+var mouseSize    = 20;
 var phi  = [0.618033];
 for(var k=0; k<10; k++){phi.push(phi[phi.length-1]*phi[0])}
 var SMOOTHER  = [[1/9.,1/9.,1/9.],
@@ -25,42 +26,46 @@ function setup(){
   resolutions.push({name:"half window size",  R:[int(windowWidth/2),int(windowHeight/2)]})
   buffer.pixelDensity(1);
   buffer.background(255);
-  BOIDMODEL   = new Boid(new Sensor(senseWs[1].A,senseLs[1].L),new Navigator(1,phi[0],phi[0]),attractions[0].f,colors[1].C)
+  BOIDMODEL   = new Boid(new Sensor(senseWs[1].A,senseLs[1].L),new Navigator(1,phi[0],phi[0]),colors[1].C)
   makeControls();
 }
 
 
 function draw(){
   // several iterations each draw
-  background(255);
-  image(buffer, 0, 0,width,height);
-  // draw walkers
-  if(showWalkers){
-    fill(255,0,0); stroke(255);
-    for(var n=0; n<BOIDS.length; n++){
-      BOIDS[n].display(5)
+  if(!seizeVisuals){
+    background(255);
+    image(buffer, 0, 0,width,height);
+    // draw walkers
+    if(showWalkers){
+      fill(255,0,0); stroke(255);
+      for(var n=0; n<BOIDS.length; n++){
+        BOIDS[n].display(5)
+      }
+    }
+    if (mouseMode=="draw" || mouseMode=="erase") {
+      stroke(BOIDMODEL.c);
+      noFill();
+      ellipse(mouseX,mouseY,mouseSize,mouseSize)
+    }else if (mouseMode=="create") {
+      BOIDMODEL.displaySpecial(mouseX,mouseY,10)
+    }else if (mouseMode=="picker") {
+      strokeWeight(5);
+      noFill();
+      stroke(BOIDMODEL.c)
+      ellipse(mouseX,mouseY,mouseSize,mouseSize)
+      strokeWeight(1);
     }
   }
-  if (mouseMode=="draw" || mouseMode=="erase") {
-    stroke(BOIDMODEL.c);
-    noFill();
-    ellipse(mouseX,mouseY,mouseSize,mouseSize)
-  }else if (mouseMode=="create") {
-    BOIDMODEL.displaySpecial(mouseX,mouseY,10)
-  }else if (mouseMode=="picker") {
-    strokeWeight(5);
-    noFill();
-    stroke(BOIDMODEL.c)
-    ellipse(mouseX,mouseY,mouseSize,mouseSize)
-    strokeWeight(1);
-  }
+
   if(play){
-  for(var k =0;k<10;k++){
-    buffer.loadPixels()
-    for(var n=0; n<BOIDS.length; n++){BOIDS[n].sense();}
-    for(var n=0; n<BOIDS.length; n++){BOIDS[n].act();}
-    buffer.updatePixels();
-  }
+    let steps = seizeVisuals? 100 : 10
+    for(var k =0;k<steps;k++){
+      buffer.loadPixels()
+      for(var n=0; n<BOIDS.length; n++){BOIDS[n].sense();}
+      for(var n=0; n<BOIDS.length; n++){BOIDS[n].act();}
+      buffer.updatePixels();
+    }
   }
 }
 
@@ -77,14 +82,15 @@ function defineGlobals(){
                 {name:"1024 x 1024",    R:[1024,1024]},
                 {name:" 512 x  512",    R:[ 512, 512]}]
 
-  senseWs =[{name:"tetral sensorspan", A:[0,-2*pi/3,2*pi/3]},
-            {name:"XXL sensorspan", A:[0,-pi*phi[1],pi*phi[1]]},
-            {name:" XL sensorspan", A:[0,-pi*phi[2],pi*phi[2]]},
-            {name:"  L sensorspan", A:[0,-pi*phi[3],pi*phi[3]]},
-            {name:"  M sensorspan", A:[0,-pi*phi[4],pi*phi[4]]},
-            {name:"  S sensorspan", A:[0,-pi*phi[5],pi*phi[5]]},
-            {name:" XS sensorspan", A:[0,-pi*phi[6],pi*phi[6]]},
-            {name:"XXS sensorspan", A:[0,-pi*phi[7],pi*phi[7]]}];
+  senseWs =[{name:"tetral sensorspan",  A:[0,-2*pi/3,2*pi/3]},
+            {name:"XXL sensorspan",     A:[0,-pi*phi[1],pi*phi[1]]},
+            {name:" XL sensorspan",     A:[0,-pi*phi[2],pi*phi[2]]},
+            {name:"  L sensorspan",     A:[0,-pi*phi[3],pi*phi[3]]},
+            {name:"  M sensorspan",     A:[0,-pi*phi[4],pi*phi[4]]},
+            {name:"  S sensorspan",     A:[0,-pi*phi[5],pi*phi[5]]},
+            {name:" XS sensorspan",     A:[0,-pi*phi[6],pi*phi[6]]},
+            {name:"XXS sensorspan",     A:[0,-pi*phi[7],pi*phi[7]]},
+            {name:"duo ",               A:[-pi*phi[1],pi*phi[1]]}];
 
   senseLs =[  {name:"XXS sensorlength", L:2},
               {name:" XS sensorlength", L:3},
@@ -120,19 +126,6 @@ function defineGlobals(){
             {name:"X8 ", C:color('#FFE87A')},
             {name:"X9 ", C:color('#E62738')}
           ];
-
-  attractions = [
-              {name:"autophilic",       f:function(rgba,self){return  sq(rgba[0]-self[0])+sq(rgba[1]-self[1])+sq(rgba[2]-self[2]);}},
-              {name:"autophobic",       f:function(rgba,self){return -sq(rgba[0]-self[0])-sq(rgba[1]-self[1])-sq(rgba[2]-self[2]);}},
-              {name:"dark   attractor", f:function(rgba,self){return sq(rgba[0])+sq(rgba[1])+sq(rgba[2]);}},
-              {name:"bright attractor", f:function(rgba,self){return sq(rgba[0]-255)+sq(rgba[1]-255)+sq(rgba[2]-255);}},
-              {name:"red   attractor",  f:function(rgba,self){return sq(rgba[0]);}},
-              {name:"red repulsor",     f:function(rgba,self){return sq(rgba[0]-255);}},
-              {name:"green   attractor",f:function(rgba,self){return sq(rgba[1]);}},
-              {name:"green repulsor",   f:function(rgba,self){return sq(rgba[1]-255);}},
-              {name:"blue   attractor", f:function(rgba,self){return sq(rgba[2]);}},
-              {name:"blue repulsor",    f:function(rgba,self){return sq(rgba[2]-255);}}
-            ]
 
   steplengths = [
     {name:"px steplength",    V:1},

@@ -8,6 +8,7 @@ function makeControls(){
   for(var i=0; i<colors.length; i++){addColorButton(colors[i].name,colors[i].C);}
   // Should probably transition to sliders/inputs instead
   addButton(createButton("play/pause"),function(){play=!play;},otherHolder)
+  addButton(createButton("Seize visuals"),function(){seizeVisuals=!seizeVisuals;},otherHolder)
   addSelect([["Create walker","create"],["Draw","draw"],["Walker eraser","erase"],["Color picker","picker"]],"Create walker",function(e){mouseMode=e.target.selectedOptions[0].value;},otherHolder)
   addSelect(resolutions.map(({ name }) => [name,name]),"window size",changedResolution,otherHolder)
   // sensor widths
@@ -19,7 +20,7 @@ function makeControls(){
     var distances = senseLs.filter(({name}) => name==e.target.selectedOptions[0].value)[0].L;
     BOIDMODEL.sensor = new Sensor(BOIDMODEL.sensor.angles,distances);},propsHolder)
   // step lengths
-  addSelect(steplengths.map(({ name }) => [name,name]),steplengths[1].name,function(e){
+  addSelect(steplengths.map(({ name }) => [name,name]),steplengths[0].name,function(e){
     var l = steplengths.filter(({name}) => name==e.target.selectedOptions[0].value)[0].V
     BOIDMODEL.navigator = new Navigator(l,phi[1],phi[1]);},propsHolder)
   // attractions
@@ -101,6 +102,7 @@ function addColorButton(name,c){
   b.mousePressed(function(){
     BOIDMODEL.c = color(c);
     if(BOIDMODEL.self){BOIDMODEL.cCost = color(c);}
+    BOIDMODEL.smoother = name=="SMEAR";
     colorInput.style('border-color',c);
     colorInput.value(rgbToHex(c.levels));
   });
@@ -124,7 +126,7 @@ function mousePressed(){
       BOIDS.push(b);
     }else if (mouseMode=="erase") {
       for(var n=BOIDS.length-1; n>=0;n--){
-        if(sq(BOIDS[n].x-xx)+sq(BOIDS[n].y-yy)<sq(mouseSize*buffer.width/width)){
+        if(sq(BOIDS[n].x-xx)+sq(BOIDS[n].y-yy)<sq(0.5*mouseSize*buffer.width/width)){
           BOIDS.splice(n, 1);
         }
       }

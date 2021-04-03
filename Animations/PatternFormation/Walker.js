@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // Main creature: Mainly a container of the propagated information
 class Boid{
-  constructor(sensor,navigator,cost,c){
+  constructor(sensor,navigator,c){
     this.x  = 1+random( buffer.width-2);
     this.y  = 1+random(buffer.height-2);
     this.th = random(2*PI)
@@ -9,10 +9,10 @@ class Boid{
     this.smoother = false;
     this.sensor = sensor;
     this.navigator = navigator;
-    this.cost = cost; // RGBA cost function
     this.c = c; // color
+    this.c = color(c.levels[0]+random(-5,5),c.levels[1]+random(-5,5),c.levels[2]+random(-5,5));
     this.cCost = c;
-    this.force = 0.618;
+    this.force = 0.381964;
     this.self = true;
     // this.interactor = interactor;
   }
@@ -108,7 +108,7 @@ class Sensor{
   constructor(angles,distance){
     this.philic     = 1; // prefactor to distance cost
     this.angles     = angles // array of radians
-    this.distance  = distance // array of radii
+    this.distance   = distance // array of radii
   }
   sensepoint(x,y,th,r,dth){ // retrieve sense-point
     var Xi = int(x+r*cos(th+dth));
@@ -155,7 +155,7 @@ class Navigator{
 
 
 function duplicateBoidModel(model){
-  var b = new Boid(model.sensor,model.navigator,model.cost,model.c);
+  var b = new Boid(model.sensor,model.navigator,model.c);
   b.smoother = model.smoother;
   b.force = model.force;
   b.cCost = model.cCost;
