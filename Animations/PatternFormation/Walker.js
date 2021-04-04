@@ -1,3 +1,9 @@
+
+//------------------------------------------------------------------------------
+
+
+
+
 //------------------------------------------------------------------------------
 // Main creature: Mainly a container of the propagated information
 class Boid{
@@ -16,12 +22,15 @@ class Boid{
     this.self  = true;
   }
   sense(){
-    this.th += this.sensor.sense(this.x,this.y,this.th,this.cCost);
+    var v = this.sensor.sense(this.x,this.y,this.th,this.cCost);
+    this.dth = v[0];
+    this.mC  = v[1];
   }
   act(){
-    var res = this.navigator.move(this.x,this.y,this.th);
+    var res = this.navigator.move(this.x,this.y,this.th,this.dth,this.mC);
     this.x  = res[0];
     this.y  = res[1];
+    this.th = res[2];
     this.interact(int(this.x),int(this.y));
   }
 
@@ -126,7 +135,7 @@ class Sensor{
       var costk = this.philic*distanceTo(c,cS.levels); // cost/repulsion of detected of color
       if(costk<costm){ costm = costk; thm = this.angles[k]; } // if lowest cost
     }
-    return thm
+    return [thm,costm];
   }
 }
 
@@ -139,18 +148,19 @@ class Navigator{
     this.fluctuationTH = fluctuationTheta; // relative!
     this.fluctuationL  = fluctuationL;     // relative!
   }
-  move(x,y,th){ // position and dir of walker, delta theta (dth) of response
+  move(x,y,th,dth,c){ // position and dir of walker, delta theta (dth) of response
     // generate direction vector
-    var dx = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*cos(th)//this.steplength*cos(th);
-    var dy = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*sin(th)//this.steplength*sin(th);
+    var thN = th + random(-this.fluctuationTH,this.fluctuationTH) + dth ;
+    var dx  = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*cos(thN)//this.steplength*cos(th);
+    var dy  = this.steplength*(1+random( -this.fluctuationL,this.fluctuationL))*sin(thN)//this.steplength*sin(th);
     // MOVE + boundary condition
     var xN  = 1+( x+dx-1 + buffer.width -2)%(buffer.width -2);   // exclude 1px bd
     var yN  = 1+( y+dy-1 + buffer.height-2)%(buffer.height-2);   // exclude 1px bd
-
-    var thN = th + random(-this.fluctuationTH,this.fluctuationTH)
     return [xN,yN,thN]
   }
 }
+
+
 
 
 function duplicateBoidModel(model){

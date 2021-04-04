@@ -1,4 +1,8 @@
+/*
 
+
+
+*/
 var showWalkers  = true;
 var seizeVisuals = false;
 var pi           = 3.141592653589;
@@ -26,7 +30,7 @@ function setup(){
   resolutions.push({name:"half window size",  R:[int(windowWidth/2),int(windowHeight/2)]})
   buffer.pixelDensity(1);
   buffer.background(255);
-  BOIDMODEL   = new Boid(new Sensor(senseWs[1].A,senseLs[1].L),new Navigator(1,phi[0],phi[0]),colors[1].C)
+  BOIDMODEL   = new Boid(new Sensor(senseWs[1].A,senseLs[1].L),new Navigator(1,0.3,0),colors[1].C)
   makeControls();
 }
 
@@ -133,4 +137,5 @@ function defineGlobals(){
     {name:"XL steplength",    V:1/phi[1]},
     {name:"XXL steplength",   V:1/phi[2]}
   ]
+
 }
