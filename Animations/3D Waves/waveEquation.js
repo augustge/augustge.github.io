@@ -7,7 +7,7 @@ var dX = 10;
 var numberOfEvolutionsPerFrame = 1;
 var velocity = 0.2;
 var Nx,Ny;
-var dr = 10;
+var dr = 5;
 var W, H, C;
 var dampingFactor = 0.995;
 var wave;

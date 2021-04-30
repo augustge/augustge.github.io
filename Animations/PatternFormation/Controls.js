@@ -24,7 +24,7 @@ function makeControls(){
     var l = steplengths.filter(({name}) => name==e.target.selectedOptions[0].value)[0].V
     BOIDMODEL.navigator = new Navigator(l,phi[3],phi[2]);},propsHolder)
   // angle jitter
-  addSelect([["no jitter",0],["weak jitter",phi[2]], ["medium jitter",phi[1]], ["strong jitter",phi[0]]],phi[2],function(e){
+  addSelect([["no jitter",0],["weak jitter",phi[4]], ["medium jitter",phi[3]], ["strong jitter",phi[2]]],phi[4],function(e){
     var v = float(e.target.selectedOptions[0].value);
     BOIDMODEL.navigator = new Navigator(BOIDMODEL.navigator.steplength,v,BOIDMODEL.navigator.fluctuationL);},propsHolder)
   // attractions
